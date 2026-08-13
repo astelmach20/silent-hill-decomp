@@ -303,9 +303,9 @@ void SysState_GamePaused_Update(void) // 0x800391E8
                                          ControllerFlag_DpadLeft    |
                                          ControllerFlag_L2          |
                                          ControllerFlag_L1          |
-                                         ControllerFlag_LStickLeft2 |
-                                         ControllerFlag_RStickLeft  |
-                                         ControllerFlag_LStickLeft)) &&
+                                         ControllerFlag_LStickLowLeft |
+                                         ControllerFlag_RStickLowLeft  |
+                                         ControllerFlag_LStickHighLeft)) &&
         (g_Controller0->buttonFlags.clicked & ControllerFlag_L3))
     {
         D_800A9A68 = 0;

@@ -404,6 +404,8 @@ bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 
     *(u16*)&g_Controller0->analogController.status = 0x7300;
     g_Controller0->analogController.digitalButtons = btns;
+
+    // Convert unsigned range to signed range.
     *(u32*)&g_Controller0->analogController.rightX = 0x80808080;
     return true;
 }

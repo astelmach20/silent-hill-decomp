@@ -96,7 +96,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 D_800CD76C = 0;
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickDown)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
             {
                 if (D_800CD768 == 0)
                 {
@@ -105,7 +105,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 D_800CD768--;
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickUp)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
             {
                 D_800CD768++;
                 if (D_800CD768 == 23)
@@ -114,7 +114,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickLeft)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)
             {
                 if (D_800CD76C != 0)
                 {
@@ -122,7 +122,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickRight)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)
             {
                 if (D_800CD76C != 39 && D_800CD038[D_800CD768][D_800CD76C + 1] != 0)
                 {
@@ -193,7 +193,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 Sd_SfxStop(D_800CD768_tbl[D_800CD768]);
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickDown)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
             {
                 if (D_800CD768 == 0)
                 {
@@ -202,7 +202,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 D_800CD768--;
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickUp)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
             {
                 D_800CD768++;
                 if (D_800CD768 == 4)

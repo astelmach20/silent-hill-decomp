@@ -227,7 +227,7 @@ typedef enum _GameState
     GameState_Credits             = 21,
     GameState_Unk16               = 22, /** Removed debug menu? Doesn't exist in function array, but `DebugMoviePlayer` state tries to switch to it. */
 
-    GameState_Hack                = NO_VALUE // @hack Force enum to be treated as s32.
+    GameState_Hack                = NO_VALUE // @hack Force enum to be treated as `s32`.
 } e_GameState;
 
 /** @brief State IDs used by `GameState_InGame`.
@@ -242,7 +242,7 @@ typedef enum _SysState
     SysState_MapScreen      = 3,
     SysState_Fmv            = 4,
     SysState_LoadOverlay    = 5,
-    SysState_LoadRoom       = 6, // Alternative: SysState_LoadArea
+    SysState_LoadRoom       = 6, // Alternative: `SysState_LoadArea`.
     SysState_ReadMessage    = 7,
     SysState_SaveMenu0      = 8,
     SysState_SaveMenu1      = 9,

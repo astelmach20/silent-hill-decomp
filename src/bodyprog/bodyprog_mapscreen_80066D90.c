@@ -320,7 +320,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             {
                 if (D_800C4454 == Q12(1.0f))
                 {
-                    if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickUp)
+                    if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighUp)
                     {
                         if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][0]))
                         {
@@ -336,7 +336,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                         }
                     }
 
-                    if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickDown)
+                    if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighDown)
                     {
                         if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][1]))
                         {

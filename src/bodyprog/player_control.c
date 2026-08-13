@@ -4979,7 +4979,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.4f));
                     }
 
-                    if (g_Controller0->buttonFlags.held & ControllerFlag_LStickUp)
+                    if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighUp)
                     {
                         g_Player_MoveStickMag = 0;
                     }
@@ -5152,7 +5152,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
 
-                if (g_Controller0->buttonFlags.held & ControllerFlag_LStickUp)
+                if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighUp)
                 {
                     g_Player_MoveStickMag = 0;
                 }
@@ -5391,7 +5391,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.15f));
                 }
 
-                if (g_Controller0->buttonFlags.held & ControllerFlag_LStickDown)
+                if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighDown)
                 {
                     g_Player_MoveStickMag = 0;
                 }
@@ -8501,21 +8501,21 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsMovingForward |= g_Controller0->rawSticks.sticks_0.leftY < -STICK_DEADZONE;
         g_Player_IsMovingBackward = g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE;
         g_Player_HasMoveInput     = g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.stepLeft |
-                                                                      (ControllerFlag_LStickUp2    |
-                                                                       ControllerFlag_LStickRight2 |
-                                                                       ControllerFlag_LStickDown2  |
-                                                                       ControllerFlag_LStickLeft2) |
+                                                                      (ControllerFlag_LStickLowUp    |
+                                                                       ControllerFlag_LStickLowRight |
+                                                                       ControllerFlag_LStickLowDown  |
+                                                                       ControllerFlag_LStickLowLeft) |
                                                                       g_GameWorkPtr->config.controllerConfig.stepRight |
                                                                       g_GameWorkPtr->config.controllerConfig.aim);
     }
     else
     {
-        g_Player_IsTurningLeft    = ((g_Controller0->buttonFlags.held & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickLeft) << 6;
-        g_Player_IsTurningRight   = ((g_Controller0->buttonFlags.held & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == ControllerFlag_LStickRight) << 6;
-        g_Player_IsMovingForward |= (g_Controller0->buttonFlags.held & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickUp;
-        g_Player_IsMovingBackward = (g_Controller0->buttonFlags.held & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == ControllerFlag_LStickDown;
+        g_Player_IsTurningLeft    = ((g_Controller0->buttonFlags.held & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft)) == ControllerFlag_LStickHighLeft) << 6;
+        g_Player_IsTurningRight   = ((g_Controller0->buttonFlags.held & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft)) == ControllerFlag_LStickHighRight) << 6;
+        g_Player_IsMovingForward |= (g_Controller0->buttonFlags.held & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown)) == ControllerFlag_LStickHighUp;
+        g_Player_IsMovingBackward = (g_Controller0->buttonFlags.held & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown)) == ControllerFlag_LStickHighDown;
         g_Player_HasMoveInput     = g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.stepLeft |
-                                                                              (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft) |
+                                                                              (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighRight | ControllerFlag_LStickHighDown | ControllerFlag_LStickHighLeft) |
                                                                               g_GameWorkPtr->config.controllerConfig.stepRight | g_GameWorkPtr->config.controllerConfig.aim);
     }
 

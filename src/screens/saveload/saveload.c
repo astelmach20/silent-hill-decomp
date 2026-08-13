@@ -1746,7 +1746,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
 
             // Memory cards are inserted and user is moving between slots.
             if (g_Savegame_ElementCount0[0] != 0 && g_Savegame_ElementCount0[1] != 0 &&
-                (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)))
+                (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft)))
             {
                 g_SelectedSaveSlotIdx ^= 1;
                 SD_Call(Sfx_MenuMove);
@@ -1760,7 +1760,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(g_SelectedSaveSlotIdx);
 
                 // Move down savegame entry.
-                if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickUp)
+                if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
                 {
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] != 0)
                     {
@@ -1770,7 +1770,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 }
 
                 // Move up savegame entry.
-                if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickDown)
+                if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
                 {
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] < g_Savegame_ElementCount0[g_SelectedSaveSlotIdx] - 1)
                     {
@@ -1843,13 +1843,13 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
 
             g_SaveScreen_MemCardStateTextTimer = 0;
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickLeft)
+            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighLeft)
             {
                 isSaveWriteOptionSelected = gameStateStep;
                 SD_Call(Sfx_MenuMove);
             }
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickRight)
+            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight)
             {
                 isSaveWriteOptionSelected = false;
                 SD_Call(Sfx_MenuMove);

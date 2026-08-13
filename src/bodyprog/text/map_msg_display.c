@@ -371,7 +371,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 }
             }
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickUp &&
+            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighUp &&
                 g_MapMsg_Select.selectedEntryIdx != 0)
             {
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
@@ -380,7 +380,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 Sd_PlaySfx(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
             }
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickDown &&
+            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighDown &&
                 g_MapMsg_Select.selectedEntryIdx != (mapMsgCode - 1))
             {
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);

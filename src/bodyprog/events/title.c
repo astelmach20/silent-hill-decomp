@@ -146,7 +146,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
             g_MainMenu_VisibleEntryFlags |= g_MainMenu_VisibleEntryFlags << MainMenuEntry_Count;
 
-            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown))
             {
                 SD_Call(Sfx_MenuMove);
                 g_GameWork.gameState = GameState_MainMenu;
@@ -158,13 +158,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickUp)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
             {
                 g_MainMenu_SelectedEntry += MainMenuEntry_Count;
                 while (!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)));
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickDown)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
             {
                 while (!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)));
             }
@@ -250,7 +250,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickUp | ControllerFlag_LStickDown) ||
+            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown) ||
                 g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
@@ -264,7 +264,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Scroll game difficulty options.
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickUp)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
             {
                 prevGameDifficultyIdx = 2;
                 if (newGameSelectedDifficultyIdx > 0)
@@ -273,7 +273,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
                 newGameSelectedDifficultyIdx = prevGameDifficultyIdx;
             }
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickDown)
+            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
             {
                 nextGameDifficultyIdx = 0;
                 if (newGameSelectedDifficultyIdx < 2)
@@ -284,7 +284,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Play scroll sound.
-            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown))
             {
                 SD_Call(Sfx_MenuMove);
             }

@@ -88,12 +88,12 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
         Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
     }
 
-    if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickLeft)
+    if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)
     {
         g_Debug_MoviePlayerIdx--;
     }
 
-    if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickRight)
+    if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)
     {
         g_Debug_MoviePlayerIdx++;
     }

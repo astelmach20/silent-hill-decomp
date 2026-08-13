@@ -310,7 +310,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             break;
 
         case 23:
-            if (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+            if (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
             {
                 g_Inventory_SelectionId = g_Inventory_SelectionId == 0;
                 Sd_PlaySfx(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
@@ -1841,42 +1841,42 @@ void Inventory_DirectionalInputSet(void) // 0x8004F5DC
         g_Controller0->rawSticks.sticks_0.leftX >= STICK_DEADZONE)
     {
         // Up.
-        g_Inventory_IsUpClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickUp2;
-        g_Inventory_IsUpPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickUp2;
+        g_Inventory_IsUpClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickLowUp;
+        g_Inventory_IsUpPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickLowUp;
 
         // Down.
-        g_Inventory_IsDownClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickDown2;
-        g_Inventory_IsDownPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickDown2;
+        g_Inventory_IsDownClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickLowDown;
+        g_Inventory_IsDownPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickLowDown;
 
         // Left.
-        g_Inventory_IsLeftClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickLowLeft;
+        g_Inventory_IsLeftHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickLowLeft;
+        g_Inventory_IsLeftPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickLowLeft;
 
         // Right.
-        g_Inventory_IsRightClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickLowRight;
+        g_Inventory_IsRightHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickLowRight;
+        g_Inventory_IsRightPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickLowRight;
     }
     else
     {
         // Up.
-        g_Inventory_IsUpClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickUp;
-        g_Inventory_IsUpPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickUp;
+        g_Inventory_IsUpClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighUp;
+        g_Inventory_IsUpPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickHighUp;
 
         // Down.
-        g_Inventory_IsDownClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickDown;
-        g_Inventory_IsDownPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickDown;
+        g_Inventory_IsDownClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighDown;
+        g_Inventory_IsDownPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickHighDown;
 
         // Left.
-        g_Inventory_IsLeftClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighLeft;
+        g_Inventory_IsLeftHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickHighLeft;
+        g_Inventory_IsLeftPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickHighLeft;
 
         // Right.
-        g_Inventory_IsRightClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickRight;
-        g_Inventory_IsRightHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickRight;
-        g_Inventory_IsRightPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickRight;
+        g_Inventory_IsRightClicked = g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight;
+        g_Inventory_IsRightHeld    = g_Controller0->buttonFlags.held    & ControllerFlag_LStickHighRight;
+        g_Inventory_IsRightPulsed  = g_Controller0->buttonFlags.pulsed  & ControllerFlag_LStickHighRight;
     }
 }
 
