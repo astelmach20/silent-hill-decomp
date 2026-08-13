@@ -246,7 +246,7 @@ void Player_ControlFreeze(void)
     g_Player_DisableControl          = true;
     g_Player_IsInWalkToRunTransition = false;
 
-    D_800AF216 = 0;
+    g_Player_MoveStickMag = 0;
 
     playerChara->properties.player.afkTimer        = Q12(0.0f);
     playerChara->properties.player.runStepSfxCount   = 0;

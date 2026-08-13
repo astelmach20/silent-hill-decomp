@@ -16,7 +16,7 @@ void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
     s_DmsEntry* curCharaEntry;
 
-    // Check if header was already initialized.
+    // Check if header is already loaded.
     if (dmsHdr->isLoaded)
     {
         return;
@@ -95,30 +95,30 @@ void Dms_CharacterTransformGetByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q
 {
     s32                     prevKeyframeIdx;
     s32                     nextKeyframeIdx;
-    s32                     alpha;
-    s_DmsKeyframeCharacter  curCharaKeyframe;
+    q19_12                  alpha;
+    s_DmsKeyframeCharacter  activeCharaKeyframe;
     s_DmsEntry*             charaEntry;
     s_DmsKeyframeCharacter* charaKeyframes;
 
-    // Get keyframe interpolation data. 
+    // Get keyframe interpolation data.
     charaEntry = &dmsHdr->characterEntries[charaIdx];
     Dms_KeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, charaEntry, dmsHdr);
 
     // Interpolate frame.
     charaKeyframes = charaEntry->keyframes.character;
-    Dms_CharacterKeyframeInterpolate(&curCharaKeyframe,
+    Dms_CharacterKeyframeInterpolate(&activeCharaKeyframe,
                                      &charaKeyframes[prevKeyframeIdx], &charaKeyframes[nextKeyframeIdx],
                                      alpha);
 
     // Set position.
-    pos->vx = Q8_TO_Q12(curCharaKeyframe.position.vx + dmsHdr->origin.vx);
-    pos->vy = Q8_TO_Q12(curCharaKeyframe.position.vy + dmsHdr->origin.vy);
-    pos->vz = Q8_TO_Q12(curCharaKeyframe.position.vz + dmsHdr->origin.vz);
+    pos->vx = Q8_TO_Q12(activeCharaKeyframe.position.vx + dmsHdr->origin.vx);
+    pos->vy = Q8_TO_Q12(activeCharaKeyframe.position.vy + dmsHdr->origin.vy);
+    pos->vz = Q8_TO_Q12(activeCharaKeyframe.position.vz + dmsHdr->origin.vz);
 
     // Set rotation.
-    rot->vx = curCharaKeyframe.rotation.vx;
-    rot->vy = curCharaKeyframe.rotation.vy;
-    rot->vz = curCharaKeyframe.rotation.vz;
+    rot->vx = activeCharaKeyframe.rotation.vx;
+    rot->vy = activeCharaKeyframe.rotation.vy;
+    rot->vz = activeCharaKeyframe.rotation.vz;
 }
 
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result,
@@ -147,7 +147,7 @@ s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unuse
     s32                 prevKeyframeIdx;
     s32                 nextKeyframeIdx;
     s32                 alpha;
-    s_DmsKeyframeCamera curCamKeyframe;
+    s_DmsKeyframeCamera activeCamKeyframe;
     s32                 camProjVal;
     const s_DmsEntry*   camEntry;
 
@@ -155,24 +155,24 @@ s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unuse
 
     // Interpolate current keyframe.
     Dms_KeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, camEntry, dmsHdr);
-    camProjVal = Dms_CameraKeyframeLerp(&curCamKeyframe, &camEntry->keyframes.camera[prevKeyframeIdx],
+    camProjVal = Dms_CameraKeyframeLerp(&activeCamKeyframe, &camEntry->keyframes.camera[prevKeyframeIdx],
                                         &camEntry->keyframes.camera[nextKeyframeIdx],
                                         alpha);
 
     // Set position target.
-    posTarget->vx = Q8_TO_Q12(curCamKeyframe.positionTarget.vx + dmsHdr->origin.vx);
-    posTarget->vy = Q8_TO_Q12(curCamKeyframe.positionTarget.vy + dmsHdr->origin.vy);
-    posTarget->vz = Q8_TO_Q12(curCamKeyframe.positionTarget.vz + dmsHdr->origin.vz);
+    posTarget->vx = Q8_TO_Q12(activeCamKeyframe.positionTarget.vx + dmsHdr->origin.vx);
+    posTarget->vy = Q8_TO_Q12(activeCamKeyframe.positionTarget.vy + dmsHdr->origin.vy);
+    posTarget->vz = Q8_TO_Q12(activeCamKeyframe.positionTarget.vz + dmsHdr->origin.vz);
 
     // Set look-at target.
-    lookAtTarget->vx = Q8_TO_Q12(curCamKeyframe.lookAtTarget.vx + dmsHdr->origin.vx);
-    lookAtTarget->vy = Q8_TO_Q12(curCamKeyframe.lookAtTarget.vy + dmsHdr->origin.vy);
-    lookAtTarget->vz = Q8_TO_Q12(curCamKeyframe.lookAtTarget.vz + dmsHdr->origin.vz);
+    lookAtTarget->vx = Q8_TO_Q12(activeCamKeyframe.lookAtTarget.vx + dmsHdr->origin.vx);
+    lookAtTarget->vy = Q8_TO_Q12(activeCamKeyframe.lookAtTarget.vy + dmsHdr->origin.vy);
+    lookAtTarget->vz = Q8_TO_Q12(activeCamKeyframe.lookAtTarget.vz + dmsHdr->origin.vz);
 
     // @unused Always passed as `NULL`.
     if (unusedAngle != NULL)
     {
-        *unusedAngle = curCamKeyframe.unusedAngle;
+        *unusedAngle = activeCamKeyframe.unusedAngle;
     }
 
     // `camProjVal` comes from `curFrame.projectionDistance`, return value is passed to `vcChangeProjectionValue`.
@@ -182,7 +182,7 @@ s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unuse
 
 bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1) // 0x8008CF54
 {
-    #define ANGLE_EPSILON Q12_ANGLE(360.0f / 16.0f) // 22.5 degrees
+    #define ANGLE_EPSILON Q12_ANGLE(360.0f / 16.0f) // 22.5 degrees.
 
     // Check each axis.
     if (ABS(rot0->vx - rot1->vx) > ANGLE_EPSILON ||

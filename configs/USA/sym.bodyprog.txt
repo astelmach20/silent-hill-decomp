@@ -2637,6 +2637,7 @@ g_Player_FlexRotationY                       = 0x800AF210;
 g_Player_FlexRotationX                       = 0x800AF212;
 g_Player_IsInWalkToRunTransition             = 0x800AF214;
 g_Player_DisableControl                      = 0x800AF215;
+g_Player_MoveStickMag                        = 0x800AF216;
 g_Player_RockDrill_AttackType                = 0x800AF217;
 g_Player_TargetNpcIdx                        = 0x800AF21C;
 g_Player_LastWeaponSelected                  = 0x800AF224;

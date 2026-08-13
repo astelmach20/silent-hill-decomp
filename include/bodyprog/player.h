@@ -381,7 +381,7 @@ extern u8 g_Player_IsInWalkToRunTransition;
 /** `bool` */
 extern u8 g_Player_DisableControl;
 
-extern u8 D_800AF216;
+extern u8 g_Player_MoveStickMag;
 
 /** @brief `e_RockDrillAttackType` | Rock Drill attack type based on D-Pad input. */
 extern s8 g_Player_RockDrill_AttackType;

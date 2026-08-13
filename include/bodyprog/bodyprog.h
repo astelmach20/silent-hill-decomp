@@ -2139,7 +2139,7 @@ void Anim_CharaTypeAnimInfoClear(void);
  */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-void func_80070B84(s_SubCharacter* player, q19_12 moveDistMax, q19_12 arg2, s32 keyframeIdx);
+void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveSpeed, s32 keyframeIdx);
 
 void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttack, s32 animStatus);
 

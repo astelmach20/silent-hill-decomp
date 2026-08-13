@@ -34,7 +34,7 @@ typedef struct _DemoPlaybackFrame
 {
     /* 0x0 */ s_AnalogController analogController;
     /* 0x8 */ s8                 expectedGameState; /** Expected value of `g_GameWork.gameState` before `analogController` is processed.
-                                                     * If it doesn't match,`Demo_Update` displays `STEP ERROR` and stops reading the demo.
+                                                     * If it doesn't match, `Demo_Update` displays `STEP ERROR` and stops reading the demo.
                                                      */
     /* 0x9 */ u8                 videoPresentInterval;
     /* 0xA */ s8                 field_A[2]; /** @unused? In DAT files, often contains pairs of the same value. */

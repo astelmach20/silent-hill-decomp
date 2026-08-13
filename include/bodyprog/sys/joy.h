@@ -13,8 +13,9 @@
 
 #define INPUT_ACTION_COUNT   14
 #define CONTROLLER_COUNT_MAX 2
-#define STICK_THRESHOLD      FP_STICK(0.5f)
+#define STICK_DEADZONE       FP_STICK(0.5f)
 
+/** @brief PSX controller input flags. TODO: Need more masks for analog sticks. */
 typedef enum _ControllerFlags
 {
     ControllerFlag_None         = 0,
@@ -45,7 +46,10 @@ typedef enum _ControllerFlags
     ControllerFlag_LStickUp     = 1 << 24,
     ControllerFlag_LStickRight  = 1 << 25,
     ControllerFlag_LStickDown   = 1 << 26,
-    ControllerFlag_LStickLeft   = 1 << 27
+    ControllerFlag_LStickLeft   = 1 << 27,
+
+    ControllerFlag_Sticks = ControllerFlag_LStickUp2 | ControllerFlag_LStickRight2 | ControllerFlag_LStickDown2 | ControllerFlag_LStickLeft2 |
+                            ControllerFlag_RStickUp  | ControllerFlag_RStickRight  | ControllerFlag_RStickDown  | ControllerFlag_RStickLeft
 } e_ControllerFlags;
 
 typedef union
@@ -63,8 +67,8 @@ typedef union
 typedef struct _AnalogController
 {
     u8  status;
-    u8  received_bytes : 4; /** Number of bytes received / 2. */
-    u8  terminal_type  : 4; /** `e_PadTerminalType` */
+    u8  receivedBytes : 4; /** Number of bytes received / 2. */
+    u8  terminalType  : 4; /** `e_PadTerminalType` */
     u16 digitalButtons;
     u8  rightX;
     u8  rightY;
@@ -82,9 +86,9 @@ typedef struct _ControllerData
     /* 0x14 */ e_ControllerFlags  releasedBtnFlags;
     /* 0x18 */ e_ControllerFlags  pulsedBtnFlags;
     /* 0x1C */ e_ControllerFlags  pulsedGuiBtnFlags;
-    /* 0x20 */ s_AnalogSticks     sticks_20;
-    /* 0x24 */ s_AnalogSticks     sticks_24;
-    /* 0x28 */ s32                field_28;
+    /* 0x20 */ s_AnalogSticks     rawSticks;        /** Raw analog stick values, signed range `[-128, 127]`. */
+    /* 0x24 */ s_AnalogSticks     normalizedSticks; /** Normalized analog stick values with deadzone, signed range `[-112, 112]`. */
+    /* 0x28 */ s32                field_28;         // Processed input flags.
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 

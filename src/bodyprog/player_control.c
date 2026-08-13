@@ -132,9 +132,9 @@ q3_12  g_Player_FlexRotationY           = Q12_ANGLE(0.0f);
 q3_12  g_Player_FlexRotationX           = Q12_ANGLE(0.0f);
 u8     g_Player_IsInWalkToRunTransition = false;
 u8     g_Player_DisableControl          = false;
-u8     D_800AF216                       = 0; // Left Y analog stick value.
+u8     g_Player_MoveStickMag            = 0; // Q1.7
 s8     g_Player_RockDrill_AttackType    = RockDrillAttackType_Center;
-u32    D_800AF218                       = 0;
+u32    D_800AF218                       = 0; // @unused
 s32    g_Player_TargetNpcIdx            = NO_VALUE;
 
 /** Related to player. */
@@ -362,13 +362,13 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
             switch (model->anim.status)
             {
                 case ANIM_STATUS(HarryAnim_WalkForward, true):
-                    if (g_Controller0->sticks_20.sticks_0.leftY < -63)
+                    if (g_Controller0->rawSticks.sticks_0.leftY <= -STICK_DEADZONE)
                     {
-                        duration = (ABS(g_Controller0->sticks_20.sticks_0.leftY + 64) * Q12(0.65f) / 64) * 16 + Q12(12.0f);
+                        duration = ((ABS(g_Controller0->rawSticks.sticks_0.leftY + STICK_DEADZONE) * Q12(0.65f) / STICK_DEADZONE) * 16) + Q12(12.0f);
                     }
-                    else if (D_800AF216 != 0)
+                    else if (g_Player_MoveStickMag != 0)
                     {
-                        duration = ((ABS(D_800AF216 - 64) * Q12(0.65f) / 64) * 16) + Q12(12.0f);
+                        duration = ((ABS(g_Player_MoveStickMag - STICK_DEADZONE) * Q12(0.65f) / STICK_DEADZONE) * 16) + Q12(12.0f);
                     }
                     else
                     {
@@ -377,21 +377,21 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     break;
 
                 case ANIM_STATUS(HarryAnim_RunForward, true):
-                    if (g_Controller0->sticks_20.sticks_0.leftY < -63)
+                    if (g_Controller0->rawSticks.sticks_0.leftY <= -STICK_DEADZONE)
                     {
                         if ((model->anim.keyframeIdx >= 40 && model->anim.keyframeIdx < 46) ||
                             (model->anim.keyframeIdx >= 30 && model->anim.keyframeIdx < 36))
                         {
-                            duration = ABS(g_Controller0->sticks_20.sticks_0.leftY + 64) * Q12(0.25f) + Q12(16.0f);
+                            duration = (ABS(g_Controller0->rawSticks.sticks_0.leftY + STICK_DEADZONE) * Q12(0.25f)) + Q12(16.0f);
                         }
                         else
                         {
                             duration = Q12(32.0f);
                         }
                     }
-                    else if (D_800AF216 != 0)
+                    else if (g_Player_MoveStickMag != 0)
                     {
-                        duration = ABS(D_800AF216 - 64) * Q12(0.25f) + Q12(16.0f);
+                        duration = (ABS(g_Player_MoveStickMag - STICK_DEADZONE) * Q12(0.25f)) + Q12(16.0f);
                     }
                     else
                     {
@@ -400,13 +400,13 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     break;
 
                 case ANIM_STATUS(HarryAnim_WalkBackward, true):
-                    if (g_Controller0->sticks_20.sticks_0.leftY >= 64)
+                    if (g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE)
                     {
-                        duration = ((ABS(g_Controller0->sticks_20.sticks_0.leftY - 64) * Q12(0.4f) / 64) * Q12(1.0f) / 200) + Q12(15.36f);
+                        duration = ((ABS(g_Controller0->rawSticks.sticks_0.leftY - STICK_DEADZONE) * Q12(0.4f) / STICK_DEADZONE) * Q12(1.0f) / 200) + Q12(15.36f);
                     }
-                    else if (D_800AF216 != 0)
+                    else if (g_Player_MoveStickMag != 0)
                     {
-                        duration = ((ABS(D_800AF216 - 64) * Q12(0.4f) / 64) * Q12(1.0f) / 200) + Q12(15.36f);
+                        duration = ((ABS(g_Player_MoveStickMag - STICK_DEADZONE) * Q12(0.4f) / STICK_DEADZONE) * Q12(1.0f) / 200) + Q12(15.36f);
                     }
                     else
                     {
@@ -432,36 +432,36 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
 
 const s_AnimInfo* const D_800297B8 = HARRY_BASE_ANIM_INFOS;
 
-void func_80070B84(s_SubCharacter* player, q19_12 moveDistMax, q19_12 arg2, s32 keyframeIdx) // 0x80070B84
+void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveSpeed, s32 keyframeIdx) // 0x80070B84
 {
     q3_12  unkMoveDist;
     s32    stickY;
     q3_12* moveDist;
 
-    if (!D_800AF216)
+    if (g_Player_MoveStickMag == 0)
     {
-        stickY = ABS(g_Controller0->sticks_20.sticks_0.leftY);
+        stickY = ABS(g_Controller0->rawSticks.sticks_0.leftY);
     }
     else
     {
-        stickY = D_800AF216;
+        stickY = g_Player_MoveStickMag;
     }
 
-    moveDistMax = moveDistMax + ((arg2 - moveDistMax) * (stickY - 64) / 64);
+    baseMoveSpeed = baseMoveSpeed + ((topMoveSpeed - baseMoveSpeed) * (stickY - STICK_DEADZONE) / STICK_DEADZONE);
 
     // @hack Wrapping in loop required for match.
     do
     {
-        if (moveDistMax < playerProps.moveSpeed)
+        if (baseMoveSpeed < playerProps.moveSpeed)
         {
-            unkMoveDist                  = playerProps.moveSpeed - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+            unkMoveDist           = playerProps.moveSpeed - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
             playerProps.moveSpeed = unkMoveDist;
-            if (unkMoveDist < moveDistMax)
+            if (unkMoveDist < baseMoveSpeed)
             {
-                playerProps.moveSpeed = moveDistMax;
+                playerProps.moveSpeed = baseMoveSpeed;
             }
         }
-        else if (playerProps.moveSpeed < moveDistMax)
+        else if (playerProps.moveSpeed < baseMoveSpeed)
         {
             moveDist = &playerProps.moveSpeed;
             if (player->model.anim.keyframeIdx >= keyframeIdx)
@@ -469,7 +469,7 @@ void func_80070B84(s_SubCharacter* player, q19_12 moveDistMax, q19_12 arg2, s32 
                 playerProps.moveSpeed = *moveDist + TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
             }
 
-            playerProps.moveSpeed = CLAMP(*moveDist, Q12(0.0f), moveDistMax);
+            playerProps.moveSpeed = CLAMP(*moveDist, Q12(0.0f), baseMoveSpeed);
         }
     }
     while (false); // @hack Required for match.
@@ -485,8 +485,8 @@ void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_
         if ((player->model.anim.keyframeIdx >= 40 && player->model.anim.keyframeIdx < 46) ||
             (player->model.anim.keyframeIdx >= 30 && player->model.anim.keyframeIdx < 36))
         {
-            stickY      = D_800AF216 ? D_800AF216 : ABS(g_Controller0->sticks_20.sticks_0.leftY);
-            moveDistMax = arg1 + ((moveDistMax - arg1) * (stickY - 64) / 64);
+            stickY      = g_Player_MoveStickMag ? g_Player_MoveStickMag : ABS(g_Controller0->rawSticks.sticks_0.leftY);
+            moveDistMax = arg1 + ((moveDistMax - arg1) * (stickY - STICK_DEADZONE) / STICK_DEADZONE);
         }
     }
     while (false); // @hack Required for match.
@@ -4948,15 +4948,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             // Walking.
             else
             {
-                if (g_Controller0->sticks_20.sticks_0.leftY <= -STICK_THRESHOLD)
+                if (g_Controller0->rawSticks.sticks_0.leftY <= -STICK_DEADZONE)
                 {
-                    D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
+                    g_Player_MoveStickMag = ABS(g_Controller0->rawSticks.sticks_0.leftY);
                     func_80070B84(player, Q12(0.75f), Q12(1.4f), 2);
                 }
                 // Stopped walking.
                 else
                 {
-                    if (D_800AF216 != 0)
+                    if (g_Player_MoveStickMag != 0)
                     {
                         func_80070B84(player, Q12(0.75f), Q12(1.4f), 2);
                     }
@@ -4981,7 +4981,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                     if (g_Controller0->heldBtnFlags & ControllerFlag_LStickUp)
                     {
-                        D_800AF216 = 0;
+                        g_Player_MoveStickMag = 0;
                     }
                 }
             }
@@ -5096,9 +5096,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         case PlayerLowerBodyState_RunForward:
             player->properties.player.exhaustionTimer += g_DeltaTime;
 
-            if (g_Controller0->sticks_20.sticks_0.leftY <= -STICK_THRESHOLD)
+            if (g_Controller0->rawSticks.sticks_0.leftY <= -STICK_DEADZONE)
             {
-                D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
+                g_Player_MoveStickMag = ABS(g_Controller0->rawSticks.sticks_0.leftY);
 
                 moveOffsetX = GET_MOVE_SPEED(speedZoneType);
 
@@ -5118,7 +5118,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             // Stopped running.
             else
             {
-                if (D_800AF216 != 0)
+                if (g_Player_MoveStickMag != 0)
                 {
                     moveOffsetX = GET_MOVE_SPEED(speedZoneType);
 
@@ -5154,7 +5154,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 if (g_Controller0->heldBtnFlags & ControllerFlag_LStickUp)
                 {
-                    D_800AF216 = 0;
+                    g_Player_MoveStickMag = 0;
                 }
             }
 
@@ -5361,15 +5361,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
             // Walking backward.
-            else if (g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD)
+            else if (g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE)
             {
-                D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
+                g_Player_MoveStickMag = ABS(g_Controller0->rawSticks.sticks_0.leftY);
                 func_80070B84(player, Q12(0.75f), Q12(1.15f), 2);
             }
             // Stop walking backward.
             else
             {
-                if (D_800AF216 != 0)
+                if (g_Player_MoveStickMag != 0)
                 {
                     func_80070B84(player, Q12(0.75f), Q12(1.15f), 2);
                 }
@@ -5393,7 +5393,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 if (g_Controller0->heldBtnFlags & ControllerFlag_LStickDown)
                 {
-                    D_800AF216 = 0;
+                    g_Player_MoveStickMag = 0;
                 }
             }
 
@@ -8493,13 +8493,13 @@ void Player_Controller(void) // 0x8007F32C
     g_Player_IsSteppingLeftTap  = (g_Player_IsSteppingLeftTap * 2) & 0x3F;
     g_Player_IsSteppingRightTap = (g_Player_IsSteppingRightTap * 2) & 0x3F;
 
-    if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
-        g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
+    if (g_Controller0->rawSticks.sticks_0.leftY < -STICK_DEADZONE || g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE ||
+        g_Controller0->rawSticks.sticks_0.leftX < -STICK_DEADZONE || g_Controller0->rawSticks.sticks_0.leftX >= STICK_DEADZONE)
     {
-        g_Player_IsTurningLeft    = g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD ? ABS(g_Controller0->sticks_20.sticks_0.leftX + STICK_THRESHOLD) : 0;
-        g_Player_IsTurningRight   = g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD ? (g_Controller0->sticks_20.sticks_0.leftX - (STICK_THRESHOLD - 1)) : 0;
-        g_Player_IsMovingForward |= g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD;
-        g_Player_IsMovingBackward = g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD;
+        g_Player_IsTurningLeft    = g_Controller0->rawSticks.sticks_0.leftX < -STICK_DEADZONE ? ABS(g_Controller0->rawSticks.sticks_0.leftX + STICK_DEADZONE) : 0;
+        g_Player_IsTurningRight   = g_Controller0->rawSticks.sticks_0.leftX >= STICK_DEADZONE ? (g_Controller0->rawSticks.sticks_0.leftX - (STICK_DEADZONE - 1)) : 0;
+        g_Player_IsMovingForward |= g_Controller0->rawSticks.sticks_0.leftY < -STICK_DEADZONE;
+        g_Player_IsMovingBackward = g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE;
         g_Player_HasMoveInput     = g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.stepLeft |
                                                                       (ControllerFlag_LStickUp2    |
                                                                        ControllerFlag_LStickRight2 |

@@ -50,7 +50,7 @@ types:
       - id: terminal_type
         type: b4
 
-      - id: digital_buttons
+      - id: button_flags
         type: u2
 
       - id: right_x

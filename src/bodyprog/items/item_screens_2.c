@@ -1835,10 +1835,10 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
 
 void Inventory_DirectionalInputSet(void) // 0x8004F5DC
 {
-    if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD ||
-        g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
-        g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD ||
-        g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
+    if (g_Controller0->rawSticks.sticks_0.leftY < -STICK_DEADZONE ||
+        g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE ||
+        g_Controller0->rawSticks.sticks_0.leftX < -STICK_DEADZONE ||
+        g_Controller0->rawSticks.sticks_0.leftX >= STICK_DEADZONE)
     {
         // Up.
         g_Inventory_IsUpClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp2;

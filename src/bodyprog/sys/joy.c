@@ -134,21 +134,23 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
 
 void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x80034670
 {
-    s32 val;
+    s32 dPadButtonFlags; // Used as analog value at first.
     s32 axisIdx;
     s32 processedInputFlags;
     s32 normalizedAnalogData;
     s32 xorShiftedRawAnalog;
-    s32 btnsHeld;
+    s32 heldButtonFlags;
     s32 signedRawAnalog;
-    s32 negativeDirBitIdx;
-    s32 positiveDirBitIdx;
+    s32 negDirBitIdx;
+    s32 posDirBitIdx;
 
-    btnsHeld = cont->heldBtnFlags;
+    heldButtonFlags = cont->heldBtnFlags;
 
     if (arg1)
     {
-        signedRawAnalog     = *(u32*)&cont->analogController.rightX ^ 0x80808080;
+        // Convert unsigned range to signed range.
+        signedRawAnalog = *(u32*)&cont->analogController.rightX ^ 0x80808080;
+
         xorShiftedRawAnalog = signedRawAnalog;
 
         for (normalizedAnalogData = 0, axisIdx = 3;
@@ -156,24 +158,24 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
              axisIdx--)
         {
             normalizedAnalogData <<= 8;
-            val                    = xorShiftedRawAnalog >> 24;
+            dPadButtonFlags        = xorShiftedRawAnalog >> 24;
             xorShiftedRawAnalog  <<= 8;
 
-            if (val < -STICK_THRESHOLD)
+            if (dPadButtonFlags < -STICK_DEADZONE)
             {
-                normalizedAnalogData |= (val + STICK_THRESHOLD) & 0xFF;
-                negativeDirBitIdx     = 23 - (axisIdx & (1 << 0));
-                btnsHeld             |= 1 << (negativeDirBitIdx - (axisIdx * 2));
+                normalizedAnalogData |= (dPadButtonFlags + STICK_DEADZONE) & 0xFF;
+                negDirBitIdx         = 23 - (axisIdx & (1 << 0));
+                heldButtonFlags      |= 1 << (negDirBitIdx - (axisIdx * 2));
             }
-            else if (val >= STICK_THRESHOLD)
+            else if (dPadButtonFlags >= STICK_DEADZONE)
             {
-                normalizedAnalogData |= (val - (STICK_THRESHOLD - 1)) & 0xFF;
-                positiveDirBitIdx     = (axisIdx & 0x1) + 21;
-                btnsHeld             |= 1 << (positiveDirBitIdx - ((axisIdx >> 1) * 4));
+                normalizedAnalogData |= (dPadButtonFlags - (STICK_DEADZONE - 1)) & 0xFF;
+                posDirBitIdx          = (axisIdx & 0x1) + 21;
+                heldButtonFlags      |= 1 << (posDirBitIdx - ((axisIdx >> 1) * 4));
             }
         }
 
-        cont->heldBtnFlags = btnsHeld;
+        cont->heldBtnFlags = heldButtonFlags;
     }
     else
     {
@@ -182,45 +184,45 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
     }
 
     processedInputFlags       = normalizedAnalogData;
-    cont->sticks_20.rawData_0 = signedRawAnalog;
+    cont->rawSticks.rawData_0 = signedRawAnalog;
 
-    // TODO: Demagic hex values. Analog stick or button flags?
+    // TODO: Demagic remaining hex values.
     if (cont == g_Controller0)
     {
         if (!(processedInputFlags & 0xFF000000))
         {
-            val = btnsHeld & 0x50;
-            if (val == 0x40)
+            dPadButtonFlags = heldButtonFlags & (ControllerFlag_DpadUp | ControllerFlag_DpadDown);
+            if (dPadButtonFlags == ControllerFlag_DpadDown)
             {
                 normalizedAnalogData = processedInputFlags | 0x2D000000;
             }
-            else if (val == 0x10)
+            else if (dPadButtonFlags == ControllerFlag_DpadUp)
             {
                 normalizedAnalogData = processedInputFlags | 0xD3000000;
             }
         }
-        if (!(normalizedAnalogData & 0xFF0000))
+        if (!(normalizedAnalogData & ControllerFlag_Sticks))
         {
-            val = btnsHeld & 0xA0;
-            if (val == 0x20)
+            dPadButtonFlags = heldButtonFlags & (ControllerFlag_DpadRight | ControllerFlag_DpadLeft);
+            if (dPadButtonFlags == ControllerFlag_DpadRight)
             {
                 normalizedAnalogData |= 0x2D0000;
             }
-            else if (val == 0x80)
+            else if (dPadButtonFlags == ControllerFlag_DpadLeft)
             {
                 normalizedAnalogData |= 0xD30000;
             }
         }
         if (!(processedInputFlags & 0xFF000000))
         {
-            val = btnsHeld & 0x50;
-            if (val == 0x40)
+            dPadButtonFlags = heldButtonFlags & (ControllerFlag_DpadUp | ControllerFlag_DpadDown);
+            if (dPadButtonFlags == ControllerFlag_DpadDown)
             {
                 processedInputFlags |= 0x20000000;
             }
-            else if (val == 0x10)
+            else if (dPadButtonFlags == ControllerFlag_DpadUp)
             {
-                if (!(btnsHeld & g_GameWorkPtr->config.controllerConfig.run))
+                if (!(heldButtonFlags & g_GameWorkPtr->config.controllerConfig.run))
                 {
                     processedInputFlags |= 0xE0000000;
                 }
@@ -230,21 +232,21 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
                 }
             }
         }
-        if (!(processedInputFlags & 0xFF0000))
+        if (!(processedInputFlags & ControllerFlag_Sticks))
         {
-            val = btnsHeld & 0xA0;
-            if (val == 0x20)
+            dPadButtonFlags = heldButtonFlags & (ControllerFlag_DpadRight | ControllerFlag_DpadLeft);
+            if (dPadButtonFlags == ControllerFlag_DpadRight)
             {
-                processedInputFlags |= 0x200000;
+                processedInputFlags |= ControllerFlag_RStickRight;
             }
-            else if (val == 0x80)
+            else if (dPadButtonFlags == ControllerFlag_DpadLeft)
             {
-                processedInputFlags |= 0xE00000;
+                processedInputFlags |= 0xE00000; // Masks right, down, left???
             }
         }
     }
 
-    cont->sticks_24.rawData_0 = normalizedAnalogData;
+    cont->normalizedSticks.rawData_0 = normalizedAnalogData;
     cont->field_28 = processedInputFlags;
 }
 
