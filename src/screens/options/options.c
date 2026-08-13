@@ -1770,17 +1770,17 @@ void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
         { { 65, 84 }, { 55, 74 }, { 55, 94 } }
     };
 
-    s32 btnInput;
+    s32 heldButFlags;
     s32 i;
     s32 dir;
 
     // Determine UI movement direction.
-    btnInput = g_Controller0->buttonFlags.held;
-    if (btnInput & ControllerFlag_LStickHighLeft)
+    heldButFlags = g_Controller0->buttonFlags.held;
+    if (heldButFlags & ControllerFlag_LStickHighLeft)
     {
         dir = 1;
     }
-    else if (btnInput & ControllerFlag_LStickHighRight)
+    else if (heldButFlags & ControllerFlag_LStickHighRight)
     {
         dir = 2;
     }
@@ -2177,9 +2177,9 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
 
     // Play cursor navigation SFX.
     if (g_Controller0->buttonFlags.pulsedGui & (ControllerFlag_LStickHighUp    |
-                                           ControllerFlag_LStickHighRight |
-                                           ControllerFlag_LStickHighDown  |
-                                           ControllerFlag_LStickHighLeft))
+                                                ControllerFlag_LStickHighRight |
+                                                ControllerFlag_LStickHighDown  |
+                                                ControllerFlag_LStickHighLeft))
     {
         SD_Call(Sfx_MenuMove);
     }
@@ -2191,8 +2191,8 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
 s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
 {
     u16* bindings;
-    u16  boundBtnFlag;
-    u16  btnFlag;
+    u16  boundButFlag;
+    u16  butFlag;
     s32  curActionIdx;
     s32  boundActionIdx;
     s32  i;
@@ -2204,34 +2204,33 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
     // Run through all controller flags, excluding stick axes.
     for (i = 0; i < 16; i++)
     {
-        btnFlag = 1 << i;
-
-        if ((btnFlag & (ControllerFlag_DpadUp    |
+        butFlag = 1 << i;
+        if ((butFlag & (ControllerFlag_DpadUp    |
                         ControllerFlag_DpadRight |
                         ControllerFlag_DpadDown  |
                         ControllerFlag_DpadLeft)) ||
-            !(btnFlag & g_Controller0->buttonFlags.clicked))
+            !(butFlag & g_Controller0->buttonFlags.clicked))
         {
             continue;
         }
 
-        boundBtnFlag = bindings[actionIdx];
+        boundButFlag = bindings[actionIdx];
 
         // Remove binding.
-        if (boundBtnFlag & btnFlag)
+        if (boundButFlag & butFlag)
         {
             if ((actionIdx <  InputAction_Skip   ||
                  actionIdx == InputAction_Action ||
                  actionIdx == InputAction_Aim    ||
                  actionIdx == InputAction_Item) &&
-                !(bindings[actionIdx] & ~btnFlag))
+                !(bindings[actionIdx] & ~butFlag))
             {
                 boundActionIdx = actionIdx;
                 SD_Call(Sfx_MenuError);
             }
             else
             {
-                bindings[actionIdx] &= ~btnFlag;
+                bindings[actionIdx] &= ~butFlag;
                 SD_Call(Sfx_MenuConfirm);
             }
         }
@@ -2243,29 +2242,29 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
                 case 0:
                 case 1:
                     curActionIdx = actionIdx == 0;
-                    if (bindings[curActionIdx] & btnFlag)
+                    if (bindings[curActionIdx] & butFlag)
                     {
-                        if (!(bindings[curActionIdx] & ~btnFlag))
+                        if (!(bindings[curActionIdx] & ~butFlag))
                         {
                             boundActionIdx = curActionIdx;
                             SD_Call(Sfx_MenuError);
                         }
                         else
                         {
-                            bindings[curActionIdx] &= ~btnFlag;
-                            bindings[actionIdx]    |= btnFlag;
+                            bindings[curActionIdx] &= ~butFlag;
+                            bindings[actionIdx]    |= butFlag;
                             SD_Call(Sfx_MenuConfirm);
                         }
                     }
                     else
                     {
-                        bindings[actionIdx] = boundBtnFlag | btnFlag;
+                        bindings[actionIdx] = boundButFlag | butFlag;
                         SD_Call(Sfx_MenuConfirm);
                     }
                     break;
 
                 case 2:
-                    bindings[InputAction_Skip] |= btnFlag;
+                    bindings[InputAction_Skip] |= butFlag;
                     SD_Call(Sfx_MenuConfirm);
                     break;
 
@@ -2273,7 +2272,7 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
                     curActionIdx = NO_VALUE;
                     for (j = InputAction_Action; j < InputAction_Count; j++)
                     {
-                        if (bindings[j] & btnFlag)
+                        if (bindings[j] & butFlag)
                         {
                             curActionIdx = j;
                             break;
@@ -2286,21 +2285,21 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
                              curActionIdx == InputAction_Action ||
                              curActionIdx == InputAction_Aim    ||
                              curActionIdx == InputAction_Item) &&
-                            !(bindings[curActionIdx] & ~btnFlag))
+                            !(bindings[curActionIdx] & ~butFlag))
                         {
                             SD_Call(Sfx_MenuError);
                             boundActionIdx = curActionIdx;
                         }
                         else
                         {
-                            bindings[curActionIdx] &= ~btnFlag;
-                            bindings[actionIdx]    |= btnFlag;
+                            bindings[curActionIdx] &= ~butFlag;
+                            bindings[actionIdx]    |= butFlag;
                             SD_Call(Sfx_MenuConfirm);
                         }
                     }
                     else
                     {
-                        bindings[actionIdx] |= btnFlag;
+                        bindings[actionIdx] |= butFlag;
                         SD_Call(Sfx_MenuConfirm);
                     }
                     break;

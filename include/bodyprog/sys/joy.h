@@ -15,7 +15,7 @@
 #define CONTROLLER_COUNT_MAX 2
 #define STICK_DEADZONE       FP_STICK(0.5f)
 
-/** @brief PSX controller input flags. TODO: Need more masks for analog sticks. */
+/** @brief PSX controller input flags. */
 typedef enum _ControllerFlags
 {
     ControllerFlag_None            = 0,
@@ -52,12 +52,17 @@ typedef enum _ControllerFlags
     ControllerFlag_RStickHighDown  = 1 << 30,
     ControllerFlag_RStickHighLeft  = 1 << 31,
 
-    ControllerFlag_LowSticks  = ControllerFlag_LStickLowUp | ControllerFlag_LStickLowRight | ControllerFlag_LStickLowDown | ControllerFlag_LStickLowLeft |
-                                ControllerFlag_RStickLowUp | ControllerFlag_RStickLowRight | ControllerFlag_RStickLowDown | ControllerFlag_RStickLowLeft,
-    ControllerFlag_HighSticks = ControllerFlag_LStickHighUp | ControllerFlag_LStickHighRight | ControllerFlag_LStickHighDown | ControllerFlag_LStickHighLeft |
-                                ControllerFlag_RStickHighUp | ControllerFlag_RStickHighRight | ControllerFlag_RStickHighDown | ControllerFlag_RStickHighLeft,
+    ControllerFlag_FaceButtons = ControllerFlag_Select | ControllerFlag_L3 | ControllerFlag_R3 | ControllerFlag_Start |
+                                 ControllerFlag_DpadUp | ControllerFlag_DpadRight | ControllerFlag_DpadDown | ControllerFlag_DpadLeft |
+                                 ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1 |
+                                 ControllerFlag_Triangle | ControllerFlag_Circle | ControllerFlag_Cross | ControllerFlag_Square,
+    ControllerFlag_LowSticks   = ControllerFlag_LStickLowUp | ControllerFlag_LStickLowRight | ControllerFlag_LStickLowDown | ControllerFlag_LStickLowLeft |
+                                 ControllerFlag_RStickLowUp | ControllerFlag_RStickLowRight | ControllerFlag_RStickLowDown | ControllerFlag_RStickLowLeft,
+    ControllerFlag_HighSticks  = ControllerFlag_LStickHighUp | ControllerFlag_LStickHighRight | ControllerFlag_LStickHighDown | ControllerFlag_LStickHighLeft |
+                                 ControllerFlag_RStickHighUp | ControllerFlag_RStickHighRight | ControllerFlag_RStickHighDown | ControllerFlag_RStickHighLeft,
 } e_ControllerFlags;
 
+/** @brief PSX controller analog stick states. */
 typedef union
 {
     /* 0x0 */ u32 rawData_0;
@@ -70,16 +75,17 @@ typedef union
     /* 0x4 */ } sticks_0; // Normalized range: `[-128, 127]`.
 } s_AnalogSticks;
 
+/** @brief Analog PSX controller state. */
 typedef struct _AnalogController
 {
-    u8  status;
-    u8  receivedBytes : 4; /** Number of bytes received / 2. */
-    u8  terminalType  : 4; /** `e_PadTerminalType` */
-    u16 digitalButtons;
-    u8  rightX;
-    u8  rightY;
-    u8  leftX;
-    u8  leftY;
+    /* 0x0 */ u8  status;
+    /* 0x1 */ u8  receivedBytes : 4; /** Number of bytes received / 2. */
+    /* 0x2 */ u8  terminalType  : 4; /** `e_PadTerminalType` */
+    /* 0x3 */ u16 buttonFlags;       /** `e_ControllerFlags` */
+    /* 0x5 */ u8  rightX;
+    /* 0x6 */ u8  rightY;
+    /* 0x7 */ u8  leftX;
+    /* 0x8 */ u8  leftY;
 } s_AnalogController;
 STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
 

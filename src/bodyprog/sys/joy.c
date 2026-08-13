@@ -44,14 +44,16 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
 
     s_ControllerData* cont;
     s32               i;
-    s32               prevBtnsHeld;
+    s32               prevHeldButFlags;
     s32               pulseTicks;
-    s32               btnsPulsed;
+    s32               pulsedButFlags;
 
     // Update controller button flags.
-    for (i = CONTROLLER_COUNT, cont = g_Controller0; i > 0; i--, cont++)
+    for (i = CONTROLLER_COUNT, cont = g_Controller0;
+         i > 0;
+         i--, cont++)
     {
-        prevBtnsHeld = cont->buttonFlags.held;
+        prevHeldButFlags = cont->buttonFlags.held;
 
         // Update held button flags.
         if (cont->analogController.status == 0xFF)
@@ -60,15 +62,19 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
         }
         else
         {
-            cont->buttonFlags.held = ~cont->analogController.digitalButtons & 0xFFFF;
+            cont->buttonFlags.held = ~cont->analogController.buttonFlags & ControllerFlag_FaceButtons;
         }
 
         // TODO: Demagic hex values.
         ControllerData_AnalogToDigital(cont, (*(u16*)&cont->analogController.status & 0x5300) == 0x5300);
 
-        // Directional held flag sanitation? TODO: Find out what it's doing.
-        cont->buttonFlags.held = cont->buttonFlags.held | (((cont->buttonFlags.held << 20) | (cont->buttonFlags.held << 8)) &
-                                                (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighRight | ControllerFlag_LStickHighDown | ControllerFlag_LStickHighLeft));
+        // Simulate high-threshold left stick inputs with D-pad and low-threshold left stick inputs.
+        // `<< 20` handles D-pad buttons, `<< 8` handles low-threshold left stick.
+        cont->buttonFlags.held |= ((cont->buttonFlags.held << 20) | (cont->buttonFlags.held << 8)) &
+                                  (ControllerFlag_LStickHighUp    |
+                                   ControllerFlag_LStickHighRight |
+                                   ControllerFlag_LStickHighDown  |
+                                   ControllerFlag_LStickHighLeft);
 
         // Clear up/down held flags if concurrent.
         if ((cont->buttonFlags.held & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown)) == (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown))
@@ -83,12 +89,12 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
         }
 
         // Update clicked and released button flags.
-        cont->buttonFlags.clicked  = ~prevBtnsHeld & cont->buttonFlags.held;
-        cont->buttonFlags.released =  prevBtnsHeld & ~cont->buttonFlags.held;
+        cont->buttonFlags.clicked  = ~prevHeldButFlags & cont->buttonFlags.held;
+        cont->buttonFlags.released =  prevHeldButFlags & ~cont->buttonFlags.held;
 
         // Update pulse ticks.
         pulseTicks = cont->pulseTicks;
-        if (cont->buttonFlags.held != prevBtnsHeld)
+        if (cont->buttonFlags.held != prevHeldButFlags)
         {
             pulseTicks = 0;
         }
@@ -101,19 +107,19 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
         if (pulseTicks >= PULSE_INITIAL_INTERVAL_TICKS)
         {
             cont->buttonFlags.pulsed = cont->buttonFlags.held;
-            pulseTicks          = PULSE_INITIAL_INTERVAL_TICKS - PULSE_INTERVAL_TICKS;
+            pulseTicks               = PULSE_INITIAL_INTERVAL_TICKS - PULSE_INTERVAL_TICKS;
         }
         else
         {
             cont->buttonFlags.pulsed = cont->buttonFlags.clicked;
         }
 
-        btnsPulsed             = cont->buttonFlags.pulsed;
-        cont->pulseTicks     = pulseTicks;
-        cont->buttonFlags.pulsedGui = btnsPulsed;
+        pulsedButFlags              = cont->buttonFlags.pulsed;
+        cont->pulseTicks            = pulseTicks;
+        cont->buttonFlags.pulsedGui = pulsedButFlags;
 
         // Clear left/right pulse flags if concurrent.
-        if ((btnsPulsed & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft)) == (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
+        if ((pulsedButFlags & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft)) == (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
         {
             cont->buttonFlags.pulsedGui &= ~(ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft);
         }
@@ -134,17 +140,17 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
 
 void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x80034670
 {
-    s32 dpadButtonFlags; // Used as analog value at first.
+    s32 dpadButFlags; // Used as analog value at first.
     s32 axisIdx;
     s32 processedInputFlags;
     s32 normalizedAnalogData;
     s32 xorShiftedRawAnalog;
-    s32 heldButtonFlags;
+    s32 heldButFlags;
     s32 signedRawAnalog;
     s32 negDirBitIdx;
     s32 posDirBitIdx;
 
-    heldButtonFlags = cont->buttonFlags.held;
+    heldButFlags = cont->buttonFlags.held;
 
     if (arg1)
     {
@@ -158,24 +164,24 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
              axisIdx--)
         {
             normalizedAnalogData <<= 8;
-            dpadButtonFlags        = xorShiftedRawAnalog >> 24;
+            dpadButFlags           = xorShiftedRawAnalog >> 24;
             xorShiftedRawAnalog  <<= 8;
 
-            if (dpadButtonFlags < -STICK_DEADZONE)
+            if (dpadButFlags < -STICK_DEADZONE)
             {
-                normalizedAnalogData |= (dpadButtonFlags + STICK_DEADZONE) & 0xFF;
+                normalizedAnalogData |= (dpadButFlags + STICK_DEADZONE) & 0xFF;
                 negDirBitIdx          = 23 - (axisIdx & (1 << 0));
-                heldButtonFlags      |= 1 << (negDirBitIdx - (axisIdx * 2));
+                heldButFlags         |= 1 << (negDirBitIdx - (axisIdx * 2));
             }
-            else if (dpadButtonFlags >= STICK_DEADZONE)
+            else if (dpadButFlags >= STICK_DEADZONE)
             {
-                normalizedAnalogData |= (dpadButtonFlags - (STICK_DEADZONE - 1)) & 0xFF;
+                normalizedAnalogData |= (dpadButFlags - (STICK_DEADZONE - 1)) & 0xFF;
                 posDirBitIdx          = (axisIdx & 0x1) + 21;
-                heldButtonFlags      |= 1 << (posDirBitIdx - ((axisIdx >> 1) * 4));
+                heldButFlags         |= 1 << (posDirBitIdx - ((axisIdx >> 1) * 4));
             }
         }
 
-        cont->buttonFlags.held = heldButtonFlags;
+        cont->buttonFlags.held = heldButFlags;
     }
     else
     {
@@ -191,12 +197,12 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
     {
         if (!(processedInputFlags & ControllerFlag_HighSticks))
         {
-            dpadButtonFlags = heldButtonFlags & (ControllerFlag_DpadUp | ControllerFlag_DpadDown);
-            if (dpadButtonFlags == ControllerFlag_DpadDown)
+            dpadButFlags = heldButFlags & (ControllerFlag_DpadUp | ControllerFlag_DpadDown);
+            if (dpadButFlags == ControllerFlag_DpadDown)
             {
                 normalizedAnalogData = processedInputFlags | 0x2D000000;
             }
-            else if (dpadButtonFlags == ControllerFlag_DpadUp)
+            else if (dpadButFlags == ControllerFlag_DpadUp)
             {
                 normalizedAnalogData = processedInputFlags | 0xD3000000;
             }
@@ -204,12 +210,12 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
 
         if (!(normalizedAnalogData & ControllerFlag_LowSticks))
         {
-            dpadButtonFlags = heldButtonFlags & (ControllerFlag_DpadRight | ControllerFlag_DpadLeft);
-            if (dpadButtonFlags == ControllerFlag_DpadRight)
+            dpadButFlags = heldButFlags & (ControllerFlag_DpadRight | ControllerFlag_DpadLeft);
+            if (dpadButFlags == ControllerFlag_DpadRight)
             {
                 normalizedAnalogData |= 0x2D0000;
             }
-            else if (dpadButtonFlags == ControllerFlag_DpadLeft)
+            else if (dpadButFlags == ControllerFlag_DpadLeft)
             {
                 normalizedAnalogData |= 0xD30000;
             }
@@ -217,14 +223,14 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
 
         if (!(processedInputFlags & ControllerFlag_HighSticks))
         {
-            dpadButtonFlags = heldButtonFlags & (ControllerFlag_DpadUp | ControllerFlag_DpadDown);
-            if (dpadButtonFlags == ControllerFlag_DpadDown)
+            dpadButFlags = heldButFlags & (ControllerFlag_DpadUp | ControllerFlag_DpadDown);
+            if (dpadButFlags == ControllerFlag_DpadDown)
             {
                 processedInputFlags |= 0x20000000;
             }
-            else if (dpadButtonFlags == ControllerFlag_DpadUp)
+            else if (dpadButFlags == ControllerFlag_DpadUp)
             {
-                if (!(heldButtonFlags & g_GameWorkPtr->config.controllerConfig.run))
+                if (!(heldButFlags & g_GameWorkPtr->config.controllerConfig.run))
                 {
                     processedInputFlags |= 0xE0000000;
                 }
@@ -237,12 +243,12 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
 
         if (!(processedInputFlags & ControllerFlag_LowSticks))
         {
-            dpadButtonFlags = heldButtonFlags & (ControllerFlag_DpadRight | ControllerFlag_DpadLeft);
-            if (dpadButtonFlags == ControllerFlag_DpadRight)
+            dpadButFlags = heldButFlags & (ControllerFlag_DpadRight | ControllerFlag_DpadLeft);
+            if (dpadButFlags == ControllerFlag_DpadRight)
             {
                 processedInputFlags |= 0x200000;
             }
-            else if (dpadButtonFlags == ControllerFlag_DpadLeft)
+            else if (dpadButFlags == ControllerFlag_DpadLeft)
             {
                 processedInputFlags |= 0xE00000;
             }
@@ -263,12 +269,12 @@ bool func_8003483C(u16* arg0) // 0x8003483C
     {
         *arg0 = 2;
     }
-    else if (g_Controller0->buttonFlags.clicked & 0xFFFF)
+    else if (g_Controller0->buttonFlags.clicked & ControllerFlag_FaceButtons)
     {
         *arg0 = 1;
     }
 
-    if (*(*arg0 + arg0) == 0xFFFF)
+    if (*(*arg0 + arg0) == ControllerFlag_FaceButtons)
     {
         *arg0 = 1;
         return true;

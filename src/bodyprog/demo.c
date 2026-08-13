@@ -380,15 +380,15 @@ bool Demo_Update(void) // 0x8008F5D8
 
 bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 {
-    u32 btns;
+    u32 butFlags;
 
     if (!(g_SysWork.sysFlags & SysFlag_DemoActive))
     {
         return false;
     }
 
-    btns = g_Controller0->analogController.digitalButtons;
-    if (btns != 0xFFFF)
+    butFlags = g_Controller0->analogController.buttonFlags;
+    if (butFlags != ControllerFlag_FaceButtons)
     {
         Demo_ExitDemo();
         return true;
@@ -403,7 +403,7 @@ bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
     }
 
     *(u16*)&g_Controller0->analogController.status = 0x7300;
-    g_Controller0->analogController.digitalButtons = btns;
+    g_Controller0->analogController.buttonFlags    = butFlags;
 
     // Convert unsigned range to signed range.
     *(u32*)&g_Controller0->analogController.rightX = 0x80808080;
