@@ -1763,7 +1763,7 @@ void func_800E1D50(void) // 0x800E1D50
     q19_12   rotZ;
 
     // Skip.
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -1931,7 +1931,7 @@ void func_800E219C(void) // 0x800E219C
 
     #define playerChara g_SysWork.playerWork.player
 
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 8)
     {
         SysWork_StateStepReset();
@@ -2217,7 +2217,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
     #define playerChara g_SysWork.playerWork.player
 
     // Skip.
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] == 7)
     {
         SysWork_StateStepSet(0, 8);
@@ -2361,7 +2361,7 @@ void func_800E3244(void) // 0x800E3244
     #define playerChara g_SysWork.playerWork.player
 
     // Skip.
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 27)
     {
         if (g_SysWork.sysStateSteps[0] != 20 &&
@@ -2668,7 +2668,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] < 63)
     {
         func_800E01F4();
@@ -3203,7 +3203,7 @@ void func_800E558C(void) // 0x800E558C
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip &&
+    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 6)
     {
         SysWork_StateStepSet(0, 6);

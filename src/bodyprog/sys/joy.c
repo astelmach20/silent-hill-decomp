@@ -51,44 +51,44 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
     // Update controller button flags.
     for (i = CONTROLLER_COUNT, cont = g_Controller0; i > 0; i--, cont++)
     {
-        prevBtnsHeld = cont->heldBtnFlags;
+        prevBtnsHeld = cont->buttonFlags.held;
 
         // Update held button flags.
         if (cont->analogController.status == 0xFF)
         {
-            cont->heldBtnFlags = ControllerFlag_None;
+            cont->buttonFlags.held = ControllerFlag_None;
         }
         else
         {
-            cont->heldBtnFlags = ~cont->analogController.digitalButtons & 0xFFFF;
+            cont->buttonFlags.held = ~cont->analogController.digitalButtons & 0xFFFF;
         }
 
         // TODO: Demagic hex values.
         ControllerData_AnalogToDigital(cont, (*(u16*)&cont->analogController.status & 0x5300) == 0x5300);
 
         // Directional held flag sanitation? TODO: Find out what it's doing.
-        cont->heldBtnFlags = cont->heldBtnFlags | (((cont->heldBtnFlags << 20) | (cont->heldBtnFlags << 8)) &
+        cont->buttonFlags.held = cont->buttonFlags.held | (((cont->buttonFlags.held << 20) | (cont->buttonFlags.held << 8)) &
                                                 (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft));
 
         // Clear up/down held flags if concurrent.
-        if ((cont->heldBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+        if ((cont->buttonFlags.held & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
         {
-            cont->heldBtnFlags &= ~(ControllerFlag_LStickUp | ControllerFlag_LStickDown);
+            cont->buttonFlags.held &= ~(ControllerFlag_LStickUp | ControllerFlag_LStickDown);
         }
 
         // Clear left/right held flags if concurrent.
-        if ((cont->heldBtnFlags & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
+        if ((cont->buttonFlags.held & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
         {
-            cont->heldBtnFlags = cont->heldBtnFlags & ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
+            cont->buttonFlags.held = cont->buttonFlags.held & ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
         }
 
         // Update clicked and released button flags.
-        cont->clickedBtnFlags  = ~prevBtnsHeld & cont->heldBtnFlags;
-        cont->releasedBtnFlags =  prevBtnsHeld & ~cont->heldBtnFlags;
+        cont->buttonFlags.clicked  = ~prevBtnsHeld & cont->buttonFlags.held;
+        cont->buttonFlags.released =  prevBtnsHeld & ~cont->buttonFlags.held;
 
         // Update pulse ticks.
         pulseTicks = cont->pulseTicks;
-        if (cont->heldBtnFlags != prevBtnsHeld)
+        if (cont->buttonFlags.held != prevBtnsHeld)
         {
             pulseTicks = 0;
         }
@@ -100,34 +100,34 @@ void Joy_ControllerDataUpdate(void) // 0x80034494
         // Update pulsed button flags.
         if (pulseTicks >= PULSE_INITIAL_INTERVAL_TICKS)
         {
-            cont->pulsedBtnFlags = cont->heldBtnFlags;
+            cont->buttonFlags.pulsed = cont->buttonFlags.held;
             pulseTicks          = PULSE_INITIAL_INTERVAL_TICKS - PULSE_INTERVAL_TICKS;
         }
         else
         {
-            cont->pulsedBtnFlags = cont->clickedBtnFlags;
+            cont->buttonFlags.pulsed = cont->buttonFlags.clicked;
         }
 
-        btnsPulsed             = cont->pulsedBtnFlags;
+        btnsPulsed             = cont->buttonFlags.pulsed;
         cont->pulseTicks     = pulseTicks;
-        cont->pulsedGuiBtnFlags = btnsPulsed;
+        cont->buttonFlags.pulsedGui = btnsPulsed;
 
         // Clear left/right pulse flags if concurrent.
         if ((btnsPulsed & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)) == (ControllerFlag_LStickRight | ControllerFlag_LStickLeft))
         {
-            cont->pulsedGuiBtnFlags &= ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
+            cont->buttonFlags.pulsedGui &= ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
         }
 
         // Clear up/down pulse flags if concurrent.
-        if ((cont->pulsedGuiBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
+        if ((cont->buttonFlags.pulsedGui & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)) == (ControllerFlag_LStickUp | ControllerFlag_LStickDown))
         {
-            cont->pulsedGuiBtnFlags &= ~(ControllerFlag_LStickUp | ControllerFlag_LStickDown);
+            cont->buttonFlags.pulsedGui &= ~(ControllerFlag_LStickUp | ControllerFlag_LStickDown);
         }
 
         // Clear left/right pulse flags if up/down is concurrent.
-        if ((cont->pulsedGuiBtnFlags & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)))
+        if ((cont->buttonFlags.pulsedGui & (ControllerFlag_LStickUp | ControllerFlag_LStickDown)))
         {
-            cont->pulsedGuiBtnFlags &= ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
+            cont->buttonFlags.pulsedGui &= ~(ControllerFlag_LStickRight | ControllerFlag_LStickLeft);
         }
     }
 }
@@ -144,7 +144,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
     s32 negDirBitIdx;
     s32 posDirBitIdx;
 
-    heldButtonFlags = cont->heldBtnFlags;
+    heldButtonFlags = cont->buttonFlags.held;
 
     if (arg1)
     {
@@ -175,7 +175,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
             }
         }
 
-        cont->heldBtnFlags = heldButtonFlags;
+        cont->buttonFlags.held = heldButtonFlags;
     }
     else
     {
@@ -252,15 +252,15 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
 
 bool func_8003483C(u16* arg0) // 0x8003483C
 {
-    if (g_Controller0->clickedBtnFlags & *(*arg0 + arg0))
+    if (g_Controller0->buttonFlags.clicked & *(*arg0 + arg0))
     {
         *arg0 = *arg0 + 1;
     }
-    else if (g_Controller0->clickedBtnFlags & (*(arg0 + 1)))
+    else if (g_Controller0->buttonFlags.clicked & (*(arg0 + 1)))
     {
         *arg0 = 2;
     }
-    else if (g_Controller0->clickedBtnFlags & 0xFFFF)
+    else if (g_Controller0->buttonFlags.clicked & 0xFFFF)
     {
         *arg0 = 1;
     }

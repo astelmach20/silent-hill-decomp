@@ -162,7 +162,7 @@ void func_800D7308(void)
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
 
     // Skip.
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -335,7 +335,7 @@ void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
 
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
 
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= EventState_MedallionCutsceneStart && g_SysWork.sysStateSteps[0] < EventState_MedallionCutsceneEnd)
     {
         ScreenFade_ResetTimestep();
@@ -542,7 +542,7 @@ void PianoPuzzle_Control(bool playNote) // 0x800D7F18
         return;
     }
 
-    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
+    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
     {
         SysWork_StateStepIncrement(0);
         return;
@@ -560,7 +560,7 @@ void PianoPuzzle_Control(bool playNote) // 0x800D7F18
     cursorY = FP_FROM(g_PianoCursorY, Q12_SHIFT) + 8;
     Gfx_CursorDraw(cursorX, cursorY, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
+    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
     {
         if (FP_FROM(g_PianoCursorY, Q12_SHIFT) >= 34)
         {
@@ -789,7 +789,7 @@ void func_800D87C0(void) // 0x800D87C0
     s_WorldObjectPose* objTobira00;
 
     // Skip.
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         if ( g_SysWork.sysStateSteps[0]  < 4)

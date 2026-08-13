@@ -162,7 +162,7 @@ void MapEvent_CommonItemTake(void) // 0x800D81AC
 
 void func_800D822C(void) // 0x800D822C
 {
-    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip)
+    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
     {
         if (g_SysWork.sysStateSteps[0] == 3)
         {
@@ -220,7 +220,7 @@ void func_800D822C(void) // 0x800D822C
 
 void func_800D84EC(void) // 0x800D84EC
 {
-    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip)
+    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
     {
         if (g_SysWork.sysStateSteps[0] == 4)
         {

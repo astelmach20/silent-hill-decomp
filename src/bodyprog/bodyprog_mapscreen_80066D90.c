@@ -271,9 +271,9 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             PaperMap_DrawScaled(scrollX, scrollY, scale);
 
             if ((g_GameWork.gameStatePrev == GameState_InventoryScreen &&
-                 (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)) ||
+                 (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)) ||
                 (g_GameWork.gameStatePrev != GameState_InventoryScreen &&
-                 (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.cancel |
+                 (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.cancel |
                                                     g_GameWorkPtr->config.controllerConfig.map))))
             {
                 SD_Call(Sfx_MenuMap);
@@ -298,7 +298,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                 break;
             }
 
-            if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
+            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 if (D_800AE770)
                 {
@@ -320,7 +320,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             {
                 if (D_800C4454 == Q12(1.0f))
                 {
-                    if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp)
+                    if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickUp)
                     {
                         if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][0]))
                         {
@@ -336,7 +336,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                         }
                     }
 
-                    if (g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown)
+                    if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickDown)
                     {
                         if (HAS_PAPER_MAP(D_800AE740[paperMapIdx][1]))
                         {
@@ -888,7 +888,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     }
 
     temp_s4 = (mapCoordIdxZ << 16) + var_a3;
-    if (g_Controller0->heldBtnFlags & (ControllerFlag_L1 | ControllerFlag_R1))
+    if (g_Controller0->buttonFlags.held & (ControllerFlag_L1 | ControllerFlag_R1))
     {
         return temp_s4;
     }

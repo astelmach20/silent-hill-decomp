@@ -77,15 +77,22 @@ typedef struct _AnalogController
 } s_AnalogController;
 STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
 
+/** @brief PSX controller button state flags. */
+typedef struct _ButtonFlags
+{
+    /* 0x0  */ e_ControllerFlags held;
+    /* 0x4  */ e_ControllerFlags clicked;
+    /* 0x8  */ e_ControllerFlags released;
+    /* 0xC  */ e_ControllerFlags pulsed;
+    /* 0x10 */ e_ControllerFlags pulsedGui;
+} s_ButtonFlags;
+
+/** @brief PSX controller input data. */
 typedef struct _ControllerData
 {
     /* 0x0  */ s_AnalogController analogController;
     /* 0x8  */ s32                pulseTicks;
-    /* 0xC  */ e_ControllerFlags  heldBtnFlags;
-    /* 0x10 */ e_ControllerFlags  clickedBtnFlags;
-    /* 0x14 */ e_ControllerFlags  releasedBtnFlags;
-    /* 0x18 */ e_ControllerFlags  pulsedBtnFlags;
-    /* 0x1C */ e_ControllerFlags  pulsedGuiBtnFlags;
+    /* 0xC  */ s_ButtonFlags      buttonFlags;
     /* 0x20 */ s_AnalogSticks     rawSticks;        /** Raw analog stick values, signed range `[-128, 127]`. */
     /* 0x24 */ s_AnalogSticks     normalizedSticks; /** Normalized analog stick values with deadzone, signed range `[-112, 112]`. */
     /* 0x28 */ s32                field_28;         // Processed input flags.

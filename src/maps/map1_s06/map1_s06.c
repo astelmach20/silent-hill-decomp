@@ -55,7 +55,7 @@ const char* MAP_MESSAGES[] = {
 
 void func_800D5614(void) // 0x800D5614
 {
-    if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 13)
     {
         SysWork_StateStepSet(0, 14);
@@ -261,7 +261,7 @@ void func_800D5DD8(void) // 0x800D5DD8
     } e_EventState;
 
     // Skip.
-    if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip)
+    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
     {
         if (g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 6)
         {
@@ -366,7 +366,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             {
                 D_800D778F = 0x80;
 
-                if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
+                if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
                                                      g_GameWorkPtr->config.controllerConfig.cancel))
                 {
                     SysWork_StateStepIncrement(0);
