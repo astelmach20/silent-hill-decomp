@@ -1,11 +1,7 @@
 #ifndef _BODYPROG_ITEMSCREENS_H
 #define _BODYPROG_ITEMSCREENS_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the functionallity and logic of the inventory and result
- * screen system.
- */
+/** @brief Inventory and result screen system. */
 
 // ==========
 // CONSTANTS

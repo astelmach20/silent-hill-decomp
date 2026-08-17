@@ -2,7 +2,7 @@
 #define _BODYPROG_SOUND_SOUNDSYSTEM_H
 
 /** @brief Game-specific sound system and not part of the sound library itself.
- * Specifically, handles audio file streaming processing and some general sound effects.
+ * Specifically, handles audio file stream processing and some general sound effects.
  *
  * @note Name deobfuscation:
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
@@ -17,24 +17,22 @@
 /** @brief Packs an audio type (VAB ID) and program index into a single 16-bit value.
  *
  * This macro replicates the encoding used in the third field of `s_VabInfo`. 
- * The resulting value is passed to `SdVoKeyOn` via the `vab_pro` argument, 
- * where the function extracts:
+ * The resulting value is passed to `SdVoKeyOn` via the `vab_pro` argument, where the function extracts:
  * - The Program Index: derived via `(vab_pro & 0x7F)`.
  * - The VAB ID: derived via `vab_pro >> 8`.
  *
- * For example, a value of 516 (0x0204) results in a program index of 4 and a 
- * VAB ID of 2. Similarly, 256 (0x0100) and 514 (0x0202) follow this bit-packed 
- * structure.
+ * For example, a value of 516 (0x0204) results in a program index of 4 and a VAB ID of 2. Similarly, 256 (0x0100) and
+ * 514 (0x0202) follow this bit-packed structure.
  *
  * @param audioType ID used to index `vab_h`, which manages VAG data allocation in SPU memory.
- * @param progIdx The specific program index within the VAB attribute table.
+ * @param progIdx Specific program index within the VAB attribute table.
  * @return Packed audio type and program index.
  */
 #define TYPE_AND_PROG_SFX(audioType, progIdx) \
-    ((audioType << 8) + progIdx)
+    (((audioType) << 8) + (progIdx))
 
-#define SD_TASK_CHANNELSET(idx) \
-    (0x300 + idx)
+#define SD_TASK_CHANNEL_SET(idx) \
+    (0x300 + (idx))
 
 // ======
 // ENUMS
@@ -55,7 +53,7 @@ typedef enum _AudioType
     AudioType_Weapon        = 1,
     AudioType_Ambient       = 2,
     AudioType_SpecialScreen = 2,
-    AudioType_MusicBank     = 3  // VAB file containing audio keys for loaded KTD file.
+    AudioType_MusicBank     = 3  // VAB file containing audio keys for a loaded KTD file.
 } e_AudioType;
 
 /** @brief VAB audio load states. */
@@ -123,7 +121,7 @@ typedef struct
     u16 xaAudioIdxCheck;        /** XA Audio index. Used to check if the file exists. */
     u16 xaAudioIdx;             /** XA Audio index. Used to play the audio. */
     u16 bgmLoadedSongIdx;       /** Index of the currently loaded music. */
-    u16 activeVabAudioIdx_8[3]; /** Stores the index of currently loaded VABs audios at `g_Sd_VabBuffers`, with the exception of music notes. */
+    u16 activeVabAudioIdx_8[3]; /** Stores the index of currently loaded VAB audio in `g_Sd_VabBuffers`, except of music notes. */
     u16 field_E;                /** MIDI channel assignment for BGM layers.
                                  * Used to assign the corresponding MIDI channel for BGM layers.
                                  *
@@ -213,7 +211,7 @@ typedef struct
     /* 0x1 */ s8  __pad_1;
     /* 0x2 */ u16 vab_progIdx_2; /** See `TYPE_AND_PROG_SFX`. */
     /* 0x4 */ u8  noteIdx_4;
-    /* 0x5 */ s8  field_5;       // Volume??? (Tested In-game indeed changes the volume)
+    /* 0x5 */ s8  field_5; // Changes the volume.
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
@@ -538,9 +536,8 @@ void Sd_TaskPoolExecute(void);
 void func_800485C0(s32 idx);
 
 /** @brief Executes a new primitive command and checks the status against the previous.
- * If the previous primitive commands haven't completed, it starts
- * adding to `g_Sd_AudioWork.cdErrorCount` each time the process fails. When it
- * reaches 600 failed attemps, it restarts the CD-ROM system.
+ * If the previous primitive commands haven't completed, it starts adding to `g_Sd_AudioWork.cdErrorCount` each time the
+ * process fails. When it reaches 600 failed attemps, it restarts the CD-ROM system.
  */
 u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res);
 

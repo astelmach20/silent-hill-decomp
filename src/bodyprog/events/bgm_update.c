@@ -63,7 +63,7 @@ void Bgm_LayerGlobalVariablesMute(void) // 0x80035E1C
 bool Bgm_MuteCheck(void)
 {
     s32 i;
-    u16 enabledChannelsTask;
+    u16 enabledChannelTask;
 
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
@@ -73,12 +73,15 @@ bool Bgm_MuteCheck(void)
         }
     }
 
-    enabledChannelsTask = Sd_ChannelTaskGet();
-    if (enabledChannelsTask == 0) // Idle.
+    enabledChannelTask = Sd_ChannelTaskGet();
+
+    // Idle.
+    if (enabledChannelTask == 0)
     {
         return true;
     }
-    else if (enabledChannelsTask == 0xFFFF) // Stop/Disable.
+    // Stop/Disable.
+    else if (enabledChannelTask == 0xFFFF)
     {
         return false;
     }
@@ -114,11 +117,8 @@ static void Bgm_LayerGlobalVariablesUpdate(void)
 
 void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
-    q3_12     songFirstLayerVolPercentage; // Store percentage later used to determine the volume
-                                           // of the first BGM layer.
-                                           // Some circumstances like: radio noise and pulling menu
-                                           // while in-game, makes the game to lower the volume of
-                                           // first BGM layer.
+    q3_12     firstSongLayerVol; // Value in range `[0.0f, 1.0f]` used to determine the first BGM layer's volume,
+                                 // prompted by radio noise or opening a menu while in-game.
     q19_12    ducking;
     q19_12    targetVol;
     q19_12    curLayerVol;
@@ -131,14 +131,14 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
     q19_12    adjustLayerValue;
     bool      areChannelsActive;
     s32       lastLayerIdx;
-    q3_12*    layersVol;
+    q3_12*    layerVols;
     u8*       channelLimitsCpy;
-    static s8 bgmChannelsVol[8];
+    static s8 bgmChannelVols[8];
 
     // Setup.
     flagsCpy         = bgmFlags;
     channelLimitsCpy = layerLimits;
-    layersVol        = g_SysWork.bgmLayerVolumes;
+    layerVols        = g_SysWork.bgmLayerVolumes;
 
     // Ensure layer limits are valid.
     if (channelLimitsCpy == NULL)
@@ -183,7 +183,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
          i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes);
          i++)
     {
-        curLayerVol = layersVol[i];
+        curLayerVol = layerVols[i];
 
         if (i == lastLayerIdx)
         {
@@ -203,12 +203,14 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
         }
         else
         {
-            if ((flagsCpy >> i) & 1) // Turn on music layer.
+            // Turn on music layer.
+            if ((flagsCpy >> i) & 1)
             {
                 adjustLayerValue = FP_MULTIPLY(g_DeltaTimeRaw, fadeSpeed, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
                 ducking          = Q12(1.0f);
             }
-            else // Turn off music layer.
+            // Turn off music layer.
+            else
             {
                 adjustLayerValue = Q12_MULT(g_DeltaTimeRaw, fadeSpeed);
                 ducking          = Q12(0.0f);
@@ -232,43 +234,40 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
             }
         }
 
-        layersVol[i] = curLayerVol;
+        layerVols[i] = curLayerVol;
     }
 
-    isBgmChannelActive          = false;
-    songFirstLayerVolPercentage = Q12(1.0f) - layersVol[8];
+    isBgmChannelActive = false;
+    firstSongLayerVol  = Q12(1.0f) - layerVols[8];
     
-    /* @todo Figure out this weird FP math.
-       @note This extremely small values are likely related to delta timer as `layersVol[8]` is set
-       by doing some stuff with the delta timer and as the previous variable shows it is used to
-       define a variable which is used for adjusting the first channel volume on certain circumstances
-       (for example during the inventory).
-    */
+    // TODO: Figure out this floating-point math.
+    // @note These extremely small values likely relate to delta time, as `layerVols[8]` is derived from it.
+    // The resulting value sets a parameter used to adjust channel 0 volume in specific contexts (e.g. in the inventory
+    // menu).
     // Updates console's MIDI channel volume.
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        curChannelVol       = layersVol[i];
+        curChannelVol       = layerVols[i];
         isBgmChannelActive |= curChannelVol != Q12(0.0f);
 
         if (i == 0)
         {
-            curChannelVol = Q12_MULT_PRECISE(curChannelVol, songFirstLayerVolPercentage);
+            curChannelVol = Q12_MULT_PRECISE(curChannelVol, firstSongLayerVol);
         }
 
         curChannelVol = Q12_MULT_PRECISE(curChannelVol, Q12(0.0312f));
-        
         if (curChannelVol > Q12(0.0312f))
         {
             curChannelVol = Q12(0.0312f);
         }
 
-        curChannelVol = (curChannelVol * channelLimitsCpy[i]) >> 7; // This is the equivalent of `/ Q12(0.0312f)` but causes missmatch.
+        curChannelVol = (curChannelVol * channelLimitsCpy[i]) >> 7; // TODO: Equivalent of `/ Q12(0.0312f)` but causes missmatch.
         if (curChannelVol > Q12(0.0312f))
         {
             curChannelVol = Q12(0.0312f);
         }
 
-        bgmChannelsVol[i] = curChannelVol;
+        bgmChannelVols[i] = curChannelVol;
     }
 
     isMusicPlaying    = false;
@@ -337,7 +336,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
         {
             for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
             {
-                Sd_ChannelsVolumeSet(i, bgmChannelsVol[i]);
+                Sd_ChannelsVolumeSet(i, bgmChannelVols[i]);
             }
         }
         else

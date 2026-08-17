@@ -1,10 +1,7 @@
 #ifndef _BODYPROG_RANKING_H
 #define _BODYPROG_RANKING_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the ranking system.
- */
+/** @brief Ranking system. */
 
 // ========
 // STRUCTS

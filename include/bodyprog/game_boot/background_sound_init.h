@@ -1,70 +1,62 @@
 #ifndef _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
 #define _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the functionallity and logic of the main background music
- * initalization and some track update.
+/** @brief Main background music * initalization and some track update.
  *
- * @note This code generally handle the change or initalization of
- * music and enviromental sounds when moving through the map.
- * It's `Sd_BgmInit` which is in charge of that behaviour of updating
- * the music when going through rooms or maps. Same with `Sd_AmbientSfxInit`,
- * but with enviromental sound effects.
+ * Handles the initialization and changes of music and environmental sound when moving through a map.
+ * `Sd_BgmInit` updates music when going, while `Sd_AmbientSfxInit` similarly handles environmental sound effects.
  */
 
 // ==========
 // FUNCTIONS
 // ==========
 
-/** @brief Initializes background music or updates current track.
+/** @brief Initializes background music or updates the current track.
  *
- * @return Returns -1 if something is being loaded in memory or if
- * some audio is being play. Returns 0 if music has been muted or
- * updated, returns 1 if everything fails.
+ * @note The only unstance of this function returning `0` is used to trigger the main loading screen.
  *
- * @note In case of returning 0 for the only instance this function
- * is used the main loading screen will be triggered.
+ * @return `-1` if something is being loaded or audio is being played,
+ * `0` if music has been muted or updated, or
+ * `1` if failed.
  */
 s32 Sd_BgmInit(void);
 
-/** @brief Checks if a given background music track is not currently playing
- * or if it is a command to trigger the update of layers or track change.
+/** @brief Checks if a given background music track isn't currently playing, or if it's a command used to trigger a
+ * layer update or track change.
  *
  * @param bgmIdx Index of the background music track to check.
- * @return `true` if the given track is not currently playing, `false` otherwise
- * and in case of being an update layer/track command.
+ * @return `true` if the track is not currently playing, `false` otherwise or if it's a command.
  */
 bool Sd_BgmActiveSongCheck(s32 bgmIdx);
 
-/** @brief Updates track.
+/** @brief Updates a track.
+ *
+ * @note Changes tracks when moving through the map or when loading a save with a map containing multiple tracks.
  *
  * @param bgmIdx `e_BgmCmd`.
- * @note This function is used to change tracks in between map/room
- * changes or when loading a save only in case the overlay uses multiple
- * tracks.
  */
 void Sd_BgmSongSet(s32 bgmIdx);
 
-/** @brief Updates track in case `g_MapOverlayHdr.bgmCmd` is defined as
- * `BgmCmd_UpdateTrack`.
+/** @brief Updates a track if `g_MapOverlayHdr.bgmCmd` is set to `BgmCmd_UpdateTrack`.
  *
- * @note This function is used to change tracks in between map/room
- * changes or when loading a save only in case the overlay uses multiple
- * tracks.
+ * @note Changes tracks when moving through the map or when loading a save with a map containing multiple tracks.
  */
 void Sd_BgmUpdateTrack(void);
 
 /** @brief Update channels being used by songs.
- * @todo Properly documment after investigating game's channel functionallity.
+ * @todo Properly document after investigating game's channel functionallity.
  */
 void Sd_BgmChannelSet(void);
 
-/** @brief Initializes enviromental audios or updates current audio track.
+// ========================================
+// AMBIENT SOUND INIT & SET
+// ========================================
+
+/** @brief Initializes enviromental audio or updates the current audio track.
  *
- * @return Returns -1 if something is being loaded in memory or if
- * some audio is being play. Returns 0 if nothing has been updated,
- * and returns 1 if the audio has been updated.
+ * @return `-1` if something is being loaded or audio is being played,
+ * `0` if nothing has been updated, or
+ * `1` if audio has been updated.
  */
 s32 Sd_AmbientSfxInit(void);
 
@@ -75,10 +67,10 @@ s32 Sd_AmbientSfxInit(void);
  */
 bool Sd_ActiveAmbientSfxCheck(s32 ambientIdx);
 
-/** @brief Updates track.
+/** @brief Sets a new background music track.
  *
- * @param idx Index of the background audio to change.
+ * @param bgmIdx Index of the background music track to set.
  */
-void Sd_AmbientSfxSet(s32 idx);
+void Sd_AmbientSfxSet(s32 bgmIdx);
 
 #endif

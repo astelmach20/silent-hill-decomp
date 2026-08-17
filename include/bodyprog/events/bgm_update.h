@@ -1,15 +1,10 @@
 #ifndef _BODYPROG_EVENTS_BGMUPDATE_H
 #define _BODYPROG_EVENTS_BGMUPDATE_H
 
-/** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` identified to be related
- * to the functionallity and logic of the main background music
- * update.
+/** @brief Main background music update.
  *
- * @note This code mainly handle the update of music layering,
- * it's `Bgm_Update` and `Bgm_MenuUpdate` what triggers the code
- * that can alternatively update tracks in case an map overlay event
- * set it through `g_MapOverlayHdr.bgmEvent`.
+ * @note Mainly handles music layer updates. `Bgm_Update` and `Bgm_MenuUpdate` invoke the logic that updates tracks when
+ * a map overlay event sets `g_MapOverlayHdr.bgmEvent`.
  */
 
 // ==========
@@ -30,26 +25,23 @@ typedef enum _BgmStatusFlags
     BgmStatusFlag_ApplyMute   = 1 << 1,
     BgmStatusFlag_RadioActive = 1 << 2,
     BgmStatusFlag_Duck        = 1 << 3,
-    BgmStatusFlag_4           = 1 << 4, /** This is the only flag completely unrelated to the background music.
-                                         * The only instance this flag is used if for the AI of the stalkers, there it is
-                                         * used for something related to their movement, likely their attack or player seeking
-                                         * code.
-                                         * In case of breaking the code this flag is used they become completely braindead.
+    BgmStatusFlag_4           = 1 << 4, /** The only flag completely unrelated to background music.
+                                         * Used exclusively by Stalker AI for movement, targeting, or player seek logic.
+                                         * Stubbing or clearing this flag breaks Stalker behavior entirely.
                                          */
     BgmStatusFlag_VoiceDialog = 1 << 5,
-    BgmStatusFlag_6           = 1 << 6, /** This flag is used to re-trigger loop audio effects when returning to the in-game mode.
-                                         * Some loop sounds stop in circumstances when changing the game state.
-                                         * This flag get assigned when returning to the in-game so these sounds loops again.
+    BgmStatusFlag_6           = 1 << 6, /** Used to re-trigger looping audio effects when returning to gameplay.
+                                         * Certain looping sounds stop during game state changes and this flag is assigned
+                                         * upon returning to gameplay to resume those looping sounds.
                                          *
-                                         * There are four instances where this flag is used:
-                                         * * The wheelchair at the beginning of the game.
-                                         * * The radio when the air screamer gets into the cafeteria.
-                                         * * Some other event at the overlay `MAP6_02`.
-                                         * * Something related to the bloodsucker.
+                                         * Used in four instances:
+                                         * - The wheelchair at the beginning of the game.
+                                         * - The radio when the Air Screamer enters the diner.
+                                         * - An event in map overlay `MAP6_02`.
+                                         * - Bloodsucker logic.
                                          *
-                                         * For example: in the second instance if the player goes to the
-                                         * inventory menu the radio stop playing, if this value is not assigned when
-                                         * re-entering the in-game state the radio won't play anymore.
+                                         * Example: In the second instance, opening the inventory menu stops the radio.
+                                         * If this flag is not set when returning to gameplay, the radio sound will not resume.
                                          */
     BgmStatusFlag_RequestMute = 1 << 7
 } e_BgmStatusFlags;
@@ -129,14 +121,11 @@ typedef struct _BgmLayerLimits
 // FUNCTIONS
 // ==========
 
-/** @brief Updates background music state in-game.
- * Triggers map's background music handler.
+/**
+ * @brief Updates the in-game background music state and invokes the map's BGM handler.
  *
- * @param updateTrack In case the overlay feature multiple songs
- * setting this value to true triggers the state where it will update
- * the current playing track to another. Most overlays and in the cases
- * where overlays have true/false options setting this to false only
- * updates song's layers.
+ * @param updateTrack `true` when the overlay uses multiple songs to switch the active track.
+ * When set to `false`, only the track's audio layers are updated.
  */
 void Bgm_Update(bool updateSong);
 
@@ -145,8 +134,7 @@ void Bgm_LayerGlobalVariablesMute(void);
 
 /** @brief @unused Checks if any audio channel for music or music layer is active.
  * 
- * @return Returns true if any audio channel for music or music layer is active,
- * false is everything is inactive.
+ * @return `true` if any audio channel for music or music layer is active, `false` is everything is inactive.
  */
 bool Bgm_MuteCheck(void);
 
@@ -158,11 +146,9 @@ bool Bgm_MuteCheck(void);
  */
 void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
 
-/** @brief Updates background music state in menus.
- * Triggers map's background music handler.
+/** @brief Updates background music state in menus and invokes a map's background music handler.
  *
- * This share the same behaviour as `Bgm_Update`,
- * however, this also disable radio static.
+ * @note This has the same behaviour as `Bgm_Update`, but additionally disables radio static.
  */
 void Bgm_MenuUpdate(void);
 

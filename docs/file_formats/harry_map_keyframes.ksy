@@ -6,6 +6,7 @@ meta:
 
 doc: |
   Map-specific block of Harry keyframes appended to the end of `HB_BASE.ANM`.
+  This spec covers all `ANM/HB_M*S**.ANM` files.
 
 seq:
   - id: keyframes
@@ -46,7 +47,6 @@ types:
         repeat: expr
         repeat-expr: _root.rotations_count
 
-    instances:
   translation:
     doc: Q0.7.
 

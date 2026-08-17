@@ -60,7 +60,6 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
             if (Sd_ChannelTaskGet() == 0)
             {
                 Sd_BgmSongSet(bgmIdx);
-
                 SysWork_StateStepIncrement(1);
             }
             break;
@@ -76,7 +75,7 @@ void Bgm_CrossfadeToSilence(void) // 0x80088028
     Bgm_CrossfadeToTrack(BgmCmd_UpdateLayers);
 }
 
-void Bgm_SongStopImmediately(void) // 0x80088048
+void Bgm_SongStopImmediate(void) // 0x80088048
 {
     if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
@@ -103,7 +102,7 @@ void Bgm_SongStopImmediately(void) // 0x80088048
     }
 }
 
-void Bgm_SongStopFadeout(bool slowerFade) // 0x800880F0
+void Bgm_SongStopFadeOut(bool useSlowFade) // 0x800880F0
 {
     if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
@@ -115,7 +114,7 @@ void Bgm_SongStopFadeout(bool slowerFade) // 0x800880F0
         case 0:
             Bgm_LayerGlobalVariablesMute();
 
-            if (!slowerFade)
+            if (!useSlowFade)
             {
                 SD_Call(22);
             }

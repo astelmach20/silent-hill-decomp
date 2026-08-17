@@ -1,11 +1,9 @@
 #ifndef _BODYPROG_EVENTS_BGMUTILS_H
 #define _BODYPROG_EVENTS_BGMUTILS_H
 
-/** @brief This header contains reference to functions used to
- * provide some effect or handling over BGM.
+/** @brief BGM handling and effects.
  *
- * @note Most of this functions are unused and even the used one
- * is only rarely used in the last overlays.
+ * @note Most of these functions are are unused, and the only used one is only rarely called in final maps.
  */
  
 /** @brief Plays a new background song. If the song is already playing, the request is ignored.
@@ -23,13 +21,13 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx);
 /** @brief Crossfades the currently playing background song to silence. */
 void Bgm_CrossfadeToSilence(void);
 
-/** @brief @unused Stop current song inmediately. */
-void Bgm_SongStopImmediately(void);
+/** @brief @unused Immediately stops the currently playing song. */
+void Bgm_SongStopImmediate(void);
 
-/** @brief @unused Stop current song with fading.
+/** @brief @unused Fades out the currently playing song.
  *
- * @param slowerFade Use slower fade.
+ * @param useSlowFade Use slow fade.
  */
-void Bgm_SongStopFadeout(bool slowerFade);
+void Bgm_SongStopFadeOut(bool useSlowFade);
 
 #endif

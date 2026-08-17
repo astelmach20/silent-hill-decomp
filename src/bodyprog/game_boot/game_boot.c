@@ -167,7 +167,7 @@ void GameBoot_InGameStartup(void)
             break;
 
         case 9:
-            if (Sd_BgmInit() == 0)
+            if (!Sd_BgmInit())
             {
                 g_GameWork.gameState = GameState_MainLoadScreen;
                 Game_StateStepIncrement(0);

@@ -759,7 +759,7 @@ u8 Sd_BgmChannelVolumeGet(u8 channelIdx) // 0x80046BB4
         return 0;
     }
 
-    if (g_Sd_AudioWork.field_E > SD_TASK_CHANNELSET(40))
+    if (g_Sd_AudioWork.field_E > SD_TASK_CHANNEL_SET(40))
     {
         return 0;
     }
@@ -789,7 +789,7 @@ void Sd_ChannelsVolumeSet(u8 channelIdx, u8 vol) // 0x80046C54
     {
         gSDVolConfig.volumeBgm_6 = (vol * 40) / 127;
     }
-    else if (g_Sd_AudioWork.field_E <= SD_TASK_CHANNELSET(40))
+    else if (g_Sd_AudioWork.field_E <= SD_TASK_CHANNEL_SET(40))
     {
 
         idx = (u8)g_Sd_AudioWork.field_E;

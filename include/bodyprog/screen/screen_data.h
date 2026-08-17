@@ -1,10 +1,7 @@
 #ifndef _BODYPROG_SCREEN_SCREENDATA_H
 #define _BODYPROG_SCREEN_SCREENDATA_H
 
-/** @brief This header is used to declare any variable or struct
- * part of `BODYPROG.BIN` identified to be related
- * to the screen display system (not from PSY-Q SDK).
- */
+/** @brief Screen display system (not from PSY-Q SDK). */
 
 // ========
 // GLOBALS
