@@ -49,12 +49,12 @@ void func_800D0050(void) // 0x800D0050
         bgmIdx = BgmCmd_Track14;
     }
 
-    Bgm_TrackChange(bgmIdx);
+    Bgm_SongChange(bgmIdx);
 }
 
 void func_800D00D0(void) // 0x800D00D0
 {
-    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
+    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D0110

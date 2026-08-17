@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/events/bodyprog_data_800A99B4.h"
-#include "bodyprog/events/bgm.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -29,41 +29,41 @@ u32 D_800A999C = &D_80025234;
 
 static s32 g_Bgm_LayersUpdated;
 static s32 g_Bgm_ChannelSetProcessState = 0;
-static u8  g_Bgm_LayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
+static u8  g_Bgm_ChannelLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 
 // ========================================
 // MUSIC UPDATE
 // ========================================
 
-void Bgm_Update(bool updateTrack) // 0x80035DB4
+void Bgm_Update(bool updateSong) // 0x80035DB4
 {
     g_Bgm_LayersUpdated = false;
 
     if (g_MapOverlayHdr.bgmEvent != NULL) // Checks if function exists.
     {
-        g_MapOverlayHdr.bgmEvent(updateTrack);
-        if (updateTrack == false && g_Bgm_LayersUpdated == false)
+        g_MapOverlayHdr.bgmEvent(updateSong);
+        if (updateSong == false && g_Bgm_LayersUpdated == false)
         {
-            Bgm_LayersUpdate(BgmFlag_Layer1, Q12(240.0f), 0);
+            Bgm_LayersUpdate(BgmFlag_Layer1, Q12(240.0f), NULL);
         }
     }
 }
 
-void Bgm_AllLayersMute(void) // 0x80035E1C
+void Bgm_LayerGlobalVariablesMute(void) // 0x80035E1C
 {
     s32 i;
 
-    // Reset all BGM layer volumes.
+    // Mute all BGM layers.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes); i++)
     {
         g_SysWork.bgmLayerVolumes[i] = Q12(0.0f);
     }
 }
 
-bool Bgm_LayerOnCheck(void) // 0x80035E44
+bool Bgm_MuteCheck(void)
 {
     s32 i;
-    u16 val;
+    u16 enabledChannelsTask;
 
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
@@ -73,19 +73,19 @@ bool Bgm_LayerOnCheck(void) // 0x80035E44
         }
     }
 
-    val = func_80045BC8();
-    if (val == 0)
+    enabledChannelsTask = Sd_ChannelTaskGet();
+    if (enabledChannelsTask == 0) // Idle.
     {
         return true;
     }
-    else if (val == 0xFFFF)
+    else if (enabledChannelsTask == 0xFFFF) // Stop/Disable.
     {
         return false;
     }
 
     for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        if (Sd_BgmLayerVolumeGet(i) != 0)
+        if (Sd_BgmChannelVolumeGet(i) != 0)
         {
             return false;
         }
@@ -94,16 +94,17 @@ bool Bgm_LayerOnCheck(void) // 0x80035E44
     return true;
 }
 
-void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
+/** @brief Updates global variables for music layer volumes. */
+static void Bgm_LayerGlobalVariablesUpdate(void)
 {
     s32 i;
 
     for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        g_SysWork.bgmLayerVolumes[i] = Sd_BgmLayerVolumeGet(i) << 5; // Conversion to Q12.
+        g_SysWork.bgmLayerVolumes[i] = Sd_BgmChannelVolumeGet(i) << 5; // Conversion to Q12.
     }
 
-    if (func_80045BC8() == 0)
+    if (Sd_ChannelTaskGet() == 0)
     {
         g_SysWork.bgmLayerVolumes[0] = Q12(1.0f);
     }
@@ -111,34 +112,38 @@ void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
     g_SysWork.bgmLayerVolumes[ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1] = Q12(0.0f);
 }
 
-void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
+void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
-    s16       temp_v0;
-    s32       ducking;
-    s32       targetVol;
+    q3_12     songFirstLayerVolPercentage; // Store percentage later used to determine the volume
+                                           // of the first BGM layer.
+                                           // Some circumstances like: radio noise and pulling menu
+                                           // while in-game, makes the game to lower the volume of
+                                           // first BGM layer.
+    q19_12    ducking;
+    q19_12    targetVol;
     q19_12    curLayerVol;
-    q19_12    curLayerVol1;
+    q19_12    curChannelVol;
     s32       activeSetChannelTask;
     s32       i;
     s32       flagsCpy;
-    bool      isBgmLayerActive;
+    bool      isBgmChannelActive;
     bool      isMusicPlaying;
     q19_12    adjustLayerValue;
     bool      areChannelsActive;
     s32       lastLayerIdx;
     q3_12*    layersVol;
-    u8*       layerLimitsCpy;
+    u8*       channelLimitsCpy;
     static s8 bgmChannelsVol[8];
 
     // Setup.
-    flagsCpy       = bgmFlags;
-    layerLimitsCpy = layerLimits;
-    layersVol      = g_SysWork.bgmLayerVolumes;
+    flagsCpy         = bgmFlags;
+    channelLimitsCpy = layerLimits;
+    layersVol        = g_SysWork.bgmLayerVolumes;
 
     // Ensure layer limits are valid.
-    if (layerLimitsCpy == NULL)
+    if (channelLimitsCpy == NULL)
     {
-        layerLimitsCpy = g_Bgm_LayerLimits;
+        channelLimitsCpy = g_Bgm_ChannelLimits;
     }
 
     // Continue music at reduced volume if player is dead.
@@ -203,7 +208,7 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
                 adjustLayerValue = FP_MULTIPLY(g_DeltaTimeRaw, fadeSpeed, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
                 ducking          = Q12(1.0f);
             }
-            else // Turn off music larper.
+            else // Turn off music layer.
             {
                 adjustLayerValue = Q12_MULT(g_DeltaTimeRaw, fadeSpeed);
                 ducking          = Q12(0.0f);
@@ -230,8 +235,8 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
         layersVol[i] = curLayerVol;
     }
 
-    isBgmLayerActive = false;
-    temp_v0          = Q12(1.0f) - layersVol[8];
+    isBgmChannelActive          = false;
+    songFirstLayerVolPercentage = Q12(1.0f) - layersVol[8];
     
     /* @todo Figure out this weird FP math.
        @note This extremely small values are likely related to delta timer as `layersVol[8]` is set
@@ -239,44 +244,45 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
        define a variable which is used for adjusting the first channel volume on certain circumstances
        (for example during the inventory).
     */
-    // Updates console's music channel volume.
+    // Updates console's MIDI channel volume.
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        curLayerVol1      = layersVol[i];
-        isBgmLayerActive |= curLayerVol1 != Q12(0.0f);
+        curChannelVol       = layersVol[i];
+        isBgmChannelActive |= curChannelVol != Q12(0.0f);
 
         if (i == 0)
         {
-            curLayerVol1 = Q12_MULT_PRECISE(curLayerVol1, temp_v0);
+            curChannelVol = Q12_MULT_PRECISE(curChannelVol, songFirstLayerVolPercentage);
         }
 
-        curLayerVol1 = Q12_MULT_PRECISE(curLayerVol1, Q12(0.0312f));
+        curChannelVol = Q12_MULT_PRECISE(curChannelVol, Q12(0.0312f));
         
-        if (curLayerVol1 > Q12(0.0312f))
+        if (curChannelVol > Q12(0.0312f))
         {
-            curLayerVol1 = Q12(0.0312f);
+            curChannelVol = Q12(0.0312f);
         }
 
-        curLayerVol1 = (curLayerVol1 * layerLimitsCpy[i]) >> 7; // This is the equivalent of `/ Q12(0.0312f)` but causes missmatch.
-        if (curLayerVol1 > Q12(0.0312f))
+        curChannelVol = (curChannelVol * channelLimitsCpy[i]) >> 7; // This is the equivalent of `/ Q12(0.0312f)` but causes missmatch.
+        if (curChannelVol > Q12(0.0312f))
         {
-            curLayerVol1 = Q12(0.0312f);
+            curChannelVol = Q12(0.0312f);
         }
 
-        bgmChannelsVol[i] = curLayerVol1;
+        bgmChannelsVol[i] = curChannelVol;
     }
 
     isMusicPlaying    = false;
-    areChannelsActive = activeSetChannelTask = func_80045BC8();
+    areChannelsActive = activeSetChannelTask = Sd_ChannelTaskGet();
 
     areChannelsActive = activeSetChannelTask != 0 && areChannelsActive != 0xFFFF;
 
-    if (isBgmLayerActive)
+    // Update music channels.
+    if (isBgmChannelActive)
     {
         switch (g_Bgm_ChannelSetProcessState)
         {
             case 3:
-                Bgm_AllLayersMute();
+                Bgm_LayerGlobalVariablesMute();
 
                 if (areChannelsActive)
                 {
@@ -284,24 +290,24 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
                 }
                 else
                 {
-                    Bgm_ChannelSet();
+                    Sd_BgmChannelSet();
                     g_Bgm_ChannelSetProcessState = 2;
                 }
                 break;
 
             case 2:
-                Bgm_AllLayersMute();
+                Bgm_LayerGlobalVariablesMute();
                 g_Bgm_ChannelSetProcessState = 1;
                 break;
 
             case 1:
                 if (areChannelsActive)
                 {
-                    Bgm_GlobalLayerVariablesUpdate();
+                    Bgm_LayerGlobalVariablesUpdate();
                 }
                 else
                 {
-                    Bgm_AllLayersMute();
+                    Bgm_LayerGlobalVariablesMute();
                 }
 
                 g_Bgm_ChannelSetProcessState = 0;
@@ -336,7 +342,7 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
         }
         else
         {
-            Bgm_AllLayersMute();
+            Bgm_LayerGlobalVariablesMute();
             g_Bgm_ChannelSetProcessState = 3;
         }
     }
@@ -351,7 +357,7 @@ void Bgm_MenuUpdate(void) // 0x800363D0
     Bgm_Update(false);
 }
 
-void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C
+void Bgm_SongChange(s32 bgmIdx) // 0x8003640C
 {
     if (bgmIdx != BgmCmd_UpdateLayers)
     {

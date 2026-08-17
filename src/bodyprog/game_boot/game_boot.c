@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/events/bgm.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/collision_trigger.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/fs_chara_anim.h"
@@ -167,7 +167,7 @@ void GameBoot_InGameStartup(void)
             break;
 
         case 9:
-            if (!Bgm_Init())
+            if (Sd_BgmInit() == 0)
             {
                 g_GameWork.gameState = GameState_MainLoadScreen;
                 Game_StateStepIncrement(0);
@@ -181,7 +181,7 @@ void GameBoot_InGameStartup(void)
                 g_SysWork.sysFlags |= SysFlag_DemoActive;
             }
 
-            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbientSfxInit || Sd_AmbientSfxInit() == false)
+            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbientSfxInit || Sd_AmbientSfxInit() == 0)
             {
                 Game_StateStepIncrement(0);
             }

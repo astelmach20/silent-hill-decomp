@@ -107,7 +107,7 @@ void func_800E9EAC(void) // 0x800E9EAC
     }
 }
 
-void func_800E9FDC(void) // 0xfunc_800E9FDC
+void func_800E9FDC(void) // 0x800E9FDC
 {
     g_DeltaTime = Q12(0.0f);
 
@@ -119,7 +119,7 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            if (Sd_AmbientSfxInit())
+            if (Sd_AmbientSfxInit() != 0)
             {
                 break;
             }

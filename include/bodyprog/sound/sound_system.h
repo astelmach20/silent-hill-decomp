@@ -2,7 +2,7 @@
 #define _BODYPROG_SOUND_SOUNDSYSTEM_H
 
 /** @brief Game-specific sound system and not part of the sound library itself.
- * Specifically, handles file streaming and some general sound effects.
+ * Specifically, handles audio file streaming processing and some general sound effects.
  *
  * @note Name deobfuscation:
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
@@ -50,12 +50,12 @@ typedef enum _AudioMode
 /** @brief Audio types. */
 typedef enum _AudioType
 {
-    AudioType_MusicKey      = 0,
+    AudioType_MusicKey      = 0, // KTD file.
     AudioType_BaseAudio     = 0,
     AudioType_Weapon        = 1,
     AudioType_Ambient       = 2,
     AudioType_SpecialScreen = 2,
-    AudioType_MusicBank     = 3
+    AudioType_MusicBank     = 3  // VAB file containing audio keys for loaded KTD file.
 } e_AudioType;
 
 /** @brief VAB audio load states. */
@@ -119,40 +119,40 @@ typedef struct
 
 typedef struct
 {
-    u16 cdErrorCount_0;             /** Counter for failed attempts when processing a primitive command. */
-    u16 xaAudioIdxCheck_2;          /** XA Audio index. Used to check if the file exists. */
-    u16 xaAudioIdx_4;               /** XA Audio index. Used to play the audio. */
-    u16 bgmLoadedSongIdx_6;         /** Index of the currently loaded music. */
-    u16 lastVabAudioLoadedIdx_8[3]; /** Stores the index of the last loaded VAB audio that's not a music note. */
-    u16 field_E;                    /** MIDI channel assignment for BGM layers.
-                                     * Used to assign the corresponding MIDI channel for BGM layers.
-                                     *
-                                     * This requires further investigation for a proper explanation. This is used
-                                     * to access values from `D_800AA604` columns in an odd way, as the values assigned
-                                     * are from `g_UnknownBgmTable1`, which range from 769 to 808 (including 0).
-                                     * However, the variables are cast as `u8`, which removes
-                                     * the second byte (range in hexadecimal: 0x1003 to 0x2803), leaving only the first byte
-                                     * ranging from 1 to 40 (also including 0).
-                                     */
-    u16 field_10;                   /** Temporarily stores a value intended for `field_E` so it can be assigned when the function
-                                     * that assigns it is executed. Part of a rule for `SD_Call`.
-                                     */
-    u8  isStereoEnabled_12;         /** `bool` */
-    s8  isXaStopping_13;            /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`. */
-    u8  bgmFadeSpeed_14;            /** Music fade speed. Range: `[0, 2]`, default: 0. */
-    u8  isAudioLoading_15;          /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  isXaNotPlaying_16;          /** `bool` | Playing: `false`, Nothing playing: `true`, default: Nothing playing. */
-    u8  muteGame_17;                /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
-                                     * in volume until mute (the sounds will keep playing, but muted).
-                                     */
+    u16 cdErrorCount;           /** Counter for failed attempts when processing a primitive command. */
+    u16 xaAudioIdxCheck;        /** XA Audio index. Used to check if the file exists. */
+    u16 xaAudioIdx;             /** XA Audio index. Used to play the audio. */
+    u16 bgmLoadedSongIdx;       /** Index of the currently loaded music. */
+    u16 activeVabAudioIdx_8[3]; /** Stores the index of currently loaded VABs audios at `g_Sd_VabBuffers`, with the exception of music notes. */
+    u16 field_E;                /** MIDI channel assignment for BGM layers.
+                                 * Used to assign the corresponding MIDI channel for BGM layers.
+                                 *
+                                 * This requires further investigation for a proper explanation. This is used
+                                 * to access values from `D_800AA604` columns in an odd way, as the values assigned
+                                 * are from `g_UnknownBgmTable1`, which range from 769 to 808 (including 0).
+                                 * However, the variables are cast as `u8`, which removes
+                                 * the second byte (range in hexadecimal: 0x1003 to 0x2803), leaving only the first byte
+                                 * ranging from 1 to 40 (also including 0).
+                                 */
+    u16 field_10;               /** Temporarily stores a value intended for `field_E` so it can be assigned when the function
+                                 * that assigns it is executed. Part of a rule for `SD_Call`.
+                                 */
+    u8  isStereoEnabled;        /** `bool` */
+    s8  isXaStopping;           /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`. */
+    u8  bgmFadeSpeed;           /** Music fade speed. Range: `[0, 2]`, default: 0. */
+    u8  isAudioLoading;         /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  isXaNotPlaying;         /** `bool` | Playing: `false`, Nothing playing: `true`, default: Nothing playing. */
+    u8  muteGame;               /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
+                                 * in volume until mute (the sounds will keep playing, but muted).
+                                 */
 } s_Sd_AudioWork;
 
 typedef struct
 {
-    u8 audioLoadState_0; /** Load VAB audio and KDT music key notes state. */
-    u8 xaLoadState_1;    /** Load XA audio state. */
-    u8 xaStopState_2;    /** Stop XA audio streaming state. */
-    u8 xaPreLoadState_3; /** Prepare Load XA audio state. Positions the current read point to the one where the XA audio to load resides. */
+    u8 audioLoadState; /** Load VAB audio and KDT music key notes state. */
+    u8 xaLoadState;    /** Load XA audio state. */
+    u8 xaStopState;    /** Stop XA audio streaming state. */
+    u8 xaPreLoadState; /** Prepare Load XA audio state. Positions the current read point to the one where the XA audio to load resides. */
 } s_AudioStreamingStates;
 
 // Game audio channels volume configuration struct.
@@ -268,7 +268,7 @@ extern s_AudioItemData g_AudioData[];
 
 extern u8 g_Sd_ReverbDepths[];
 
-// Odd access. See `Sd_ChannelsVolumeSet` and `Sd_BgmLayerVolumeGet`.
+// Odd access. See `Sd_ChannelsVolumeSet` and `Sd_BgmChannelVolumeGet`.
 extern u8 D_800AA604[41][16];
 
 extern s_XaItemData g_XaItemData[];
@@ -362,7 +362,7 @@ void SD_Call(u32 cmd);
  */
 u8 Sd_AudioStreamingCheck(void);
 
-u16 func_80045BC8(void);
+u16 Sd_ChannelTaskGet(void);
 
 /** @brief Sound effect management and VAB + KDT file load.
  * Scratch: https://decomp.me/scratch/AA6ui
@@ -439,11 +439,11 @@ void Sd_StopBgm(void);
 
 void Sd_StopBgmStep(void);
 
-/** Returns the current BGM audio layer volume based on the PSX's MIDI channel. Returns Q7 value?? */
-u8 Sd_BgmLayerVolumeGet(u8 layerIdx);
+/** Returns the current BGM audio channel volume based on the PSX's MIDI channel. Returns Q7 value?? */
+u8 Sd_BgmChannelVolumeGet(u8 channelIdx);
 
-/** Manipulates the BGM audio layer volume. */
-void Sd_ChannelsVolumeSet(u8 layerIdx, u8 vol);
+/** Manipulates the BGM audio channel volume. */
+void Sd_ChannelsVolumeSet(u8 channelIdx, u8 vol);
 
 /** @brief Loads and plays XA audio in `g_XaItemData`. */
 void Sd_XaAudioPlay(void);
@@ -539,7 +539,7 @@ void func_800485C0(s32 idx);
 
 /** @brief Executes a new primitive command and checks the status against the previous.
  * If the previous primitive commands haven't completed, it starts
- * adding to `g_Sd_AudioWork.cdErrorCount_0` each time the process fails. When it
+ * adding to `g_Sd_AudioWork.cdErrorCount` each time the process fails. When it
  * reaches 600 failed attemps, it restarts the CD-ROM system.
  */
 u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res);

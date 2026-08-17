@@ -299,13 +299,13 @@ void SysState_GamePaused_Update(void) // 0x800391E8
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_Controller0->buttonFlags.held == (ControllerFlag_L3          |
-                                         ControllerFlag_DpadLeft    |
-                                         ControllerFlag_L2          |
-                                         ControllerFlag_L1          |
-                                         ControllerFlag_LStickLowLeft |
-                                         ControllerFlag_RStickLowLeft  |
-                                         ControllerFlag_LStickHighLeft)) &&
+    if ((g_Controller0->buttonFlags.held == (ControllerFlag_L3               |
+                                             ControllerFlag_DpadLeft         |
+                                             ControllerFlag_L2               |
+                                             ControllerFlag_L1               |
+                                             ControllerFlag_LStickLowLeft    |
+                                             ControllerFlag_RStickLowLeft    |
+                                             ControllerFlag_LStickHighLeft)) &&
         (g_Controller0->buttonFlags.clicked & ControllerFlag_L3))
     {
         D_800A9A68 = 0;
@@ -643,7 +643,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     else
     {
         g_SysWork.processFlags = ProcessFlag_RoomTransition;
-        Bgm_TrackChange(g_MapEventData->mapIdx);
+        Bgm_SongChange(g_MapEventData->mapIdx);
 
         if (g_MapOverlayHdr.mapPoints[g_MapEventData->eventParam].field_4_5 != 0)
         {

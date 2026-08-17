@@ -8,7 +8,7 @@
 
 #include "bodyprog/anim.h"
 #include "bodyprog/chara/chara.h"
-#include "bodyprog/events/bgm.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/items.h"
 #include "bodyprog/model.h"
@@ -487,7 +487,7 @@ typedef struct _SysWork
     /* 0x2510   */ s32              field_2510;
     /* 0x2514   */ s_SysWork_2514   field_2514;
     /* 0x254C   */ s8               field_254C[508]; /** Used through indirect pointer calls. Tied to `libkpad`.*/
-    /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT];
+    /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT]; // Last index value is not a layer, but some sort of timer. See `Bgm_LayersUpdate`.
                    // 2 bytes of padding.
     /* 0x275C   */ q23_8            field_275C; // } SFX volumes?
     /* 0x2760   */ q23_8            field_2760; // }

@@ -6,7 +6,7 @@
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/chara/chara_model.h"
 #include "bodyprog/chara/spawn.h"
-#include "bodyprog/events/bgm.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/events_util.h"
 #include "bodyprog/events/map_msg.h"
 #include "bodyprog/formats/ipd.h"
@@ -1625,31 +1625,6 @@ void func_8008E5B4(void);
 void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY);
 
 void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY);
-
-// =========================
-// `bodyprog_bgm_80087EA8.c`
-// =========================
-
-/** @brief Plays a new background music track. If the track is already playing, the request is ignored.
- *
- * @param bgmIdx Index of the background music track to play.
- */
-void Bgm_PlayNewTrack(s32 bgmIdx);
-
-/** @brief Handles a multi-step crossfade to a new track.
- *
- * @param bgmIdx Index of the background music track to play.
- */
-void Bgm_CrossfadeToTrack(s32 bgmIdx);
-
-/** @brief Crossfades the currently playing background music track to silence. */
-void Bgm_CrossfadeToSilence(void);
-
-/** State handler. */
-void func_80088048(void);
-
-/** State handler. */
-void func_800880F0(bool bool);
 
 // ========================
 

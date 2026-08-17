@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/dms.h"
+#include "bodyprog/events/bgm_utils.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
@@ -74,12 +75,12 @@ void func_800E0B90(void) // 0x800E0B90
         bgmIdx = BgmCmd_Track14;
     }
 
-    Bgm_TrackChange(bgmIdx);
+    Bgm_SongChange(bgmIdx);
 }
 
 void func_800E0C10(void) // 0x800E0C10
 {
-    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
+    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800E0C50
@@ -1937,7 +1938,7 @@ void func_800E514C(void) // 0x800E514C
                 Savegame_EventFlagClear(EventFlag_576);
             }
 
-            Bgm_PlayNewTrack(BgmCmd_Track40);
+            Bgm_PlayNewSong(BgmCmd_Track40);
             SysWork_StateStepIncrement(0);
 
         case 22:

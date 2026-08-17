@@ -184,21 +184,22 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
             }
         }
         
-        // Performs multiple checks to initialize slot elements.
-        //
-        // 1. If the memory card is unavailable: 
-        //    Sets the first element to reflect the current memory card state.
-        //
-        // 2. If the memory card is available but contains no files:
-        //    - Displays "no save available" if the screen is in loading mode.
-        //    - Displays "out of blocks" if the card is detected as empty.
-        //    - Displays "create new file" if the screen is in save mode.
-        //
-        // 3. If the screen is in load mode and a damaged file is detected:
-        //    Assigns the damaged file message to the slot.
-        //
-        // 4. Otherwise:
-        //    Reads and updates all slot elements from memory.
+        /** Performs multiple checks to initialize slot elements.
+         *
+         * 1) If the memory card is unavailable: 
+         * Sets the first element to reflect the current memory card state.
+         *
+         * 2) If the memory card is available but contains no files:
+         * - Displays "no save available" if the screen is in loading mode.
+         * - Displays "out of blocks" if the card is detected as empty.
+         * - Displays "create new file" if the screen is in save mode.
+         *
+         * 3) If the screen is in load mode and a damaged file is detected:
+         * Assigns the damaged file message to the slot.
+         *
+         * 4) Otherwise:
+         * Reads and updates all slot elements from memory.
+         */
         if (memCardStatus != MemCardState_Available)
         {
             switch (memCardStatus)
@@ -253,7 +254,7 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
             else
             {
                 g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31700;
-                g_MemCard_ActiveMemCardSlotSaves->type             = SavegameEntryType_NewFile;
+                g_MemCard_ActiveMemCardSlotSaves->type               = SavegameEntryType_NewFile;
 
                 slotIdx = WrapIdx(i);
                 g_Savegame_ElementCount0[slotIdx >> 2]++;
@@ -286,10 +287,10 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
                 if (fileStatus == FileState_Damaged)
                 {
                     g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 0;
-                    g_MemCard_ActiveMemCardSlotSaves->deviceId         = i;
-                    g_MemCard_ActiveMemCardSlotSaves->fileIdx          = j;
-                    g_MemCard_ActiveMemCardSlotSaves->elementIdx       = 0;
-                    g_MemCard_ActiveMemCardSlotSaves->type             = SavegameEntryType_CorruptedSave;
+                    g_MemCard_ActiveMemCardSlotSaves->deviceId           = i;
+                    g_MemCard_ActiveMemCardSlotSaves->fileIdx            = j;
+                    g_MemCard_ActiveMemCardSlotSaves->elementIdx         = 0;
+                    g_MemCard_ActiveMemCardSlotSaves->type               = SavegameEntryType_CorruptedSave;
 
                     slotIdx = WrapIdx(i);
 
@@ -306,12 +307,12 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
                         saveMetadata = MemCard_SaveMetadataGet(i, j, k);
 
                         g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = saveMetadata->totalSavegameCount;
-                        g_MemCard_ActiveMemCardSlotSaves->deviceId         = i;
-                        g_MemCard_ActiveMemCardSlotSaves->fileIdx          = j;
-                        g_MemCard_ActiveMemCardSlotSaves->elementIdx       = k;
-                        g_MemCard_ActiveMemCardSlotSaves->savegameCount    = saveMetadata->savegameCount;
-                        g_MemCard_ActiveMemCardSlotSaves->locationId       = saveMetadata->locationId;
-                        g_MemCard_ActiveMemCardSlotSaves->saveMetadata     = saveMetadata;
+                        g_MemCard_ActiveMemCardSlotSaves->deviceId           = i;
+                        g_MemCard_ActiveMemCardSlotSaves->fileIdx            = j;
+                        g_MemCard_ActiveMemCardSlotSaves->elementIdx         = k;
+                        g_MemCard_ActiveMemCardSlotSaves->savegameCount      = saveMetadata->savegameCount;
+                        g_MemCard_ActiveMemCardSlotSaves->locationId         = saveMetadata->locationId;
+                        g_MemCard_ActiveMemCardSlotSaves->saveMetadata       = saveMetadata;
 
                         if (saveMetadata->totalSavegameCount > 0)
                         {
@@ -326,7 +327,7 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
                         else if (g_SaveScreen_SaveScreenState == SaveScreenState_Save && isWriteNewSaveAvailable[i] == false)
                         {
                             isWriteNewSaveAvailable[i]                           = true;
-                            g_MemCard_ActiveMemCardSlotSaves->type             = SavegameEntryType_NewSave;
+                            g_MemCard_ActiveMemCardSlotSaves->type               = SavegameEntryType_NewSave;
                             g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31900;
 
                             slotIdx = WrapIdx(i);
@@ -340,8 +341,8 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
 
             if (g_SaveScreen_SaveScreenState == SaveScreenState_Save && isWriteNewSaveAvailable[i] == false && MemCard_FreeFilesCount(i) > 0)
             {
-                g_MemCard_ActiveMemCardSlotSaves->savegameCount    = 0;
-                g_MemCard_ActiveMemCardSlotSaves->saveMetadata     = NULL;
+                g_MemCard_ActiveMemCardSlotSaves->savegameCount      = 0;
+                g_MemCard_ActiveMemCardSlotSaves->saveMetadata       = NULL;
                 isWriteNewSaveAvailable[i]                           = true;
                 g_MemCard_ActiveMemCardSlotSaves->totalSavegameCount = 31800;
                 slotFilesStatus                                      = fileStatuses[i];

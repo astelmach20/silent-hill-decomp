@@ -86,7 +86,7 @@ void func_800D5614(void) // 0x800D5614
             SysWork_StateStepIncrement(0);
 
         case 1:
-            if (!Sd_AmbientSfxInit())
+            if (Sd_AmbientSfxInit() == 0)
             {
                 SysWork_StateStepIncrement(0);
             }

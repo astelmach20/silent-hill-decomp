@@ -59,10 +59,10 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
 
 /** @brief Draws memory card state.
  *
- * @param g_SaveScreen_SaveScreenState `e_SaveScreenState`
+ * @param saveScreenState `e_SaveScreenState`
  * @param memCardState `e_MemCardResult`
  */
-void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardState);
+void SaveScreen_MemCardStateDraw(s32 saveScreenState, s32 memCardState);
 
 /** @brief Draws options writing options when the
  * player is overwriting a save or is formatting

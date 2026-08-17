@@ -6,5 +6,5 @@ void Map_RoomBgmInit_CondTrue(void)
     s32 mapOverlayVal;
 
     mapOverlayVal = !Savegame_EventFlagGet(EventFlag_295) ? OVERLAY_VAL_OFF : OVERLAY_VAL_ON;
-    Bgm_TrackChange(mapOverlayVal);
+    Bgm_SongChange(mapOverlayVal);
 }

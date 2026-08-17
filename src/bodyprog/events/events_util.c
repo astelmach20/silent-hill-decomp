@@ -870,7 +870,7 @@ void Event_DisplayBgTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fa
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+                                                      g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(1);
             }

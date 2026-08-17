@@ -31,7 +31,7 @@ void Map_RoomBgmInit_CondTrue(void) // 0x800DA7AC
         bgmIdx = BgmCmd_Track6;
     }
 
-    Bgm_TrackChange(bgmIdx);
+    Bgm_SongChange(bgmIdx);
 }
 
 void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC

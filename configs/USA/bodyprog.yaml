@@ -216,10 +216,20 @@ segments:
       - [0x4B7C0,    c, collision/chara]
       - [0x4BB84,    c, player_control]
       - [0x5BDE0,    c, view/vc_main]
-      - [0x61218,    c, events/events_util]
-      - [0x63348,    c, events/bodyprog_bgm_80087EA8]
-      - [0x63658,    c, gfx/bodyprog_2d_800881B8]
-      - [0x6411C,    c, chara_spawn]
+                                                      # These files may be from a different path than `events/`
+                                                      # considering their position, they still related to events,
+                                                      # however, while all the previously listed files in `events/`
+                                                      # are code that covers general game elements (with the exception
+                                                      # of main menu) or core game functionallity, these files contains
+                                                      # code for specific events of the game. Most of this functions
+                                                      # are call in the contrary way the other `events/` functions, while
+                                                      # previously they are mostly calling functions or retrieving data
+                                                      # from the map overlay the function in these files are mostly
+                                                      # being call from the map overlay.
+      - [0x61218,    c, events/events_util]           # }
+      - [0x63348,    c, events/bgm_utils]             # }
+      - [0x63658,    c, events/events_2d_draw_utils]  # }
+      - [0x6411C,    c, events/chara_spawn]           # }
       - [0x64530,    c, bodyprog_80089090] # Uses `s_SysWork_2514` which is mainly used for `libkpad`, possibly vibration?
       - [0x654F8,    c, bodyprog_combat_8008A058]
       - [0x67E40,    c, dms]

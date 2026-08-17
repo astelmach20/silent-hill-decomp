@@ -371,13 +371,13 @@ Fs_CharaAnimBoneInfoSet                      = 0x8003536C; // type:func
 //----------------------------------------------------------------------------------
 //--- PA: 0x0108F0   VA: 0x80035450   subsegment: c, game_boot/background_sound_init
 //----------------------------------------------------------------------------------
-Bgm_Init                                     = 0x80035450; // type:func
-Bgm_ActiveTrackCheck                         = 0x80035578; // type:func
-Bgm_TrackSet                                 = 0x800355AC; // type:func
-Bgm_ChannelSet                               = 0x800355F4; // type:func
-Bgm_UpdateTrack                              = 0x8003563C; // type:func
+Sd_BgmInit                                   = 0x80035450; // type:func
+Sd_BgmActiveSongCheck                        = 0x80035578; // type:func
+Sd_BgmSongSet                                = 0x800355AC; // type:func
+Sd_BgmChannelSet                             = 0x800355F4; // type:func
+Sd_BgmUpdateTrack                            = 0x8003563C; // type:func
 Sd_AmbientSfxInit                            = 0x8003566C; // type:func
-Sd_ActiveAmbientCheck                        = 0x80035780; // type:func
+Sd_ActiveAmbientSfxCheck                     = 0x80035780; // type:func
 Sd_AmbientSfxSet                             = 0x80035798; // type:func
 
 //------------------------------------------------------------------------
@@ -393,12 +393,12 @@ GameBoot_LoadScreen_PlayerRun                = 0x800358B0; // type:func
 //--- PA: 0x010F24   VA: 0x80035A84   subsegment: c, events/bgm
 //-------------------------------------------------------------
 Bgm_Update                                   = 0x80035A84; // type:func
-Bgm_AllLayersMute                            = 0x80035AEC; // type:func
-Bgm_LayerOnCheck                             = 0x80035B14; // type:func
-Bgm_GlobalLayerVariablesUpdate               = 0x80035BA0; // type:func
+Bgm_LayerGlobalVariablesMute                 = 0x80035AEC; // type:func
+Bgm_MuteCheck                                = 0x80035B14; // type:func
+Bgm_LayerGlobalVariablesUpdate               = 0x80035BA0; // type:func
 Bgm_LayersUpdate                             = 0x80035C1C; // type:func
 Bgm_MenuUpdate                               = 0x800360A0; // type:func
-Bgm_TrackChange                              = 0x800360DC; // type:func
+Bgm_SongChange                               = 0x800360DC; // type:func
 Game_MapRoomIdxUpdate                        = 0x800360F0; // type:func
 func_8003647C                                = 0x8003614C; // type:func
 func_80036498                                = 0x80036168; // type:func
@@ -717,7 +717,7 @@ func_80045534                                = 0x80045268; // type:func
 //----------------------------------------------------------------
 SD_Call                                      = 0x800457B0; // type:func
 Sd_AudioStreamingCheck                       = 0x8004585C; // type:func
-func_80045BC8                                = 0x800458FC; // type:func
+Sd_ChannelTaskGet                            = 0x800458FC; // type:func
 SD_BranchCTRL                                = 0x8004590C; // type:func
 Sd_AudioSystemSet                            = 0x80045A5C; // type:func
 SD_Init                                      = 0x80045B08; // type:func
@@ -736,7 +736,7 @@ func_80046A70                                = 0x800467A4; // type:func
 Sd_StopBgmTaskAdd                            = 0x8004680C; // type:func
 Sd_StopBgm                                   = 0x80046838; // type:func
 Sd_StopBgmStep                               = 0x800468AC; // type:func
-Sd_BgmLayerVolumeGet                         = 0x800468E8; // type:func
+Sd_BgmChannelVolumeGet                       = 0x800468E8; // type:func
 Sd_ChannelsVolumeSet                         = 0x80046988; // type:func
 Sd_XaAudioPlayTaskAdd                        = 0x80046A70; // type:func
 Sd_XaAudioLengthGet                          = 0x80046B00; // type:func
@@ -1332,11 +1332,11 @@ Event_PaperMapTake                           = 0x80089530; // type:func
 //------------------------------------------------------------------------
 //--- PA: 0x064D84   VA: 0x800898E4   subsegment: c, bodyprog_bgm_80087EA8
 //------------------------------------------------------------------------
-Bgm_PlayNewTrack                             = 0x800898E4; // type:func
+Bgm_PlayNewSong                              = 0x800898E4; // type:func
 Bgm_CrossfadeToTrack                         = 0x80089918; // type:func
 Bgm_CrossfadeToSilence                       = 0x80089A64; // type:func
-func_80088048                                = 0x80089A84; // type:func
-func_800880F0                                = 0x80089B2C; // type:func
+Bgm_SongStopImmediately                      = 0x80089A84; // type:func
+Bgm_SongStopFadeout                          = 0x80089B2C; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x065094   VA: 0x80089BF4   subsegment: c, bodyprog_800881B8
@@ -2804,7 +2804,7 @@ D_800A998C                                   = 0x800ABD28;
 //-----------------------------------------------------------------
 D_800A999C                                   = 0x800ABD38;
 g_Bgm_ChannelSetProcessState                 = 0x800ABD3C;
-g_Bgm_LayerLimits                            = 0x800ABD40;
+g_Bgm_ChannelLimits                          = 0x800ABD40;
 
 //------------------------------------------------------------------------------------
 //--- PA: 0x0871F0   VA: 0x800ABD50   subsegment: .data, events/bodyprog_data_800A99B4

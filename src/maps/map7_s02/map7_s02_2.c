@@ -54,12 +54,12 @@ void func_800D9864(void) // 0x800D9864
         bgmIdx = BgmCmd_Track14;
     }
 
-    Bgm_TrackChange(bgmIdx);
+    Bgm_SongChange(bgmIdx);
 }
 
 void func_800D98E4(void) // 0x800D98E4
 {
-    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
+    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D9924
@@ -253,7 +253,7 @@ void func_800DA248(void) // 0x800DA248
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
-            Bgm_TrackChange(BgmCmd_Track4);
+            Bgm_SongChange(BgmCmd_Track4);
             SysWork_StateStepIncrement(0);
 
         case 1:

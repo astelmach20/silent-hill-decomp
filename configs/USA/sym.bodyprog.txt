@@ -269,13 +269,13 @@ Fs_CharaAnimBoneInfoSet                      = 0x8003569C; // type:func
 //----------------------------------------------------------------------------------
 //--- PA: 0x010C20   VA: 0x80035780   subsegment: c, game_boot/background_sound_init
 //----------------------------------------------------------------------------------
-Bgm_Init                                     = 0x80035780; // type:func
-Bgm_ActiveTrackCheck                         = 0x800358A8; // type:func
-Bgm_TrackSet                                 = 0x800358DC; // type:func
-Bgm_ChannelSet                               = 0x80035924; // type:func
-Bgm_UpdateTrack                              = 0x8003596C; // type:func
+Sd_BgmInit                                   = 0x80035780; // type:func
+Sd_BgmActiveSongCheck                        = 0x800358A8; // type:func
+Sd_BgmSongSet                                = 0x800358DC; // type:func
+Sd_BgmChannelSet                             = 0x80035924; // type:func
+Sd_BgmUpdateTrack                            = 0x8003596C; // type:func
 Sd_AmbientSfxInit                            = 0x8003599C; // type:func
-Sd_ActiveAmbientCheck                        = 0x80035AB0; // type:func
+Sd_ActiveAmbientSfxCheck                     = 0x80035AB0; // type:func
 Sd_AmbientSfxSet                             = 0x80035AC8; // type:func
 
 //------------------------------------------------------------------------
@@ -290,12 +290,12 @@ GameBoot_LoadScreen_PlayerRun                = 0x80035BE0; // type:func
 //--- PA: 0x011254   VA: 0x80035DB4   subsegment: c, events/bgm_update
 //--------------------------------------------------------------------
 Bgm_Update                                   = 0x80035DB4; // type:func
-Bgm_AllLayersMute                            = 0x80035E1C; // type:func
-Bgm_LayerOnCheck                             = 0x80035E44; // type:func
-Bgm_GlobalLayerVariablesUpdate               = 0x80035ED0; // type:func
+Bgm_LayerGlobalVariablesMute                 = 0x80035E1C; // type:func
+Bgm_MuteCheck                                = 0x80035E44; // type:func
+Bgm_LayerGlobalVariablesUpdate               = 0x80035ED0; // type:func
 Bgm_LayersUpdate                             = 0x80035F4C; // type:func
 Bgm_MenuUpdate                               = 0x800363D0; // type:func
-Bgm_TrackChange                              = 0x8003640C; // type:func
+Bgm_SongChange                               = 0x8003640C; // type:func
 Game_MapRoomIdxUpdate                        = 0x80036420; // type:func
 
 //-------------------------------------------------------------------------
@@ -576,6 +576,7 @@ Skeleton_BoneModelAssign                     = 0x800451B0; // type:func
 //----------------------------------------------------------------
 SD_Call                                      = 0x80045A7C; // type:func
 Sd_AudioStreamingCheck                       = 0x80045B28; // type:func
+Sd_ChannelTaskGet                            = 0x80045BC8;
 SD_BranchCTRL                                = 0x80045BD8; // type:func
 Sd_AudioSystemSet                            = 0x80045D28; // type:func
 SD_Init                                      = 0x80045DD4; // type:func
@@ -591,7 +592,7 @@ Sd_AllSfxWithRRStop                          = 0x800469E8; // type:func
 Sd_StopBgmTaskAdd                            = 0x80046AD8; // type:func
 Sd_StopBgm                                   = 0x80046B04; // type:func
 Sd_StopBgmStep                               = 0x80046B78; // type:func
-Sd_BgmLayerVolumeGet                         = 0x80046BB4; // type:func
+Sd_BgmChannelVolumeGet                       = 0x80046BB4; // type:func
 Sd_ChannelsVolumeSet                         = 0x80046C54; // type:func
 Sd_XaAudioPlayTaskAdd                        = 0x80046D3C; // type:func
 Sd_XaAudioLengthGet                          = 0x80046DCC; // type:func
@@ -1054,22 +1055,23 @@ Event_ItemTake                               = 0x800877B8; // type:func
 Event_CommonItemTake                         = 0x800879FC; // type:func
 Event_PaperMapTake                           = 0x80087AF4; // type:func
 
-//-------------------------------------------------------------------------------
-//--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, events/bodyprog_bgm_80087EA8
-//-------------------------------------------------------------------------------
-Bgm_PlayNewTrack                             = 0x80087EA8; // type:func
+//-------------------------------------------------------------------
+//--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, events/bgm_utils
+//-------------------------------------------------------------------
+Bgm_PlayNewSong                              = 0x80087EA8; // type:func
 Bgm_CrossfadeToTrack                         = 0x80087EDC; // type:func
 Bgm_CrossfadeToSilence                       = 0x80088028; // type:func
+Bgm_SongStopFadeout                          = 0x800880F0;
 
-//---------------------------------------------------------------------------
-//--- PA: 0x063658   VA: 0x800881B8   subsegment: c, gfx/bodyprog_2d_800881B8
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//--- PA: 0x063658   VA: 0x800881B8   subsegment: c, events/events_2d_draw_utils
+//------------------------------------------------------------------------------
 Gfx_CursorDraw                               = 0x800881B8;
 Map_BoxOutlineDraw                           = 0x80088370;
 
-//--------------------------------------------------------------
-//--- PA: 0x06411C   VA: 0x80088C7C   subsegment: c, chara_spawn
-//--------------------------------------------------------------
+//---------------------------------------------------------------------
+//--- PA: 0x06411C   VA: 0x80088C7C   subsegment: c, events/chara_spawn
+//---------------------------------------------------------------------
 Chara_Load                                   = 0x80088C7C; // type:func
 Chara_ProcessLoads                           = 0x80088D0C; // type:func
 Chara_BonesInit                              = 0x80088D34; // type:func
@@ -2518,7 +2520,7 @@ g_CharaAnimDataIdxs                          = 0x800A98FC;
 g_CharaModelAnimsData                        = 0x800A992C;
 D_800A998C                                   = 0x800A998C; // type:AnimInfo size:0x10
 g_Bgm_ChannelSetProcessState                 = 0x800A99A0;
-g_Bgm_LayerLimits                            = 0x800A99A4;
+g_Bgm_ChannelLimits                          = 0x800A99A4;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x084E4C   VA: 0x800A99AC   subsegment: .data, text/map_msg_display
