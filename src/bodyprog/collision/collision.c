@@ -533,8 +533,8 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
 {
     s_CollisionState     state;
     VECTOR3              sp120; // Q19.12
-    VECTOR3              moveOffset1;
-    VECTOR3              moveOffsetCpy;
+    VECTOR3              moveOffsetCpy1;
+    VECTOR3              moveOffsetCpy0;
     s32                  var_a0;
     s32                  i;
     bool                 cond;
@@ -553,19 +553,18 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
         return false;
     }
 
-    // Apply slowdown to move offset.
-    Collision_TargetCharaCollidingSlowDown(moveOffset, cylinder, charas, charaCount);
+    // Dampen movement offset.
+    Collision_MoveOffsetDampen(moveOffset, cylinder, charas, charaCount);
 
-    moveOffsetCpy             = *moveOffset;
-    collResult->ceilingHeight = Collision_CeilingHeightGet(&moveOffsetCpy, cylinder, cylinder->radius, cylinder->top);
+    moveOffsetCpy0            = *moveOffset;
+    collResult->ceilingHeight = Collision_CeilingHeightGet(&moveOffsetCpy0, cylinder, cylinder->radius, cylinder->top);
+    Collision_CollStateInit(&state, &moveOffsetCpy0, cylinder, arg3);
 
-    Collision_CollStateInit(&state, &moveOffsetCpy, cylinder, arg3);
-
-    moveOffset1 = moveOffsetCpy;
-
+    // Apply movement offset.
+    moveOffsetCpy1        = moveOffsetCpy0;
     collResult->offset.vz = Q12(0.0f);
     collResult->offset.vx = Q12(0.0f);
-    collResult->offset.vy = moveOffsetCpy.vy;
+    collResult->offset.vy = moveOffsetCpy0.vy;
 
     while (true)
     {
@@ -588,7 +587,8 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
             Collision_CharaCollisionHandle(&state, *curCollData);
         }
 
-        if (state.field_44.field_0.field_0 && state.field_44.field_0.field_2.vx == state.field_44.field_0.field_2.vy)
+        if (state.field_44.field_0.field_0 &&
+            state.field_44.field_0.field_2.vx == state.field_44.field_0.field_2.vy)
         {
             cond |= true;
         }
@@ -626,7 +626,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
             func_8006CF18(&state, chara->collision.field_E4, chara->collision.field_E1_4);
         }
 
-        func_8006D01C(&sp120, &moveOffset1, Collision_OffsetAlphaGet(&state), &state);
+        func_8006D01C(&sp120, &moveOffsetCpy1, Collision_OffsetAlphaGet(&state), &state);
 
         collResult->offset.vx += sp120.vx;
         collResult->offset.vz += sp120.vz;
@@ -659,7 +659,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
         }
 
         state.field_0_0 = true;
-        func_8006D774(&state, &sp120, &moveOffset1);
+        func_8006D774(&state, &sp120, &moveOffsetCpy1);
     }
 
     if (state.heightDisabled == true)
@@ -686,16 +686,18 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
     return state.field_0_0 != false;
 }
 
-void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder,
-                                            s_SubCharacter** charas, s32 charaCount) // 0x8006A940
+void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CollisionCylinder* cylinder,
+                                s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
+    #define SLOWDOWN_MAX Q12(0.4f)
+    
     q19_12          headingAngle;
     q19_12          cylinderOffsetZ;
     q19_12          cylinderOffsetX;
-    q19_12          var_a0;
+    q19_12          collAngleDelta;
     s32             i;
-    q19_12          offsetAlpha;
-    q19_12          var_v0;
+    q19_12          slowdownAlpha;
+    q19_12          slowdownAlphaReduction;
     s32             dist;
     q19_12          curCharaTop;
     q19_12          curCharaBottom;
@@ -703,8 +705,8 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
     q19_12          otherCharaTop;
     s_SubCharacter* curChara;
 
-    offsetAlpha  = Q12(1.0f);
-    headingAngle = ratan2(offset->vx, offset->vz);
+    slowdownAlpha = Q12(1.0f);
+    headingAngle  = ratan2(moveOffset->vx, moveOffset->vz);
 
     // Run through characters to collide.
     for (i = 0; i < charaCount; i++)
@@ -740,26 +742,31 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
             continue;
         }
 
-        // TODO: Check what this is doing. Computes a slowdown alpha based on the angle at which the cylinders collided?
-        var_a0 = Q12_MULT(Math_Cos(ratan2(cylinderOffsetX, cylinderOffsetZ) - headingAngle), Q12(1.5f));
-        var_v0 = MAX(var_a0, Q12(0.0f));
-        var_a0 = var_v0;
+        // Compute directional alignment.
+        collAngleDelta = Q12_MULT(Math_Cos(ratan2(cylinderOffsetX, cylinderOffsetZ) - headingAngle), Q12(1.5f));
+
+        // Clamp to produce no slowdown when moving away or sideways.
+        slowdownAlphaReduction = MAX(collAngleDelta, Q12(0.0f));
+
+        // Cap maximum slowdown per character collision with unique case for Hanged Scratcher.
+        collAngleDelta = slowdownAlphaReduction; // @hack From here, `collAngleDelta` used as `slowdownAlphaReduction` for match.
         if (curChara->model.charaId == Chara_HangedScratcher)
         {
-            var_a0 = MIN(var_a0, Q12(0.6f));
+            collAngleDelta = MIN(collAngleDelta, Q12(0.6f));
         }
         else
         {
-            var_a0 = MIN(var_a0, Q12(0.4f));
+            collAngleDelta = MIN(collAngleDelta, Q12(0.4f));
         }
 
-        offsetAlpha -= var_a0;
+        // Adjust slowdown alpha.
+        slowdownAlpha -= collAngleDelta;
     }
 
-    // Adjust displacement offset.
-    offsetAlpha = MAX(offsetAlpha, Q12(0.4f));
-    offset->vx  = Q12_MULT(offsetAlpha, offset->vx);
-    offset->vz  = Q12_MULT(offsetAlpha, offset->vz);
+    // Apply slowdown to displacement offset.
+    slowdownAlpha  = MAX(slowdownAlpha, Q12(0.4f));
+    moveOffset->vx = Q12_MULT(slowdownAlpha, moveOffset->vx);
+    moveOffset->vz = Q12_MULT(slowdownAlpha, moveOffset->vz);
 }
 
 void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3) // 0x8006AB50
