@@ -2420,7 +2420,7 @@ void AirScreamer_Control_8(s_SubCharacter* airScreamer)
         case 3:
             sharedFunc_800DDF74_2_s00(airScreamer, unkDist / 2, unkAngle);
 
-#define angleDiff Q12_ANGLE_NORM_S(unkAngle - airScreamer->rotation.vy)
+            #define angleDiff Q12_ANGLE_NORM_S(unkAngle - airScreamer->rotation.vy)
 
             if (temp_s3 != 0)
             {
@@ -2436,7 +2436,7 @@ void AirScreamer_Control_8(s_SubCharacter* airScreamer)
             }
             break;
 
-#undef angleDiff
+            #undef angleDiff
 
         case 4:
             if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) ||
@@ -4871,7 +4871,7 @@ void AirScreamer_Control_23(s_SubCharacter* airScreamer)
     switch (airScreamer->model.stateStep)
     {
         case 0:
-#define angleDiff Q12_ANGLE_NORM_S(g_SysWork.playerWork.player.rotation.vy - airScreamer->rotation.vy)
+            #define angleDiff Q12_ANGLE_NORM_S(g_SysWork.playerWork.player.rotation.vy - airScreamer->rotation.vy)
 
             distTest = dist0 + (Rng_RandQ12() * 4);
             if (sharedFunc_800DC200_2_s00(airScreamer) && distTest > Q12(8.0f))
@@ -8284,7 +8284,7 @@ void AirScreamer_Control_45(s_SubCharacter* airScreamer)
     bool cond;
     s32  animStatus;
 
-#define airScreamerFlags airScreamerProps
+    #define airScreamerFlags airScreamerProps
 
     cond       = false;
     animStatus = airScreamer->model.anim.status;
@@ -9529,7 +9529,7 @@ void sharedFunc_800DD534_2_s00(s_SubCharacter* airScreamer)
 
 void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
 {
-#define ANGLE_STEP_COUNT 16
+    #define ANGLE_STEP_COUNT 16
 
     q19_12 posX;
     q19_12 posY;
@@ -9611,13 +9611,13 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
     airScreamer->moveSpeed  = sharedData_800CAA98_0_s01.field_380[9][0];
     airScreamerProps.timer_120 = Q12(10.0f);
 
-#undef ANGLE_STEP_COUNT
+    #undef ANGLE_STEP_COUNT
 }
 
 void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
 {
-#define ANGLE_STEP_COUNT 16
-#define RADIUS           Q12(30.0f)
+    #define ANGLE_STEP_COUNT 16
+    #define RADIUS           Q12(30.0f)
 
     q19_12 posX;
     q19_12 posY;
@@ -9676,8 +9676,8 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
     airScreamer->moveSpeed  = sharedData_800CAA98_0_s01.field_380[9][0];
     airScreamerProps.timer_120 = Q12(10.0f);
 
-#undef ANGLE_STEP_COUNT
-#undef RADIUS
+    #undef ANGLE_STEP_COUNT
+    #undef RADIUS
 }
 
 void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer)
@@ -10261,8 +10261,8 @@ void sharedFunc_800DE7E0_2_s00(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
 {
-#define PLAYER_ANGLE_RANGE       Q12_ANGLE(60.0f)
-#define AIR_SCREAMER_ANGLE_RANGE Q12_ANGLE(90.0f)
+    #define PLAYER_ANGLE_RANGE       Q12_ANGLE(60.0f)
+    #define AIR_SCREAMER_ANGLE_RANGE Q12_ANGLE(90.0f)
 
     q19_12 targetPosX;
     q19_12 targetPosY;
@@ -10346,8 +10346,8 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
     // Additional processing.
     sharedFunc_800D4E84_0_s01(airScreamer);
 
-#undef PLAYER_ANGLE_RANGE
-#undef AIR_SCREAMER_ANGLE_RANGE
+    #undef PLAYER_ANGLE_RANGE
+    #undef AIR_SCREAMER_ANGLE_RANGE
 }
 
 #ifndef MAP0_S01

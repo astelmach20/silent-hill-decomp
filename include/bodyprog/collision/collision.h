@@ -296,7 +296,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
  * @param collResult Output collision result with the XZ offset vector adjusted to push away from a wall.
  * @param pos Center position.
  * @param groundHeight Base ground height.
- * @param headingAngle Starting heading angle on the XZ plane for the probe circle.
+ * @param headingAngle Start heading angle on the XZ plane for the probe circle.
  */
 void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_12 groundHeight, q19_12 headingAngle);
 
@@ -341,9 +341,9 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s
 
 s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* cylinder);
 
-bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3,
-                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
-                   s_SubCharacter** charas, s32 charaCount);
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3,
+                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
+                  s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Slows down colliding characters according to relational cylinder collision. */
 void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder,

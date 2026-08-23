@@ -190,9 +190,10 @@ s32 Collision_WallDetect(s_CollisionResult* collResult, const VECTOR3* moveOffse
 s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara, s32 response) // 0x80069BA8
 {
     #define POINT_COUNT          9
-    #define ANGLE_STEP           Q12_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
-    #define WALL_COUNT_THRESHOLD 3                               // Unknown purpose.
-    #define WALL_HEIGHT          Q12(0.5f)
+    #define ANGLE_STEP           Q12_ANGLE(370.0f / POINT_COUNT) // Maybe @bug, or `370.0f` is used instead of `360.0f`
+                                                                 // as a rudimentary way of increasing point density in front. 
+    #define WALL_COUNT_THRESHOLD 3                               // Minimum wall-height floors to detect before a wall is acknowledged.
+    #define WALL_HEIGHT          Q12(0.5f)                       // Floor height to treat as a wall.
 
     s_CollisionSurface surface;
     e_CollisionType    collType;
@@ -245,6 +246,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
                 break;
             }
 
+            // Run through ground heights around character position to detect walls.
             for (i = 0, groundType = GroundType_None; i < POINT_COUNT; i++)
             {
                 Collision_SurfaceGet(&surface,
@@ -254,6 +256,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
                 switch (collType)
                 {
                     case CollisionType_Wall:
+                        // Track wall-height floors.
                         if (surface.groundHeight < wallHeightBound)
                         {
                             wallCount++;
@@ -273,6 +276,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
             switch (collType)
             {
                 case CollisionType_Wall:
+                    // Ignore wall if too few wall-height floors detected.
                     if (wallCount < WALL_COUNT_THRESHOLD)
                     {
                         collResult->surface.groundHeight = chara->position.vy;
@@ -402,6 +406,7 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
 
     offsetCpy = *moveOffset;
 
+    // TODO: Condition related to ceiling detection, exact purpose unclear. See `s_CollisionCharaState::field_4`.
     switch (chara->model.charaId)
     {
         case Chara_Harry:
@@ -508,7 +513,6 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s
     {
         var1 = 1;
     }
-
     return var1;
 }
 
@@ -523,9 +527,9 @@ s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_
                          WorldMap_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3,
-                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
-                   s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
+s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3,
+                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
+                  s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
     s_CollisionState     state;
     VECTOR3              sp120; // Q19.12
@@ -542,15 +546,17 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
 
     cond = false;
 
-    if (cylinder->collisionState == CharaCollisionState_5)
+    // Set default collision result.
+    if (cylinder->collisionState == CharaCollisionState_Default)
     {
         Collision_DefaultResultSet(collResult, moveOffset->vx, moveOffset->vy, moveOffset->vz, cylinder->position.vy);
         return false;
     }
 
+    // Apply slowdown to move offset.
     Collision_TargetCharaCollidingSlowDown(moveOffset, cylinder, charas, charaCount);
 
-    moveOffsetCpy = *moveOffset;
+    moveOffsetCpy             = *moveOffset;
     collResult->ceilingHeight = Collision_CeilingHeightGet(&moveOffsetCpy, cylinder, cylinder->radius, cylinder->top);
 
     Collision_CollStateInit(&state, &moveOffsetCpy, cylinder, arg3);

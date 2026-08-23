@@ -471,7 +471,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             sharedFunc_800D2EB4_0_s00();
             WorldGfx_PlayerHeldItemSet(InvItemId_Handgun);
 
-            g_SysWork.playerWork.player.collision.state = CharaCollisionState_5;
+            g_SysWork.playerWork.player.collision.state = CharaCollisionState_Default;
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 153, false);
             D_800D94F4 = 0;

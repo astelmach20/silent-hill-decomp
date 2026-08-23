@@ -40,12 +40,12 @@ typedef enum _CharaGroupFlags
 /** @brief Character collision states. */
 typedef enum _CharaCollisionState
 {
-    CharaCollisionState_Ignore = 0,
-    CharaCollisionState_Player = 1,
-    CharaCollisionState_2      = 2,
-    CharaCollisionState_Npc    = 3,
-    CharaCollisionState_4      = 4,
-    CharaCollisionState_5      = 5
+    CharaCollisionState_Ignore  = 0,
+    CharaCollisionState_Player  = 1,
+    CharaCollisionState_2       = 2,
+    CharaCollisionState_Npc     = 3,
+    CharaCollisionState_4       = 4,
+    CharaCollisionState_Default = 5
 } e_CharaCollisionState;
 
 /** @brief Character IDs.
