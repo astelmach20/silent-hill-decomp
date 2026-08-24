@@ -409,7 +409,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
     {
         if (!Savegame_EventFlagGet(EventFlag_402))
         {
-            collFlags |= CollisionTriggerFlag_1;
+            collFlags |= CollisionTriggerFlag_Objects;
         }
 
         Text_Debug_PositionSet(30, 30);
@@ -432,7 +432,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EBEE0
                 WorldObjects_Add(&g_WorldObject_DrOpen1.object, &g_WorldObject_DrOpen1.position, &SVECTOR3_Zero);
                 WorldObjects_Add(&g_WorldObject_DrOpen2.object, &g_WorldObject_DrOpen2.position, &SVECTOR3_Zero);
 
-                collFlags |= CollisionTriggerFlag_1;
+                collFlags |= CollisionTriggerFlag_Objects;
             }
             else
             {

@@ -1691,7 +1691,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
                 D_800E05AE += Q12(1.0f);
             }
 
-            Collision_FlagBitsClear(CollisionTriggerFlag_1);
+            Collision_FlagBitsClear(CollisionTriggerFlag_Objects);
             D_800E05A8 += g_DeltaTime;
 
             if (D_800E05AC) {} // @hack
@@ -1742,7 +1742,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         }
         else
         {
-            Collision_FlagBitsClear(CollisionTriggerFlag_1);
+            Collision_FlagBitsClear(CollisionTriggerFlag_Objects);
             WorldObjects_Add(&g_WorldObject_Mal6[1], &g_WorldObject_UnkPos, &g_WorldObject_UnkRot);
         }
     }

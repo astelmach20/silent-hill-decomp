@@ -54,7 +54,7 @@ static s_AudioStreamingStates g_Sd_AudioStreamingStates;
  * to be 48/0x30 bytes, while this is 16/0x10
  * bytes. They are used to adjust the volume channels.
  */
-static s_ChannelsVolumeController gSDVolConfig;
+static s_ChannelVolumesController gSDVolConfig;
 
 static s_800C1688       D_800C1688;
 static s_VabPlayingInfo g_Sd_VabPlayingInfo;

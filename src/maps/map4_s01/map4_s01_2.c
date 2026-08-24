@@ -1218,7 +1218,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
         }
         else
         {
-            Collision_FlagBitsSet(CollisionTriggerFlag_1);
+            Collision_FlagBitsSet(CollisionTriggerFlag_Objects);
         }
 
         WorldObjects_Add(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &SVECTOR3_Zero);

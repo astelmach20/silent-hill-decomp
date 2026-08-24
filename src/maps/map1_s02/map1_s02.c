@@ -1506,7 +1506,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
         // Activate collisions for door blocking corpse in bathroom with shotgun.
         else
         {
-            collFlags = CollisionTriggerFlag_1;
+            collFlags = CollisionTriggerFlag_Objects;
         }
 
         WorldObjects_Add(&g_WorldObject_DoorHid.object, &g_WorldObject_DoorHid.position, &g_WorldObject_DoorHid.rotation);
@@ -1532,7 +1532,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
             Savegame_EventFlagSet(EventFlag_362);
         }
 
-        collFlags |= CollisionTriggerFlag_1;
+        collFlags |= CollisionTriggerFlag_Objects;
     }
     else
     {

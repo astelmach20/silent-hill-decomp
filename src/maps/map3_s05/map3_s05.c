@@ -970,7 +970,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
         {
-            collFlags |= CollisionTriggerFlag_1;
+            collFlags |= CollisionTriggerFlag_Objects;
             Savegame_EventFlagSet(EventFlag_288);
         }
         else

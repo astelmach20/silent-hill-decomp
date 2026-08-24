@@ -23,7 +23,7 @@ void Collision_FlagsLocationUpdate(const s_SubCharacter* chara) // 0x8003BD48
             if (chara->position.vx >= Q12(191.6f) && chara->position.vx <= Q12(198.8f) &&
                 chara->position.vz >= Q12(-96.0f) && chara->position.vz <= Q12(-90.3f))
             {
-                collFlags = (collFlags & ~CollisionTriggerFlag_1) | CollisionTriggerFlag_2;
+                collFlags = (collFlags & ~CollisionTriggerFlag_Objects) | CollisionTriggerFlag_2;
             }
             break;
 
@@ -32,7 +32,7 @@ void Collision_FlagsLocationUpdate(const s_SubCharacter* chara) // 0x8003BD48
             if (chara->position.vx >= Q12(-100.0f) && chara->position.vx <= Q12(-94.5f) &&
                 chara->position.vz >= Q12(-70.3f)  && chara->position.vz <= Q12(-62.0f))
             {
-                collFlags = (collFlags & ~CollisionTriggerFlag_1) | CollisionTriggerFlag_2;
+                collFlags = (collFlags & ~CollisionTriggerFlag_Objects) | CollisionTriggerFlag_2;
             }
     }
 

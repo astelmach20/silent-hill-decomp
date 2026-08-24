@@ -355,7 +355,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         }
         else
         {
-            collFlags = CollisionTriggerFlag_1;
+            collFlags = CollisionTriggerFlag_Objects;
         }
 
         Collision_FlagBitsSet(collFlags);

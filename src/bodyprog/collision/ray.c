@@ -138,7 +138,7 @@ bool func_8006DC18(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset
     return trace->hasHit;
 }
 
-bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR3* from, const VECTOR3* offset, q19_12 arg5, q19_12 arg6,
+bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 radiusOffset, const VECTOR3* from, const VECTOR3* offset, q19_12 arg5, q19_12 arg6,
                     s_SubCharacter** collCharas, s32 collCharaCount)
 {
     if (offset->vx == Q12(0.0f) && offset->vz == Q12(0.0f))
@@ -146,11 +146,11 @@ bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR
         return false;
     }
 
-    state->field_0  = useCylinder;
-    state->field_4  = g_ActiveCollisionTriggers.flags; // Struct could begin some point earlier.
-    state->field_6  = arg2;
-    state->field_8  = SHRT_MAX;
-    state->field_20 = 0;
+    state->field_0      = useCylinder;
+    state->field_4      = g_ActiveCollisionTriggers.flags;  // Struct could begin some point earlier.
+    state->radiusOffset = radiusOffset;
+    state->field_8      = SHRT_MAX;
+    state->field_20     = 0;
 
     state->from.vx = Q12_TO_Q8(from->vx);
     state->from.vy = Q12_TO_Q8(from->vy);
@@ -497,7 +497,7 @@ void func_8006E53C(s_RayState* state, s_IpdCollSubcellRange* subcellRanges, s_Ip
                     (state->field_0 == true ||
                      (temp_a1_2->groundType != GroundType_Default &&
                       temp_a1_2->groundType != GroundType_None)) &&
-                    temp_a1_2->field_8 >= state->field_6)
+                    temp_a1_2->radiusOffset >= state->radiusOffset)
                 {
                     func_8006EB8C(state, temp_a1_2);
                 }
@@ -625,10 +625,10 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
     SVECTOR sp18;
     s16     temp_a1_3;
     s32     temp_v0;
-    s16     temp_a1;
+    q7_8    radiusOffset;
     s32     temp_v1;
 
-    temp_a1 = arg1->field_8;
+    radiusOffset = arg1->radiusOffset;
     if (state->field_5E <= arg1->offset.vy)
     {
         return;
@@ -642,9 +642,10 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
     gte_rtv0();
     gte_stMAC12(&sp10);
 
-    if (-temp_a1 < sp10.vx && sp10.vx < (state->rayDistance + temp_a1) && -temp_a1 < sp10.vy && sp10.vy < temp_a1)
+    if (-radiusOffset < sp10.vx && sp10.vx < (state->rayDistance + radiusOffset) &&
+        -radiusOffset < sp10.vy && sp10.vy < radiusOffset)
     {
-        temp_v0   = SquareRoot0(SQUARE(temp_a1) - SQUARE(sp10.vy));
+        temp_v0   = SquareRoot0(SQUARE(radiusOffset) - SQUARE(sp10.vy));
         temp_a1_3 = sp10.vx - temp_v0;
 
         if (temp_a1_3 >= -temp_v0 && state->rayDistance >= temp_a1_3 && temp_a1_3 < state->field_8)

@@ -41,7 +41,7 @@ typedef struct
 {
     /* 0x0  */ bool             field_0; // "Use cylinder"?
     /* 0x4  */ s16              field_4; // Collision flags.
-    /* 0x6  */ q7_8             field_6;
+    /* 0x6  */ q7_8             radiusOffset;
     /* 0x8  */ q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
     /* 0xA  */ s8               __pad_A[2];
     /* 0xC  */ VECTOR3          field_C; // Q19.12
@@ -110,7 +110,7 @@ bool Ray_LosHitCheck(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offs
 
 bool func_8006DC18(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset);
 
-bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR3* from, const VECTOR3* offset, q19_12 arg5, q19_12 arg6,
+bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 radiusOffset, const VECTOR3* from, const VECTOR3* offset, q19_12 arg5, q19_12 arg6,
                     s_SubCharacter** collCharas, s32 collCharaCount);
 
 bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);

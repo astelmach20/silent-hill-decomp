@@ -676,7 +676,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
         }
         else
         {
-            collFlags = CollisionTriggerFlag_1;
+            collFlags = CollisionTriggerFlag_Objects;
         }
 
         WorldObjects_Add(&g_WorldObject_Movaches.object, &g_WorldObject_Movaches.position, &SVECTOR3_Zero);

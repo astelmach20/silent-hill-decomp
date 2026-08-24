@@ -115,7 +115,7 @@ typedef struct
     u8 field_1;
 } s_800C15F0;
 
-typedef struct
+typedef struct _Sd_AudioWork
 {
     u16 cdErrorCount;           /** Counter for failed attempts when processing a primitive command. */
     u16 xaAudioIdxCheck;        /** XA Audio index. Used to check if the file exists. */
@@ -145,7 +145,7 @@ typedef struct
                                  */
 } s_Sd_AudioWork;
 
-typedef struct
+typedef struct _AudioStreamingStates
 {
     u8 audioLoadState; /** Load VAB audio and KDT music key notes state. */
     u8 xaLoadState;    /** Load XA audio state. */
@@ -155,7 +155,7 @@ typedef struct
 
 // Game audio channels volume configuration struct.
 // @note Could the values of the fields be some sort of fractional value?
-typedef struct
+typedef struct _ChannelVolumesController
 {
     s16 volumeXa_0; /** This and the second field are volume controllers for XA audio files. This field is used more generally while the
                      * second field is used by `Sd_XaAudioPlay` in order to set the audio volume.
@@ -178,7 +178,7 @@ typedef struct
     u8  globalVolumeBgm_D; // Global BGM volume channel.
     u8  globalVolumeXa_E;  // Global Voice volume channel (not configurable).
     u8  reverbDepth_F;
-} s_ChannelsVolumeController;
+} s_ChannelVolumesController;
 
 // Used for the load of XA audios and related to VSync values???
 typedef struct
@@ -205,7 +205,7 @@ typedef struct _VabPlayingInfo
 } s_VabPlayingInfo;
 
 /** @note It is recomended to read VAB file format documentation to fully understand this struct. */
-typedef struct
+typedef struct _VabInfo
 {
     /* 0x0 */ u8  audioVabIdx; /** Index of audio inside VAB files. */
     /* 0x1 */ s8  __pad_1;
@@ -215,7 +215,7 @@ typedef struct
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
-typedef struct
+typedef struct _XaItemData
 {
     /* 0x0    */ u8  xaFileIdx_0;
     /* 0x1    */ s8  __pad_1[3];
@@ -227,7 +227,7 @@ typedef struct
 STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
 // Used to store KDT and VAB data access.
-typedef struct
+typedef struct _AudioItemData
 {
     /* 0x0 */ s8  typeIdx_0;       /** See `e_AudioType`. */
     /* 0x1 */ s8  __pad_1;
@@ -299,7 +299,7 @@ extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
 extern s32 __pad_bss_800C1674;
 
-extern s_ChannelsVolumeController gSDVolConfig;
+extern s_ChannelVolumesController gSDVolConfig;
 
 extern s_800C1688 D_800C1688;
 

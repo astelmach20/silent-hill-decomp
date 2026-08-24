@@ -501,7 +501,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
         }
         else
         {
-            Collision_FlagBitsSet(CollisionTriggerFlag_1);
+            Collision_FlagBitsSet(CollisionTriggerFlag_Objects);
         }
     }
     else

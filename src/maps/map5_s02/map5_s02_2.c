@@ -847,7 +847,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
                 WorldObjects_Add(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
             }
 
-            Collision_FlagBitsSet(CollisionTriggerFlag_1);
+            Collision_FlagBitsSet(CollisionTriggerFlag_Objects);
         }
 
         if (Savegame_EventFlagGet(EventFlag_M5S02_UsedSafeKey))

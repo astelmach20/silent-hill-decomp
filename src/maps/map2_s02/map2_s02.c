@@ -176,7 +176,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
         if (Savegame_EventFlagGet(EventFlag_346))
         {
             Collision_FlagBitsSet(CollisionTriggerFlag_2);
-            Collision_FlagBitsClear(CollisionTriggerFlag_1);
+            Collision_FlagBitsClear(CollisionTriggerFlag_Objects);
 
             if (g_SysWork.playerWork.player.position.vz < Q12(-68.0f))
             {
@@ -186,7 +186,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
         else
         {
             Collision_FlagBitsClear(CollisionTriggerFlag_2);
-            Collision_FlagBitsSet(CollisionTriggerFlag_1);
+            Collision_FlagBitsSet(CollisionTriggerFlag_Objects);
         }
     }
 

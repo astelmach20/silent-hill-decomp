@@ -26,7 +26,7 @@ s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 void Collision_Init(void) // 0x800697EC
 {
-    Collision_FlagsSet(CollisionTriggerFlag_0);
+    Collision_FlagsSet(CollisionTriggerFlag_Map);
     g_ActiveCollisionTriggers.collisionTriggerCount = 0;
 }
 
@@ -47,7 +47,7 @@ void Collision_FlagBitsSet(u16 collFlags) // 0x8006982C
 
 void Collision_FlagBitsClear(s32 collFlags) // 0x80069844
 {
-    g_ActiveCollisionTriggers.flags = (g_ActiveCollisionTriggers.flags & ~collFlags) | CollisionTriggerFlag_0;
+    g_ActiveCollisionTriggers.flags = (g_ActiveCollisionTriggers.flags & ~collFlags) | CollisionTriggerFlag_Map;
 }
 
 void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* triggers) // 0x80069860
@@ -781,9 +781,9 @@ void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const
     state->field_34 = 0;
     
     state->field_44.field_0.field_0  = 0;
-    state->field_44.field_6          = 0;
+    state->field_44.radiusOffset     = Q8(0.0f);
     state->field_44.field_8.field_0  = 0;
-    state->field_44.field_36         = 0;
+    state->field_44.field_36         = Q8(0.0f);
     state->field_44.field_30.field_0 = 0;
     
     state->tiltAngleZ     = Q12_ANGLE(0.0f);
@@ -1437,7 +1437,7 @@ q23_8 func_8006BC34(s_CollisionState* state)
     return state->charaState.bottomPos - unkHeight;
 }
 
-void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q7_8 distX, q7_8 distZ, q7_8 arg5) // 0x8006BCC4
+void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q7_8 distX, q7_8 distZ, q7_8 radiusOffset) // 0x8006BCC4
 {
     q7_8 rotX;
     q7_8 rotY;
@@ -1453,9 +1453,9 @@ void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q7_8 distX, q7
 
             func_8006BDDC(&arg0->field_0, rotX, rotY);
 
-            if (arg0->field_6 < arg5)
+            if (arg0->radiusOffset < radiusOffset)
             {
-                arg0->field_6 = arg5;
+                arg0->radiusOffset = radiusOffset;
             }
             break;
 
@@ -1473,9 +1473,9 @@ void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q7_8 distX, q7
 
             func_8006BDDC(&arg0->field_30, rotX, rotY);
 
-            if (arg0->field_36 < arg5)
+            if (arg0->field_36 < radiusOffset)
             {
-                arg0->field_36 = arg5;
+                arg0->field_36 = radiusOffset;
             }
             break;
     }
@@ -1732,11 +1732,11 @@ bool func_8006C3D4(s_CollisionState* state, s_IpdCollisionData* collData, s32 su
         return false;
     }
 
-    state->point.heightDisabled  = temp_a1->disableHeight;
-    state->point.field_6.vx      = temp_a1->offset.vx;
-    state->point.field_6.vy      = temp_a1->offset.vy;
-    state->point.field_6.vz      = temp_a1->offset.vz;
-    state->point.field_C.field_0 = temp_a1->field_8;
+    state->point.heightDisabled       = temp_a1->disableHeight;
+    state->point.field_6.vx           = temp_a1->offset.vx;
+    state->point.field_6.vy           = temp_a1->offset.vy;
+    state->point.field_6.vz           = temp_a1->offset.vz;
+    state->point.field_C.radiusOffset = temp_a1->radiusOffset;
     return true;
 }
 
@@ -1752,7 +1752,7 @@ void func_8006C45C(s_CollisionState* state) // 0x8006C45C
     s32   temp;
     s32   temp2;
 
-    distMax = state->charaState.radius + state->point.field_C.field_0;
+    distMax = state->charaState.radius + state->point.field_C.radiusOffset;
     bound   = distMax + 8;
     temp_v1 = state->point.field_6.vx - bound;
 
@@ -1784,14 +1784,14 @@ void func_8006C45C(s_CollisionState* state) // 0x8006C45C
     distZ = state->charaPositionFrom.offset.vz - state->point.field_6.vz;
     dist  = Math_Vector2MagCalc(distX, distZ);
 
-    if (dist < state->point.field_C.field_0 && state->point.heightDisabled != true &&
+    if (dist < state->point.field_C.radiusOffset && state->point.heightDisabled != true &&
         (state->subcellIdx == UCHAR_MAX || state->point.field_6.vy < state->groundHeight))
     {
         state->subcellIdx   = state->point.subcellIdx;
         state->groundHeight = state->point.field_6.vy;
     }
 
-    if (!state->isCharaMoving && !state->field_0_9 || dist < state->point.field_C.field_0)
+    if (!state->isCharaMoving && !state->field_0_9 || dist < state->point.field_C.radiusOffset)
     {
         return;
     }
@@ -1840,16 +1840,16 @@ void func_8006C45C(s_CollisionState* state) // 0x8006C45C
     }
 }
 
-void func_8006C794(s_CollisionState* state, s32 arg1, s32 dist) // 0x8006C794
+void func_8006C794(s_CollisionState* state, s32 arg1, q23_8 dist) // 0x8006C794
 {
-    if (state->charaState.bottomPos >= (state->point.field_6.vy + (dist - state->point.field_C.field_0)))
+    if (state->charaState.bottomPos >= (state->point.field_6.vy + (dist - state->point.field_C.radiusOffset)))
     {
         func_8006BCC4(&state->field_44,
                       &state->point.ipdCollisionData->subcellCheckIdxs[state->point.subcellIdx],
                       arg1,
                       state->charaPositionFrom.offset.vx - state->point.field_6.vx,
                       state->charaPositionFrom.offset.vz - state->point.field_6.vz,
-                      (state->charaState.radius + state->point.field_C.field_0) - dist);
+                      (state->charaState.radius + state->point.field_C.radiusOffset) - dist);
     }
 }
 
@@ -2192,8 +2192,8 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
     bool   var_s1;
     q3_12  angle;
     q19_12 unkAngleMin;
-    s16    var_v1_2;
-    s16    var_a0;
+    q7_8   dist;
+    q7_8   radiusOffset;
     q3_12  angle2;
     q3_12  angle3;
 
@@ -2244,8 +2244,8 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
         {
             if (arg1->field_0.field_0 == 0)
             {
-                arg1->field_0 = arg1->field_30;
-                arg1->field_6 = arg1->field_36;
+                arg1->field_0      = arg1->field_30;
+                arg1->radiusOffset = arg1->field_36;
             }
             else
             {
@@ -2254,12 +2254,12 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
                 Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy,
                                    arg1->field_30.field_2.vx, arg1->field_30.field_2.vy);
 
-                var_a0 = arg1->field_6;
-                if (arg1->field_6 < arg1->field_36)
+                radiusOffset = arg1->radiusOffset;
+                if (arg1->radiusOffset < arg1->field_36)
                 {
-                    var_a0 = arg1->field_36;
+                    radiusOffset = arg1->field_36;
                 }
-                arg1->field_6 = var_a0;
+                arg1->radiusOffset = radiusOffset;
             }
         }
 
@@ -2268,7 +2268,7 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
             if (arg1->field_0.field_0 == 0)
             {
                 arg1->field_0 = arg1->field_8;
-                arg1->field_6 = 0;
+                arg1->radiusOffset = Q8(0.0f);
             }
             else
             {
@@ -2332,8 +2332,8 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
             }
         }
 
-        var_v1_2 = MIN(arg1->field_6 + 2, 16) * 16;
-        func_8006D600(arg0, angle, angleMin, angleMax, var_v1_2);
+        dist = MIN(arg1->radiusOffset + 2, 16) * 16; // TODO: Use Q8 macros.
+        func_8006D600(arg0, angle, angleMin, angleMax, dist);
     }
 }
 
@@ -2413,9 +2413,9 @@ void func_8006D774(s_CollisionState* state, VECTOR3* arg1, VECTOR3* arg2) // 0x8
 
     state->field_34                  = 0;
     state->field_44.field_0.field_0  = 0;
-    state->field_44.field_6          = 0;
+    state->field_44.radiusOffset     = Q8(0.0f);
     state->field_44.field_8.field_0  = 0;
-    state->field_44.field_36         = 0;
+    state->field_44.field_36         = Q8(0.0f);
     state->field_44.field_30.field_0 = 0;
 
     func_8006D7EC(&state->charaState, &offset0, &offset1);

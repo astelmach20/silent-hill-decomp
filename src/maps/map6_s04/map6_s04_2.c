@@ -3432,7 +3432,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
             if (Savegame_EventFlagGet(EventFlag_443))
             {
-                collFlags = CollisionTriggerFlag_1;
+                collFlags = CollisionTriggerFlag_Objects;
 
                 if (g_SysWork.sysState != SysState_EventCallback)
                 {
