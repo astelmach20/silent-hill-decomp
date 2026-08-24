@@ -120,9 +120,9 @@ typedef enum _PlayerState
     PlayerState_GetUpBack                 = 50,
     PlayerState_Unk51                     = 51, // Cutscenes
     PlayerState_Reset                     = 52, // Unsure, maybe a forced stop. Seems to reset the animation to a standing pose.
-    PlayerState_Unk53                     = 53, // Moving in cutscene?
-    PlayerState_Unk54                     = 54, // Running in cutscene?
-    PlayerState_Unk55                     = 55,
+    PlayerState_WalkForward               = 53, // Cutscene-only?
+    PlayerState_RunForward                = 54, // Cutscene-only?
+    PlayerState_WalkBackward              = 55, // Cutscene-only? Possibly @unused
     PlayerState_TurnRight                 = 56,
     PlayerState_TurnLeft                  = 57,
     PlayerState_Unk58                     = 58,
@@ -332,6 +332,16 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_Reload             = 35
 } e_PlayerLowerBodyState;
 
+/** @brief Player cutscene states. Used by `g_Player_CutsceneState`. */
+typedef enum _PlayerCutsceneState
+{
+    PlayerCutsceneState_RunForward  = 0,
+    PlayerCutsceneState_WalkForward = 1,
+    PlayerCutsceneState_Unused2     = 2, /** @unused Likely for walk backward. */
+    PlayerCutsceneState_TurnRight   = 3,
+    PlayerCutsceneState_TurnLeft    = 4
+} e_PlayerCutsceneState;
+
 /** @brief Rock Drill weapon attack types. */
 typedef enum _RockDrillAttackType
 {
@@ -416,18 +426,16 @@ extern q19_12 D_800C45DC;
 /** Table of player keyframe indices. Purpose unknown. */
 extern s_800C44F0 D_800C44F0[10];
 
-// Enemy target.
-extern VECTOR3 g_TargetEnemyPosition; // 0x800C4540
+// Q19.12 | Enemy target.
+extern VECTOR3 g_Player_TargetEnemyPosition;
 
 /** @brief Player rotation speed.
  * More context is required for a name.
  */
 extern q19_12 D_800C454C;
 
-/** @brief Player movement speed.
- * More context is required for a name.
- */
-extern q19_12 D_800C4550;
+// TODO: Unsure if it should be called a "previous" move speed.
+extern q19_12 g_Player_PrevMoveSpeed;
 
 extern s16 D_800C4554; // Timer?
 
@@ -454,7 +462,7 @@ extern u8 __pad_bss_800C4563[13];
 
 extern s_800AFBF4 g_Player_EquippedWeaponInfo;
 
-/** `D_800C457C` could be related to animations that play during cutscenes.
+/** `g_Player_CutsceneState` could be related to animations that play during cutscenes.
  *
  * Called by:
  * - 'func_800D2C7C' in map0_s00.c
@@ -474,7 +482,7 @@ extern s_800AFBF4 g_Player_EquippedWeaponInfo;
  * next overlay where the value is 1 during the first
  * cutscene and doesn't change until the player makes an input.
  */
-extern u8 D_800C457C;
+extern u8 g_Player_CutsceneState;
 
 extern u8 __pad_bss_800C457D;
 
@@ -529,8 +537,8 @@ extern u16 g_Player_IsMovingForward;
 
 extern s8 __pad_bss_800C45EA[2];
 
-/** Related to game difficulty. Maybe multiplier? */
-extern s32 D_800C45EC;
+/** Related to game difficulty, used as max for `player.timer_110`. See `Player_LogicUpdate`. */
+extern q19_12 D_800C45EC;
 
 /** `bool` */
 extern u16 g_Player_IsMovingBackward;

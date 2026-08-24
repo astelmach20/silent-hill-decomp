@@ -4,9 +4,9 @@
 #define HAS_PlayerState_Unk51
 #define HAS_PlayerState_Unk131
 #define HAS_PlayerState_Reset
-#define HAS_PlayerState_Unk53
-#define HAS_PlayerState_Unk54
-#define HAS_PlayerState_Unk55
+#define HAS_PlayerState_WalkForward
+#define HAS_PlayerState_RunForward
+#define HAS_PlayerState_WalkBackward
 #define HAS_PlayerState_TurnRight
 #define HAS_PlayerState_TurnLeft
 #define HAS_PlayerState_Unk59

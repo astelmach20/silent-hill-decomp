@@ -25,7 +25,8 @@ MAP_INFOS                                    = 0x8002500C; // type:MapType size:
 //--- PA: 0x0005BC   VA: 0x8002511C   subsegment: .rodata, sys/settings_reset
 //---------------------------------------------------------------------------
 DEFAULT_CONTROLLER_CONFIGS                   = 0x8002511C;
-
+g_Player_PrevMoveSpeed = 0x800C4550;
+g_Player_CutsceneState = 0x800C457C;
 //--------------------------------------------------------------------------------------
 //--- PA: 0x000758   VA: 0x800252B8   subsegment: .rodata, events/bodyprog_data_800A99B4
 //--------------------------------------------------------------------------------------
@@ -3200,7 +3201,7 @@ g_ActiveCollisionTriggers                    = 0x800C4478;
 //--- PA: 0x09F970   VA: 0x800C44D0   subsegment: .bss, player_control
 //--------------------------------------------------------------------
 D_800C44F0                                   = 0x800C44F0; // size:0x50
-g_TargetEnemyPosition                        = 0x800C4540; 
+g_Player_TargetEnemyPosition                        = 0x800C4540; 
 g_Player_HasMoveInput                        = 0x800C4558; 
 g_Player_HasActionInput                      = 0x800C455C; 
 g_Player_PrevAttackReceived                  = 0x800C4560;

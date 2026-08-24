@@ -242,9 +242,9 @@ s_CollisionPoint g_CollisionPointCache = {
 };
 
 s_800C44F0 D_800C44F0[10];
-VECTOR3    g_TargetEnemyPosition;
+VECTOR3    g_Player_TargetEnemyPosition;
 q19_12     D_800C454C;
-q19_12     D_800C4550;
+q19_12     g_Player_PrevMoveSpeed;
 s16        D_800C4554;
 s16        D_800C4556;
 s32        g_Player_HasMoveInput;
@@ -254,7 +254,7 @@ u8         g_Player_IsDead;
 u8         g_Player_DisableDamage;
 u8         __pad_bss_800C4563[13];
 s_800AFBF4 g_Player_EquippedWeaponInfo;
-u8         D_800C457C;
+u8         g_Player_CutsceneState;
 u8         __pad_bss_800C457D;
 
 u16        g_Player_IsAiming;
@@ -279,7 +279,7 @@ s_800C45C8 D_800C45C8;
 s8         __pad_bss_800C45E0[8];
 u16        g_Player_IsMovingForward;
 s8         __pad_bss_800C45EA[2];
-s32        D_800C45EC;
+q19_12     D_800C45EC;
 u16        g_Player_IsMovingBackward;
 s8         __pad_bss_800C45F2[6];
 VECTOR3    g_Player_PrevPosition;
@@ -1057,7 +1057,7 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
         case PlayerState_Unk162:
             break;
 
-        case PlayerState_Unk54:
+        case PlayerState_RunForward:
             func_80071968_Switch0();
             break;
 
@@ -1129,8 +1129,8 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
         case PlayerState_GetUpBack:
         case PlayerState_Unk51:
         case PlayerState_Reset:
-        case PlayerState_Unk53:
-        case PlayerState_Unk55:
+        case PlayerState_WalkForward:
+        case PlayerState_WalkBackward:
         case PlayerState_TurnRight:
         case PlayerState_TurnLeft:
         case PlayerState_Unk58:
@@ -1255,7 +1255,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
     Game_TimerUpdate();
 
-    D_800C4550                              = 0;
+    g_Player_PrevMoveSpeed                              = Q12(0.0f);
     D_800C454C                              = Q12(0.0f);
     player->properties.player.field_10C >>= 1;
 
@@ -1370,7 +1370,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 playerProps.moveSpeed = Q12(0.0f);
             }
 
-            D_800C4550             = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed             = playerProps.moveSpeed;
             player->flags         |= CharaFlag_Unk4;
             player->attackReceived = NO_VALUE;
             break;
@@ -1410,7 +1410,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            D_800C4550 = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed = playerProps.moveSpeed;
             break;
 
         case PlayerState_EnemyGrabPinnedFrontStart:
@@ -1916,7 +1916,6 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (g_Player_GrabReleaseInputTimer >= grabFreeInputCount)
             {
                 func_8007FD4C(false);
-
                 Player_ExtraStateSet(player, extra, enemyGrabReleaseState);
 
                 player->flags |= CharaFlag_Unk4;
@@ -2017,14 +2016,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 func_8007FB94(player, extra, animStatus);
             }
 
-            D_800C4550 = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed = playerProps.moveSpeed;
             player->flags |= CharaFlag_Unk4;
 
             switch (playerExtra.state)
             {
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
-                    player->damage.amount                  = Q12(0.0f);
+                    player->damage.amount              = Q12(0.0f);
                     player->properties.player.afkTimer = Q12(0.0f);
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
@@ -2449,7 +2448,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 playerProps.moveSpeed = Q12(0.0f);
             }
 
-            D_800C4550     = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed     = playerProps.moveSpeed;
             player->flags |= CharaFlag_Unk4;
             break;
 
@@ -2464,7 +2463,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
     player->rotation.vy      = Q12_ANGLE_NORM_U(player->rotation.vy + (D_800C454C >> 4) + Q12_ANGLE(360.0f));
     player->headingAngle     = Q12_ANGLE_NORM_U((player->rotation.vy + g_Player_HeadingAngle) + Q12_ANGLE(360.0f));
-    player->moveSpeed        = D_800C4550;
+    player->moveSpeed        = g_Player_PrevMoveSpeed;
     player->fallSpeed       += g_GravitySpeed;
     player->rotationSpeed.vy = (D_800C454C << 8) / g_DeltaTime;
     coords->flg              = false;
@@ -3667,9 +3666,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (extra->model.controlState != 0)
                 {
-                    if (g_TargetEnemyPosition.vx != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx ||
-                        g_TargetEnemyPosition.vy != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vy ||
-                        g_TargetEnemyPosition.vz != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz ||
+                    if (g_Player_TargetEnemyPosition.vx != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx ||
+                        g_Player_TargetEnemyPosition.vy != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vy ||
+                        g_Player_TargetEnemyPosition.vz != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz ||
                         g_Player_PrevPosition.vx != g_SysWork.playerWork.player.position.vx ||
                         g_Player_PrevPosition.vy != g_SysWork.playerWork.player.position.vy ||
                         g_Player_PrevPosition.vz != g_SysWork.playerWork.player.position.vz)
@@ -3683,7 +3682,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                             func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(25.0f), Q12(3.0f), 0);
                         }
 
-                        g_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
+                        g_Player_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
                     }
                     else
                     {
@@ -3693,7 +3692,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 else
                 {
                     enemyAttackedIdx      = g_SysWork.targetNpcIdx;
-                    g_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
+                    g_Player_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
                 }
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx && enemyAttackedIdx != NO_VALUE)
@@ -6093,8 +6092,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
 
                 player->model.controlState++;
-                playerProps.moveSpeed = Q12(2.25f);
-                D_800C4550            = Q12(2.25f);
+                playerProps.moveSpeed  = Q12(2.25f);
+                g_Player_PrevMoveSpeed = Q12(2.25f);
             }
             else
             {
@@ -6107,7 +6106,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
 
-                D_800C4550 = playerProps.moveSpeed;
+                g_Player_PrevMoveSpeed = playerProps.moveSpeed;
             }
 
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_JumpBackward, true) && player->model.anim.keyframeIdx == 246)
@@ -6506,7 +6505,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     if (playerExtra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
         playerExtra.lowerBodyState != PlayerLowerBodyState_Reload)
     {
-        D_800C4550 = playerProps.moveSpeed;
+        g_Player_PrevMoveSpeed = playerProps.moveSpeed;
     }
 
     switch (playerExtra.lowerBodyState)
@@ -7654,7 +7653,7 @@ s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x
             arg1->field_14   = (traces[0].hitDistance + traces[1].hitDistance) >> 1;
             arg1->groundType = traces[0].groundType;
 
-            angle      = Q12_ANGLE_NORM_U(((traces[0].field_1C + traces[1].field_1C) >> 1) + Q12_ANGLE(360.0f));
+            angle      = Q12_ANGLE_NORM_U(Q12_ANGLE_ABS((traces[0].headingAngle + traces[1].headingAngle) >> 1));
             angleDelta = ABS_DIFF(angle, player->headingAngle);
             if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {
@@ -8075,7 +8074,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     playerCombat.isAiming          = false;
     g_Player_GrabReleaseInputTimer = Q12(0.0f);
     D_800C4588                     = 0;
-    D_800C457C                     = 0;
+    g_Player_CutsceneState             = PlayerCutsceneState_RunForward;
     g_Player_DisableControl        = false;
 
     switch (g_SavegamePtr->gameDifficulty)

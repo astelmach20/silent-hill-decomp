@@ -110,7 +110,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #endif
 
 #if defined(MAP0_S01)
-    if (g_SysWork.playerWork.extra.state == PlayerState_Unk53)
+    if (g_SysWork.playerWork.extra.state == PlayerState_WalkForward)
     {
         cond = false;
     }
@@ -241,7 +241,7 @@ void Player_ControlFreeze(void)
 
     sharedData_800DD59C_0_s00 = NO_VALUE;
 
-    D_800C457C                       = 0;
+    g_Player_CutsceneState               = PlayerCutsceneState_RunForward;
     D_800C4588                       = 0;
     g_Player_DisableControl          = true;
     g_Player_IsInWalkToRunTransition = false;
@@ -406,13 +406,13 @@ bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle,
 
             if (playerRotDelta < Q12_ANGLE(0.0f))
             {
-                D_800C457C = 4;
+                g_Player_CutsceneState = PlayerCutsceneState_TurnLeft;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnLeft);
                 D_800C4588 = 2;
             }
             else
             {
-                D_800C457C = 3;
+                g_Player_CutsceneState = PlayerCutsceneState_TurnRight;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnRight);
                 D_800C4588 = 2;
             }
@@ -440,12 +440,12 @@ bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle,
             Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
             switch (playerExtraState)
             {
-                case PlayerState_Unk54:
-                    D_800C457C = 0;
+                case PlayerState_RunForward:
+                    g_Player_CutsceneState = PlayerCutsceneState_RunForward;
                     break;
 
-                case PlayerState_Unk53:
-                    D_800C457C = 1;
+                case PlayerState_WalkForward:
+                    g_Player_CutsceneState = PlayerCutsceneState_WalkForward;
                     break;
             }
 
@@ -549,12 +549,12 @@ bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle,
 
             if (playerRotDelta < Q12_ANGLE(0.0f))
             {
-                D_800C457C = 4;
+                g_Player_CutsceneState = PlayerCutsceneState_TurnLeft;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnLeft);
             }
             else
             {
-                D_800C457C = 3;
+                g_Player_CutsceneState = PlayerCutsceneState_TurnRight;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnRight);
             }
 
@@ -567,7 +567,7 @@ bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle,
             {
                 playerChara->rotation.vy = angle;
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Reset);
-                D_800C457C = 0;
+                g_Player_CutsceneState = PlayerCutsceneState_RunForward;
                 D_800C4588 = 8;
             }
             break;
@@ -597,20 +597,20 @@ void Player_AnimStateSet(s32 playerExtraState)
 
     switch (playerExtraState)
     {
-        case PlayerState_Unk54:
-            D_800C457C = 0;
+        case PlayerState_RunForward:
+            g_Player_CutsceneState = PlayerCutsceneState_RunForward;
             break;
 
-        case PlayerState_Unk53:
-            D_800C457C = 1;
+        case PlayerState_WalkForward:
+            g_Player_CutsceneState = PlayerCutsceneState_WalkForward;
             break;
 
         case PlayerState_TurnRight:
-            D_800C457C = 3;
+            g_Player_CutsceneState = PlayerCutsceneState_TurnRight;
             break;
 
         case PlayerState_TurnLeft:
-            D_800C457C = 4;
+            g_Player_CutsceneState = PlayerCutsceneState_TurnLeft;
             break;
     }
 

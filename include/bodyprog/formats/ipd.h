@@ -49,11 +49,11 @@ STATIC_ASSERT_SIZEOF(s_IpdCollSurface, 12);
 /** @brief IPD file collision subcell containing two split surfaces. */
 typedef struct _IpdCollSubcell
 {
-    /* 0x0+0  */ q7_8 field_0_0  : 14; // X. }
-    /* 0x0+14 */ u16  field_0_14 : 2;  // ID Values? } 
-    /* 0x2+0  */ q7_8 field_2_0  : 14; // Y. }
-    /* 0x2+14 */ u16  field_2_14 : 2;  // ID Values? } See `func_8006B318` definition for further explanation.
-    /* 0x4    */ q7_8 field_4;         // Z. }
+    /* 0x0+0  */ q7_8 field_0_0  : 14; // Z. Unsure, used as X in one place.
+    /* 0x0+14 */ u16  field_0_14 : 2;  // ID Values?
+    /* 0x2+0  */ q7_8 field_2_0  : 14; // X. Unsure, used as Y in one place.
+    /* 0x2+14 */ u16  field_2_14 : 2;  // ID Values? See `func_8006B318` definition for further explanation.
+    /* 0x4    */ q7_8 field_4;         // Y?
     /* 0x6    */ u8   splitVertexIdx0; // `s_IpdCollisionData::splitVertices` index.
     /* 0x7    */ u8   splitVertexIdx1; // `s_IpdCollisionData::splitVertices` index.
     /* 0x8    */ u8   surfaceIdx0;     // `s_IpdCollisionData::surfaces` index.

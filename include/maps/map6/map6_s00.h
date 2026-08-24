@@ -2,7 +2,7 @@
 #define _MAPS_MAP6_S00_H
 
 #define HAS_PlayerState_Reset
-#define HAS_PlayerState_Unk53
+#define HAS_PlayerState_WalkForward
 #define HAS_PlayerState_Unk114
 #define HAS_PlayerState_Unk126
 #define HAS_PlayerState_Unk127

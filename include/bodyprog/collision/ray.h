@@ -44,13 +44,13 @@ typedef struct _RayState
     /* 0x6  */ q7_8             radiusOffset;
     /* 0x8  */ q7_8             hitDistance;
     /* 0xA  */ s8               __pad_A[2];
-    /* 0xC  */ VECTOR3          field_C; // Q19.12
+    /* 0xC  */ VECTOR3          target; // Q23.8
     /* 0x18 */ s8               unk_18[4];
     /* 0x1C */ q7_8             groundHeight;
     /* 0x1E */ s8               __pad_1E[2];
     /* 0x20 */ s_SubCharacter*  character;
-    /* 0x24 */ q7_8             field_24;   // X offset.
-    /* 0x26 */ q7_8             field_26;   // Z offset.
+    /* 0x24 */ q7_8             offsetX;
+    /* 0x26 */ q7_8             offsetZ;
     /* 0x28 */ s32              groundType; /** `e_GroundType` */
     /* 0x2C */ VECTOR3          from;       // Q23.8
     /* 0x38 */ s8               unk_38[4];
@@ -84,11 +84,11 @@ typedef struct _RayTrace
     /* 0x0  */ s8              hasHit;     /** `bool` */
     /* 0x1  */ u8              groundType; /** `e_GroundType` */
     /* 0x2  */ s8              __pad_2[2];
-    /* 0x4  */ VECTOR3         target; /** Q19.12 */
+    /* 0x4  */ VECTOR3         target;     /** Q19.12 */
     /* 0x10 */ s_SubCharacter* character;
     /* 0x14 */ q19_12          hitDistance;
     /* 0x18 */ q19_12          groundHeight;
-    /* 0x1C */ q3_12           field_1C; // Angle.
+    /* 0x1C */ q3_12           headingAngle;
 } s_RayTrace;
 
 bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to);
