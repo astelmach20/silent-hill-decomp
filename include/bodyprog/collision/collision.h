@@ -145,8 +145,8 @@ typedef struct _CollisionCharaState
     /* 0x20 */ q23_8      positionToX;
     /* 0x24 */ q23_8      positionToZ;
     /* 0x28 */ q7_8       radius;
-    /* 0x2A */ q7_8       topPos;
-    /* 0x2C */ q7_8       bottomPos;
+    /* 0x2A */ q7_8       top;
+    /* 0x2C */ q7_8       bottom;
 } s_CollisionCharaState;
 
 typedef struct _CollisionState
@@ -175,12 +175,12 @@ typedef struct _CollisionState
                  union
                  {
                      DVECTOR_XZ offset; /** Q23.8 */
-                     s32        field_0;
+                     q23_8      vx;
     /* 0x98   */ } charaPositionFrom;
                  union
                  {
                      DVECTOR_XZ offset; /** Q23.8 */
-                     s32        field_0;
+                     q23_8      vz;
     /* 0x9C   */ } charaPositionTo;
                  union
                  {
@@ -195,8 +195,8 @@ typedef struct _CollisionState
                      } s_0;
                      struct
                      {
-                         /* 0x0 */ q7_8 field_0; // Set to absolute character bottom height.
-                         /* 0x2 */ q7_8 field_2; // Set to absolute character top height.
+                         /* 0x0 */ q7_8 bottom; // Set to absolute character bottom height.
+                         /* 0x2 */ q7_8 top;    // Set to absolute character top height.
                          /* 0x4 */ s16  field_4;
                          /* 0x6 */ u8   collisionState; /** `e_CharaCollisionState` */
                          /* 0x8 */ u8*  field_8;

@@ -373,7 +373,8 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
         offset.vy = (g_SysWork.npcs[j].position.vy + g_SysWork.npcs[j].collision.box.offsetY)         - posY;
         offset.vz = (g_SysWork.npcs[j].position.vz + g_SysWork.npcs[j].collision.shapeOffsets.box.vz) - posZ;
 
-        if (Ray_CharaTraceQuery(&trace, &from, &offset, &g_SysWork.playerWork.player) && trace.character == &g_SysWork.npcs[j])
+        if (Ray_CharaTraceQuery(&trace, &from, &offset, &g_SysWork.playerWork.player) &&
+            trace.character == &g_SysWork.npcs[j])
         {
             break;
         }

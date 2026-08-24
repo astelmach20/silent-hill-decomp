@@ -37,18 +37,18 @@ typedef struct
 } s_RayState_8C;
 
 /** @brief State for an in-progress ray trace. Contains pointers to active characters among other things. */
-typedef struct
+typedef struct _RayState
 {
     /* 0x0  */ bool             field_0; // "Use cylinder"?
     /* 0x4  */ s16              field_4; // Collision flags.
     /* 0x6  */ q7_8             radiusOffset;
-    /* 0x8  */ q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
+    /* 0x8  */ q7_8             hitDistance;
     /* 0xA  */ s8               __pad_A[2];
     /* 0xC  */ VECTOR3          field_C; // Q19.12
     /* 0x18 */ s8               unk_18[4];
     /* 0x1C */ q7_8             groundHeight;
     /* 0x1E */ s8               __pad_1E[2];
-    /* 0x20 */ s_SubCharacter*  field_20;
+    /* 0x20 */ s_SubCharacter*  character;
     /* 0x24 */ q7_8             field_24;   // X offset.
     /* 0x26 */ q7_8             field_26;   // Z offset.
     /* 0x28 */ s32              groundType; /** `e_GroundType` */
@@ -131,6 +131,7 @@ void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
 // Fills ray hit data?
 void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* chara);
 
+// Sets hit character ray state?
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara);
 
 #endif
