@@ -209,31 +209,31 @@ typedef struct _VabInfo
 {
     /* 0x0 */ u8  audioVabIdx; /** Index of audio inside VAB files. */
     /* 0x1 */ s8  __pad_1;
-    /* 0x2 */ u16 vab_progIdx_2; /** See `TYPE_AND_PROG_SFX`. */
-    /* 0x4 */ u8  noteIdx_4;
+    /* 0x2 */ u16 vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
+    /* 0x4 */ u8  noteIdx;
     /* 0x5 */ s8  field_5; // Changes the volume.
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
 typedef struct _XaItemData
 {
-    /* 0x0    */ u8  xaFileIdx_0;
+    /* 0x0    */ u8  xaFileIdx;
     /* 0x1    */ s8  __pad_1[3];
-    /* 0x4+0  */ u32 sector_4      : 24;
-    /* 0x4+24 */ u8  field_4_24    : 8; // Index. Element of the group index defined at `field_8_24`.
-    /* 0x8+0  */ u32 audioLength_8 : 24;
-    /* 0x8+24 */ u8  field_8_24    : 8; // Index. Indicate some sort of group.
+    /* 0x4+0  */ u32 sector      : 24;
+    /* 0x4+24 */ u8  field_4_24  : 8; // Index. Element of the group index defined at `field_8_24`.
+    /* 0x8+0  */ u32 audioLength : 24;
+    /* 0x8+24 */ u8  field_8_24  : 8; // Index. Indicate some sort of group.
 } s_XaItemData;
 STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
 // Used to store KDT and VAB data access.
 typedef struct _AudioItemData
 {
-    /* 0x0 */ s8  typeIdx_0;       /** See `e_AudioType`. */
+    /* 0x0 */ s8  typeIdx;       /** See `e_AudioType`. */
     /* 0x1 */ s8  __pad_1;
-    /* 0x0 */ u16 vagDataOffset_2; /** Offset of VAG data in VAB files. */
-    /* 0x4 */ u32 fileSize_4;      /** VAB file size. */
-    /* 0x8 */ s32 fileOffset_8;    /** VAB audio offset in the file container. */
+    /* 0x0 */ u16 vagDataOffset; /** Offset of VAG data in VAB files. */
+    /* 0x4 */ u32 fileSize;      /** VAB file size. */
+    /* 0x8 */ s32 fileOffset;    /** VAB audio offset in the file container. */
 } s_AudioItemData;
 
 // ========
