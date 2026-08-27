@@ -588,7 +588,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
             // Set config.
             vol = CLAMP(vol, 0, OPT_SOUND_VOLUME_MAX);
-            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config.volumeSe);
+            Sd_GlobalVolSet(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config.volumeSe);
             g_GameWork.config.volumeBgm = vol;
             break;
 
@@ -617,7 +617,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
             vol = CLAMP(vol, 0, OPT_SOUND_VOLUME_MAX);
 
-            Sd_SetVolume(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config.volumeSe);
+            Sd_GlobalVolSet(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config.volumeSe);
             g_GameWork.config.volumeSe = vol;
             break;
 

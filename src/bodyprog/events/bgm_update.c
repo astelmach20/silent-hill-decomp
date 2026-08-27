@@ -88,7 +88,7 @@ bool Bgm_MuteCheck(void)
 
     for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        if (Sd_BgmChannelVolumeGet(i) != 0)
+        if (Sd_MidiChannelVolumeGet(i) != 0)
         {
             return false;
         }
@@ -104,7 +104,7 @@ static void Bgm_LayerGlobalVariablesUpdate(void)
 
     for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        g_SysWork.bgmLayerVolumes[i] = Sd_BgmChannelVolumeGet(i) << 5; // Conversion to Q12.
+        g_SysWork.bgmLayerVolumes[i] = Sd_MidiChannelVolumeGet(i) << 5; // Conversion to Q12.
     }
 
     if (Sd_ChannelTaskGet() == 0)
@@ -336,7 +336,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
         {
             for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
             {
-                Sd_ChannelsVolumeSet(i, bgmChannelVols[i]);
+                Sd_MidiChannelsVolumeSet(i, bgmChannelVols[i]);
             }
         }
         else

@@ -201,7 +201,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
                     // Reset drive & sound driver
                     CdReset(1);
-                    sd_work_init();
+                    SD_InitStruct();
 #endif
 
                     while (g_GameWork.gameStateSteps[0] < KcetLogoStateStep_NoMemCard)

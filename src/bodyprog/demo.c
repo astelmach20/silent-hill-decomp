@@ -147,13 +147,13 @@ void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
     g_GameWork.config.vibrationEnabled = OPT_VIBRATION_DISABLED;
     g_GameWork.config.brightness       = g_Demo_OptionsConfigBackup.brightness;
 
-    Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config.volumeSe);
+    Sd_GlobalVolSet(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config.volumeSe);
 }
 
 void Demo_GameGlobalsRestore(void) // 0x8008F2BC
 {
     g_GameWork.config = g_Demo_OptionsConfigBackup;
-    Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config.volumeBgm, g_GameWork.config.volumeSe);
+    Sd_GlobalVolSet(OPT_SOUND_VOLUME_MAX, g_GameWork.config.volumeBgm, g_GameWork.config.volumeSe);
 }
 
 void Demo_GameRandSeedUpdate(void) // 0x8008F33C

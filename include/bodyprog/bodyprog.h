@@ -769,7 +769,7 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern u8 D_800AA604[41][16];
+extern u8 g_Sd_SongsChannelsForLayers[41][16];
 
 extern u8 D_800AE185;
 

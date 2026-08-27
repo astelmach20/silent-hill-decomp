@@ -13,7 +13,7 @@
 // ========================================
 
 /** @brief Task commands for `SD_Call` to load BGM KDT and VAB files. */
-static u16 g_BgmTaskLoadCmds[42] = {
+static u16 g_BgmTaskLoad[42] = {
     0,  0, 
     32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
     42, 43, 44, 46, 47, 48, 49, 50, 51, 52,
@@ -22,7 +22,7 @@ static u16 g_BgmTaskLoadCmds[42] = {
 };
 
 /** @brief Task commands for `SD_Call` to set current BGM channels to be used. */
-static u16 g_BgmChannelSetTaskCmds[42] = {
+static u16 g_BgmChannelSetTask[42] = {
     0, 0,
     SD_TASK_CHANNEL_SET(1),  SD_TASK_CHANNEL_SET(2),  SD_TASK_CHANNEL_SET(3),  SD_TASK_CHANNEL_SET(4),
     SD_TASK_CHANNEL_SET(5),  SD_TASK_CHANNEL_SET(6),  SD_TASK_CHANNEL_SET(7),  SD_TASK_CHANNEL_SET(8),
@@ -37,7 +37,7 @@ static u16 g_BgmChannelSetTaskCmds[42] = {
 };
 
 /** @brief Task commands for `SD_Call` to load ambient VAB files. */
-static u16 g_AmbientVabTaskLoadCmds[40] = {
+static u16 g_AmbientVabTaskLoad[40] = {
     0,   162, 170, 171, 204, 172, 173, 174,
     175, 176, 177, 178, 179, 179, 179, 180,
     181, 182, 183, 184, 185, 186, 187, 188,
@@ -46,7 +46,7 @@ static u16 g_AmbientVabTaskLoadCmds[40] = {
 };
 
 // ========================================
-// MUSIC INIT AND SET
+// ENVIROMENT AND MUSIC INIT AND SET
 // ========================================
 
 bool Sd_BgmInit(void) // 0x80035780
@@ -126,7 +126,7 @@ void Sd_BgmSongSet(s32 bgmIdx) // 0x800358DC
     }
 
     g_GameWork.bgmIdx = bgmIdx;
-    SD_Call(g_BgmTaskLoadCmds[bgmIdx]);
+    SD_Call(g_BgmTaskLoad[bgmIdx]);
 }
 
 void Sd_BgmChannelSet(void) // 0x80035924
@@ -141,7 +141,7 @@ void Sd_BgmChannelSet(void) // 0x80035924
         return;
     }
 
-    SD_Call(g_BgmChannelSetTaskCmds[g_GameWork.bgmIdx]);
+    SD_Call(g_BgmChannelSetTask[g_GameWork.bgmIdx]);
 }
 
 void Sd_BgmUpdateTrack(void)
@@ -202,5 +202,5 @@ bool Sd_ActiveAmbientSfxCheck(s32 ambientIdx) // 0x80035AB0
 void Sd_AmbientSfxSet(s32 bgmIdx) // 0x80035AC8
 {
     g_GameWork.ambientIdx = bgmIdx;
-    SD_Call(g_AmbientVabTaskLoadCmds[bgmIdx]);
+    SD_Call(g_AmbientVabTaskLoad[bgmIdx]);
 }

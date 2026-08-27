@@ -315,7 +315,7 @@ typedef struct _GameWork
     /* 0x5B0 */ s8                 __pad_5B0;
     /* 0x5B1 */ s8                 mapAnimIdx;
     /* 0x5B2 */ s8                 bgmIdx;            /** `BgmCmd` | Currently player background music track. */
-    /* 0x5B4 */ s8                 ambientIdx;        /** Index of `g_AmbientVabTaskLoadCmds`. */
+    /* 0x5B4 */ s8                 ambientIdx;        /** Index of `g_AmbientVabTaskLoad`. */
     /* 0x5B4 */ s_AnalogController rawController;
     /* 0x5BC */ s8                 unused_5BC[28];    // @unused Debug data?
 } s_GameWork;
