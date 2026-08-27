@@ -121,13 +121,13 @@ typedef struct _Sd_AudioWork
     u16 xaAudioIdxCheck;        /** XA Audio index. Used to check if the file exists. */
     u16 xaAudioIdx;             /** XA Audio index. Used to play the audio. */
     u16 bgmLoadedSongIdx;       /** Index of the currently loaded music. */
-    u16 activeVabAudioIdx_8[3]; /** Stores the index of currently loaded VAB audio in `g_Sd_VabBuffers`, except of music notes. */
+    u16 activeVabAudioIdx_8[3]; /** Stores the index of currently loaded VAB audio in `g_Sd_VabBuffers`, except for music notes. */
     u16 field_E;                /** MIDI channel assignment for BGM layers.
                                  * Used to assign the corresponding MIDI channel for BGM layers.
                                  *
-                                 * This requires further investigation for a proper explanation. This is used
+                                 * This requires further investigation to document properly. It's used
                                  * to access values from `D_800AA604` columns in an odd way, as the values assigned
-                                 * are from `g_UnknownBgmTable1`, which range from 769 to 808 (including 0).
+                                 * are from `g_UnknownBgmTable1`, which are in the range [769, 808] (including 0).
                                  * However, the variables are cast as `u8`, which removes
                                  * the second byte (range in hexadecimal: 0x1003 to 0x2803), leaving only the first byte
                                  * ranging from 1 to 40 (also including 0).
@@ -230,8 +230,7 @@ STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 typedef struct _AudioItemData
 {
     /* 0x0 */ s8  typeIdx;       /** See `e_AudioType`. */
-    /* 0x1 */ s8  __pad_1;
-    /* 0x0 */ u16 vagDataOffset; /** Offset of VAG data in VAB files. */
+    /* 0x2 */ u16 vagDataOffset; /** Offset of VAG data in VAB files. */
     /* 0x4 */ u32 fileSize;      /** VAB file size. */
     /* 0x8 */ s32 fileOffset;    /** VAB audio offset in the file container. */
 } s_AudioItemData;

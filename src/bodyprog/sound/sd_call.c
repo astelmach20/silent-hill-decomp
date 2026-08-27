@@ -1545,9 +1545,9 @@ void Sd_KdtLoad_TaskAdd(u16 songIdx) // 0x80048244
     SD_Call((u16)(songIdx + 173));
     Sd_TaskPoolAdd(songIdx);
 
-    g_Sd_VabLoadAttemps               = 0;
+    g_Sd_VabLoadAttemps             = 0;
     g_Sd_AudioWork.bgmLoadedSongIdx = songIdx;
-    g_Sd_AudioWork.isAudioLoading  = true;
+    g_Sd_AudioWork.isAudioLoading   = true;
 }
 
 void Sd_KdtLoad(void) // 0x800482D8
