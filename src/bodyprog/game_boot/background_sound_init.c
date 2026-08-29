@@ -84,7 +84,7 @@ bool Sd_BgmInit(void) // 0x80035780
 
         case 2:
             // Checks if no BGM channel is being used.
-            if (Sd_ChannelTaskGet() == 0)
+            if (Sd_MidiChannelTaskGet() == 0)
             {
                 Sd_BgmSongSet(g_MapOverlayHdr.bgmCmd);
                 g_GameWork.gameStateSteps[1]++;

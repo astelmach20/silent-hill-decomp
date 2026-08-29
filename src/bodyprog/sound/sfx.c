@@ -208,7 +208,7 @@ void Sfx_WithFlagsAndPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32
     }
     else
     {
-        Sd_PlaySfx(sfxId, balance, ~adjVol);
+        Sd_SfxPlay(sfxId, balance, ~adjVol);
     }
 }
 
@@ -243,7 +243,7 @@ void Sfx_WithPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch) /
         volCpy = Q8_CLAMPED(1.0f);
     }
 
-    func_80046620(sfxId, balance, ~volCpy, pitch);
+    Sd_SfxWithPitchPlay(sfxId, balance, ~volCpy, pitch);
 }
 
 static inline q23_8 AttenuationCalc(s32 vol, VECTOR3* pos, q19_12 falloff)

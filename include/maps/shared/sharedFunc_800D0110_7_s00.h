@@ -93,7 +93,7 @@ void sharedFunc_800D0110_7_s00(void)
                             fadeSpeed = Q12(240.0f);
                             bgmFlags  = (1 << 0) | (1 << 9);
 
-                            if (Sd_ChannelTaskGet() == 0)
+                            if (Sd_MidiChannelTaskGet() == 0)
                             {
                                 Savegame_EventFlagSet(EventFlag_572);
                             }
@@ -109,7 +109,7 @@ void sharedFunc_800D0110_7_s00(void)
                         fadeSpeed = Q12(1.0f);
                         bgmFlags  = (1 << 0) | (1 << 9);
 
-                        if (Sd_ChannelTaskGet() == 0)
+                        if (Sd_MidiChannelTaskGet() == 0)
                         {
                             Savegame_EventFlagSet(EventFlag_572);
                         }
@@ -523,7 +523,7 @@ void sharedFunc_800D0110_7_s00(void)
 
                 if (g_SysWork.bgmLayerVolumes[0] != Q12(1.0f))
                 {
-                    if (Sd_ChannelTaskGet() == 0)
+                    if (Sd_MidiChannelTaskGet() == 0)
                     {
                         Sd_BgmChannelSet();
                     }

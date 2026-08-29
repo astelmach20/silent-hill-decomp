@@ -15,6 +15,48 @@
  * TM suggests that at some point, they were called `events`.
  */
 
+/** @note MIDI Channels/BGM clarification:
+ * One of the most obfuscated or hardest to points to understand of the entire system is the purpose
+ * and usage of `g_Sd_AudioWork.midiChannelsVolTask`.
+ *
+ * The initialization of BGM consist of 3 steps:
+ * * Load KDT file containing music sheet.
+ * * Load VAB file containing music key sounds.
+ * * Setting up volumes of SPU's MIDI channels for handling music layers.
+ *
+ * The first two steps are very straight forward. In the circumstance of a new song being play
+ * the game sends a new task to `SD_Call` which directly loads the KDT file and then sets a task
+ * to load the pair VAB file.
+ *
+ * This process completely changes when it comes to assign volumes for MIDI channels in order
+ * to make the BGM layering system.
+ * The way the game handle that is through a 2D array that specify what channels to use to represent
+ * layers on specific songs. The array is `g_Sd_SongsChannelsForLayers` and more information is available
+ * on it's description.
+ *
+ * The main confusing part comes here. The way the game determines to what row of `g_Sd_SongsChannelsForLayers`
+ * access is by calling `Sd_BgmChannelSet` which uses the current playing song index to access to a list task commands
+ * set in `g_BgmChannelSetTask` and assign the task to `SD_Call` that range from `0x301` to `0x328`.
+ * The fundamental parts of that task handling process are: First it gives `g_Sd_AudioWork.midiChannelsVolTaskToSet`
+ * the task ID, then it passed to `g_Sd_AudioWork.midiChannelsVolTask` and lastly `Sd_MidiChannelsVolumeSet` (mainly
+ * used by `Bgm_LayersUpdate`) locally strips the task ID base (0x300) and the remaining value is used to access to
+ * a row of `g_Sd_SongsChannelsForLayers`.
+ *
+ * This is an extremely simplified explanation of how it works, but process has two noticeable odd code decisions
+ * that makes this part of the system hard to comprehend at first glance. Here are those odd decisions:
+ * * The base from the task ID that set the update MIDI channels config is never strip down leaving values that are
+ * * bigger than the array they are meant to be used, what the game does is stripping the base (0x300) by casting
+ * * the value as a `s8` instead of using `& 0xFF` which would look more comprehensible. This can be noted at
+ * * `Sd_MidiChannelVolumeGet` and `Sd_MidiChannelVolumeSet`.
+ * * `g_Sd_AudioWork.midiChannelsVolTaskToSet` may be useless. This is a failsafe to avoid running a same task twice,
+ * * however, this could either be an unnecessary failsafe as this could only ever happen if the console suddenly start
+ * * misbehaving or this is a particular fix or failsafe for the Nowhere section of the game as for some reason there
+ * * is another function (`sharedFunc_800D0110_7_s00`) that calls `Sd_BgmChannelSet`.
+ *
+ * Additional note: The OPM 16 build (earliest build available) shows that the code was completely different and
+ * actually strip the base and apparently there wasn't another check.
+ */
+
 // ==============
 // HELPER MACROS
 // ==============
@@ -83,7 +125,7 @@ typedef enum _AudioStreamingState
     AudioStreamingState_VabPlaying    = 2,
     AudioStreamingState_XaLoading     = 3,
     AudioStreamingState_XaLoadPending = 4,
-    AudioStreamingState_TaskPending   = 5
+    AudioStreamingState_AudioTaskPending   = 5
 } e_AudioStreamingState;
 
 /** @brief XA load states. */
@@ -132,21 +174,22 @@ typedef union _Sd_XaCdlInfo
 /** @brief Sound struct for tracking information of the game specific audio system. */
 typedef struct _Sd_AudioWork
 {
-    /* 0x0 */   u16 cdErrorCount;               /** Counter for failed attempts when processing a primitive command. */
-    /* 0x2 */   u16 xaAudioIdxCheck;            /** XA Audio index. Used to check if the file exists. */
-    /* 0x4 */   u16 xaAudioIdx;                 /** XA Audio index. Used to play the audio. */
-    /* 0x6 */   u16 bgmLoadedSongIdx;           /** Index of the currently loaded music. */
-    /* 0x8 */   u16 activeVabAudioIdx[3];       /** Stores the index of currently loaded VAB audio in `g_Sd_VabBuffers`, except of music notes. */
-    /* 0xE */   u16 bgmChannelVolumesTask;      /** MIDI channel assignment for BGM layers. */
-    /* 0x10 */  u16 bgmChannelVolumesTaskToSet; /** Temporarily stores the value intended for `bgmChannelVolumesTask`. */
-    /* 0x11 */  u8  isStereoEnabled;            /** `bool` */
-    /* 0x12 */  s8  isXaStopping;               /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`. */
-    /* 0x13 */  u8  bgmFadeSpeed;               /** Music fade speed. Range: `[0, 2]`, default: 0. */
-    /* 0x14 */  u8  isAudioLoading;             /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    /* 0x15 */  u8  isXaNotPlaying;             /** `bool` | Playing: `false`, Nothing playing: `true`, default: Nothing playing. */
-    /* 0x16 */  u8  muteGame;                   /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
-                                                 * in volume until mute (the sounds will keep playing, but muted).
-                                                 */
+    /* 0x0 */   u16 cdErrorCount;             /** Counter for failed attempts when processing a primitive command. */
+    /* 0x2 */   u16 xaAudioIdxCheck;          /** XA Audio index. Used to check if the file exists. */
+    /* 0x4 */   u16 xaAudioIdx;               /** XA Audio index. Used to play the audio. */
+    /* 0x6 */   u16 bgmLoadedSongIdx;         /** Index of the currently loaded music. */
+    /* 0x8 */   u16 activeVabAudioIdx[3];     /** Stores the index of currently loaded VAB audio in `g_Sd_VabBuffers`, except of music notes. */
+    /* 0xE */   u16 midiChannelsVolTask;      /** MIDI channel assignment for BGM layers.
+                                                  Index of `g_Sd_SongsChannelsForLayers`. Requires to be wrapped by doing `& 0xFF` as the command base to assign the value is `0x300`. */
+    /* 0x10 */  u16 midiChannelsVolTaskToSet; /** Temporarily stores the value intended for `midiChannelsVolTask`. Used to avoid running the same process twice for a same target MIDI channel configuration. */
+    /* 0x11 */  u8  isStereoEnabled;          /** `bool` */
+    /* 0x12 */  s8  isXaStopping;             /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`. */
+    /* 0x13 */  u8  bgmFadeSpeed;             /** Music fade speed. Range: `[0, 2]`, default: 0. */
+    /* 0x14 */  u8  isAudioLoading;           /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    /* 0x15 */  u8  isXaNotPlaying;           /** `bool` | Playing: `false`, Nothing playing: `true`, default: Nothing playing. */
+    /* 0x16 */  u8  muteGame;                 /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
+                                               * in volume until mute (the sounds will keep playing, but muted).
+                                               */
 } s_Sd_AudioWork;
 
 /** @brief Sound struct for tracking VAB and XA audios and KDT file streaming. */
@@ -192,15 +235,15 @@ typedef struct
  */
 typedef struct _VabPlayingInfo
 {
-    /* 0x0 */ u8  audioVabIdx;
+    /* 0x0 */ u8  voiceIdx; /** Index of audio at PSX's "Voice" channels. */
     /* 0x1 */ s8  __pad;
     /* 0x2 */ s16 typeIdx; /** `e_AudioType` */
     /* 0x4 */ s16 progIdx;
     /* 0x6 */ s16 toneIdx;
     /* 0x8 */ s16 noteIdx;
     /* 0xA */ s16 pitch;
-    /* 0xC */ s16 volumeLeft;
-    /* 0xE */ s16 volumeRight;
+    /* 0xC */ s16 volLeft;
+    /* 0xE */ s16 volRight;
 } s_VabPlayingInfo;
 
 /** @brief Sound struct VAB audio information.
@@ -212,7 +255,7 @@ typedef struct _VabInfo
     /* 0x1 */ s8  __pad;
     /* 0x2 */ u16 vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
     /* 0x4 */ u8  noteIdx;
-    /* 0x5 */ s8  field_5; // Changes the volume.
+    /* 0x5 */ s8  volMinimun;  /** Minimun volume required to play the audio. */
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
@@ -314,12 +357,12 @@ extern s_ChannelsVolumeController gSDVolConfig;
 extern s_XaAudioPlayTracking g_Sd_XaAudioPlayTracking;
 extern s32 __pad_bss_800C1694;
 extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
-extern u8 g_Sd_TaskPool[32];
+extern u8 g_Sd_TaskPool[];
 extern s8 D_800C16C8[];
 extern u8 g_Sd_AudioType;
 extern char __pad_bss_800C37C9[3];
 extern u32 g_Sd_FileDataTransferred;
-extern u8 g_Sd_VabLoadAttemps;
+extern u8 g_Sd_DataLoadAttempts;
 extern char __pad_bss_800C37D1[3];
 extern s_AudioItemData* g_Sd_VabTargetLoad;
 extern s_AudioItemData* g_Sd_KdtTargetLoad;
@@ -334,6 +377,7 @@ extern u8 g_Sd_CurrentTask;
 
 /** @brief Passes a task to the sound driver.
  * Plays SFX among other things.
+ * Scratch: https://decomp.me/scratch/IniqJ
  *
  * @note Name from retrieved debug symbols.
  * Some PS1 and early PS2 KCET games and SH2 feature a function
@@ -351,14 +395,18 @@ void SD_Call(u32 task);
 
 /** @brief Checks if an audio file is loading, is going to be loaded, or an XA file is playing.
  * Depending of the audio file, it marks different numbers.
+ * Scratch: https://decomp.me/scratch/41vuh
  *
- * @todo Unknown `AudioStreamingState_TaskPending` state, maybe Vab load is pending?
- *
- * @returns `e_AudioStreamingState` with the current state.
+ * @return `e_AudioStreamingState` with the current state.
  */
 u8 Sd_AudioStreamingCheck(void);
 
-u16 Sd_ChannelTaskGet(void);
+/** @brief Gets task index for current MIDI preset.
+ * Scratch: https://decomp.me/scratch/ZiViR
+ *
+ * @return Task index for current MIDI preset.
+ */
+u16 Sd_MidiChannelTaskGet(void);
 
 /** @brief Sound effect management and VAB + KDT file load.
  * Scratch: https://decomp.me/scratch/AA6ui
@@ -403,13 +451,35 @@ void SD_InitStruct(void);
 /** @unused Stop main audio system. */
 void Sd_AudioStop(void);
 
-u8 Sd_PlaySfx(u16 sfxId, q0_7 balance, u8 vol);
+/** @brief Plays audio.
+ *
+ * @param sfxId `e_SfxId`.
+ * @param balance Audio side balance in case the game is using audio stereo mode.
+ * @param vol [0, 255] | Audio volume.
+ * @return Audio index in PSX's "Voice" channels.
+ */
+u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol);
 
-/** Updates attributes from currently playing specified audio. */
+/** @brief Updates attributes from currently playing specified audio.
+ *
+ * @param sfxId `e_SfxId`.
+ * @param balance Audio side balance in case the game is using audio stereo mode.
+ * @param vol [0, 255] | Audio volume.
+ * @param pitch Target pitch volume.
+ */
 void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch);
 
-/** SFX func. */
-void func_80046620(u16 sfxId, q0_7 balance, u8 vol, s8 pitch);
+/** @brief Plays audio.
+ * @note The differences with `Sd_SfxPlay` is that this function features an option to
+ * specify audio pitch and this function doesn't register the playing sound at `g_AudioPlayingIdxList`
+ *
+ * @param sfxId `e_SfxId`.
+ * @param balance Audio side balance in case the game is using audio stereo mode.
+ * @param vol [0, 255] | Audio volume.
+ * @param pitch Target pitch volume.
+ * @return Audio index in PSX's "Voice" channels.
+ */
+void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, u8 vol, s8 pitch);
 
 /** @brief Stops the last VAB audio data playback. */
 void Sd_LastSfxStop(void);
@@ -451,6 +521,7 @@ void Sd_XaAudioPlayTaskAdd(u16 sfx);
 
 s32 Sd_XaAudioLengthGet(s32 idx);
 
+/** @brief Initializes the process to play XA audios in `gSDXATable`. */
 void Sd_XaPreLoadAudioPreTaskAdd(u16 xaIdx);
 
 void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx);

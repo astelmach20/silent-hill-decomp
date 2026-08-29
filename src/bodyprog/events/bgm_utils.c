@@ -57,7 +57,7 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
         case 2:
             g_SysWork.bgmStatusFlags |= BgmStatusFlag_RequestMute;
 
-            if (Sd_ChannelTaskGet() == 0)
+            if (Sd_MidiChannelTaskGet() == 0)
             {
                 Sd_BgmSongSet(bgmIdx);
                 SysWork_StateStepIncrement(1);
@@ -91,7 +91,7 @@ void Bgm_SongStopImmediate(void) // 0x80088048
             break;
 
         case 1:
-            if (Sd_ChannelTaskGet() == 0)
+            if (Sd_MidiChannelTaskGet() == 0)
             {
                 SysWork_StateStepIncrement(0); // Resets `field_10` to 0.
             }
@@ -127,7 +127,7 @@ void Bgm_SongStopFadeOut(bool useSlowFade) // 0x800880F0
             break;
 
         case 1:
-            if (Sd_ChannelTaskGet() == 0)
+            if (Sd_MidiChannelTaskGet() == 0)
             {
                 SysWork_StateStepIncrement(0); // Resets `field_10` to 0.
             }

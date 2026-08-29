@@ -73,7 +73,7 @@ bool Bgm_MuteCheck(void)
         }
     }
 
-    enabledChannelTask = Sd_ChannelTaskGet();
+    enabledChannelTask = Sd_MidiChannelTaskGet();
 
     // Idle.
     if (enabledChannelTask == 0)
@@ -107,7 +107,7 @@ static void Bgm_LayerGlobalVariablesUpdate(void)
         g_SysWork.bgmLayerVolumes[i] = Sd_MidiChannelVolumeGet(i) << 5; // Conversion to Q12.
     }
 
-    if (Sd_ChannelTaskGet() == 0)
+    if (Sd_MidiChannelTaskGet() == 0)
     {
         g_SysWork.bgmLayerVolumes[0] = Q12(1.0f);
     }
@@ -271,7 +271,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
     }
 
     isMusicPlaying    = false;
-    areChannelsActive = activeSetChannelTask = Sd_ChannelTaskGet();
+    areChannelsActive = activeSetChannelTask = Sd_MidiChannelTaskGet();
 
     areChannelsActive = activeSetChannelTask != 0 && areChannelsActive != 0xFFFF;
 
