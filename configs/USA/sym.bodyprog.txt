@@ -3071,7 +3071,9 @@ g_MapMsg_SelectCancelIdx                     = 0x800BCD7B; // type:s8
 g_DeltaTimeCpy                               = 0x800BCD84; // type:s32
 g_ItemTriggerEvents                          = 0x800BCD90; // type:s32 size:0x14
 g_RadioNoise                                 = 0x800BCDA8;
+g_MapPoint                                   = 0x800BCDB0;
 g_ItemTriggerItemIds                         = 0x800BCDC0; // type:s32 size:0x14
+g_MapAreaLoadCounter                         = 0x800BCDD4;
 g_MapEventData                               = 0x800BCDD8; // type:u32 - pointer to `s_EventData`.
 
 //------------------------------------------------------------------

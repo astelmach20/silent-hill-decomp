@@ -387,7 +387,7 @@ typedef struct
 typedef struct
 {
     /* 0x0   */ VECTOR3 field_0; // Q23.8 | Position.
-    /* 0xC   */ MATRIX  field_C;
+    /* 0xC   */ MATRIX  worldToScreenMat;
     /* 0x2C  */ s32     field_2C;
     /* 0x30  */ DVECTOR field_30;
     /* 0x34  */ q3_12   field_34[24];
@@ -395,12 +395,12 @@ typedef struct
     /* 0x94  */ q3_12   field_94[24];
     /* 0xC4  */ s16     field_C4;
     /* 0xC6  */ s16     field_C6;
-    /* 0xC8  */ s16     field_C8;
-    /* 0xCA  */ s16     field_CA;
-    /* 0xCC  */ s16     field_CC;
+    /* 0xC8  */ q3_12   field_C8;
+    /* 0xCA  */ q3_12   field_CA;
+    /* 0xCC  */ q3_12   field_CC; // Angle?
     /* 0xCE  */ s16     field_CE;
-    /* 0xD0  */ s32     field_D0;
-    /* 0xD4  */ s32     field_D4;
+    /* 0xD0  */ q19_12  field_D0;
+    /* 0xD4  */ q19_12  field_D4;
     /* 0xD8  */ s32     field_D8;
     /* 0xDC  */ s16     field_DC[4];
     /* 0xE4  */ s16     field_E4[4];
@@ -788,14 +788,14 @@ extern s32 __pad_bss_800BCD94[5];
 
 extern s_RadioNoise g_RadioNoise[2];
 
-extern s_MapPoint2d D_800BCDB0;
+extern s_MapPoint2d g_MapPoint;
 
 extern s32 __pad_bss_800BCDD0;
 
 /** Related to special item interactions. */
 extern s32 g_ItemTriggerItemIds[5];
 
-extern u8 D_800BCDD4;
+extern u8 g_MapAreaLoadCounter;
 
 extern s8 __pad_bss_800BCDD5[3];
 

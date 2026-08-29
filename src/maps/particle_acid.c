@@ -189,8 +189,8 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
 
     ptr->field_0 = sp10;
 
-    gte_SetRotMatrix(&ptr->field_0.field_C);
-    gte_SetTransMatrix(&ptr->field_0.field_C);
+    gte_SetRotMatrix(&ptr->field_0.worldToScreenMat);
+    gte_SetTransMatrix(&ptr->field_0.worldToScreenMat);
 
     sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 - g_DeltaTime, 0);
 

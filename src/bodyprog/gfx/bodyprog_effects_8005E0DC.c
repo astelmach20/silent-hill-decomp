@@ -381,10 +381,10 @@ void func_8005E89C(void) // 0x8005E89C
     ptr->field_0.vy = Q8(posY);
     ptr->field_0.vz = Q8(posZ);
 
-    Vw_WorldScreenMatrixAtPositionGet(&ptr->field_C, Q12(posX), Q12(posY), Q12(posZ));
+    Vw_WorldScreenMatrixAtPositionGet(&ptr->worldToScreenMat, Q12(posX), Q12(posY), Q12(posZ));
 
-    gte_SetRotMatrix(&ptr->field_C);
-    gte_SetTransMatrix(&ptr->field_C);
+    gte_SetRotMatrix(&ptr->worldToScreenMat);
+    gte_SetTransMatrix(&ptr->worldToScreenMat);
     gte_ReadGeomScreen(&ptr->field_2C);
 
     vwGetViewAngle(&sp10);
@@ -1435,8 +1435,8 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
             *ptr = sp10;
 
-            gte_SetRotMatrix(&ptr->field_0.field_C);
-            gte_SetTransMatrix(&ptr->field_0.field_C);
+            gte_SetRotMatrix(&ptr->field_0.worldToScreenMat);
+            gte_SetTransMatrix(&ptr->field_0.worldToScreenMat);
         }
 
         return true;
@@ -1924,8 +1924,8 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
         *ptr = sp10;
 
-        gte_SetRotMatrix(&ptr->field_0.field_C);
-        gte_SetTransMatrix(&ptr->field_0.field_C);
+        gte_SetRotMatrix(&ptr->field_0.worldToScreenMat);
+        gte_SetTransMatrix(&ptr->field_0.worldToScreenMat);
     }
 
     ptr->field_210 = (g_MapOverlayHdr.unkTable1_4C[idx].field_B << 13) + 224;
@@ -2334,8 +2334,8 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
             gte_stlvnl(&ptr->field_16C[ptr->field_1D8]);
         }
 
-        gte_SetRotMatrix(&ptr->field_0.field_C);
-        gte_SetTransMatrix(&ptr->field_0.field_C);
+        gte_SetRotMatrix(&ptr->field_0.worldToScreenMat);
+        gte_SetTransMatrix(&ptr->field_0.worldToScreenMat);
 
         for (ptr->field_1D8 = 0; ptr->field_1D8 < 3; ptr->field_1D8++)
         {

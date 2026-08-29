@@ -77,8 +77,8 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
         Sfx_WithFlagsPlay(Sfx_Unk1476, &sfxPos, Q8(0.5f), SfxFlag_None);
     }
 
-    gte_SetRotMatrix(&ptr->field_0.field_C);
-    gte_SetTransMatrix(&ptr->field_0.field_C);
+    gte_SetRotMatrix(&ptr->field_0.worldToScreenMat);
+    gte_SetTransMatrix(&ptr->field_0.worldToScreenMat);
 
     if (ABS(g_SysWork.playerWork.player.position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
         ABS(g_SysWork.playerWork.player.position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >

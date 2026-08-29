@@ -66,9 +66,9 @@ static q19_12 g_DeltaTimeCpy;
 
 s_EventData* g_ItemTriggerEvents[];
 s_RadioNoise g_RadioNoise[2];
-s_MapPoint2d D_800BCDB0;
+s_MapPoint2d g_MapPoint;
 s32          g_ItemTriggerItemIds[5];
-u8           D_800BCDD4;
+u8           g_MapAreaLoadCounter;
 s_EventData* g_MapEventData;
 
 void GameState_InGame_Update(void) // 0x80038BD4
@@ -110,6 +110,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         g_DeltaTimeCpy = g_DeltaTimeRaw;
     }
 
+    // Run system state.
     if (g_SysWork.sysState == SysState_Gameplay)
     {
         g_SysWork.isMgsStringSet = false;
@@ -134,7 +135,9 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
 
-    if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause) && g_MapOverlayHdr.updateWorldObjects != NULL)
+    // Update world objects if not paused.
+    if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause) &&
+        g_MapOverlayHdr.updateWorldObjects != NULL)
     {
         g_MapOverlayHdr.updateWorldObjects();
     }
@@ -144,6 +147,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
 
+    // Update world scene if not paused.
     if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause))
     {
         World_NearbyPlayerCollisionTriggersGet();
@@ -614,7 +618,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     s_MapPoint2d* mapPoint;
 
     g_SysWork.unused_229C         = 0;
-    g_SysWork.loadingScreenIdx    = D_800BCDB0.loadingScreenId;
+    g_SysWork.loadingScreenIdx    = g_MapPoint.loadingScreenId;
     g_SysWork.sfxPairIdx          = g_MapEventData->sfxPairIdx_8_19;
     g_SysWork.areaTransitionFlags = g_MapEventData->transitionFlags;
 
@@ -622,17 +626,17 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     if (g_SysWork.sfxPairIdx == SfxPairIdx_7)
     {
-        D_800BCDD4          = 0;
-        g_SysWork.sysFlags |= SysFlag_LoadActive;
+        g_MapAreaLoadCounter = 0;
+        g_SysWork.sysFlags  |= SysFlag_LoadActive;
     }
 
-    D_800BCDB0 = g_MapOverlayHdr.mapPoints[g_MapEventData->eventParam];
-    if (D_800BCDB0.triggerParam1 == 1)
+    g_MapPoint = g_MapOverlayHdr.mapPoints[g_MapEventData->eventParam];
+    if (g_MapPoint.triggerParam1 == 1)
     {
         mapPoint              = &g_MapOverlayHdr.mapPoints[g_MapEventData->mapPointIdx];
         offsetZ               = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
-        D_800BCDB0.positionX += g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
-        D_800BCDB0.positionZ += offsetZ;
+        g_MapPoint.positionX += g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
+        g_MapPoint.positionZ += offsetZ;
     }
 
     if (g_SysWork.sysState == SysState_LoadOverlay)
@@ -670,7 +674,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
 void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 {
-    Chara_PositionSet(&D_800BCDB0);
+    Chara_PositionSet(&g_MapPoint);
 }
 
 void AreaLoad_TransitionSound(void) // 0x80039F54

@@ -20,14 +20,15 @@
 
 void GameState_LoadScreen_Update(void)
 {
+    #define LOAD_COUNT_MAX 20
+
     GameBoot_LoadingScreen();
     GameBoot_InGameStartup();
 
     if (g_SysWork.sysFlags & SysFlag_LoadActive)
     {
-        D_800BCDD4++;
-
-        if (D_800BCDD4 >= 21)
+        g_MapAreaLoadCounter++;
+        if (g_MapAreaLoadCounter > LOAD_COUNT_MAX)
         {
             g_SysWork.sysFlags &= ~SysFlag_LoadActive;
 
@@ -35,6 +36,8 @@ void GameState_LoadScreen_Update(void)
             SD_Call(Sfx_Unk1501);
         }
     }
+
+    #undef LOAD_COUNT_MAX
 }
 
 void GameBoot_InGameStartup(void)

@@ -154,14 +154,14 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     {
         s_func_8005E89C field_0;
         SVECTOR         field_12C;
-        s32             field_134;
-        s32             field_138;
+        q19_12          field_134;
+        q19_12          field_138;
         s32             field_13C;
         DVECTOR         field_140;
         s16             field_144;
     } s_func_800CB040;
 
-    s32              var_s1;
+    q19_12           var_s1;
     s32              halfSizeCeil;
     s32              halfSizeFloor;
     s_func_800CB040* ptr;
@@ -171,11 +171,8 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     if (sharedData_800DFB7C_0_s00[idx].field_A == 8)
     {
         *(s32*)&(*poly)->u0 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) << 6) + ((sharedData_800DFB7C_0_s00[idx].field_B >= 3) ? 0x020EC000 : 0x020E8000);
-
         *(s32*)&(*poly)->u1 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) ? 0x7F : 0x3F) + (sharedData_800DFB7C_0_s00[idx].field_B >= 3 ? 0x6DC000 : 0x6D8000);
-
         *(s16*)&(*poly)->u2 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) << 6) | ((sharedData_800DFB7C_0_s00[idx].field_B >= 3) ? 0xFF00 : 0xBF00);
-
         *(s16*)&(*poly)->u3 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) ? 0x7F : 0x3F) | ((sharedData_800DFB7C_0_s00[idx].field_B >= 3) ? 0xFF00 : 0xBF00);
 
         // TODO: Might be single line statements / macros like above?
@@ -214,10 +211,10 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     ptr->field_138 = sharedData_800DFB7C_0_s00[idx].field_4.vz_4 +
                      Q12_MULT(Math_Cos(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1);
 
-    if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 < (u16)ptr->field_0.field_C8)
+    if ((q4_12)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 < (q4_12)ptr->field_0.field_C8)
     {
         q19_12 angle = func_8005C7B0(Q12_ANGLE(90.0f) - (((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 << 6) / sharedData_800D8568_1_s05.field_4));
-        var_s1    = Q12_MULT((u16)ptr->field_0.field_CA, Math_Sin(angle)) + (u16)ptr->field_0.field_CC;
+        var_s1    = Q12_MULT((q4_12)ptr->field_0.field_CA, Math_Sin(angle)) + (q4_12)ptr->field_0.field_CC;
 
         ptr->field_134 = Q12_MULT(ptr->field_134, var_s1);
         ptr->field_138 = Q12_MULT(ptr->field_138, var_s1);
@@ -226,11 +223,12 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     ptr->field_134 += ptr->field_0.field_D0;
     ptr->field_138 += ptr->field_0.field_D4;
 
-    *(s32*)&ptr->field_12C = (((ptr->field_134 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
-    ptr->field_12C.vz = (ptr->field_138 >> 4) - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->field_12C,
+                           Q12_TO_Q8(ptr->field_134)                      - (q8_8)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(ptr->field_138)                      - ptr->field_0.field_0.vz);
 
-    if (sharedData_800DFB7C_0_s00[idx].field_B & 0x1)
+    if (sharedData_800DFB7C_0_s00[idx].field_B & (1 << 0))
     {
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 += Q12_MULT_PRECISE(g_DeltaTime, ((u16)sharedData_800D8568_1_s05.field_A * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0) >> 8);
     }
