@@ -251,18 +251,18 @@ void func_800DA248(void) // 0x800DA248
 
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_11);
             g_Cutscene_Timer = Q12(0.0f);
-            Anim_CharaTypeAnimInfoClear();
 
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_Lisa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             ScreenFade_ResetTimestep();
-
             CutsceneBorder_ForceShow();
-            g_SysWork.lightIntensity      = Q12(0.8f);
-            g_SysWork.sysFlags           |= SysFlag_CutsceneActive;
+            g_SysWork.lightIntensity = Q12(0.8f);
+            g_SysWork.sysFlags      |= SysFlag_CutsceneActive;
 
             Game_TurnFlashlightOn();
             D_800E9ECC = 0;
+
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();

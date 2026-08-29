@@ -36,6 +36,7 @@
 // STATIC VARIABLES
 // ========================================
 
+/** @brief Game system state functions. Used with `e_SysState`. */
 static void (*g_SysStateFuncs[])(void) = {
     SysState_Gameplay_Update,
     SysState_OptionsMenu_Update,
@@ -57,18 +58,18 @@ static void (*g_SysStateFuncs[])(void) = {
 /** Used to store the previous delta time state of the delta timer. There are some instances where 2D backgrounds
  * are drawn using `g_DeltaTimeRaw` while `g_DeltaTime` is stopped.
  */
-static s32 g_DeltaTimeCpy;
+static q19_12 g_DeltaTimeCpy;
 
 // ========================================
 // GLOBAL VARIABLES
 // ========================================
 
-s_EventData*   g_ItemTriggerEvents[];
-s_RadioNpcInfo g_RadioNpcInfos[2];
-s_MapPoint2d   D_800BCDB0;
-s32            g_ItemTriggerItemIds[5];
-u8             D_800BCDD4;
-s_EventData*   g_MapEventData;
+s_EventData* g_ItemTriggerEvents[];
+s_RadioNoise g_RadioNoise[2];
+s_MapPoint2d D_800BCDB0;
+s32          g_ItemTriggerItemIds[5];
+u8           D_800BCDD4;
+s_EventData* g_MapEventData;
 
 void GameState_InGame_Update(void) // 0x80038BD4
 {
@@ -85,7 +86,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         case 1:
             DrawSync(SyncMode_Wait);
-            func_80037154();
+            Game_RadioNoiseReset();
             Game_MapRoomIdxUpdate();
             func_800892A4(1);
 

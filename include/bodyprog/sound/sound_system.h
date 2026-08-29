@@ -236,7 +236,7 @@ typedef struct
 typedef struct _VabPlayingInfo
 {
     /* 0x0 */ u8  voiceIdx; /** Index of audio at PSX's "Voice" channels. */
-    /* 0x1 */ s8  __pad;
+    /* 0x1 */ s8  __pad_1;
     /* 0x2 */ s16 typeIdx; /** `e_AudioType` */
     /* 0x4 */ s16 progIdx;
     /* 0x6 */ s16 toneIdx;
@@ -252,7 +252,7 @@ typedef struct _VabPlayingInfo
 typedef struct _VabInfo
 {
     /* 0x0 */ u8  audioVabIdx; /** Index of audio inside VAB files. */
-    /* 0x1 */ s8  __pad;
+    /* 0x1 */ s8  __pad_1;
     /* 0x2 */ u16 vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
     /* 0x4 */ u8  noteIdx;
     /* 0x5 */ s8  volumeMin;   /** Minimun volume required to play the audio. */
@@ -274,11 +274,12 @@ STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 typedef struct _AudioItemData
 {
     /* 0x0 */ s8  typeIdx;       /** See `e_AudioType`. */
-    /* 0x1 */ s8  __pad;
-    /* 0x0 */ u16 vagDataOffset; /** Offset of VAG data in VAB files. */
+    /* 0x1 */ s8  __pad_1;
+    /* 0x2 */ u16 vagDataOffset; /** Offset of VAG data in VAB files. */
     /* 0x4 */ u32 fileSize;      /** VAB/KDT file size. */
     /* 0x8 */ s32 fileOffset;    /** VAB/KDT audio offset in the file container. */
 } s_AudioItemData;
+STATIC_ASSERT_SIZEOF(s_AudioItemData, 12);
 
 // ========
 // GLOBALS
@@ -353,7 +354,7 @@ extern s16                        g_AudioPlayingPitchList[24];
 extern s_Sd_AudioWork             g_Sd_AudioWork;
 extern s_AudioStreamingStates     g_Sd_AudioStreamingStates;
 extern s32                        __pad_bss_800C1674;
-extern s_ChannelsVolumeController gSDVolConfig;
+extern s_ChannelsVolumeController g_SdVolumeConfig;
 extern s_XaAudioPlayTracking      g_Sd_XaAudioPlayTracking;
 extern s32                        __pad_bss_800C1694;
 extern s_VabPlayingInfo           g_Sd_VabPlayingInfo;

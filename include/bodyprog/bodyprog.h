@@ -195,14 +195,15 @@ typedef struct
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
-typedef struct _RadioNpcInfo
+/** @brief Radio noise data for nearby enemies. */
+typedef struct _RadioNoise
 {
     /* 0x0 */ s8 prevIdx;
     /* 0x1 */ s8 idx;
     /* 0x2 */ s8 closeNpcInfoIdx;
-    /* 0x3 */ s8 field_3;
-} s_RadioNpcInfo;
-STATIC_ASSERT_SIZEOF(s_RadioNpcInfo, 4);
+    /* 0x3 */ s8 unused; /** @unused */
+} s_RadioNoise;
+STATIC_ASSERT_SIZEOF(s_RadioNoise, 4);
 
 typedef struct
 {
@@ -777,7 +778,7 @@ extern u8 D_800AE186;
 
 extern s8 __pad_bss_800BCD81[3];
 
-extern s32 g_DeltaTimeCpy;
+extern q19_12 g_DeltaTimeCpy;
 
 extern s32 __pad_bss_800BCD88[2];
 
@@ -785,8 +786,7 @@ extern s_EventData* g_ItemTriggerEvents[];
 
 extern s32 __pad_bss_800BCD94[5];
 
-/** Radio SFX data. */
-extern s_RadioNpcInfo g_RadioNpcInfos[2];
+extern s_RadioNoise g_RadioNoise[2];
 
 extern s_MapPoint2d D_800BCDB0;
 

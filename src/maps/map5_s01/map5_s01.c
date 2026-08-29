@@ -282,7 +282,7 @@ void func_800EBA40(void) // 0x800EBA40
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
-            func_80037154();
+            Game_RadioNoiseReset();
             break;
     }
 }
@@ -389,7 +389,7 @@ void func_800EBF70(void) // 0x800EBF70
             vcReturnPreAutoCamWork(true);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80037154();
+            Game_RadioNoiseReset();
             break;
     }
 }

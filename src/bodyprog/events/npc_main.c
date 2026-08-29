@@ -73,7 +73,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
     if (cond == false)
     {
-        func_80037154();
+        Game_RadioNoiseReset();
 
         if (g_MapOverlayHdr.npcSpawnEvent != NULL)
         {
@@ -163,7 +163,7 @@ void Game_NpcUpdate(void) // 0x80038354
     s32             var_v1_3;
     s32             closeNpcInfoIdx1;
     s32             balance;
-    s8              temp_s1;
+    s8              idx;
     s32             closeNpcInfoIdx;
     s32             bitIdx;
     q20_12          curDistToNpc;
@@ -365,9 +365,9 @@ void Game_NpcUpdate(void) // 0x80038354
 
     idxBits = 0;
 
-    for (l = 0; l < ARRAY_SIZE(g_RadioNpcInfos); l++)
+    for (l = 0; l < ARRAY_SIZE(g_RadioNoise); l++)
     {
-        closeNpcInfoIdx1 = g_RadioNpcInfos[l].idx;
+        closeNpcInfoIdx1 = g_RadioNoise[l].idx;
         if (closeNpcInfoIdx1 == NO_VALUE)
         {
             closeNpcInfoIdx0 = NO_VALUE;
@@ -379,22 +379,22 @@ void Game_NpcUpdate(void) // 0x80038354
 
         if (closeNpcInfoIdx0 >= 0)
         {
-            g_RadioNpcInfos[l].closeNpcInfoIdx = closeNpcInfoIdx0;
-            idxBits                           |= 1 << closeNpcInfoIdx1;
+            g_RadioNoise[l].closeNpcInfoIdx = closeNpcInfoIdx0;
+            idxBits                        |= 1 << closeNpcInfoIdx1;
         }
         else
         {
-            g_RadioNpcInfos[l].idx = NO_VALUE;
+            g_RadioNoise[l].idx = NO_VALUE;
         }
     }
 
-    for (l = 0; l < ARRAY_SIZE(g_RadioNpcInfos); l++)
+    for (l = 0; l < ARRAY_SIZE(g_RadioNoise); l++)
     {
-        temp_s1 = g_RadioNpcInfos[l].idx;
-        if (temp_s1 == NO_VALUE)
+        idx = g_RadioNoise[l].idx;
+        if (idx == NO_VALUE)
         {
             closeNpcInfoIdx = func_800382EC();
-            if (closeNpcInfoIdx != temp_s1)
+            if (closeNpcInfoIdx != idx)
             {
                 bitIdx = closestNpcInfos[closeNpcInfoIdx].bitIdx;
             }
@@ -403,16 +403,16 @@ void Game_NpcUpdate(void) // 0x80038354
                 bitIdx = NO_VALUE;
             }
 
-            g_RadioNpcInfos[l].closeNpcInfoIdx = closeNpcInfoIdx;
-            g_RadioNpcInfos[l].idx = bitIdx;
+            g_RadioNoise[l].closeNpcInfoIdx = closeNpcInfoIdx;
+            g_RadioNoise[l].idx             = bitIdx;
         }
     }
 
-    for (l = 0; l < ARRAY_SIZE(g_RadioNpcInfos); l++)
+    for (l = 0; l < ARRAY_SIZE(g_RadioNoise); l++)
     {
-        if (g_RadioNpcInfos[l].prevIdx == NO_VALUE)
+        if (g_RadioNoise[l].prevIdx == NO_VALUE)
         {
-            if (g_RadioNpcInfos[l].idx >= 0)
+            if (g_RadioNoise[l].idx >= 0)
             {
                 SD_Call((u16)(Sfx_RadioInterferenceLoop + l));
             }
@@ -426,9 +426,9 @@ void Game_NpcUpdate(void) // 0x80038354
                 var_s3 = 1;
             }
 
-            if (g_RadioNpcInfos[l].idx >= 0)
+            if (g_RadioNoise[l].idx >= 0)
             {
-                closeNpcInfo = &closestNpcInfos[g_RadioNpcInfos[l].closeNpcInfoIdx];
+                closeNpcInfo = &closestNpcInfos[g_RadioNoise[l].closeNpcInfoIdx];
                 balance      = Vc_StereoBalanceGet(&closeNpcInfo->position);
 
                 var_v1_3 = SquareRoot12(closeNpcInfo->distanceToNpc << Q12_SHIFT) >> 8;
@@ -446,7 +446,7 @@ void Game_NpcUpdate(void) // 0x80038354
             }
         }
 
-        g_RadioNpcInfos[l].prevIdx = g_RadioNpcInfos[l].idx;
+        g_RadioNoise[l].prevIdx = g_RadioNoise[l].idx;
     }
 }
 
