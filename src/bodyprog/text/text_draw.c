@@ -265,7 +265,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     }
 
     // Reset base string position?
-    Math_DVectorSetFast(&g_StringPosition, posX, posY);
+    Math_SetDVectorFast(&g_StringPosition, posX, posY);
 
     return result;
 
@@ -686,7 +686,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         GsOUT_PACKET_P = packet;
     }
 
-    Math_DVectorSetFast(&g_StringPosition, glyphPosX, glyphPosY);
+    Math_SetDVectorFast(&g_StringPosition, glyphPosX, glyphPosY);
     return returnCode;
 
     #undef LINE_SPACE_SIZE

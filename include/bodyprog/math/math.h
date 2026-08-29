@@ -222,7 +222,7 @@
  * @param x X component.
  * @param y Y component.
  */
-#define Math_DVectorSetFast(vec, x, y) \
+#define Math_SetDVectorFast(vec, x, y) \
     *((s32*)&(vec)->vx) = ((x) & 0xFFFF) + ((y) << 16)
 
 /** @brief Sets an `SVECTOR` using a fast bitwise method.

@@ -142,10 +142,10 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
     sharedData_800DFB7C_0_s00[idx].field_4.vz_4    += Q12_MULT(temp_s1, Math_Sin(temp_v0_5));
     sharedData_800DFB7C_0_s00[idx].field_C.field_0 += MAX(temp_s1, 0);
 
-    *(s32*)&ptr->field_12C = ((((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + sharedData_800DEE50_1_s01.field_14) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
-
-    ptr->field_12C.vz = ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + sharedData_800DEE50_1_s01.field_18) >> 4) - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->field_12C,
+        Q12_TO_Q8((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + sharedData_800DEE50_1_s01.field_14)) - (q8_8)ptr->field_0.field_0.vx,
+        Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8)                                                - ptr->field_0.field_0.vy,
+        Q12_TO_Q8((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + sharedData_800DEE50_1_s01.field_18)) - ptr->field_0.field_0.vz);
 
     sharedData_800DFB7C_0_s00[idx].field_C.field_0 += CLAMP_LOW(TO_FIXED(Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DEE50_1_s01.field_C), Q12_SHIFT) /
                                                                 (Q12_MULT(Math_Cos(sharedData_800DEE50_1_s01.field_10), sharedData_800DEE50_1_s01.field_6) -

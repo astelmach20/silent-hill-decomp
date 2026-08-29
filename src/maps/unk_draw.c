@@ -366,9 +366,10 @@ bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx) // 0x800CCF50
     ptr->field_138 = sharedData_800D8568_1_s05.field_24 + sharedData_800DFB7C_0_s00[idx].field_4.vz_4 +
                      Q12_MULT(Math_Cos(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1);
 
-    *(s32*)&ptr->field_12C = (((ptr->field_134 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                             (((sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
-    ptr->field_12C.vz = (ptr->field_138 >> 4) - ptr->field_0.field_0.vz;
+    Math_SetSVectorFastSum(&ptr->field_12C,
+                           Q12_TO_Q8(ptr->field_134)                      - (q8_8)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(ptr->field_138)                      - ptr->field_0.field_0.vz);
 
     if (sharedData_800DFB7C_0_s00[idx].field_B & 1)
     {

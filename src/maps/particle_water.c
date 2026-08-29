@@ -302,21 +302,25 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
         setPolyFT4(*poly);
 
-        *(s32*)&ptr->field_12C = (((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + (ptr->field_168 >> Q12_SHIFT))) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(ptr->field_174) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_12C.vz = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + (-ptr->field_164 >> Q12_SHIFT)) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_12C,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + (ptr->field_168 >> Q12_SHIFT))  - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(ptr->field_174)                                                               - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + (-ptr->field_164 >> Q12_SHIFT)) - ptr->field_0.field_0.vz);
 
-        *(s32*)&ptr->field_134 = ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + (-ptr->field_168 >> Q12_SHIFT)) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(ptr->field_174) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_134.vz = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + (ptr->field_164 >> Q12_SHIFT)) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_134,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + (-ptr->field_168 >> Q12_SHIFT)) - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(ptr->field_174)                                                               - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + (ptr->field_164 >> Q12_SHIFT))  - ptr->field_0.field_0.vz);
 
-        *(s32*)&ptr->field_13C = ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ((ptr->field_168 - ptr->field_16C) >> Q12_SHIFT)) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(ptr->field_176) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_13C.vz = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ((-ptr->field_164 - ptr->field_170) >> Q12_SHIFT)) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_13C,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ((ptr->field_168 - ptr->field_16C) >> Q12_SHIFT))  - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(ptr->field_176)                                                                                  - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ((-ptr->field_164 - ptr->field_170) >> Q12_SHIFT)) - ptr->field_0.field_0.vz);
 
-        *(s32*)&ptr->field_144 = ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ((-ptr->field_168 - ptr->field_16C) >> Q12_SHIFT)) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(ptr->field_176) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_144.vz = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ((ptr->field_164 - ptr->field_170) >> Q12_SHIFT)) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_144,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ((-ptr->field_168 - ptr->field_16C) >> Q12_SHIFT)) - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(ptr->field_176)                                                                                  - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ((ptr->field_164 - ptr->field_170) >> Q12_SHIFT))  - ptr->field_0.field_0.vz);
     }
     else
     {
@@ -366,21 +370,25 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
         setPolyFT4(*poly);
 
-        *(s32*)&ptr->field_12C = ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vx) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_12C.vz      = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vx) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_12C,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vx) - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8)                                                    - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vx) - ptr->field_0.field_0.vz);
 
-        *(s32*)&ptr->field_134 = ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vy) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_134.vz      = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vy) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_134,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vy) - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8)                                                    - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vy) - ptr->field_0.field_0.vz);
 
-        *(s32*)&ptr->field_13C = ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vx) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_16C) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_13C.vz      = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vx) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_13C,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vx) - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_16C)                                   - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vx) - ptr->field_0.field_0.vz);
 
-        *(s32*)&ptr->field_144 = ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vy) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
-                                 ((Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_16C) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_144.vz      = Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vy) - ptr->field_0.field_0.vz;
+        Math_SetSVectorFastSum(&ptr->field_144,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + ptr->field_0.u_field_EC.field_0[idx0].vy) - (q8_8)ptr->field_0.field_0.vx,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_16C)                                   - ptr->field_0.field_0.vy,
+                               Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + ptr->field_0.u_field_FC.field_0[idx0].vy) - ptr->field_0.field_0.vz);
     }
 
     gte_ldv3c(&ptr->field_12C);
@@ -609,8 +617,10 @@ void sharedFunc_800CCE60_1_s02(void)
                     }
                 }
 
-                *(s32*)&ptr->field_12C = (((var_fp >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) + (((sp18 >> 4) - ptr->field_0.field_0.vy) << 16);
-                ptr->field_12C.vz      = (sp1C >> 4) - ptr->field_0.field_0.vz;
+                Math_SetSVectorFastSum(&ptr->field_12C,
+                                       Q12_TO_Q8(var_fp) - (q8_8)ptr->field_0.field_0.vx,
+                                       Q12_TO_Q8(sp18)   - ptr->field_0.field_0.vy,
+                                       Q12_TO_Q8(sp1C)   - ptr->field_0.field_0.vz);
 
                 gte_ldv0(&ptr->field_12C);
                 gte_rtps();

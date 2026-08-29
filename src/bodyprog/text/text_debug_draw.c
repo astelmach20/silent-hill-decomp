@@ -98,8 +98,8 @@ void Text_Debug_Draw(char* str) // 0x80031F40
         packet += sizeof(SPRT_8);
     }
 
-    *((u32*)&g_Text_Debug_PositionSet1) = (posX & 0xFFFF) + (posY << 16);
-    tPage                               = (DR_TPAGE*)packet;
+    Math_SetDVectorFast(&g_Text_Debug_PositionSet1, posX, posY);
+    tPage = (DR_TPAGE*)packet;
 
     setDrawTPage(tPage, 0, 1, getTPageN(0, 0, 4, 1));
     addPrim(ot, tPage);

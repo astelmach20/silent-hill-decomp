@@ -268,7 +268,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
     }
 
     // Reset base string position?
-    *((u32*)&g_StringPosition) = (posX & 0xFFFF) + (posY << 16);
+    Math_SetDVectorFast(&g_StringPosition, posX, posY);
 
     return result;
 
