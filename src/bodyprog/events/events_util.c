@@ -985,7 +985,7 @@ void Event_DisplayMapMsgWithDimmedBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, 
         case EventStates_4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
-            if (mapMsgIdx0 != MapMsgCode_None)
+            if (mapMsgIdx0 != MapMsgReturnCode_None)
             {
                 Event_DisplayMapMsg(false, mapMsgIdx0, 0, 0, 0, true);
                 break;

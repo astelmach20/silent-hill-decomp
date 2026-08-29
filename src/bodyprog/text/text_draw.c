@@ -94,7 +94,7 @@ void Gfx_StringsReset2dLayerIdx(void) // 0x8004A8CC
     g_Strings2dLayerIdx = 6;
 }
 
-void Gfx_StringSetColor(s16 colorId) // 0x8004A8DC
+void Gfx_StringColorSet(s16 colorId) // 0x8004A8DC
 {
     g_StringColorId = colorId;
 }
@@ -273,7 +273,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     #undef ATLAS_BASE_Y
 }
 
-s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
+s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
 {
     s32 i;
     s32 j;
@@ -396,7 +396,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     u32       color;
     u8        code;
     s32       arg;
-    s32       result;
+    s32       returnCode; // `e_MagMsgReturnCode`
     s32       charCode;
     s32       idx;
     s32       charWidth;
@@ -406,8 +406,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     POLY_FT4* glyphPoly;
     SPRT*     glyphSprt;
 
-    packet = NULL;
-    result = MapMsgCode_None;
+    packet     = NULL;
+    returnCode = MapMsgReturnCode_None;
 
     ot                  = (GsOT*)&g_OtTags0[g_ActiveBufferIdx][6];
     color               = STRING_COLORS[g_StringColorId];
@@ -418,21 +418,21 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         packet = GsOUT_PACKET_P;
     }
 
-    switch ((u8)g_MapMsg_ActiveLine.positionIdx)
+    switch (g_MapMsg_ActiveLine.positionIdx)
     {
-        case 0:
+        case 0: // @unused
             g_StringPosition.vy = -92;
             break;
 
-        case 1:
+        case 1: // @unused
             g_StringPosition.vy = 76 - ((g_MapMsg_WidthIdx - 1) * FONT_12X16_GLYPH_SIZE_Y);
             break;
 
-        case 2:
+        case 2: // @unused
             g_StringPosition.vy = -60;
             break;
 
-        case 3:
+        case 3: // @unused
             g_StringPosition.vy = 44 - ((g_MapMsg_WidthIdx - 1) * FONT_12X16_GLYPH_SIZE_Y);
             break;
 
@@ -496,13 +496,13 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                     case MAP_MSG_CODE_NEWLINE:
                         lineIdx++;
 
-                        switch (result)
+                        switch (returnCode)
                         {
-                            case MapMsgCode_AlignCenter:
+                            case MapMsgReturnCode_AlignCenter:
                                 glyphPosX = -(g_MapMsg_Widths[lineIdx] >> 1);
                                 break;
 
-                            case MapMsgCode_SetByT:
+                            case MapMsgReturnCode_SetByT:
                                 glyphPosX = g_StringPositionX1;
                                 break;
 
@@ -568,12 +568,12 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_MIDDLE:
-                        result    = MapMsgCode_AlignCenter;
-                        glyphPosX = -(g_MapMsg_Widths[lineIdx] >> 1);
+                        returnCode = MapMsgReturnCode_AlignCenter;
+                        glyphPosX  = -(g_MapMsg_Widths[lineIdx] >> 1);
                         break;
 
                     case MAP_MSG_CODE_TAB:
-                        result             = MapMsgCode_SetByT;
+                        returnCode         = MapMsgReturnCode_SetByT;
                         g_StringPositionX1 = -120;
                         glyphPosX          = -120;
                         break;
@@ -588,13 +588,13 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_END:
-                        result  = NO_VALUE;
-                        lineIdx = FONT_12X16_LINE_COUNT_MAX;
+                        returnCode = NO_VALUE;
+                        lineIdx    = FONT_12X16_LINE_COUNT_MAX;
                         break;
 
                     case MAP_MSG_CODE_SELECT:
-                        result  = arg;
-                        lineIdx = FONT_12X16_LINE_COUNT_MAX;
+                        returnCode = arg;
+                        lineIdx    = FONT_12X16_LINE_COUNT_MAX;
                         break;
 
                     case MAP_MSG_CODE_HIGH_RES:
@@ -607,8 +607,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
         // Terminator.
         case '\0':
-            result  = MapMsgCode_Terminate;
-            lineIdx = FONT_12X16_LINE_COUNT_MAX;
+            returnCode = MapMsgReturnCode_Terminate;
+            lineIdx    = FONT_12X16_LINE_COUNT_MAX;
             break;
 
         // Draw glyph sprite.
@@ -625,8 +625,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, (s8)color, (s8)(color >> 8), (s8)(color >> 16));
                 setXY4(glyphPoly,
-                       glyphPosX,                             glyphPosY * 2,
-                       glyphPosX,                             (glyphPosY * 2) + 30,
+                       glyphPosX,                           glyphPosY * 2,
+                       glyphPosX,                           (glyphPosY * 2) + 30,
                        glyphPosX + FONT_12X16_GLYPH_SIZE_X, glyphPosY * 2,
                        glyphPosX + FONT_12X16_GLYPH_SIZE_X, (glyphPosY * 2) + 30);
 
@@ -676,7 +676,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                     GsOUT_PACKET_P = packet;
                 }
 
-                return result;
+                return returnCode;
             }
         }
     }
@@ -687,7 +687,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     }
 
     Math_DVectorSetFast(&g_StringPosition, glyphPosX, glyphPosY);
-    return result;
+    return returnCode;
 
     #undef LINE_SPACE_SIZE
     #undef CHARCODE_OFFSET

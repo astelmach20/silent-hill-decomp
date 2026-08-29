@@ -1674,7 +1674,7 @@ void func_800DCC54(void) // 0x800DCC54
         {
             sharedFunc_800D0B18_0_s00(6);
             Savegame_EventFlagSet(EventFlag_18);
-            Sd_SfxPlay(Sfx_Unk1359, Q8(0.0f), 192);
+            Sd_SfxPlay(Sfx_Unk1359, Q8(0.0f), Q8(0.75f));
 
             D_800DFADC = Q12(60.0f);
         }

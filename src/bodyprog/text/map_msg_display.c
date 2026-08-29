@@ -28,11 +28,11 @@ s_MapMsgSelect g_MapMsg_Select;
 u8             g_MapMsg_AudioLoadBlock;
 s8             g_MapMsg_SelectCancelIdx;
 
-// @hack JP calls different `Gfx_StringSetColor` / `Gfx_StringDraw` funcs here.
+// @hack JP calls different `Gfx_StringColorSet` / `Gfx_StringDraw` funcs here.
 // The normal funcs available are also used in JP, so can't be renamed.
-// For now override `Gfx_StringSetColor` calls in this file until those JP funcs get figured out.
+// For now override `Gfx_StringColorSet` calls in this file until those JP funcs get figured out.
 #if VERSION_REGION_IS(NTSCJ)
-    #define Gfx_StringSetColor Gfx_StringSetColor_JP
+    #define Gfx_StringColorSet Gfx_StringColorSet_JP
 #endif
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
@@ -84,7 +84,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             msgDisplayInc                    = 2; // Advance 2 glyphs at a time.
 
             Gfx_MapMsg_DefaultStringInfoSet();
-            var_a1 = Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
+            var_a1 = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
 
 #if VERSION_REGION_IS(NTSCJ)
             if (var_a1 != 0)
@@ -126,7 +126,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 D_800BCD74 = 0;
             }
 
-            Gfx_StringSetColor(StringColorId_White);
+            Gfx_StringColorSet(StringColorId_White);
 #if VERSION_REGION_IS(NTSC)
             Gfx_StringSetPosition(40, 160);
 #endif
@@ -170,7 +170,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         g_MapMsg_Select.maxIdx           = temp;
                         g_MapMsg_Select.selectedEntryIdx = g_MapMsg_SelectCancelIdx;
 
-                        Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), 64);
+                        Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
 
                         if (g_SysWork.silentYesSelection)
                         {
@@ -186,11 +186,11 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                         if (g_MapMsg_Select.selectedEntryIdx == (s8)g_MapMsg_SelectCancelIdx)
                         {
-                            Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), 64);
+                            Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
                         }
                         else if (!g_SysWork.silentYesSelection)
                         {
-                            Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), 64);
+                            Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
                         }
 
                         if (g_SysWork.silentYesSelection)
@@ -215,7 +215,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     g_MapMsg_CurrentIdx++;
                     g_SysWork.mapMsgTimer = g_MapMsg_Select.maxIdx;
 
-                    var_a1 = Gfx_MapMsg_CalculateWidths(g_MapMsg_CurrentIdx);
+                    var_a1 = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
 
 #if VERSION_REGION_IS(NTSCJ)
                     if (var_a1 != 0)
@@ -263,7 +263,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             stateMachineIdx0 = 0;
             stateMachineIdx1 = Gfx_MapMsg_SelectionUpdate(g_MapMsg_CurrentIdx, &msgDisplayLength);
 
-            if (stateMachineIdx1 != 0 && stateMachineIdx1 < MapMsgCode_Select4)
+            if (stateMachineIdx1 != 0 && stateMachineIdx1 < MapMsgReturnCode_Select4)
             {
                 stateMachineIdx0 = NO_VALUE;
             }
@@ -295,9 +295,9 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     #define STRING_LINE_OFFSET 16
 
     s32 i;
-    s32 mapMsgCode;
+    s32 returnCode;
 
-    mapMsgCode = Gfx_MapMsg_StringDraw(g_MapOverlayHdr.mapMessages[mapMsgIdx], *arg1);
+    returnCode = Gfx_MapMsg_StringDraw(g_MapOverlayHdr.mapMessages[mapMsgIdx], *arg1);
 
     g_MapMsg_SelectFlashTimer += g_DeltaTimeRaw;
     if (g_MapMsg_SelectFlashTimer >= Q12(0.5f))
@@ -305,20 +305,20 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
         g_MapMsg_SelectFlashTimer -= Q12(0.5f);
     }
 
-    switch (mapMsgCode)
+    switch (returnCode)
     {
         case NO_VALUE:
-        case MapMsgCode_None:
+        case MapMsgReturnCode_None:
             g_MapMsg_SelectFlashTimer = Q12(0.0f);
             break;
 
-        case MapMsgCode_Select2:
-        case MapMsgCode_Select3:
-        case MapMsgCode_Select4:
+        case MapMsgReturnCode_Select2:
+        case MapMsgReturnCode_Select3:
+        case MapMsgReturnCode_Select4:
             g_MapMsg_Select.maxIdx   = 1;
-            g_MapMsg_SelectCancelIdx = (mapMsgCode == 3) ? 2 : 1;
+            g_MapMsg_SelectCancelIdx = (returnCode == 3) ? 2 : 1;
 
-            if (mapMsgCode == MapMsgCode_Select4)
+            if (returnCode == MapMsgReturnCode_Select4)
             {
                 // Shows selection prompt with map messages at indices 0 and 1.
                 // All maps have "Yes" and "No" as messages 0 and 1, respectively.
@@ -326,11 +326,11 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 {
                     if (g_MapMsg_Select.selectedEntryIdx == i)
                     {
-                        Gfx_StringSetColor(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
+                        Gfx_StringColorSet(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
                     }
                     else
                     {
-                        Gfx_StringSetColor(StringColorId_White);
+                        Gfx_StringColorSet(StringColorId_White);
                     }
 
 #if VERSION_REGION_IS(NTSC)
@@ -341,7 +341,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
 #endif
                 }
 
-                mapMsgCode = 2;
+                returnCode = 2;
             }
             else
             {
@@ -351,15 +351,15 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 // `[idx + 1]`: "Option 1"
                 // `[idx + 2]`: "Option 2"
                 // `[idx + 3]`: "Option 3"
-                for (i = 0; i < mapMsgCode; i++)
+                for (i = 0; i < returnCode; i++)
                 {
                     if (g_MapMsg_Select.selectedEntryIdx == i)
                     {
-                        Gfx_StringSetColor(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
+                        Gfx_StringColorSet(((g_MapMsg_SelectFlashTimer >> 10) * 3) + 4);
                     }
                     else
                     {
-                        Gfx_StringSetColor(StringColorId_White);
+                        Gfx_StringColorSet(StringColorId_White);
                     }
 
 #if VERSION_REGION_IS(NTSC)
@@ -377,27 +377,27 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx--;
 
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), 64);
+                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
             }
 
             if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighDown &&
-                g_MapMsg_Select.selectedEntryIdx != (mapMsgCode - 1))
+                g_MapMsg_Select.selectedEntryIdx != (returnCode - 1))
             {
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx++;
 
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), 64);
+                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
             }
 
-            mapMsgCode = NO_VALUE;
+            returnCode = NO_VALUE;
             break;
 
-        case MapMsgCode_DisplayAll:
+        case MapMsgReturnCode_DisplayAll:
             *arg1 = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
             break;
     }
 
-    return mapMsgCode;
+    return returnCode;
 
     #undef STRING_LINE_OFFSET
 }

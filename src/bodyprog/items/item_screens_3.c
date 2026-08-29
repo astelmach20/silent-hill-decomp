@@ -582,7 +582,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
         "Name:"
     };
 
-    Gfx_StringSetColor(StringColorId_White);
+    Gfx_StringColorSet(StringColorId_White);
 
     // In inventory.
     if (g_GameWork.gameStateSteps[1] < 21)
@@ -1568,7 +1568,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
     }
 
-    Gfx_StringSetColor(StringColorId_White);
+    Gfx_StringColorSet(StringColorId_White);
 
     D_800AE185 = INV_ITEM_GROUP(g_SavegamePtr->items[idx].id_0) - 1;
     D_800AE186 = INV_ITEM_GROUP_ID(g_SavegamePtr->items[idx].id_0);
@@ -2343,7 +2343,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                                 break;
                         }
 
-                        Sd_SfxPlay(Sfx_Unk1325, Q8(-0.25f), 64);
+                        Sd_SfxPlay(Sfx_Unk1325, Q8(-0.25f), Q8(0.25f));
                         g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, Q12(0.0f), Q12(100.0f));
                         g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1--;
                         break;

@@ -571,7 +571,7 @@ void func_800D6B00(void) // 0x800D6B00
 
             CutsceneBorder_ForceShow();
 
-            Sd_SfxPlay(Sfx_Unk1575, Q8(0.0f), 128);
+            Sd_SfxPlay(Sfx_Unk1575, Q8(0.0f), Q8(0.5f));
             SysWork_StateStepIncrement(0);
 
         case 11:

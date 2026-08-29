@@ -32,18 +32,18 @@ typedef enum _MapMsgIdx
     MapMsgIdx_NowMaking         = 14  /** @unused? */
 } e_MapMsgIdx;
 
-/** @brief Map message return codes. */
-typedef enum _MapMsgCode
+/** @brief Map message return codes. Returned by `Gfx_MapMsg_StringDraw`. */
+typedef enum _MapMsgReturnCode
 {
-    MapMsgCode_None        = 0,
-    MapMsgCode_Terminate   = 1,
-    MapMsgCode_Select2     = 2,
-    MapMsgCode_Select3     = 3,
-    MapMsgCode_Select4     = 4,
-    MapMsgCode_DisplayAll  = 20,
-    MapMsgCode_SetByT      = 88,
-    MapMsgCode_AlignCenter = 99
-} e_MapMsgCode;
+    MapMsgReturnCode_None        = 0,
+    MapMsgReturnCode_Terminate   = 1,
+    MapMsgReturnCode_Select2     = 2,
+    MapMsgReturnCode_Select3     = 3,
+    MapMsgReturnCode_Select4     = 4,
+    MapMsgReturnCode_DisplayAll  = 20,
+    MapMsgReturnCode_SetByT      = 88,
+    MapMsgReturnCode_AlignCenter = 99
+} e_MapMsgReturnCode;
 
 /** @brief Map message states.
  *

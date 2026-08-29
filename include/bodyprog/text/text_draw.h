@@ -88,7 +88,7 @@ void Gfx_StringsReset2dLayerIdx(void);
  *
  * @param colorId ID of the new color to set (`e_ColorId`).
  */
-void Gfx_StringSetColor(s16 colorId);
+void Gfx_StringColorSet(s16 colorId);
 
 /** @brief Draws a string in screen space using 12x16 glyphs.
  *
@@ -105,13 +105,13 @@ bool Gfx_StringDraw(char* str, s32 strLength);
  *
  * @param mapMsgIdx Index of the map message to evaluate.
  */
-s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx);
+s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx);
 
 /** @brief Draws a string in screen space using 12x16 glyphs and returns a map message code.
  *
  * @param mapMsg Map message to draw.
  * @param strLength Number of consecutive glyphs to draw from the map message.
- * @return Map message code (`e_MapMsgCode`).
+ * @return Map message return code (`e_MapMsgReturnCode`).
  */
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength);
 

@@ -30,7 +30,7 @@ static s16 g_StringColorId = StringColorId_White;
 static s32 g_Strings2dLayerIdx = 6;
 
 // TODO: Unsure if these correspond to variables in USA.
-extern s16 D_800AF83C; // Set by `Gfx_StringSetColor_JP`
+extern s16 D_800AF83C; // Set by `Gfx_StringColorSet_JP`
 extern s16 D_800C5DEC;
 extern s16 D_800C5DEE;
 extern s16 g_GlyphSpritePositionX; // 0x800C5E0C;
@@ -97,7 +97,7 @@ void Gfx_StringsReset2dLayerIdx(void) // 0x8004A600
     g_Strings2dLayerIdx = 6;
 }
 
-void Gfx_StringSetColor(s16 colorId) // 0x8004A610
+void Gfx_StringColorSet(s16 colorId) // 0x8004A610
 {
     g_StringColorId = colorId;
 }
@@ -488,12 +488,12 @@ void func_8004AF14(s32 x, s32 y) // 0x8004AF14
     }
 }
 
-void Gfx_StringSetColor_JP(s16 colorId) // 0x8004A8DC
+void Gfx_StringColorSet_JP(s16 colorId) // 0x8004A8DC
 {
     D_800AF83C = colorId;
 }
 
-s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004AF5C
+s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
 {
     RECT  rect;
     s32   i;

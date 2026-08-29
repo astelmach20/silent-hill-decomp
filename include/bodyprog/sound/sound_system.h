@@ -120,12 +120,12 @@ typedef enum _AudioLoadState
 /** @brief Audio streaming states. Returned by `Sd_AudioStreamingCheck`. */
 typedef enum _AudioStreamingState
 {
-    AudioStreamingState_None          = 0,
-    AudioStreamingState_XaPlaying     = 1,
-    AudioStreamingState_VabPlaying    = 2,
-    AudioStreamingState_XaLoading     = 3,
-    AudioStreamingState_XaLoadPending = 4,
-    AudioStreamingState_AudioTaskPending   = 5
+    AudioStreamingState_None             = 0,
+    AudioStreamingState_XaPlaying        = 1,
+    AudioStreamingState_VabPlaying       = 2,
+    AudioStreamingState_XaLoading        = 3,
+    AudioStreamingState_XaLoadPending    = 4,
+    AudioStreamingState_AudioTaskPending = 5
 } e_AudioStreamingState;
 
 /** @brief XA load states. */
@@ -242,8 +242,8 @@ typedef struct _VabPlayingInfo
     /* 0x6 */ s16 toneIdx;
     /* 0x8 */ s16 noteIdx;
     /* 0xA */ s16 pitch;
-    /* 0xC */ s16 volLeft;
-    /* 0xE */ s16 volRight;
+    /* 0xC */ s16 volumeLeft;
+    /* 0xE */ s16 volumeRight;
 } s_VabPlayingInfo;
 
 /** @brief Sound struct VAB audio information.
@@ -255,7 +255,7 @@ typedef struct _VabInfo
     /* 0x1 */ s8  __pad;
     /* 0x2 */ u16 vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
     /* 0x4 */ u8  noteIdx;
-    /* 0x5 */ s8  volMinimun;  /** Minimun volume required to play the audio. */
+    /* 0x5 */ s8  volumeMin;   /** Minimun volume required to play the audio. */
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
@@ -344,30 +344,30 @@ extern s_VabInfo g_Vab_InfoTable[];
 // This is done until a way to replicate `common`
 // segment behavior is found.
 
-extern CdlLOC g_Sd_XaCdLocation;
-extern s32 __pad_bss_800C15EC;
-extern u_Sd_XaCdlInfo g_Sd_XaCdlInfo;
-extern s16 __pad_bss_800C15F2[2];
-extern u16 g_AudioPlayingIdxList[24];
-extern s16 g_AudioPlayingPitchList[24];
-extern s_Sd_AudioWork g_Sd_AudioWork;
-extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
-extern s32 __pad_bss_800C1674;
+extern CdlLOC                     g_Sd_XaCdLocation;
+extern s32                        __pad_bss_800C15EC;
+extern u_Sd_XaCdlInfo             g_Sd_XaCdlInfo;
+extern s16                        __pad_bss_800C15F2[2];
+extern u16                        g_AudioPlayingIdxList[24];
+extern s16                        g_AudioPlayingPitchList[24];
+extern s_Sd_AudioWork             g_Sd_AudioWork;
+extern s_AudioStreamingStates     g_Sd_AudioStreamingStates;
+extern s32                        __pad_bss_800C1674;
 extern s_ChannelsVolumeController gSDVolConfig;
-extern s_XaAudioPlayTracking g_Sd_XaAudioPlayTracking;
-extern s32 __pad_bss_800C1694;
-extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
-extern u8 g_Sd_TaskPool[];
-extern s8 D_800C16C8[];
-extern u8 g_Sd_AudioType;
-extern char __pad_bss_800C37C9[3];
-extern u32 g_Sd_FileDataTransferred;
-extern u8 g_Sd_DataLoadAttempts;
-extern char __pad_bss_800C37D1[3];
-extern s_AudioItemData* g_Sd_VabTargetLoad;
-extern s_AudioItemData* g_Sd_KdtTargetLoad;
-extern u8 g_Sd_XaTaskPending;
-extern u8 g_Sd_CurrentTask;
+extern s_XaAudioPlayTracking      g_Sd_XaAudioPlayTracking;
+extern s32                        __pad_bss_800C1694;
+extern s_VabPlayingInfo           g_Sd_VabPlayingInfo;
+extern u8                         g_Sd_TaskPool[];
+extern s8                         D_800C16C8[];
+extern u8                         g_Sd_AudioType;
+extern char                       __pad_bss_800C37C9[3];
+extern u32                        g_Sd_FileDataTransferred;
+extern u8                         g_Sd_DataLoadAttempts;
+extern char                       __pad_bss_800C37D1[3];
+extern s_AudioItemData*           g_Sd_VabTargetLoad;
+extern s_AudioItemData*           g_Sd_KdtTargetLoad;
+extern u8                         g_Sd_XaTaskPending;
+extern u8                         g_Sd_CurrentTask;
 #endif
 #endif
 
@@ -454,32 +454,33 @@ void Sd_AudioStop(void);
 /** @brief Plays audio.
  *
  * @param sfxId `e_SfxId`.
- * @param balance Audio side balance in case the game is using audio stereo mode.
- * @param vol [0, 255] | Audio volume.
+ * @param balance Stereo balance.
+ * @param vol Audio volume.
  * @return Audio index in PSX's "Voice" channels.
  */
-u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol);
+u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, q0_8 vol);
 
 /** @brief Updates attributes from currently playing specified audio.
  *
  * @param sfxId `e_SfxId`.
- * @param balance Audio side balance in case the game is using audio stereo mode.
- * @param vol [0, 255] | Audio volume.
+ * @param balance Stereo balance.
+ * @param vol Audio volume.
  * @param pitch Target pitch volume.
  */
-void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch);
+void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch);
 
 /** @brief Plays audio.
- * @note The differences with `Sd_SfxPlay` is that this function features an option to
- * specify audio pitch and this function doesn't register the playing sound at `g_AudioPlayingIdxList`
+ *
+ * @note The differences with `Sd_SfxPlay` is that this function has an option to
+ * specify the audio pitch and doesn't register the playing sound in `g_AudioPlayingIdxList`.
  *
  * @param sfxId `e_SfxId`.
- * @param balance Audio side balance in case the game is using audio stereo mode.
- * @param vol [0, 255] | Audio volume.
+ * @param balance Stereo balance.
+ * @param vol Audio volume.
  * @param pitch Target pitch volume.
  * @return Audio index in PSX's "Voice" channels.
  */
-void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, u8 vol, s8 pitch);
+void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch);
 
 /** @brief Stops the last VAB audio data playback. */
 void Sd_LastSfxStop(void);
@@ -506,16 +507,16 @@ u8 Sd_MidiChannelVolumeGet(u8 channelIdx);
 void Sd_MidiChannelsVolumeSet(u8 channelIdx, u8 vol);
 
 /** @brief Sets the volume for the global channels of the music, sound effects, and voices. */
-void Sd_GlobalVolSet(u8 xaVol, s16 bgmVol, u8 seVol);
+void Sd_GlobalVolumeSet(u8 xaVol, s16 bgmVol, u8 seVol);
 
 /** @brief Sets the volume for the channels of music. */
-void Sd_VolBgmSet(s16 volLeft, s16 volRight);
+void Sd_BgmVolumeSet(s16 volumeLeft, s16 volumeRight);
 
 /** @brief Sets the volume for the channels of voices. */
-void Sd_VolXaSet(s16 volLeft, s16 volRight);
+void Sd_XaVolumeSet(s16 volumeLeft, s16 volumeRight);
 
 /** @brief Sets the volume for the channels of sound effects. */
-s16 Sd_VolSeGet(s16 arg0);
+s16 Sd_SeVolumeGet(s16 arg0);
 
 void Sd_XaAudioPlayTaskAdd(u16 sfx);
 

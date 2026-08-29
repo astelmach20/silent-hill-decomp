@@ -37,27 +37,27 @@
 // ========================================
 
 /** @brief Stores read position of processing XA file in CD. */
-static CdlLOC                     g_Sd_XaCdLocation;
+static CdlLOC g_Sd_XaCdLocation;
 
 /** @brief Stores information for processing access to XA file data. */
-static u_Sd_XaCdlInfo             g_Sd_XaCdlInfo;
+static u_Sd_XaCdlInfo g_Sd_XaCdlInfo;
 
 /** @brief Stores SFX IDs of currently playing SFXs.
  * SFX IDs are stored in the same index where the audio is being play
  * at PSX "Voice" channels.
  */
-static u16                        g_AudioPlayingIdxList[SD_VOICE_COUNT];
+static u16 g_AudioPlayingIdxList[SD_VOICE_COUNT];
 
 /** @brief Stores the pitch of currently playing SFX.
  * Shares the same index of where the SFX is stored at `g_AudioPlayingIdxList`.
  */
-static s16                        g_AudioPlayingPitchList[SD_VOICE_COUNT];
+static s16 g_AudioPlayingPitchList[SD_VOICE_COUNT];
 
 /** @brief Stores information of some audio processes. */
-static s_Sd_AudioWork             g_Sd_AudioWork;
+static s_Sd_AudioWork g_Sd_AudioWork;
 
 /** @brief Holds states for different audio types streaming. */
-static s_AudioStreamingStates     g_Sd_AudioStreamingStates;
+static s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
 /** @brief Stores main game audio channels volumes.
  * 
@@ -68,10 +68,10 @@ static s_AudioStreamingStates     g_Sd_AudioStreamingStates;
 static s_ChannelsVolumeController gSDVolConfig;
 
 /** @brief Stores timestamp from the currently playing XA audio. */
-static s_XaAudioPlayTracking      g_Sd_XaAudioPlayTracking;
+static s_XaAudioPlayTracking g_Sd_XaAudioPlayTracking;
 
 /** @brief Stores information from the currently playing VAB audio. */
-static s_VabPlayingInfo           g_Sd_VabPlayingInfo;
+static s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
 /** @brief Task pool related to audio and audio data streaming.
  * `Sd_TaskPoolExecute` is the main function responsible for executing tasks.
@@ -82,22 +82,22 @@ static s_VabPlayingInfo           g_Sd_VabPlayingInfo;
  * this purpose. This game also features a similar command pool system
  * to the one in SH1.
  */
-static u8               g_Sd_TaskPool[TASK_POOL_SIZE];
+static u8 g_Sd_TaskPool[TASK_POOL_SIZE];
 
-/** @unused Dead code. Call by `SdSetTableSize`, but the function is a nullsub. */
-static s8               D_800C16C8[0x2100];
+/** @unused Dead code. Called by `SdSetTableSize`, but the function is a nullsub. */
+static s8 D_800C16C8[0x2100];
 
 /** @brief The type of audio file being loaded. See `e_AudioType`. */
-static u8               g_Sd_AudioType;
+static u8 g_Sd_AudioType;
 
 /** @brief Amount of data transferred when loading KDT/VAB files. */
-static u32              g_Sd_FileDataTransferred;
+static u32 g_Sd_FileDataTransferred;
 
 /** @brief Amount of attempts when loading VAB/KDT files.
  * 
  * @note Limit is defined in `AUDIO_DATA_LOAD_ATTEMPTS` and by default is 16.
  */
-static u8               g_Sd_DataLoadAttempts;
+static u8 g_Sd_DataLoadAttempts;
 
 /** @brief Pointer to the data of the VAB file being loaded. */
 static s_AudioItemData* g_Sd_VabTargetLoad;
@@ -106,10 +106,10 @@ static s_AudioItemData* g_Sd_VabTargetLoad;
 static s_AudioItemData* g_Sd_KdtTargetLoad;
 
 /** @brief Boolean | Check if a process of loading a XA audio is pending. */
-static u8               g_Sd_XaTaskPending;
+static u8 g_Sd_XaTaskPending;
 
 /** @brief First element from `g_Sd_TaskPool[TASK_POOL_SIZE]`. */
-static u8               g_Sd_CurrentTask;
+static u8 g_Sd_CurrentTask;
 
 // ========================================
 // GENERAL AUDIO SYSTEM CORE
@@ -134,7 +134,7 @@ void SD_Call(u32 task) // 0x80045A7C
         // Play SFX. Range [1280, 1791].
         case 5:
         case 6:
-            Sd_SfxPlay(task, Q8(0.0f), 0);
+            Sd_SfxPlay(task, Q8(0.0f), Q8(0.0f));
             return;
 
         // Stop SFX. Range [1792, 2303].
@@ -343,7 +343,7 @@ void SD_InitStruct(void) // 0x80045E44
     SdUtSetReverbDepth(20, 20);
     Sd_SetReverbEnable(0);
     SdSetSerialAttr(0, 0, 0);
-    Sd_VolXaSet(0, 0);
+    Sd_XaVolumeSet(0, 0);
 
     g_Sd_XaCdlInfo.cdlMode = CdlModeSpeed;
     Sd_CdPrimitiveCmdTry(CdlSetmode, &g_Sd_XaCdlInfo.cdlMode, NULL);
@@ -384,7 +384,7 @@ void SD_InitStruct(void) // 0x80045E44
     gSDVolConfig.volumeBgmToSet              = 40;
     gSDVolConfig.volumeBgm                   = 40;
 
-    Sd_VolBgmSet(gSDVolConfig.volumeBgm, gSDVolConfig.volumeBgm);
+    Sd_BgmVolumeSet(gSDVolConfig.volumeBgm, gSDVolConfig.volumeBgm);
 }
 
 // ========================================
@@ -412,7 +412,7 @@ void Sd_AudioStop(void) // 0x80045FF8
     SdQuit();
 }
 
-u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol) // 0x80046048
+u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, q0_8 vol) // 0x80046048
 {
     static s16   audioIdx;
     SpuVoiceAttr attr;
@@ -433,32 +433,32 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol) // 0x80046048
     g_Sd_VabPlayingInfo.progIdx = g_Vab_InfoTable[audioIdx].vabProgIdx & 0xFF;
     g_Sd_VabPlayingInfo.noteIdx = g_Vab_InfoTable[audioIdx].noteIdx;
 
-    targetVol  = gSDVolConfig.volumeSe + g_Vab_InfoTable[audioIdx].volMinimun;
+    targetVol  = gSDVolConfig.volumeSe + g_Vab_InfoTable[audioIdx].volumeMin;
     targetVol -= (targetVol * volCpy) / 255;
 
-    Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volLeft, &g_Sd_VabPlayingInfo.volRight, targetVol);
+    Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volumeLeft, &g_Sd_VabPlayingInfo.volumeRight, targetVol);
 
     // Apply stereo balance.
     if (g_Sd_AudioWork.isStereoEnabled == true)
     {
         if (balance < Q8(0.0f))
         {
-            g_Sd_VabPlayingInfo.volRight -= (g_Sd_VabPlayingInfo.volLeft * ABS(balance)) >> 7;
+            g_Sd_VabPlayingInfo.volumeRight -= (g_Sd_VabPlayingInfo.volumeLeft * ABS(balance)) >> 7;
         }
         else
         {
-            g_Sd_VabPlayingInfo.volLeft -= (g_Sd_VabPlayingInfo.volLeft * balance) >> 7;
+            g_Sd_VabPlayingInfo.volumeLeft -= (g_Sd_VabPlayingInfo.volumeLeft * balance) >> 7;
         }
     }
 
     // Clamp volume to positive range.
-    if (g_Sd_VabPlayingInfo.volLeft < 0)
+    if (g_Sd_VabPlayingInfo.volumeLeft < 0)
     {
-        g_Sd_VabPlayingInfo.volLeft = 0;
+        g_Sd_VabPlayingInfo.volumeLeft = 0;
     }
-    if (g_Sd_VabPlayingInfo.volRight < 0)
+    if (g_Sd_VabPlayingInfo.volumeRight < 0)
     {
-        g_Sd_VabPlayingInfo.volRight = 0;
+        g_Sd_VabPlayingInfo.volumeRight = 0;
     }
 
     if (sfxId == Sfx_RadioInterferenceLoop)
@@ -466,7 +466,7 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol) // 0x80046048
         g_Sd_VabPlayingInfo.toneIdx = g_Vab_InfoTable[audioIdx].audioVabIdx;
         SdUtKeyOnV(22, g_Sd_VabPlayingInfo.typeIdx, g_Sd_VabPlayingInfo.progIdx,
                    g_Sd_VabPlayingInfo.toneIdx, g_Sd_VabPlayingInfo.noteIdx, 0,
-                   Sd_VolSeGet(g_Sd_VabPlayingInfo.volLeft), Sd_VolSeGet(g_Sd_VabPlayingInfo.volRight));
+                   Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeLeft), Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeRight));
         g_Sd_VabPlayingInfo.voiceIdx = 22;
     }
     else if (sfxId == Sfx_RadioStaticLoop)
@@ -474,13 +474,13 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol) // 0x80046048
         g_Sd_VabPlayingInfo.toneIdx = g_Vab_InfoTable[audioIdx].audioVabIdx;
         SdUtKeyOnV(23, g_Sd_VabPlayingInfo.typeIdx, g_Sd_VabPlayingInfo.progIdx,
                    g_Sd_VabPlayingInfo.toneIdx, g_Sd_VabPlayingInfo.noteIdx, 120,
-                   Sd_VolSeGet(g_Sd_VabPlayingInfo.volLeft), Sd_VolSeGet(g_Sd_VabPlayingInfo.volRight));
+                   Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeLeft), Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeRight));
         g_Sd_VabPlayingInfo.voiceIdx = 23;
     }
     else
     {
         g_Sd_VabPlayingInfo.voiceIdx = SdVoKeyOn(g_Vab_InfoTable[audioIdx].vabProgIdx, g_Sd_VabPlayingInfo.noteIdx * 0x100,
-                                                 Sd_VolSeGet(g_Sd_VabPlayingInfo.volLeft), Sd_VolSeGet(g_Sd_VabPlayingInfo.volRight));
+                                                 Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeLeft), Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeRight));
     }
 
     // Clears any instance where the audio was being previously play at some "Voice" channel.
@@ -493,7 +493,7 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol) // 0x80046048
     }
 
     // Updates `g_AudioPlayingIdxList` to set which "Voice" channel will be playing the audio
-    // and retrieves the pitch intended to be used and updates `g_AudioPlayingPitchList`.
+    // and retrieves the pitch intended to be used, updating `g_AudioPlayingPitchList`.
     if (g_Sd_VabPlayingInfo.voiceIdx < SD_VOICE_COUNT)
     {
         g_AudioPlayingIdxList[g_Sd_VabPlayingInfo.voiceIdx] = sfxId;
@@ -508,7 +508,7 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, u8 vol) // 0x80046048
     return NO_VALUE;
 }
 
-void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x800463C0
+void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x800463C0
 {
     static s16   audioIdx;
     static u16   audioPitch;
@@ -523,7 +523,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x8004
     }
 
     audioIdx                    = sfxId - Sfx_Base;
-    g_Sd_VabPlayingInfo.volLeft = gSDVolConfig.volumeSe + g_Vab_InfoTable[audioIdx].volMinimun;
+    g_Sd_VabPlayingInfo.volumeLeft = gSDVolConfig.volumeSe + g_Vab_InfoTable[audioIdx].volumeMin;
 
     if (sfxId == Sfx_RadioInterferenceLoop)
     {
@@ -558,20 +558,20 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x8004
     g_Sd_VabPlayingInfo.noteIdx = g_Vab_InfoTable[audioIdx].noteIdx;
     audioPitch                  = g_AudioPlayingPitchList[voiceIdx] + (pitch * 2);
     convertedVol                = vol;
-    convertedVol                = g_Sd_VabPlayingInfo.volLeft - ((g_Sd_VabPlayingInfo.volLeft * (convertedVol)) / 255);
+    convertedVol                = g_Sd_VabPlayingInfo.volumeLeft - ((g_Sd_VabPlayingInfo.volumeLeft * (convertedVol)) / 255);
 
-    Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volLeft, &g_Sd_VabPlayingInfo.volRight, convertedVol);
+    Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volumeLeft, &g_Sd_VabPlayingInfo.volumeRight, convertedVol);
 
     // Apply stereo balance.
     if (g_Sd_AudioWork.isStereoEnabled == true)
     {
         if (balance < Q8(0.0f))
         {
-            g_Sd_VabPlayingInfo.volRight -= (convertedVol * ABS(balance)) >> 7;
+            g_Sd_VabPlayingInfo.volumeRight -= (convertedVol * ABS(balance)) >> 7;
         }
         else
         {
-            g_Sd_VabPlayingInfo.volLeft -= (convertedVol * balance) >> 7;
+            g_Sd_VabPlayingInfo.volumeLeft -= (convertedVol * balance) >> 7;
         }
     }
 
@@ -584,23 +584,23 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x8004
     attr.volmode.right = 0;
 
     // Clamp volume to positive range.
-    if (g_Sd_VabPlayingInfo.volLeft < 0)
+    if (g_Sd_VabPlayingInfo.volumeLeft < 0)
     {
-        g_Sd_VabPlayingInfo.volLeft = 0;
+        g_Sd_VabPlayingInfo.volumeLeft = 0;
     }
-    if (g_Sd_VabPlayingInfo.volRight < 0)
+    if (g_Sd_VabPlayingInfo.volumeRight < 0)
     {
-        g_Sd_VabPlayingInfo.volRight = 0;
+        g_Sd_VabPlayingInfo.volumeRight = 0;
     }
 
-    attr.volume.right = Sd_VolSeGet(g_Sd_VabPlayingInfo.volRight << 7);
-    attr.volume.left  = Sd_VolSeGet(g_Sd_VabPlayingInfo.volLeft << 7);
+    attr.volume.right = Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeRight << 7);
+    attr.volume.left  = Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeLeft << 7);
     attr.pitch        = audioPitch;
 
     SpuSetVoiceAttr(&attr);
 }
 
-void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x80046620
+void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x80046620
 {
     static s16 audioIdx;
     s16        volMin;
@@ -626,37 +626,37 @@ void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, u8 vol, s8 pitch) // 0x8004662
         g_Sd_VabPlayingInfo.pitch = 127 - ABS(pitch * 5) % 127;
     }
 
-    volMin                      = gSDVolConfig.volumeSe + g_Vab_InfoTable[audioIdx].volMinimun;
+    volMin                      = gSDVolConfig.volumeSe + g_Vab_InfoTable[audioIdx].volumeMin;
     convertedVol                = vol;
-    g_Sd_VabPlayingInfo.volLeft = volMin - (volMin * convertedVol) / 255;
+    g_Sd_VabPlayingInfo.volumeLeft = volMin - (volMin * convertedVol) / 255;
 
-    Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volLeft, &g_Sd_VabPlayingInfo.volRight, g_Sd_VabPlayingInfo.volLeft);
+    Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volumeLeft, &g_Sd_VabPlayingInfo.volumeRight, g_Sd_VabPlayingInfo.volumeLeft);
 
     // Apply stereo balance.
     if (g_Sd_AudioWork.isStereoEnabled == true)
     {
         if (balance < Q8(0.0f))
         {
-            g_Sd_VabPlayingInfo.volRight -= (g_Sd_VabPlayingInfo.volRight * ABS(balance)) >> 7;
+            g_Sd_VabPlayingInfo.volumeRight -= (g_Sd_VabPlayingInfo.volumeRight * ABS(balance)) >> 7;
         }
         else
         {
-            g_Sd_VabPlayingInfo.volLeft -= (g_Sd_VabPlayingInfo.volLeft * balance) >> 7;
+            g_Sd_VabPlayingInfo.volumeLeft -= (g_Sd_VabPlayingInfo.volumeLeft * balance) >> 7;
         }
     }
 
     // Clamp volume to positive range.
-    if (g_Sd_VabPlayingInfo.volLeft < 0)
+    if (g_Sd_VabPlayingInfo.volumeLeft < 0)
     {
-        g_Sd_VabPlayingInfo.volLeft = 0;
+        g_Sd_VabPlayingInfo.volumeLeft = 0;
     }
-    if (g_Sd_VabPlayingInfo.volRight < 0)
+    if (g_Sd_VabPlayingInfo.volumeRight < 0)
     {
-        g_Sd_VabPlayingInfo.volRight = 0;
+        g_Sd_VabPlayingInfo.volumeRight = 0;
     }
 
     g_Sd_VabPlayingInfo.voiceIdx = SdUtKeyOn(g_Sd_VabPlayingInfo.typeIdx, g_Sd_VabPlayingInfo.progIdx, g_Sd_VabPlayingInfo.toneIdx, g_Sd_VabPlayingInfo.noteIdx, g_Sd_VabPlayingInfo.pitch,
-                                             Sd_VolSeGet(g_Sd_VabPlayingInfo.volLeft), Sd_VolSeGet(g_Sd_VabPlayingInfo.volRight));
+                                             Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeLeft), Sd_SeVolumeGet(g_Sd_VabPlayingInfo.volumeRight));
 }
 
 void Sd_LastSfxStop(void) // 0x800468EC
@@ -735,7 +735,7 @@ static void func_80046A70(void) // 0x80046A70
     gSDVolConfig.volumeBgm      = 40;
     gSDVolConfig.volumeBgmToSet = 40;
 
-    Sd_VolBgmSet(gSDVolConfig.volumeBgm, gSDVolConfig.volumeBgm);
+    Sd_BgmVolumeSet(gSDVolConfig.volumeBgm, gSDVolConfig.volumeBgm);
     Sd_TaskPoolUpdate();
 }
 
@@ -760,12 +760,12 @@ static void Sd_BgmStop(void) // 0x80046B04
     }
 
     gSDVolConfig.volumeBgm = gSDVolConfig.volumeBgmToSet;
-    Sd_VolBgmSet(gSDVolConfig.volumeBgm, gSDVolConfig.volumeBgm);
+    Sd_BgmVolumeSet(gSDVolConfig.volumeBgm, gSDVolConfig.volumeBgm);
 }
 
 static void Sd_BgmStopStep(void) // 0x80046B78
 {
-    Sd_VolBgmSet(0, 0);
+    Sd_BgmVolumeSet(0, 0);
     SdSeqStop(0);
 
     g_Sd_AudioWork.bgmFadeSpeed        = 0;
@@ -892,7 +892,7 @@ static void Sd_XaAudioPlay(void) // 0x80046E00
                 case 620:
                 case 657:
                 case 606:
-                    gSDVolConfig.volumeXaToSet = Sd_VolSeGet(84);
+                    gSDVolConfig.volumeXaToSet = Sd_SeVolumeGet(84);
                     break;
 
                 case 723:
@@ -910,7 +910,7 @@ static void Sd_XaAudioPlay(void) // 0x80046E00
             }
 
             gSDVolConfig.volumeXa                 = gSDVolConfig.volumeXaToSet;
-            Sd_VolXaSet(gSDVolConfig.volumeXaToSet, gSDVolConfig.volumeXaToSet);
+            Sd_XaVolumeSet(gSDVolConfig.volumeXaToSet, gSDVolConfig.volumeXaToSet);
             g_Sd_XaCdlInfo.cdlMode                = CdlModeSpeed | CdlModeRT | CdlModeSF;
             g_Sd_AudioStreamingStates.xaLoadState = XaLoadState_SetMode;
             break;
@@ -1021,7 +1021,7 @@ static void Sd_XaPreLoadAudio(void) // 0x80047308
     {
         case 0:
             xaAudioIdx                               = g_Sd_AudioWork.xaAudioIdxCheck;
-            Sd_VolXaSet(0, 0);
+            Sd_XaVolumeSet(0, 0);
             g_Sd_XaCdlInfo.cdlMode                   = CdlModeSpeed | CdlModeRT | CdlModeSF;
             g_Sd_AudioStreamingStates.xaPreLoadState = 1;
             break;
@@ -1103,7 +1103,7 @@ static void Sd_XaAudioStop(void) // 0x80047634
     switch (g_Sd_AudioStreamingStates.xaStopState)
     {
         case XaStopState_FadeOut:
-            Sd_VolXaSet(gSDVolConfig.volumeXa, gSDVolConfig.volumeXa);
+            Sd_XaVolumeSet(gSDVolConfig.volumeXa, gSDVolConfig.volumeXa);
             gSDVolConfig.volumeXa     -= 24;
             gSDVolConfig.volumeXaToSet = gSDVolConfig.volumeXa;
 
@@ -1117,7 +1117,7 @@ static void Sd_XaAudioStop(void) // 0x80047634
             gSDVolConfig.volumeXa      = 0;
             gSDVolConfig.volumeXaToSet = 0;
 
-            Sd_VolXaSet(0, 0);
+            Sd_XaVolumeSet(0, 0);
             SdSetSerialAttr(0, 0, 0);
 
             g_Sd_AudioStreamingStates.xaStopState = XaStopState_PauseDisc;
@@ -1156,7 +1156,7 @@ static void Sd_XaAudioStop(void) // 0x80047634
 // VOLUME SET
 // ========================================
 
-void Sd_GlobalVolSet(u8 xaVol, s16 bgmVol, u8 seVol) // 0x80047798
+void Sd_GlobalVolumeSet(u8 xaVol, s16 bgmVol, u8 seVol) // 0x80047798
 {
     gSDVolConfig.globalVolumeXa  = xaVol;
     gSDVolConfig.globalVolumeBgm = bgmVol;
@@ -1164,26 +1164,26 @@ void Sd_GlobalVolSet(u8 xaVol, s16 bgmVol, u8 seVol) // 0x80047798
 
     if (g_Sd_AudioWork.midiChannelsVolTask != 0)
     {
-        Sd_VolBgmSet(gSDVolConfig.volumeBgmToSet, gSDVolConfig.volumeBgmToSet);
+        Sd_BgmVolumeSet(gSDVolConfig.volumeBgmToSet, gSDVolConfig.volumeBgmToSet);
     }
 
     if (g_Sd_AudioWork.xaAudioIdx != 0)
     {
-        Sd_VolXaSet(gSDVolConfig.volumeXa, gSDVolConfig.volumeXa);
+        Sd_XaVolumeSet(gSDVolConfig.volumeXa, gSDVolConfig.volumeXa);
     }
 }
 
-void Sd_VolBgmSet(s16 volLeft, s16 volRight) // 0x80047808
+void Sd_BgmVolumeSet(s16 volumeLeft, s16 volumeRight) // 0x80047808
 {
-    SdSeqSetVol(0, (volLeft * gSDVolConfig.globalVolumeBgm) >> 7, (volRight * gSDVolConfig.globalVolumeBgm) >> 7);
+    SdSeqSetVol(0, (volumeLeft * gSDVolConfig.globalVolumeBgm) >> 7, (volumeRight * gSDVolConfig.globalVolumeBgm) >> 7);
 }
 
-void Sd_VolXaSet(s16 volLeft, s16 volRight) // 0x80047860
+void Sd_XaVolumeSet(s16 volumeLeft, s16 volumeRight) // 0x80047860
 {
-    SdSetSerialVol(0, (volLeft * gSDVolConfig.globalVolumeXa) >> 7, (volRight * gSDVolConfig.globalVolumeXa) >> 7);
+    SdSetSerialVol(0, (volumeLeft * gSDVolConfig.globalVolumeXa) >> 7, (volumeRight * gSDVolConfig.globalVolumeXa) >> 7);
 }
 
-s16 Sd_VolSeGet(s16 arg0) // 0x800478B8
+s16 Sd_SeVolumeGet(s16 arg0) // 0x800478B8
 {
     return (arg0 * gSDVolConfig.globalVolumeSe) >> 7;
 }
@@ -1767,7 +1767,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
 
         gSDVolConfig.volumeBgm = gSDVolConfig.volumeBgmToSet;
 
-        Sd_VolBgmSet(gSDVolConfig.volumeBgmToSet, gSDVolConfig.volumeBgmToSet);
+        Sd_BgmVolumeSet(gSDVolConfig.volumeBgmToSet, gSDVolConfig.volumeBgmToSet);
     }
     else if (gSDVolConfig.volumeBgm != gSDVolConfig.volumeBgmToSet)
     {
@@ -1788,7 +1788,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
             }
         }
 
-        Sd_VolBgmSet(gSDVolConfig.volumeBgmToSet, gSDVolConfig.volumeBgmToSet);
+        Sd_BgmVolumeSet(gSDVolConfig.volumeBgmToSet, gSDVolConfig.volumeBgmToSet);
     }
 
     if (g_Sd_XaAudioPlayTracking.xaAudioPlayCurrentTime > g_Sd_XaAudioPlayTracking.xaAudioLength)

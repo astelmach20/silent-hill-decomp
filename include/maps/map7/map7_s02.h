@@ -70,7 +70,7 @@ extern q19_12 D_800E9ED0;
 
 extern s16 D_800E9ED4;
 extern s16 D_800E9ED6;
-extern s16 D_800E9ED8;
+extern q3_12 D_800E9ED8; // Time value.
 extern s16 D_800E9EDA;
 
 /** Index into `D_800E9D6C`. */

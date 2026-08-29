@@ -256,7 +256,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
     }
 
     cont->normalizedSticks.rawData_0 = normalizedAnalogData;
-    cont->field_28 = processedInputFlags;
+    cont->field_28                   = processedInputFlags;
 }
 
 bool func_8003483C(u16* arg0) // 0x8003483C
