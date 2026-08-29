@@ -134,7 +134,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             msgDisplayLength += msgDisplayInc;
             msgDisplayLength  = CLAMP(msgDisplayLength, 0, MAP_MESSAGE_DISPLAY_ALL_LENGTH);
 
-            if (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer > 0)
+            if (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer > Q12(0.0f))
             {
                 g_SysWork.mapMsgTimer -= g_DeltaTimeRaw;
                 g_SysWork.mapMsgTimer  = CLAMP(g_SysWork.mapMsgTimer, Q12(0.0f), MSG_TIMER_MAX);
@@ -154,7 +154,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     if (g_MapMsg_Select.maxIdx == temp)
                     {
                         if (!((g_MapMsg_AudioLoadBlock & (1 << 0)) || !hasInput) ||
-                            (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer == 0))
+                            (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer == Q12(0.0f)))
                         {
                             stateMachineIdx1 = FINISH_MAP_MSG;
 
@@ -203,12 +203,12 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     }
                 }
                 else if ((!(g_MapMsg_AudioLoadBlock & (1 << 0)) && hasInput && g_MapMsg_Select.maxIdx != 0) ||
-                         (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer == 0))
+                         (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer == Q12(0.0f)))
                 {
                     if (g_MapMsg_Select.maxIdx != NO_VALUE)
                     {
-                        g_MapMsg_Select.maxIdx  = NO_VALUE;
-                        stateMachineIdx1 = FINISH_MAP_MSG;
+                        g_MapMsg_Select.maxIdx = NO_VALUE;
+                        stateMachineIdx1       = FINISH_MAP_MSG;
                         break;
                     }
 
@@ -315,7 +315,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
         case MapMsgCode_Select2:
         case MapMsgCode_Select3:
         case MapMsgCode_Select4:
-            g_MapMsg_Select.maxIdx  = 1;
+            g_MapMsg_Select.maxIdx   = 1;
             g_MapMsg_SelectCancelIdx = (mapMsgCode == 3) ? 2 : 1;
 
             if (mapMsgCode == MapMsgCode_Select4)

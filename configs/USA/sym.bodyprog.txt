@@ -682,6 +682,7 @@ Gfx_StringDraw                               = 0x8004A8E8; // type:func
 Gfx_MapMsg_CalculateWidths                   = 0x8004ACF4; // type:func
 Gfx_MapMsg_StringDraw                        = 0x8004AF18; // type:func
 Gfx_MapMsg_DefaultStringInfoSet              = 0x8004B684; // type:func
+Gfx_GlyphSprite_PositionSet                  = 0x8004B6D4;
 Gfx_StringDrawInt                            = 0x8004B9F8; // type:func
 
 //-------------------------------------------------------------------------
@@ -3133,9 +3134,11 @@ VbWvsMatrix                                  = 0x800C3888; // type:MATRIX size:0
 //--------------------------------------------------------------------
 g_StringPosition                             = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1                           = 0x800C38AC; // type:s32
+g_MapMsg_ActiveLine                          = 0x800C38B0;
 g_MapMsg_WidthIdx                            = 0x800C38B4;
 g_MapMsg_Widths                              = 0x800C38C8; // type:s32
 g_MapMsg_GlyphSprite                         = 0x800C38F8;
+g_GlyphSpritePositionX                       = 0x800C391C;
 
 //----------------------------------------------------------------------------
 //--- PA: 0x09EDC8   VA: 0x800C3928   subsegment: .bss, items/item_screens_cam

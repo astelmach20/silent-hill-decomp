@@ -462,7 +462,7 @@ typedef struct _SysWork
     /* 0x234A+0 */ u8               field_234A   : 8; /** `bool` */
     /* 0x234B+0 */ u8               field_234B_0 : 4; /** `bool` | Related to particles. Used to trigger SFX? */
     /* 0x234B+4 */ u8               field_234B_4 : 4; // Related to particles.
-    /* 0x234C   */ s32              mapMsgTimer;
+    /* 0x234C   */ q19_12           mapMsgTimer;
     /* 0x2350+0 */ u8               enableHighResGlyphs : 4; /** `bool` */
     /* 0x2350+4 */ u8               silentYesSelection  : 4; /** `bool` */
     /* 0x2351+0 */ u32              invItemSelectedIdx  : 8;

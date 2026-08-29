@@ -32,9 +32,11 @@ typedef enum _MapMsgIdx
     MapMsgIdx_NowMaking         = 14  /** @unused? */
 } e_MapMsgIdx;
 
+/** @brief Map message return codes. */
 typedef enum _MapMsgCode
 {
     MapMsgCode_None        = 0,
+    MapMsgCode_Terminate   = 1,
     MapMsgCode_Select2     = 2,
     MapMsgCode_Select3     = 3,
     MapMsgCode_Select4     = 4,
@@ -72,6 +74,7 @@ typedef struct _MapMsgSelect
 
 extern s_MapMsgSelect g_MapMsg_Select;
 
+// 2 flags?
 extern u8 g_MapMsg_AudioLoadBlock;
 
 extern s8 g_MapMsg_SelectCancelIdx;

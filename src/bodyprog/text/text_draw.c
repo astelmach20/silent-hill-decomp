@@ -18,7 +18,7 @@
 // STATIC VARIABLES
 // ========================================
 
-/** @brief Glyph widths for the 12x16 font. Used for kerning. */
+/** @brief Glyph widths of the 12x16 font. Used for kerning. */
 static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {
     3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4,
     10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12, 9,  9,  12, 12, 13, 12, 13, 11,
@@ -44,24 +44,23 @@ static s16 g_StringColorId = StringColorId_White;
 // 2 bytes of padding.
 
 /** Text index 2D layer.
- * If modifying `Gfx_StringSetPosition`, when setting it to
- * a value lower than 6, text will not be affected by the fade effect.
+ * If modifying `Gfx_StringSetPosition`, setting it to a value lower than 6 results in text not being affected by the
+ * screen fade effect.
  */
 static s32 g_Strings2dLayerIdx = 6;
-
 
 // ========================================
 // GLOBAL VARIABLES
 // ========================================
 
-DVECTOR    g_StringPosition;
-s32        g_StringPositionX1;
-s_800C38B0 D_800C38B0;
-s32        g_MapMsg_WidthIdx;
-s32        g_MapMsg_Widths[12];
-GsSPRITE   g_MapMsg_GlyphSprite;
-s16        D_800C391C;
-s32        D_800C3920;
+DVECTOR      g_StringPosition;
+s32          g_StringPositionX1;
+s_MapMsgLine g_MapMsg_ActiveLine;
+s32          g_MapMsg_WidthIdx;
+s32          g_MapMsg_Widths[12];
+GsSPRITE     g_MapMsg_GlyphSprite;
+s16          g_GlyphSpritePositionX;
+s32          D_800C3920;
 
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
 {
@@ -283,7 +282,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
     s32 posIdx;
     u8* mapMsg;
 
-    g_MapMsg_WidthIdx  = 1;
+    g_MapMsg_WidthIdx       = 1;
     g_MapMsg_AudioLoadBlock = 0;
 
     for (i = (FONT_12X16_LINE_COUNT_MAX - 1); i >= 0; i--)
@@ -331,7 +330,7 @@ s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                         break;
 
                     case MAP_MSG_CODE_LINE_POSITION:
-                        D_800C38B0.positionIdx = posIdx;
+                        g_MapMsg_ActiveLine.positionIdx = posIdx;
                         break;
 
                     case MAP_MSG_CODE_JUMP:
@@ -395,8 +394,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     bool      isFraction;
     s32       lineIdx;
     u32       color;
-    u8        codeTag;
-    s32       codeArg;
+    u8        code;
+    s32       arg;
     s32       result;
     s32       charCode;
     s32       idx;
@@ -408,7 +407,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
     SPRT*     glyphSprt;
 
     packet = NULL;
-    result = 0;
+    result = MapMsgCode_None;
 
     ot                  = (GsOT*)&g_OtTags0[g_ActiveBufferIdx][6];
     color               = STRING_COLORS[g_StringColorId];
@@ -419,7 +418,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         packet = GsOUT_PACKET_P;
     }
 
-    switch ((u8)D_800C38B0.positionIdx)
+    switch ((u8)g_MapMsg_ActiveLine.positionIdx)
     {
         case 0:
             g_StringPosition.vy = -92;
@@ -486,10 +485,10 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                 break;
 
             case MAP_MSG_CODE_MARKER:
-                codeTag = *++mapMsg;
-                codeArg = *++mapMsg - '0';
+                code = *++mapMsg;       // E.g. `L` in `~L4`.
+                arg  = *++mapMsg - '0'; // E.g. `4` in `~L4`.
 
-                switch (codeTag)
+                switch (code)
                 {
                     default:
                         break;
@@ -527,7 +526,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
                             mapMsg                  = mapMsg + 2;
                             c                       = *mapMsg;
-                            g_MapMsg_AudioLoadBlock = codeArg + 1;
+                            g_MapMsg_AudioLoadBlock = arg + 1;
 
                             while (c != ')')
                             {
@@ -550,7 +549,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                                 c = *mapMsg;
                             }
 
-                            digit <<= 12;
+                            digit = Q12(digit);
                             for (i = 0; i < fractionDigits; i++)
                             {
                                 digit /= 10;
@@ -561,9 +560,9 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         }
                         else
                         {
-                            while (codeArg != ' ' && codeArg != '\t')
+                            while (arg != ' ' && arg != '\t')
                             {
-                                codeArg = *++mapMsg;
+                                arg = *++mapMsg;
                             }
                         }
                         break;
@@ -580,8 +579,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_COLOR:
-                        color           = STRING_COLORS[codeArg];
-                        g_StringColorId = codeArg;
+                        color           = STRING_COLORS[arg];
+                        g_StringColorId = arg;
                         break;
 
                     case MAP_MSG_CODE_DISPLAY_ALL:
@@ -594,7 +593,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_SELECT:
-                        result  = codeArg;
+                        result  = arg;
                         lineIdx = FONT_12X16_LINE_COUNT_MAX;
                         break;
 
@@ -608,7 +607,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
         // Terminator.
         case '\0':
-            result  = 1;
+            result  = MapMsgCode_Terminate;
             lineIdx = FONT_12X16_LINE_COUNT_MAX;
             break;
 
@@ -704,25 +703,25 @@ void func_8004B658(void) // 0x8004B658
 
 void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004B684
 {
-    g_MapMsg_WidthIdx             = 1;
-    D_800C38B0.unused             = 0;
-    D_800C38B0.positionIdx        = 1;
-    g_StringPositionX1            = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId               = StringColorId_White;
-    g_SysWork.enableHighResGlyphs = false;
+    g_MapMsg_WidthIdx               = 1;
+    g_MapMsg_ActiveLine.unused      = 0;
+    g_MapMsg_ActiveLine.positionIdx = 1;
+    g_StringPositionX1              = SCREEN_POSITION_X(-37.5f);
+    g_StringColorId                 = StringColorId_White;
+    g_SysWork.enableHighResGlyphs   = false;
 }
 
-void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
+void Gfx_GlyphSprite_PositionSet(s16 x, s16 y) // 0x8004B6D4
 {
-    if (arg0 != NO_VALUE)
+    if (x != NO_VALUE)
     {
-        g_MapMsg_GlyphSprite.x = arg0 + (-g_GameWork.gsScreenWidth / 2);
-        D_800C391C   = g_MapMsg_GlyphSprite.x;
+        g_MapMsg_GlyphSprite.x = x + (-g_GameWork.gsScreenWidth / 2);
+        g_GlyphSpritePositionX             = g_MapMsg_GlyphSprite.x;
     }
 
-    if (arg1 != NO_VALUE)
+    if (y != NO_VALUE)
     {
-        g_MapMsg_GlyphSprite.y = arg1 + (-g_GameWork.gsScreenHeight / 2);
+        g_MapMsg_GlyphSprite.y = y + (-g_GameWork.gsScreenHeight / 2);
     }
 }
 
@@ -797,13 +796,13 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
 
             // Newline.
             case '\n':
-                glyphSprt->x  = D_800C391C;
+                glyphSprt->x  = g_GlyphSpritePositionX;
                 glyphSprt->y += LINE_SPACE_SIZE;
                 break;
 
             // Carriage return.
             case '\r':
-                glyphSprt->x  = D_800C391C;
+                glyphSprt->x  = g_GlyphSpritePositionX;
                 glyphSprt->y -= LINE_SPACE_SIZE;
                 break;
         }

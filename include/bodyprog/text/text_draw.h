@@ -41,12 +41,12 @@ typedef enum _StringColorId
     StringColorId_Count       = 8
 } e_StringColorId;
 
-/** Used in string parsing. */
-typedef struct
+/** @brief Map message line data. */
+typedef struct _MapMsgLine
 {
     /* 0x0 */ s8 unused;
     /* 0x1 */ u8 positionIdx;
-} s_800C38B0;
+} s_MapMsgLine;
 
 // ====================
 // GLOBALS (BSS; Hack; text_draw.c)
@@ -56,66 +56,76 @@ typedef struct
 // This is done until a way to replicate `common`
 // segment behavior is found.
 
-/** String position. */
-extern DVECTOR g_StringPosition; // 0x800C38A8
-
-/** String X position as `s32`. It's unclear why there are two. */
-extern s32 g_StringPositionX1; // 0x800C38AC
-
-extern s_800C38B0 D_800C38B0;
-
-extern s8 __pad_bss_800C38B2[2];
-
-extern s32 g_MapMsg_WidthIdx;
-
-extern s32 __pad_bss_800C38B8[4];
-
-extern s32 g_MapMsg_Widths[12];
-
-/** String glyph sprite. */
-extern GsSPRITE g_MapMsg_GlyphSprite;
-
-extern s16 D_800C391C;
-
-extern s16 __pad_bss_800C391E;
-
-extern s32 D_800C3920;
-
-extern s32 __pad_bss_800C3924;
+extern DVECTOR      g_StringPosition;
+extern s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
+extern s_MapMsgLine g_MapMsg_ActiveLine;
+extern s8           __pad_bss_800C38B2[2];
+extern s32          g_MapMsg_WidthIdx;
+extern s32          __pad_bss_800C38B8[4];
+extern s32          g_MapMsg_Widths[12];
+extern GsSPRITE     g_MapMsg_GlyphSprite;
+extern s16          g_GlyphSpritePositionX;
+extern s16          __pad_bss_800C391E;
+extern s32          D_800C3920; // Something for Japanese glyphs.
+extern s32          __pad_bss_800C3924;
 
 // ==========
 // FUNCTIONS
 // ==========
 
-/** Sets the position of the next string to be drawn by `Gfx_StringDraw`. */
+/** @brief Sets the global position of the next string to be drawn by `Gfx_StringDraw`.
+ *
+ * @param x X screen position.
+ * @param y Y screen position.
+ */
 void Gfx_StringSetPosition(s32 x, s32 y);
 
 void Gfx_Strings2dLayerIdxSet(s32 idx);
 
 void Gfx_StringsReset2dLayerIdx(void);
 
-/** Sets the color of the next string drawn by `Gfx_StringDraw`. Uses `e_ColorId`. */
+/** @brief Sets the global color state of the next string drawn by `Gfx_StringDraw`.
+ *
+ * @param colorId ID of the new color to set (`e_ColorId`).
+ */
 void Gfx_StringSetColor(s16 colorId);
 
-/** Draws a string in screen space using 12x16 glyphs.
+/** @brief Draws a string in screen space using 12x16 glyphs.
  *
- * @note References glyphs in `FONT16.TIM`. Although this texture atlas contains a single row with 84 glyphs,
- * the function implies 21 glyphs per row. Maybe the engine slices the texture into a stack in VRAM?
- * Notably, the atlas happens to have a 4-pixel space every 21st glyph.
+ * @note References glyphs in `FONT16.TIM`. The texture is loaded into VRAM across multiple texture pages,
+ * hence why the texture is a single row with 4-pixel padding every 21st glyph instead of a stacked arrangement.
+ *
+ * @param str String to draw.
+ * @param strLength Number of consecutive glyphs to draw from the string.
  */
 bool Gfx_StringDraw(char* str, s32 strLength);
 
+/** @brief Computes the screen space widths of lines in a map message using 12x16 glyphs and populates
+ * `g_MapMsg_Widths`.
+ *
+ * @param mapMsgIdx Index of the map message to evaluate.
+ */
 s32 Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx);
 
-/** Draws string and returns map message index. */
+/** @brief Draws a string in screen space using 12x16 glyphs and returns a map message code.
+ *
+ * @param mapMsg Map message to draw.
+ * @param strLength Number of consecutive glyphs to draw from the map message.
+ * @return Map message code (`e_MapMsgCode`).
+ */
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength);
 
+/** @brief @unused? Might be from JAP builds. */
 void func_8004B658(void);
 
 void Gfx_MapMsg_DefaultStringInfoSet(void);
 
-/** @unused */
-void func_8004B6D4(s16 arg0, s16 arg1);
+/** @brief @unused Sets the global glyph sprite position relative to the center of the screen.
+ *
+ * @param x Center-relative X screen position.
+ * @param y Center-relative Y screen position.
+ */
+void Gfx_GlyphSprite_PositionSet(s16 x, s16 y);
 
 /** @unused */
 void func_8004B74C(s16 arg0);
@@ -123,7 +133,11 @@ void func_8004B74C(s16 arg0);
 /** @unused Draws string. */
 void func_8004B76C(char* str, bool useFixedWidth);
 
-/** Draws an integer string in screen space. */
+/** @brief Draws an integer string in screen space using 12x16 glyphs.
+ *
+ * @param widthMin Minimum width of the integer string.
+ * @param strLength Number of consecutive glyphs to draw from the integer string.
+ */
 void Gfx_StringDrawInt(s32 widthMin, s32 strLength);
 
 #if VERSION_REGION_IS(NTSCJ)
