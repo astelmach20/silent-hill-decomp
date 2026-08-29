@@ -19,6 +19,19 @@
 
 #include "../src/maps/map_util.c" // 0x800D9754
 
+static inline D_800E9ED8_Set(void)
+{
+    if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
+    {
+        Sd_SfxPlay(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
+        D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
+    }
+    else
+    {
+        D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime) : Q12(0.0f);
+    }
+}
+
 void func_800D97FC(s32 arg0) // 0x800D97FC
 {
     (arg0 != 0) ? func_800D9864() : sharedFunc_800D0110_7_s00();
@@ -1208,16 +1221,7 @@ void func_800DCD00(void) // 0x800DCD00
         case 3:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
-
-            if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
-            {
-                Sd_SfxPlay(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
-                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
-            }
-            else
-            {
-                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime) : Q12(0.0f);
-            }
+            D_800E9ED8_Set();
             break;
 
         case 4:
@@ -1235,16 +1239,7 @@ void func_800DCD00(void) // 0x800DCD00
             }
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-
-            if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
-            {
-                Sd_SfxPlay(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
-                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
-            }
-            else
-            {
-                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime) : Q12(0.0f);
-            }
+            D_800E9ED8_Set();
             break;
 
         case 6:
@@ -1259,16 +1254,7 @@ void func_800DCD00(void) // 0x800DCD00
         case 8:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
-
-            if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
-            {
-                Sd_SfxPlay(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
-                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
-            }
-            else
-            {
-                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime) : Q12(0.0f);
-            }
+            D_800E9ED8_Set();
 
             if (g_SysWork.sysStateSteps[0] != 8)
             {
@@ -1308,16 +1294,7 @@ void func_800DCD00(void) // 0x800DCD00
         case 14:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
-
-            if (D_800E9ED8 == Q12(0.0f) && !Savegame_EventFlagGet(EventFlag_555))
-            {
-                Sd_SfxPlay(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
-                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
-            }
-            else
-            {
-                D_800E9ED8 = ((D_800E9ED8 - g_DeltaTime) >= Q12(0.0f)) ? (D_800E9ED8 - (q3_12)g_DeltaTime) : Q12(0.0f);
-            }
+            D_800E9ED8_Set();
             break;
 
         default:
