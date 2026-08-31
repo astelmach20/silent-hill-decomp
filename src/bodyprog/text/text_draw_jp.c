@@ -67,8 +67,8 @@ const u32 __pad_rodata_80025DCC[2] = { 0, 0 };
 
 void Gfx_StringPositionSet(s32 x, s32 y) // 0x8004A5B0
 {
-    #define OFFSET_X SCREEN_POSITION_X(50.0f)
-    #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
+    #define OFFSET_X (SCREEN_WIDTH / 2)
+    #define OFFSET_Y 112
 
     if (x != NO_VALUE)
     {

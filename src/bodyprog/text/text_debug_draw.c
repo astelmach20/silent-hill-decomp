@@ -21,8 +21,8 @@ static DVECTOR g_Text_Debug_PositionSet1;
 
 void Text_Debug_PositionSet(s16 x, s16 y) // 0x80031EFC
 {
-    #define OFFSET_X SCREEN_POSITION_X(50.0f)
-    #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
+    #define OFFSET_X (SCREEN_WIDTH / 2)
+    #define OFFSET_Y 112
 
     if (x != NO_VALUE)
     {

@@ -34,14 +34,6 @@
 #define SECONDS_60_FPS(sec) \
     (s32)((sec) * TICKS_PER_SECOND)
 
-/** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
-#define SCREEN_POSITION_X(percent) \
-    (s32)(SCREEN_WIDTH * ((percent) / 100.0f))
-
-/** @brief Converts a floating-point Y screen position in percent to a fixed-point Y screen coodinate. */
-#define SCREEN_POSITION_Y(percent) \
-    (s32)(SCREEN_HEIGHT * ((percent) / 100.0f))
-
 /** @brief Packs a weapon attack containing a weapon ID and attack input type.
  *
  * @param weaponId Weapon ID.

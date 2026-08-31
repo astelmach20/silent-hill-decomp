@@ -1753,7 +1753,7 @@ void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
     const char* LEVEL_STR = "LEVEL_________";
 
     Gfx_StringColorSet(StringColorId_White);
-    Gfx_StringPositionSet(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
+    Gfx_StringPositionSet(SCREEN_WIDTH / 4, 190);
     Gfx_StringDraw(LEVEL_STR, 20);
     Gfx_StringDrawInt(1, g_GameWork.config.brightness);
 }
