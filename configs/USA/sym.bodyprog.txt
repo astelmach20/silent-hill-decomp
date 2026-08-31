@@ -677,8 +677,8 @@ vwOresenHokan                                = 0x8004A7C8; // type:func
 //--- PA: 0x025D1C   VA: 0x8004A87C   subsegment: c, text/text_draw
 //-----------------------------------------------------------------
 Gfx_StringPositionSet                        = 0x8004A87C; // type:func
-Gfx_Strings2dLayerIdxSet                     = 0x8004A8C0; // type:func
-Gfx_StringsReset2dLayerIdx                   = 0x8004A8CC; // type:func
+Gfx_StringLayerIdxSet                        = 0x8004A8C0; // type:func
+Gfx_StringLayerIdxReset                      = 0x8004A8CC; // type:func
 Gfx_StringColorSet                           = 0x8004A8DC; // type:func
 Gfx_StringDraw                               = 0x8004A8E8; // type:func
 Gfx_MapMsg_WidthsCompute                     = 0x8004ACF4; // type:func
@@ -2601,7 +2601,7 @@ g_Vab_InfoTable                              = 0x800ACAA8;
 //--- PA: 0x088938   VA: 0x800AD498   subsegment: .data, text/text_draw
 //---------------------------------------------------------------------
 g_StringColorId                              = 0x800AD498; // type:s16
-g_Strings2dLayerIdx                          = 0x800AD49C;
+g_StringLayerIdx                             = 0x800AD49C;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x088940   VA: 0x800AD4A0   subsegment: .data, items/item_screens_3

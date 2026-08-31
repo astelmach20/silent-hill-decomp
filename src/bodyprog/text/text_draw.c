@@ -38,16 +38,9 @@ static const u32 STRING_COLORS[StringColorId_Count] = {
     COLOR_RGBC(128, 128, 128, PRIM_RECT | RECT_TEXTURE)
 };
 
-/** `e_ColorId` */
-static s16 g_StringColorId = StringColorId_White;
-
+static s16 g_StringColorId = StringColorId_White; /** `e_ColorId` */
 // 2 bytes of padding.
-
-/** Text index 2D layer.
- * If modifying `Gfx_StringPositionSet`, setting it to a value lower than 6 results in text not being affected by the
- * screen fade effect.
- */
-static s32 g_Strings2dLayerIdx = 6;
+static s32 g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 
 // ========================================
 // GLOBAL VARIABLES
@@ -78,20 +71,20 @@ void Gfx_StringPositionSet(s32 x, s32 y) // 0x8004A87C
         g_StringPosition.vy = y - OFFSET_FROM_CENTER_Y;
     }
 
-    g_Strings2dLayerIdx = 6;
+    g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 
-    #undef OFFSET_X
-    #undef OFFSET_Y
+    #undef OFFSET_FROM_CENTER_X
+    #undef OFFSET_FROM_CENTER_Y
 }
 
-void Gfx_Strings2dLayerIdxSet(s32 idx) // 0x8004A8C0
+void Gfx_StringLayerIdxSet(s32 layerIdx) // 0x8004A8C0
 {
-    g_Strings2dLayerIdx = idx;
+    g_StringLayerIdx = layerIdx;
 }
 
-void Gfx_StringsReset2dLayerIdx(void) // 0x8004A8CC
+void Gfx_StringLayerIdxReset(void) // 0x8004A8CC
 {
-    g_Strings2dLayerIdx = 6;
+    g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 }
 
 void Gfx_StringColorSet(s16 colorId) // 0x8004A8DC
@@ -139,7 +132,7 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
     posY = g_StringPosition.vy;
 
     glyphColor = STRING_COLORS[g_StringColorId];
-    ot         = &g_OtTags0[g_ActiveBufferIdx][g_Strings2dLayerIdx];
+    ot         = &g_OtTags0[g_ActiveBufferIdx][g_StringLayerIdx];
 
     if (!g_SysWork.enableHighResGlyphs)
     {

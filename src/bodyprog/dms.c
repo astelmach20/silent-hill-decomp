@@ -141,23 +141,23 @@ q3_12 Dms_FovScaleGet(q3_12 fovAngle) // 0x8008CDBC
     return (96 * Math_Cos(fovAngle / 2)) / Math_Sin(fovAngle / 2);
 }
 
-s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
-                         const s_DmsHeader* dmsHdr) // 0x8008CE1C
+q19_12 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
+                            const s_DmsHeader* dmsHdr) // 0x8008CE1C
 {
     s32                 prevKeyframeIdx;
     s32                 nextKeyframeIdx;
-    s32                 alpha;
+    q19_12              alpha;
     s_DmsKeyframeCamera activeCamKeyframe;
-    s32                 camProjVal;
+    q19_12              camProjDist;
     const s_DmsEntry*   camEntry;
 
     camEntry = &dmsHdr->cameraEntry;
 
     // Interpolate current keyframe.
     Dms_KeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, camEntry, dmsHdr);
-    camProjVal = Dms_CameraKeyframeLerp(&activeCamKeyframe, &camEntry->keyframes.camera[prevKeyframeIdx],
-                                        &camEntry->keyframes.camera[nextKeyframeIdx],
-                                        alpha);
+    camProjDist = Dms_CameraKeyframeLerp(&activeCamKeyframe, &camEntry->keyframes.camera[prevKeyframeIdx],
+                                         &camEntry->keyframes.camera[nextKeyframeIdx],
+                                         alpha);
 
     // Set position target.
     posTarget->vx = Q8_TO_Q12(activeCamKeyframe.positionTarget.vx + dmsHdr->origin.vx);
@@ -175,9 +175,9 @@ s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unuse
         *unusedAngle = activeCamKeyframe.unusedAngle;
     }
 
-    // `camProjVal` comes from `curFrame.projectionDistance`, return value is passed to `vcChangeProjectionValue`.
+    // `camProjDist` comes from `curFrame.projectionDistance`, return value is passed to `vcChangeProjectionValue`.
     // Might be related to FOV?
-    return camProjVal;
+    return camProjDist;
 }
 
 bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1) // 0x8008CF54
@@ -195,9 +195,9 @@ bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1) // 0x8008C
     return false;
 }
 
-s32 Dms_CameraKeyframeLerp(s_DmsKeyframeCamera* result,
-                           const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
-                           q19_12 alpha) // 0x8008CFEC
+q19_12 Dms_CameraKeyframeLerp(s_DmsKeyframeCamera* result,
+                              const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
+                              q19_12 alpha) // 0x8008CFEC
 {
     // Set position target.
     result->positionTarget.vx = prevKeyframe->positionTarget.vx + Q12_MULT_PRECISE(nextKeyframe->positionTarget.vx - prevKeyframe->positionTarget.vx, alpha);
@@ -318,5 +318,5 @@ s32 Dms_KeyframeIdxGet(s32 frameIdx, const s_DmsEntry* entry) // 0x8008D330
 
 q19_12 Dms_AngleLerp(q3_12 angleFrom, q3_12 angleTo, q19_12 alpha) // 0x8008D3D4
 {
-    return Q12_ANGLE_NORM_S((q19_12)(Q12_MULT_PRECISE(Q12_ANGLE_NORM_S(angleTo - angleFrom), alpha)) + angleFrom);
+    return Q12_ANGLE_NORM_S((q19_12)Q12_MULT_PRECISE(Q12_ANGLE_NORM_S(angleTo - angleFrom), alpha) + angleFrom);
 }

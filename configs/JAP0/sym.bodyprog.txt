@@ -820,8 +820,8 @@ vwOresenHokan                                = 0x8004A4FC; // type:func
 //--- PA: 0x025A50   VA: 0x8004A5B0   subsegment: c, text/text_draw_jp
 //--------------------------------------------------------------------
 Gfx_StringPositionSet                        = 0x8004A5B0; // type:func
-Gfx_Strings2dLayerIdxSet                     = 0x8004A5F4; // type:func
-Gfx_StringsReset2dLayerIdx                   = 0x8004A600; // type:func
+Gfx_StringLayerIdxSet                        = 0x8004A5F4; // type:func
+Gfx_StringLayerIdxReset                      = 0x8004A600; // type:func
 Gfx_StringColorSet                           = 0x8004A610; // type:func
 Gfx_StringDraw                               = 0x8004A61C; // type:func
 func_8004B76C                                = 0x8004AB04; // type:func
@@ -2930,7 +2930,7 @@ D_800AD480                                   = 0x800AF81C;
 //------------------------------------------------------------------------
 g_StringColorId                              = 0x800AF834;
 // text_draw
-g_Strings2dLayerIdx                          = 0x800AF838;
+g_StringLayerIdx                             = 0x800AF838;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x08AD00   VA: 0x800AF860   subsegment: .data, items/item_screens_3

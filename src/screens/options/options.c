@@ -16,11 +16,12 @@
 #include "screens/options.h"
 #include "screens/stream/stream.h"
 
-#define LINE_CURSOR_TIMER_MAX 8
-#define LAYER_24              24
-#define LAYER_40              40
-#define LAYER_36              36
-#define LAYER_8148            8148
+#define LINE_CURSOR_TIMER_MAX          8
+#define LAYER_24                       24
+#define LAYER_40                       40
+#define LAYER_36                       36
+#define LAYER_8148                     8148
+#define OPTIONS_ENTRY_STRING_LAYER_IDX 8 // TODO: Leftover from JAP builds or required for all?
 
 s32  g_MainOptionsMenu_SelectedEntry      = 0;
 s32  g_ExtraOptionsMenu_SelectedEntry     = 0;
@@ -779,14 +780,14 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     // Draw heading string.
     Gfx_StringColorSet(StringColorId_White);
     Gfx_StringPositionSet(STR_POS.vx, STR_POS.vy);
-    Gfx_Strings2dLayerIdxSet(8);
+    Gfx_StringLayerIdxSet(OPTIONS_ENTRY_STRING_LAYER_IDX);
     Gfx_StringDraw(EXTRA_OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < g_ExtraOptionsMenu_EntryCount; i++)
     {
         Gfx_StringPositionSet(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
-        Gfx_Strings2dLayerIdxSet(8);
+        Gfx_StringLayerIdxSet(OPTIONS_ENTRY_STRING_LAYER_IDX);
         Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
 
@@ -836,18 +837,18 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     // Draw heading string.
     Gfx_StringColorSet(StringColorId_White);
     Gfx_StringPositionSet(strPos.vx, strPos.vy);
-    Gfx_Strings2dLayerIdxSet(8);
+    Gfx_StringLayerIdxSet(OPTIONS_ENTRY_STRING_LAYER_IDX);
     Gfx_StringDraw(OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < MainOptionsMenuEntry_Count; i++)
     {
         Gfx_StringPositionSet(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
-        Gfx_Strings2dLayerIdxSet(8);
+        Gfx_StringLayerIdxSet(OPTIONS_ENTRY_STRING_LAYER_IDX);
         Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
 
-    Gfx_StringsReset2dLayerIdx();
+    Gfx_StringLayerIdxReset();
 
     #undef LINE_BASE_X
     #undef LINE_BASE_Y

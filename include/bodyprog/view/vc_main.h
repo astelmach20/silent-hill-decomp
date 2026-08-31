@@ -54,7 +54,7 @@ void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, b
 
 void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f);
 
-void vcChangeProjectionValue(s16 scr_y);
+void vcChangeProjectionValue(q3_12 scr_y);
 
 /** @brief Sets `vcWork.updateLookAtPoint` to `true`. */
 void Vc_UpdateLookAtPointSet(void);
@@ -168,7 +168,7 @@ void vcSetWatchTgtXzPos(VECTOR3* watch_pos, const VECTOR3* center_pos, const VEC
 
 void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, q19_12 watch_y);
 
-void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy);
+void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, q3_12 sy);
 
 void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p,
                             VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, q19_12 far_watch_rate);

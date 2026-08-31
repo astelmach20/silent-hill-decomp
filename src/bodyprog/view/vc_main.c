@@ -214,7 +214,7 @@ void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp
     }
 }
 
-void vcChangeProjectionValue(s16 scr_y) // 0x80080D5C
+void vcChangeProjectionValue(q3_12 scr_y) // 0x80080D5C
 {
     vcWork.geom_screen_dist = scr_y;
 }
@@ -1816,7 +1816,7 @@ void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, q19_
     }
 }
 
-void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, s16 sy) // 0x800835E0
+void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, q3_12 sy) // 0x800835E0
 {
     q3_12  max_cam_ang_x;
     q19_12 dist;

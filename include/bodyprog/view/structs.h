@@ -108,7 +108,7 @@ typedef struct _VC_WORK
     /* 0x10  */ VC_THROUGH_DOOR_CAM_PARAM through_door;                              /** Active rail camera data? */
     /* 0x1C  */ q3_12                     scr_half_ang_wy;
     /* 0x2E  */ q3_12                     scr_half_ang_wx;
-    /* 0x30  */ s16                       geom_screen_dist;                          /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
+    /* 0x30  */ q3_12                     geom_screen_dist;                          /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
                 // 2 bytes of padding.
     /* 0x34  */ VC_CAM_MV_PARAM           user_cam_mv_prm;                           /** Look parameters? */
     /* 0x44  */ VECTOR3                   cam_tgt_pos;                               /** Target camera position. */

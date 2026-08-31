@@ -23,6 +23,7 @@
 #define FONT_12X16_ATLAS_COLUMN_COUNT (FONT_12X16_GLYPH_COUNT / 4)
 
 #define GLYPH_TABLE_ASCII_OFFSET '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
+#define DEFAULT_TEXT_LAYER_IDX   6    /** Values < 6 would make text unaffected by the screen fade effect and are thus @unused. */
 
 /** @brief String color IDs for strings displayed in screen space.
  * Used as indices into `STRING_COLORS`.
@@ -80,9 +81,14 @@ extern s32          __pad_bss_800C3924;
  */
 void Gfx_StringPositionSet(s32 x, s32 y);
 
-void Gfx_Strings2dLayerIdxSet(s32 idx);
+/** @brief Set the global `g_StringLayerIdx`.
+ *
+ * @param layerIdx New layer index.
+ */
+void Gfx_StringLayerIdxSet(s32 layerIdx);
 
-void Gfx_StringsReset2dLayerIdx(void);
+/** @brief Resets the global `g_StringLayerIdx` to `DEFAULT_TEXT_LAYER_IDX`. */
+void Gfx_StringLayerIdxReset(void);
 
 /** @brief Sets the global color state of the next string drawn by `Gfx_StringDraw`.
  *

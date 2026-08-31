@@ -154,9 +154,10 @@ q3_12 Dms_FovScaleGet(q3_12 fovAngle);
  * @param unusedAngle @unused
  * @param time Playback time.
  * @param dmsHdr DMS header.
+ * @return Projection distance.
  */
-s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
-                         const s_DmsHeader* dmsHdr);
+q19_12 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
+                            const s_DmsHeader* dmsHdr);
 
 /** @brief @unused Checks if any axis between two rotations differs by more than 22.5 degrees (1/16th of a full
  * rotation).
@@ -173,10 +174,11 @@ bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1);
  * @param prevKeyframe Previous camera keyframe.
  * @param nextKeyframe Next camera keyframe.
  * @param alpha Interpolation alpha.
+ * @return Projection distance.
  */
-s32 Dms_CameraKeyframeLerp(s_DmsKeyframeCamera* result,
-                           const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
-                           q19_12 alpha);
+q19_12 Dms_CameraKeyframeLerp(s_DmsKeyframeCamera* result,
+                              const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
+                              q19_12 alpha);
 
 /** @brief Gets keyframe interpolation data at a given playback time from a given DMS camera entry.
  *

@@ -14,20 +14,11 @@
 
 extern s_MapMsgLine g_MapMsg_ActiveLine; // 0x800C5E18 in JPN.
 
-DVECTOR g_StringPosition;
-
-s32 g_StringPositionX1;
-
-/** `e_ColorId` */
-static s16 g_StringColorId = StringColorId_White;
-
+DVECTOR    g_StringPosition;
+s32        g_StringPositionX1;
+static s16 g_StringColorId = StringColorId_White; /** `e_ColorId` */
 // 2 bytes of padding.
-
-/** Text index 2D layer.
- * If modifying `Gfx_StringPositionSet`, when setting it to
- * a value lower than 6, text will not be affected by the fade effect.
- */
-static s32 g_Strings2dLayerIdx = 6;
+static s32 g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 
 // TODO: Unsure if these correspond to variables in USA.
 extern s16 D_800AF83C; // Set by `Gfx_StringColorSet_JP`
@@ -81,20 +72,20 @@ void Gfx_StringPositionSet(s32 x, s32 y) // 0x8004A5B0
         g_StringPosition.vy = y - OFFSET_Y;
     }
 
-    g_Strings2dLayerIdx = 6;
+    g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 
     #undef OFFSET_X
     #undef OFFSET_Y
 }
 
-void Gfx_Strings2dLayerIdxSet(s32 idx) // 0x8004A5F4
+void Gfx_StringLayerIdxSet(s32 idx) // 0x8004A5F4
 {
-    g_Strings2dLayerIdx = idx;
+    g_StringLayerIdx = idx;
 }
 
-void Gfx_StringsReset2dLayerIdx(void) // 0x8004A600
+void Gfx_StringLayerIdxReset(void) // 0x8004A600
 {
-    g_Strings2dLayerIdx = 6;
+    g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 }
 
 void Gfx_StringColorSet(s16 colorId) // 0x8004A610
@@ -142,7 +133,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
     posY = g_StringPosition.vy;
 
     glyphColor = STRING_COLORS[g_StringColorId];
-    ot         = &g_OtTags0[g_ActiveBufferIdx][g_Strings2dLayerIdx];
+    ot         = &g_OtTags0[g_ActiveBufferIdx][g_StringLayerIdx];
 
     if (!g_SysWork.enableHighResGlyphs)
     {
