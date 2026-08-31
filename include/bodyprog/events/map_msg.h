@@ -81,7 +81,7 @@ extern s8 g_MapMsg_SelectCancelIdx;
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
 
-s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1);
+s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength);
 
 /** @unused */
 void func_80036E48(u16* arg0, s16* arg1);

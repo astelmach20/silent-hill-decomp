@@ -819,7 +819,7 @@ vwOresenHokan                                = 0x8004A4FC; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x025A50   VA: 0x8004A5B0   subsegment: c, text/text_draw_jp
 //--------------------------------------------------------------------
-Gfx_StringSetPosition                        = 0x8004A5B0; // type:func
+Gfx_StringPositionSet                        = 0x8004A5B0; // type:func
 Gfx_Strings2dLayerIdxSet                     = 0x8004A5F4; // type:func
 Gfx_StringsReset2dLayerIdx                   = 0x8004A600; // type:func
 Gfx_StringColorSet                           = 0x8004A610; // type:func

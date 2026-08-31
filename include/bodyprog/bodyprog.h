@@ -1418,7 +1418,7 @@ s32 WorldEnv_LightDirectionAndIntensityGet(SVECTOR* dir);
 
 /** Light function. */
 void Gfx_FlashlightPositionUpdate(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
-                   SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones);
+                                  SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones);
 
 /** Light function. */
 void func_80055648(s32 lightIntensity, const SVECTOR* dir);
@@ -1473,8 +1473,8 @@ void func_8005A42C(s_GteScratchData* scratchData, q19_12 alpha);
 
 void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha);
 
-/** `scratchData` is unused? */
-void func_8005A838(s_GteScratchData* scratchData, s32 scale);
+/** `scratchData` is unused. */
+void func_8005A838(s_GteScratchData* scratchData, q19_12 scale);
 
 void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* viewMat);
 

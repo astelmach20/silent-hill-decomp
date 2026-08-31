@@ -427,7 +427,7 @@ static void MainMenu_MainTextDraw(void) // 0x8003B568
             continue;
         }
 
-        Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
+        Gfx_StringPositionSet(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringColorSet(StringColorId_White);
 
         if (i == g_MainMenu_SelectedEntry)
@@ -469,7 +469,7 @@ static void MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
     // Draw selection strings.
     for (i = 0; i < DIFFICULTY_MENU_SELECTION_COUNT; i++)
     {
-        Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
+        Gfx_StringPositionSet(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringColorSet(StringColorId_White);
 
         if (i == idx)

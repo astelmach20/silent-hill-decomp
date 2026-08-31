@@ -482,25 +482,25 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
 
     if (g_GameWork.gameStateSteps[1] < 23)
     {
-        Gfx_StringSetPosition(100, -84);
+        Gfx_StringPositionSet(100, -84);
         Gfx_StringDraw(D_8002B4C0[0], 20);
-        Gfx_StringSetPosition(24, -56);
+        Gfx_StringPositionSet(24, -56);
         Gfx_StringDraw(D_8002B4C0[1], 20);
 
         switch (g_Ranking_GameDifficulty)
         {
             case GameDifficulty_Easy:
-                Gfx_StringSetPosition(252, -56);
+                Gfx_StringPositionSet(252, -56);
                 Gfx_StringDraw(D_8002B4C0[2], 20);
                 break;
 
             case GameDifficulty_Normal:
-                Gfx_StringSetPosition(222, -56);
+                Gfx_StringPositionSet(222, -56);
                 Gfx_StringDraw(D_8002B4C0[3], 20);
                 break;
 
             case GameDifficulty_Hard:
-                Gfx_StringSetPosition(247, -56);
+                Gfx_StringPositionSet(247, -56);
                 Gfx_StringDraw(D_8002B4C0[4], 20);
                 break;
 
@@ -509,43 +509,43 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         }
 
         temp_s1 = Ranking_DigitCount(g_Ranking_SavegameCount);
-        Gfx_StringSetPosition(24, 7);
+        Gfx_StringPositionSet(24, 7);
         Gfx_StringDraw(D_8002B4C0[5], 20);
-        Gfx_StringSetPosition(286 - ((temp_s1 - 1) * 10), 7);
+        Gfx_StringPositionSet(286 - ((temp_s1 - 1) * 10), 7);
         Gfx_StringColorSet(g_Ranking_TextColors.savegameCount);
         Gfx_StringDrawInt(3, g_Ranking_SavegameCount);
         Gfx_StringColorSet(StringColorId_White);
 
         temp_s1 = Ranking_DigitCount(g_Ranking_ContinueCount);
-        Gfx_StringSetPosition(24, 28);
+        Gfx_StringPositionSet(24, 28);
         Gfx_StringDraw(D_8002B4C0[6], 20);
-        Gfx_StringSetPosition(286 - ((temp_s1 - 1) * 10), 28);
+        Gfx_StringPositionSet(286 - ((temp_s1 - 1) * 10), 28);
         Gfx_StringColorSet(g_Ranking_TextColors.continueCount);
         Gfx_StringDrawInt(3, g_Ranking_ContinueCount);
         Gfx_StringColorSet(StringColorId_White);
 
         temp_s1 = Ranking_DigitCount(g_Ranking_GameplayHours);
-        Gfx_StringSetPosition(24, 49);
+        Gfx_StringPositionSet(24, 49);
         Gfx_StringDraw(D_8002B4C0[7], 20);
-        Gfx_StringSetPosition(220 - (temp_s1 * 10), 49);
+        Gfx_StringPositionSet(220 - (temp_s1 * 10), 49);
         Gfx_StringColorSet(g_Ranking_TextColors.gameplayTime);
         Gfx_StringDrawInt(5, g_Ranking_GameplayHours);
-        Gfx_StringSetPosition(220, 49);
+        Gfx_StringPositionSet(220, 49);
         Gfx_StringDraw(D_8002B4C0[8], 5);
-        Gfx_StringSetPosition(254 - (Ranking_DigitCount(g_Ranking_GameplayMinutes) * 10), 49);
+        Gfx_StringPositionSet(254 - (Ranking_DigitCount(g_Ranking_GameplayMinutes) * 10), 49);
         Gfx_StringDrawInt(2, g_Ranking_GameplayMinutes);
-        Gfx_StringSetPosition(254, 49);
+        Gfx_StringPositionSet(254, 49);
         Gfx_StringDraw(D_8002B4C0[9], 5);
-        Gfx_StringSetPosition(288 - (Ranking_DigitCount(g_Ranking_GameplaySeconds) * 10), 49);
+        Gfx_StringPositionSet(288 - (Ranking_DigitCount(g_Ranking_GameplaySeconds) * 10), 49);
         Gfx_StringDrawInt(2, g_Ranking_GameplaySeconds);
-        Gfx_StringSetPosition(288, 49);
+        Gfx_StringPositionSet(288, 49);
         Gfx_StringDraw(D_8002B4C0[10], 5);
         Gfx_StringColorSet(StringColorId_White);
 
         temp_s1 = Ranking_DigitCount(g_Ranking_WalkDistanceKm);
-        Gfx_StringSetPosition(24, 70);
+        Gfx_StringPositionSet(24, 70);
         Gfx_StringDraw(D_8002B4C0[13], 20);
-        Gfx_StringSetPosition(229 - ((temp_s1 - 1) * 10), 70);
+        Gfx_StringPositionSet(229 - ((temp_s1 - 1) * 10), 70);
         Gfx_StringDrawInt(4, g_Ranking_WalkDistanceKm);
         Gfx_StringDraw(D_8002B4C0[11], 5);
 
@@ -563,9 +563,9 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringDraw(D_8002B4C0[12], 5);
 
         temp_s1 = Ranking_DigitCount(g_Ranking_RunDistanceKm);
-        Gfx_StringSetPosition(24, 91);
+        Gfx_StringPositionSet(24, 91);
         Gfx_StringDraw(D_8002B4C0[14], 20);
-        Gfx_StringSetPosition(229 - ((temp_s1 - 1) * 10), 91);
+        Gfx_StringPositionSet(229 - ((temp_s1 - 1) * 10), 91);
         Gfx_StringDrawInt(4, g_Ranking_RunDistanceKm);
         Gfx_StringDraw(D_8002B4C0[11], 5);
 
@@ -583,9 +583,9 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringDraw(D_8002B4C0[12], 5);
 
         temp_s1 = Ranking_DigitCount(g_Ranking_PickedUpItemCount);
-        Gfx_StringSetPosition(24, 112);
+        Gfx_StringPositionSet(24, 112);
         Gfx_StringDraw(D_8002B4C0[15], 20);
-        Gfx_StringSetPosition(218 - ((temp_s1 - 1) * 10), 112);
+        Gfx_StringPositionSet(218 - ((temp_s1 - 1) * 10), 112);
         Gfx_StringColorSet(g_Ranking_TextColors.pickedUpItemCount);
         Gfx_StringDrawInt(3, (s32) g_Ranking_PickedUpItemCount);
         Gfx_StringDraw(D_8002B4C0[16], 5);
@@ -599,45 +599,45 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringDrawInt(1, g_Ranking_PickedUpSpecialItemCount);
         }
 
-        Gfx_StringSetPosition(292, 112);
+        Gfx_StringPositionSet(292, 112);
         Gfx_StringDraw(")", 1);
         Gfx_StringColorSet(StringColorId_White);
 
         temp_s1 = Ranking_DigitCount(g_Ranking_ClearGameCount);
-        Gfx_StringSetPosition(24, -35);
+        Gfx_StringPositionSet(24, -35);
         Gfx_StringDraw(D_8002B4C0[18], 20);
-        Gfx_StringSetPosition(286 - ((temp_s1 - 1) * 10), -35);
+        Gfx_StringPositionSet(286 - ((temp_s1 - 1) * 10), -35);
         Gfx_StringColorSet(g_Ranking_TextColors.clearGameCount);
         Gfx_StringDrawInt(3, g_Ranking_ClearGameCount);
         Gfx_StringColorSet(StringColorId_White);
-        Gfx_StringSetPosition(24, -14);
+        Gfx_StringPositionSet(24, -14);
         Gfx_StringDraw(D_8002B4C0[19], 20);
         Gfx_StringColorSet(g_Ranking_TextColors.ending);
 
         switch (g_Ranking_CurrentEndingFlags & 0x1F)
         {
             case GameEndingFlag_GoodPlus:
-                Gfx_StringSetPosition(234, -14);
+                Gfx_StringPositionSet(234, -14);
                 Gfx_StringDraw(D_8002B4C0[20], 10);
                 break;
 
             case GameEndingFlag_Good:
-                Gfx_StringSetPosition(244, -14);
+                Gfx_StringPositionSet(244, -14);
                 Gfx_StringDraw(D_8002B4C0[21], 10);
                 break;
 
             case GameEndingFlag_BadPlus:
-                Gfx_StringSetPosition(249, -14);
+                Gfx_StringPositionSet(249, -14);
                 Gfx_StringDraw(D_8002B4C0[22], 10);
                 break;
 
             case GameEndingFlag_Bad:
-                Gfx_StringSetPosition(258, -14);
+                Gfx_StringPositionSet(258, -14);
                 Gfx_StringDraw(D_8002B4C0[23], 10);
                 break;
 
             case GameEndingFlag_Ufo:
-                Gfx_StringSetPosition(256, -14);
+                Gfx_StringPositionSet(256, -14);
                 Gfx_StringDraw(D_8002B4C0[24], 10);
                 break;
 
@@ -646,50 +646,50 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         }
 
         Gfx_StringColorSet(StringColorId_White);
-        Gfx_StringSetPosition(24, 154);
+        Gfx_StringPositionSet(24, 154);
         Gfx_StringDraw(D_8002B4C0[27], 32);
-        Gfx_StringSetPosition(296 - (Ranking_DigitCount(g_Ranking_EnemyKillsShooting) * 10), 154);
+        Gfx_StringPositionSet(296 - (Ranking_DigitCount(g_Ranking_EnemyKillsShooting) * 10), 154);
         Gfx_StringColorSet(g_Ranking_TextColors.enemyKills);
         Gfx_StringDrawInt(4, g_Ranking_EnemyKillsShooting);
         Gfx_StringColorSet(StringColorId_White);
-        Gfx_StringSetPosition(24, 133);
+        Gfx_StringPositionSet(24, 133);
         Gfx_StringDraw(D_8002B4C0[28], 32);
-        Gfx_StringSetPosition(296 - (Ranking_DigitCount(g_Ranking_EnemyKillsMelee) * 10), 133);
+        Gfx_StringPositionSet(296 - (Ranking_DigitCount(g_Ranking_EnemyKillsMelee) * 10), 133);
         Gfx_StringColorSet(g_Ranking_TextColors.enemyKills);
         Gfx_StringDrawInt(4, g_Ranking_EnemyKillsMelee);
 
         if (g_Ranking_HasFiredShot)
         {
             Gfx_StringColorSet(StringColorId_White);
-            Gfx_StringSetPosition(24, 175);
+            Gfx_StringPositionSet(24, 175);
             Gfx_StringDraw(D_8002B4C0[29], 32);
-            Gfx_StringSetPosition(72, 196);
+            Gfx_StringPositionSet(72, 196);
             Gfx_StringDraw(D_8002B4C0[30], 32);
-            Gfx_StringSetPosition(262, 196);
+            Gfx_StringPositionSet(262, 196);
             Gfx_StringColorSet(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f0, 5);
             Gfx_StringColorSet(StringColorId_White);
-            Gfx_StringSetPosition(72, 217);
+            Gfx_StringPositionSet(72, 217);
             Gfx_StringDraw(D_8002B4C0[31], 32);
-            Gfx_StringSetPosition(262, 217);
+            Gfx_StringPositionSet(262, 217);
             Gfx_StringColorSet(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f1, 5);
             Gfx_StringColorSet(StringColorId_White);
-            Gfx_StringSetPosition(72, 238);
+            Gfx_StringPositionSet(72, 238);
             Gfx_StringDraw(D_8002B4C0[32], 32);
-            Gfx_StringSetPosition(262, 238);
+            Gfx_StringPositionSet(262, 238);
             Gfx_StringColorSet(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f2, 5);
             Gfx_StringColorSet(StringColorId_White);
-            Gfx_StringSetPosition(72, 259);
+            Gfx_StringPositionSet(72, 259);
             Gfx_StringDraw(D_8002B4C0[33], 32);
-            Gfx_StringSetPosition(262, 259);
+            Gfx_StringPositionSet(262, 259);
             Gfx_StringColorSet(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f3, 5);
         }
 
         Gfx_StringColorSet(StringColorId_White);
-        Gfx_StringSetPosition(24, 292);
+        Gfx_StringPositionSet(24, 292);
         Gfx_StringDraw(D_8002B4C0[25], 20);
 
         if (g_Ranking_Score >= 100)
@@ -706,7 +706,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
 
         if (temp_v1 != 0 && temp_a0 == 0)
         {
-            Gfx_StringSetPosition(160, 198);
+            Gfx_StringPositionSet(160, 198);
 
             g_SysWork.enableHighResGlyphs = true;
 
@@ -719,7 +719,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         }
         else if (temp_v1 == 0 && temp_a0 != 0)
         {
-            Gfx_StringSetPosition(160, 292);
+            Gfx_StringPositionSet(160, 292);
 
             g_SysWork.enableHighResGlyphs = false;
 
@@ -731,7 +731,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         else
         {
             g_SysWork.enableHighResGlyphs = true;
-            Gfx_StringSetPosition(160, 194);
+            Gfx_StringPositionSet(160, 194);
 
             for (i = 0; i < temp_v1; i++)
             {
@@ -739,7 +739,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
             }
 
             g_SysWork.enableHighResGlyphs = false;
-            Gfx_StringSetPosition(160, 300);
+            Gfx_StringPositionSet(160, 300);
 
             for (i = 0; i < temp_a0; i++)
             {

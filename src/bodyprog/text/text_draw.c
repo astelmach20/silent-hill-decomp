@@ -44,7 +44,7 @@ static s16 g_StringColorId = StringColorId_White;
 // 2 bytes of padding.
 
 /** Text index 2D layer.
- * If modifying `Gfx_StringSetPosition`, setting it to a value lower than 6 results in text not being affected by the
+ * If modifying `Gfx_StringPositionSet`, setting it to a value lower than 6 results in text not being affected by the
  * screen fade effect.
  */
 static s32 g_Strings2dLayerIdx = 6;
@@ -62,20 +62,20 @@ GsSPRITE     g_MapMsg_GlyphSprite;
 s16          g_GlyphSpritePositionX;
 s32          D_800C3920;
 
-void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A87C
+void Gfx_StringPositionSet(s32 x, s32 y) // 0x8004A87C
 {
-    #define OFFSET_X SCREEN_POSITION_X(50.0f)
-    #define OFFSET_Y SCREEN_POSITION_Y(47.0f)
+    #define OFFSET_FROM_CENTER_X 160
+    #define OFFSET_FROM_CENTER_Y 112
 
     if (x != NO_VALUE)
     {
-        g_StringPosition.vx = x - OFFSET_X;
-        g_StringPositionX1  = (s16)(x - OFFSET_X);
+        g_StringPosition.vx = x - OFFSET_FROM_CENTER_X;
+        g_StringPositionX1  = (s16)(x - OFFSET_FROM_CENTER_X);
     }
 
     if (y != NO_VALUE)
     {
-        g_StringPosition.vy = y - OFFSET_Y;
+        g_StringPosition.vy = y - OFFSET_FROM_CENTER_Y;
     }
 
     g_Strings2dLayerIdx = 6;
@@ -99,7 +99,7 @@ void Gfx_StringColorSet(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
-bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
+bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
 {
     #define WIDE_SPACE_SIZE 10
     #define ATLAS_BASE_Y    240
@@ -129,7 +129,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
 
     // Create local argument copies.
     strCpy  = str;
-    sizeCpy = strLength;
+    sizeCpy = displayLength;
 
     packet = NULL;
     result = false;
@@ -378,7 +378,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
     // TODO: JAP0 includes extra code and returns a value here.
 }
 
-s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
+s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
 {
     #define LINE_SPACE_SIZE 32
     #define CHARCODE_OFFSET '\''
@@ -498,14 +498,17 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
                         switch (returnCode)
                         {
+                            // Set new center-aligned position for next line.
                             case MapMsgReturnCode_AlignCenter:
                                 glyphPosX = -(g_MapMsg_Widths[lineIdx] >> 1);
                                 break;
 
+                            // Tabulate next line.
                             case MapMsgReturnCode_SetByT:
                                 glyphPosX = g_StringPositionX1;
                                 break;
 
+                            // Set new line.
                             default:
                                 glyphPosX = -(longestLineWidth >> 1);
                                 break;
@@ -584,7 +587,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
                         break;
 
                     case MAP_MSG_CODE_DISPLAY_ALL:
-                        strLength = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
+                        displayLength = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
                         break;
 
                     case MAP_MSG_CODE_END:
@@ -613,7 +616,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
 
         // Draw glyph sprite.
         default:
-            strLength--;
+            displayLength--;
 
             if (g_SysWork.enableHighResGlyphs)
             {
@@ -669,7 +672,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
             mapMsg++;
 
             // Stop drawing if length exceeded.
-            if (strLength <= 0)
+            if (displayLength <= 0)
             {
                 if (!g_SysWork.enableHighResGlyphs)
                 {

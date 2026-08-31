@@ -193,11 +193,10 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     }
     else
     {
-        *(s32*)&(*poly)->u0 = 0x024E7800;
-        *(s32*)&(*poly)->u1 = 0x4D7807;
-        *(u16*)&(*poly)->u2 = 0x7F00;
-        *(u16*)&(*poly)->u3 = 0x7F07;
-
+        setUV0AndClutSum(*poly, 0, 120, 590);
+        setUV1AndTPageSum(*poly, 7, 120, 77);
+        setUV2Sum(*poly, 0, 127);
+        setUV3Sum(*poly, 7, 127);
         setRGBC0(*poly, 120, 128, 128, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     }
 

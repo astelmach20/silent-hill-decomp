@@ -78,7 +78,7 @@ extern s32          __pad_bss_800C3924;
  * @param x X screen position.
  * @param y Y screen position.
  */
-void Gfx_StringSetPosition(s32 x, s32 y);
+void Gfx_StringPositionSet(s32 x, s32 y);
 
 void Gfx_Strings2dLayerIdxSet(s32 idx);
 
@@ -90,15 +90,16 @@ void Gfx_StringsReset2dLayerIdx(void);
  */
 void Gfx_StringColorSet(s16 colorId);
 
-/** @brief Draws a string in screen space using 12x16 glyphs.
+/** @brief Draws a string in screen space using 12x16 glyphs. The position and color must be set by
+ * `Gfx_StringPositionSet` and `Gfx_StringColorSet` before calling this function.
  *
  * @note References glyphs in `FONT16.TIM`. The texture is loaded into VRAM across multiple texture pages,
  * hence why the texture is a single row with 4-pixel padding every 21st glyph instead of a stacked arrangement.
  *
  * @param str String to draw.
- * @param strLength Number of consecutive glyphs to draw from the string.
+ * @param displayLength Number of consecutive glyphs to draw from the string.
  */
-bool Gfx_StringDraw(char* str, s32 strLength);
+bool Gfx_StringDraw(char* str, s32 displayLength);
 
 /** @brief Computes the screen space widths of lines in a map message using 12x16 glyphs and populates
  * `g_MapMsg_Widths`.
@@ -110,10 +111,10 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx);
 /** @brief Draws a string in screen space using 12x16 glyphs and returns a map message code.
  *
  * @param mapMsg Map message to draw.
- * @param strLength Number of consecutive glyphs to draw from the map message.
+ * @param displayLength Number of consecutive glyphs to draw from the map message.
  * @return Map message return code (`e_MapMsgReturnCode`).
  */
-s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength);
+s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength);
 
 /** @brief @unused? Might be from JAP builds. */
 void func_8004B658(void);
@@ -136,9 +137,9 @@ void func_8004B76C(char* str, bool useFixedWidth);
 /** @brief Draws an integer string in screen space using 12x16 glyphs.
  *
  * @param widthMin Minimum width of the integer string.
- * @param strLength Number of consecutive glyphs to draw from the integer string.
+ * @param displayLength Number of consecutive glyphs to draw from the integer string.
  */
-void Gfx_StringDrawInt(s32 widthMin, s32 strLength);
+void Gfx_StringDrawInt(s32 widthMin, s32 displayLength);
 
 #if VERSION_REGION_IS(NTSCJ)
     void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1);

@@ -41,16 +41,16 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     #define FINISH_CUTSCENE 0xFF
     #define FINISH_MAP_MSG  0xFF
 
-    s32        temp_s1;
-    bool       hasInput;
-    s32        temp;
-    s32        var_a1;
-    static s32 stateMachineIdx0;
-    static s32 stateMachineIdx1;
-    static s32 msgDisplayLength;
-    static s32 msgIdx;
-    static s32 msgDisplayInc;
-    static s32 D_800BCD74;
+    s32         temp_s1;
+    bool        hasInput;
+    s32         temp;
+    s32         var_a1;
+    static s32  stateMachineIdx0;
+    static s32  stateMachineIdx1;
+    static s32  msgDisplayLength;
+    static s32  msgIdx;
+    static s32  msgDisplayInc;
+    static bool loadAudio;
 
     // Check for user input.
     hasInput = false;
@@ -103,7 +103,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             }
 #endif
 
-            D_800BCD74 = 1;
+            loadAudio = true;
             g_SysWork.isMgsStringSet++;
             return MapMsgState_Finish;
 
@@ -112,23 +112,23 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             {
                 if (Sd_AudioStreamingCheck() == AudioStreamingState_XaLoadPending)
                 {
-                    D_800BCD74 = 0;
+                    loadAudio = false;
                     break;
                 }
 
-                if (D_800BCD74 != 0)
+                if (loadAudio)
                 {
                     break;
                 }
             }
             else
             {
-                D_800BCD74 = 0;
+                loadAudio = false;
             }
 
             Gfx_StringColorSet(StringColorId_White);
 #if VERSION_REGION_IS(NTSC)
-            Gfx_StringSetPosition(40, 160);
+            Gfx_StringPositionSet(40, 160);
 #endif
 
             msgDisplayLength += msgDisplayInc;
@@ -239,7 +239,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                     if (g_MapMsg_AudioLoadBlock == MapMsgAudioLoadBlock_J2)
                     {
-                        D_800BCD74 = 0;
+                        loadAudio = false;
                         return MapMsgState_Idle;
                     }
 
@@ -248,7 +248,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         SD_Call(19);
                     }
 
-                    D_800BCD74 = 1;
+                    loadAudio = true;
                     return MapMsgState_Finish;
                 }
             }
@@ -280,7 +280,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     if (g_SysWork.bgmStatusFlags & BgmStatusFlag_VoiceDialog)
     {
-        D_800BCD74 = 1;
+        loadAudio = true;
     }
 
     return g_MapMsg_Select.selectedEntryIdx + 1;
@@ -290,14 +290,14 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     #undef FINISH_MAP_MSG
 }
 
-s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
+s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength) // 0x80036B5C
 {
     #define STRING_LINE_OFFSET 16
 
     s32 i;
     s32 returnCode;
 
-    returnCode = Gfx_MapMsg_StringDraw(g_MapOverlayHdr.mapMessages[mapMsgIdx], *arg1);
+    returnCode = Gfx_MapMsg_StringDraw(g_MapOverlayHdr.mapMessages[mapMsgIdx], *displayLength);
 
     g_MapMsg_SelectFlashTimer += g_DeltaTimeRaw;
     if (g_MapMsg_SelectFlashTimer >= Q12(0.5f))
@@ -334,7 +334,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
 
 #if VERSION_REGION_IS(NTSC)
-                    Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 98);
+                    Gfx_StringPositionSet(32, (STRING_LINE_OFFSET * i) + 98);
                     Gfx_StringDraw(g_MapOverlayHdr.mapMessages[i], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
 #else
                     Gfx_StringDraw_JP(g_MapOverlayHdr.mapMessages[i], i);
@@ -363,7 +363,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
                     }
 
 #if VERSION_REGION_IS(NTSC)
-                    Gfx_StringSetPosition(32, (STRING_LINE_OFFSET * i) + 96);
+                    Gfx_StringPositionSet(32, (STRING_LINE_OFFSET * i) + 96);
                     Gfx_StringDraw(g_MapOverlayHdr.mapMessages[(mapMsgIdx + i) + 1], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
 #else
                     Gfx_StringDraw_JP(g_MapOverlayHdr.mapMessages[(mapMsgIdx + i) + 1], i);
@@ -393,7 +393,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
             break;
 
         case MapMsgReturnCode_DisplayAll:
-            *arg1 = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
+            *displayLength = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
             break;
     }
 

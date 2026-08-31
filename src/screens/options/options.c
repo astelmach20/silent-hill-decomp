@@ -778,14 +778,14 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 
     // Draw heading string.
     Gfx_StringColorSet(StringColorId_White);
-    Gfx_StringSetPosition(STR_POS.vx, STR_POS.vy);
+    Gfx_StringPositionSet(STR_POS.vx, STR_POS.vy);
     Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(EXTRA_OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < g_ExtraOptionsMenu_EntryCount; i++)
     {
-        Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
+        Gfx_StringPositionSet(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         Gfx_Strings2dLayerIdxSet(8);
         Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
@@ -835,14 +835,14 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 
     // Draw heading string.
     Gfx_StringColorSet(StringColorId_White);
-    Gfx_StringSetPosition(strPos.vx, strPos.vy);
+    Gfx_StringPositionSet(strPos.vx, strPos.vy);
     Gfx_Strings2dLayerIdxSet(8);
     Gfx_StringDraw(OPTIONS_STR, DEFAULT_MAP_MESSAGE_LENGTH);
 
     // Draw entry strings.
     for (i = 0; i < MainOptionsMenuEntry_Count; i++)
     {
-        Gfx_StringSetPosition(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
+        Gfx_StringPositionSet(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         Gfx_Strings2dLayerIdxSet(8);
         Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
@@ -1187,7 +1187,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
         {
             case ExtraOptionsMenuEntry_WeaponCtrl:
                 strPosX = (g_GameWork.config.extraWeaponCtrl != 0) ? 217 : 212;
-                Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_WeaponCtrl));
+                Gfx_StringPositionSet(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_WeaponCtrl));
                 Gfx_StringDraw(CONFIG_STRS[!g_GameWork.config.extraWeaponCtrl], 10);
                 break;
 
@@ -1195,19 +1195,19 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
                 switch (g_ExtraOptionsMenu_SelectedBloodColorEntry)
                 {
                     case BloodColorMenuEntry_Normal:
-                        Gfx_StringSetPosition(210, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
+                        Gfx_StringPositionSet(210, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
                         break;
 
                     case BloodColorMenuEntry_Green:
-                        Gfx_StringSetPosition(214, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
+                        Gfx_StringPositionSet(214, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
                         break;
 
                     case BloodColorMenuEntry_Violet:
-                        Gfx_StringSetPosition(214, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
+                        Gfx_StringPositionSet(214, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
                         break;
 
                     case BloodColorMenuEntry_Black:
-                        Gfx_StringSetPosition(217, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
+                        Gfx_StringPositionSet(217, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_Blood));
                         break;
                 }
 
@@ -1216,36 +1216,36 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 
             case ExtraOptionsMenuEntry_ViewCtrl:
                 strPosX = !g_GameWork.config.extraViewCtrl ? 210 : 206;
-                Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_ViewCtrl));
+                Gfx_StringPositionSet(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_ViewCtrl));
                 Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config.extraViewCtrl != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_RetreatTurn:
                 strPosX = !g_GameWork.config.extraRetreatTurn ? 210 : 206;
-                Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_RetreatTurn));
+                Gfx_StringPositionSet(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_RetreatTurn));
                 Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config.extraRetreatTurn != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_MovementCtrl:
                 strPosX = !g_GameWork.config.extraWalkRunCtrl ? 210 : 206;
-                Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_MovementCtrl));
+                Gfx_StringPositionSet(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_MovementCtrl));
                 Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config.extraWalkRunCtrl != 0) ? 32 : 28) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_AutoAiming:
                 strPosX = !g_GameWork.config.extraAutoAiming ? 228 : 226;
-                Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_AutoAiming));
+                Gfx_StringPositionSet(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_AutoAiming));
                 Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config.extraAutoAiming != 0) ? 40 : 36) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_ViewMode:
                 strPosX = !g_GameWork.config.extraViewMode ? 210 : 200;
-                Gfx_StringSetPosition(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_ViewMode));
+                Gfx_StringPositionSet(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_ViewMode));
                 Gfx_StringDraw(CONFIG_STRS[(g_GameWork.config.extraViewMode ? 48 : 44) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_BulletMult:
-                Gfx_StringSetPosition(230, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_BulletMult));
+                Gfx_StringPositionSet(230, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_BulletMult));
                 Gfx_StringDraw(CONFIG_STRS[g_GameWork.config.extraBulletAdjust + 13], 10);
                 break;
         }
@@ -1323,7 +1323,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         {
             case 0:
                 strPosX = !g_GameWork.config.vibrationEnabled ? 214 : 216;
-                Gfx_StringSetPosition(strPosX, 120);
+                Gfx_StringPositionSet(strPosX, 120);
 
                 strIdx = !g_GameWork.config.vibrationEnabled;
                 Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
@@ -1331,7 +1331,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 
             case 1:
                 strPosX = !g_GameWork.config.autoLoad ? 214 : 216;
-                Gfx_StringSetPosition(strPosX, 136);
+                Gfx_StringPositionSet(strPosX, 136);
 
                 strIdx = !g_GameWork.config.autoLoad;
                 Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
@@ -1339,7 +1339,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 
             case 2:
                 strPosX = g_GameWork.config.soundType ? 194 : 206;
-                Gfx_StringSetPosition(strPosX, 152);
+                Gfx_StringPositionSet(strPosX, 152);
 
                 strIdx = g_GameWork.config.soundType + 2;
                 Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
@@ -1650,11 +1650,11 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
     addPrim((u8*)ot->org + LAYER_40, poly);
     GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
 
-    Gfx_StringSetPosition(108 - g_GameWorkConst->config.screenPositionX, 162 - g_GameWorkConst->config.screenPositionY);
+    Gfx_StringPositionSet(108 - g_GameWorkConst->config.screenPositionX, 162 - g_GameWorkConst->config.screenPositionY);
     Gfx_StringDraw(AXIS_OFFSET_STRS[0], 10);
     Gfx_StringDrawInt(3, g_GameWorkConst->config.screenPositionX);
 
-    Gfx_StringSetPosition(168 - g_GameWorkConst->config.screenPositionX, 162 - g_GameWorkConst->config.screenPositionY);
+    Gfx_StringPositionSet(168 - g_GameWorkConst->config.screenPositionX, 162 - g_GameWorkConst->config.screenPositionY);
     Gfx_StringDraw(AXIS_OFFSET_STRS[1], 10);
     Gfx_StringDrawInt(3, g_GameWorkConst->config.screenPositionY);
 }
@@ -1753,7 +1753,7 @@ void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
     const char* LEVEL_STR = "LEVEL_________";
 
     Gfx_StringColorSet(StringColorId_White);
-    Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
+    Gfx_StringPositionSet(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
     Gfx_StringDraw(LEVEL_STR, 20);
     Gfx_StringDrawInt(1, g_GameWork.config.brightness);
 }
@@ -2403,7 +2403,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     // Draw entry strings.
     for (i = 0; i < ControllerMenuState_Count; i++)
     {
-        Gfx_StringSetPosition(24, STR_BASE_Y + (i * STR_OFFSET_Y));
+        Gfx_StringPositionSet(24, STR_BASE_Y + (i * STR_OFFSET_Y));
         Gfx_StringDraw(CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[i], 20);
     }
 

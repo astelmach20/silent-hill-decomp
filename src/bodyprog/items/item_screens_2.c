@@ -464,10 +464,10 @@ void Gfx_Results_Save(void) // 0x8004D1A0
 #if VERSION_REGION_IS(NTSC)
     g_SysWork.enableHighResGlyphs = true;
 
-    Gfx_StringSetPosition(90, 92);
+    Gfx_StringPositionSet(90, 92);
     Gfx_StringDraw("\x07Is_it_OK_to_save?", DEFAULT_MAP_MESSAGE_LENGTH);
 
-    Gfx_StringSetPosition(94, 122);
+    Gfx_StringPositionSet(94, 122);
     Gfx_StringDraw("\x07Yes_____________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
     g_SysWork.enableHighResGlyphs = false;
@@ -502,19 +502,19 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     }
 #endif
 
-    Gfx_StringSetPosition(82, 200);
+    Gfx_StringPositionSet(82, 200);
     Gfx_StringDraw("NEXT_GAME_MODE", 15);
 
     switch (g_Inventory_GameDifficulty)
     {
         case GameDifficulty_Easy:
-            Gfx_StringSetPosition(123, 240);
+            Gfx_StringPositionSet(123, 240);
             Gfx_StringDraw("NORMAL", 10);
             break;
 
         case GameDifficulty_Normal:
         case GameDifficulty_Hard:
-            Gfx_StringSetPosition(136, 240);
+            Gfx_StringPositionSet(136, 240);
             Gfx_StringDraw("HARD", 10);
             break;
 
@@ -1266,57 +1266,57 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
             if (!g_SysWork.field_2388.isFlashlightUnavailable ||
                 g_SavegamePtr->items[idx].id_0 != InvItemId_Flashlight)
             {
-                Gfx_StringSetPosition(222, -42);
+                Gfx_StringPositionSet(222, -42);
                 Gfx_StringDraw(STRS[5], 10);
-                Gfx_StringSetPosition(222, -26);
+                Gfx_StringPositionSet(222, -26);
                 Gfx_StringDraw(STRS[6], 10);
             }
             break;
 
         case InvCmdId_UseHealth:
         case InvCmdId_Use:
-            Gfx_StringSetPosition(222, -34);
+            Gfx_StringPositionSet(222, -34);
             Gfx_StringDraw(STRS[0], 10);
             break;
 
         case InvCmdId_Equip:
-            Gfx_StringSetPosition(222, -34);
+            Gfx_StringPositionSet(222, -34);
             Gfx_StringDraw(STRS[1], 10);
             break;
 
         case InvCmdId_Unequip:
-            Gfx_StringSetPosition(222, -34);
+            Gfx_StringPositionSet(222, -34);
             Gfx_StringDraw(STRS[2], 10);
             break;
 
         case InvCmdId_Reload:
-            Gfx_StringSetPosition(222, -34);
+            Gfx_StringPositionSet(222, -34);
             Gfx_StringDraw(STRS[3], 10);
             break;
 
         case InvCmdId_UseLook:
-            Gfx_StringSetPosition(222, -42);
+            Gfx_StringPositionSet(222, -42);
             Gfx_StringDraw(STRS[0], 10);
-            Gfx_StringSetPosition(222, -26);
+            Gfx_StringPositionSet(222, -26);
             Gfx_StringDraw(STRS[7], 10);
             break;
 
         case InvCmdId_EquipReload:
-            Gfx_StringSetPosition(222, -42);
+            Gfx_StringPositionSet(222, -42);
             Gfx_StringDraw(STRS[1], 10);
-            Gfx_StringSetPosition(222, -26);
+            Gfx_StringPositionSet(222, -26);
             Gfx_StringDraw(STRS[3], 10);
             break;
 
         case InvCmdId_UnequipReload:
-            Gfx_StringSetPosition(222, -42);
+            Gfx_StringPositionSet(222, -42);
             Gfx_StringDraw(STRS[2], 10);
-            Gfx_StringSetPosition(222, -26);
+            Gfx_StringPositionSet(222, -26);
             Gfx_StringDraw(STRS[3], 10);
             break;
 
         case InvCmdId_Look:
-            Gfx_StringSetPosition(222, -34);
+            Gfx_StringPositionSet(222, -34);
             Gfx_StringDraw(STRS[7], 10);
             break;
 
@@ -1827,7 +1827,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
         "I_don't_have_the_map\n\t\tfor_this_place."
     };
 
-    Gfx_StringSetPosition(30, 232);
+    Gfx_StringPositionSet(30, 232);
     Gfx_StringColorSet(StringColorId_White);
     Gfx_StringDraw(STRS[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 #endif

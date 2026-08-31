@@ -1070,16 +1070,16 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
             temp_t0_4  = temp_a3_4 * 2;
             temp_a2_6  = temp_a2_5;
 
-            if ((s16)temp_a2_5 + temp_a3_4 < temp_t0_4 || (s16)temp_a1_4 + temp_a3_4 < temp_t0_4 ||
-                (s16)temp_a0_9 + temp_a3_4 < temp_t0_4 || (s16)temp_v1_21 + temp_a3_4 < temp_t0_4)
+            if (((s16)temp_a2_5 + temp_a3_4) < temp_t0_4 || ((s16)temp_a1_4 + temp_a3_4) < temp_t0_4 ||
+                ((s16)temp_a0_9 + temp_a3_4) < temp_t0_4 || ((s16)temp_v1_21 + temp_a3_4) < temp_t0_4)
             {
-                *(s32*)&poly3->x0  = temp_a2_6;
+                *(s32*)&poly3->x0 = temp_a2_6;
                 *(s32*)&poly2->x0 = temp_a2_6;
-                *(s32*)&poly3->x1  = temp_a1_4;
+                *(s32*)&poly3->x1 = temp_a1_4;
                 *(s32*)&poly2->x1 = temp_a1_4;
-                *(s32*)&poly3->x2  = temp_a0_9;
+                *(s32*)&poly3->x2 = temp_a0_9;
                 *(s32*)&poly2->x2 = temp_a0_9;
-                *(s32*)&poly3->x3  = temp_v1_21;
+                *(s32*)&poly3->x3 = temp_v1_21;
                 *(s32*)&poly2->x3 = temp_v1_21;
 
                 temp4    = Q12(1.0f) - scratchData->field_252[scratchData->field_380.s_0.field_10] * 16;
@@ -1184,7 +1184,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
             }
         }
 
-        GsOUT_PACKET_P = poly2; // @bug? Should be `poly_gt4`
+        GsOUT_PACKET_P = poly2; // @bug? Should be `poly_gt4`.
         return;
     }
     else
@@ -1259,8 +1259,8 @@ __block1530:
         temp_t0_3  = temp_a3_3 * 2;
         temp3      = temp_a2_4;
 
-        if ((s16)temp_a2_4 + temp_a3_3 < temp_t0_3 || (s16)temp_a1_3 + temp_a3_3 < temp_t0_3 ||
-            (s16)temp_a0_7 + temp_a3_3 < temp_t0_3 || (s16)temp_v1_16 + temp_a3_3 < temp_t0_3)
+        if (((s16)temp_a2_4 + temp_a3_3) < temp_t0_3 || ((s16)temp_a1_3 + temp_a3_3) < temp_t0_3 ||
+            ((s16)temp_a0_7 + temp_a3_3) < temp_t0_3 || ((s16)temp_v1_16 + temp_a3_3) < temp_t0_3)
         {
             *(s32*)&poly0->x0 = temp3;
             *(s32*)&poly0->x1 = temp_a1_3;
@@ -1399,8 +1399,8 @@ __block19CC:
         temp_t0_5  = temp_a3_5 * 2;
         temp       = temp_a2_7;
 
-        if ((s16)temp_a2_7 + temp_a3_5 < temp_t0_5 || (s16)temp_a1_5 + temp_a3_5 < temp_t0_5 ||
-            (s16)temp_a0_13 + temp_a3_5 < temp_t0_5 || (s16)temp_v1_27 + temp_a3_5 < temp_t0_5)
+        if (((s16)temp_a2_7 + temp_a3_5) < temp_t0_5 || ((s16)temp_a1_5 + temp_a3_5) < temp_t0_5 ||
+            ((s16)temp_a0_13 + temp_a3_5) < temp_t0_5 || ((s16)temp_v1_27 + temp_a3_5) < temp_t0_5)
         {
             *(s32*)&poly4->x0 = temp;
             *(s32*)&poly4->x1 = temp_a1_5;
@@ -1539,10 +1539,10 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
         temp_t1 = temp_t0 * 2;
         x0 = temp;
 
-        if (scratchData->screenXy_0[scratchData->field_380.s_0.field_10].vx + temp_t0 >= temp_t1 &&
-            (s16)x1 + temp_t0 >= temp_t1 &&
-            (s16)x2 + temp_t0 >= temp_t1 &&
-            (s16)x3 + temp_t0 >= temp_t1)
+        if ((scratchData->screenXy_0[scratchData->field_380.s_0.field_10].vx + temp_t0) >= temp_t1 &&
+            ((s16)x1 + temp_t0) >= temp_t1 &&
+            ((s16)x2 + temp_t0) >= temp_t1 &&
+            ((s16)x3 + temp_t0) >= temp_t1)
         {
             continue;
         }
@@ -1554,7 +1554,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
 
         *(s32*)&poly->r0 = packedColor;
         *(s32*)&poly->u0 = *(s32*)&prim->u0;
-        *(s32*)&poly->u1 = ((*(u32*)&prim->u1 & 0x1FFFFF) | (var_a2 << 16)); // Maybe `field_4` is bitfield
+        *(s32*)&poly->u1 = ((*(u32*)&prim->u1 & 0x1FFFFF) | (var_a2 << 16)); // Maybe `field_4` is bitfield.
         *(u16*)&poly->u2 = *(u16*)&prim->u2;
         *(u16*)&poly->u3 = *(u16*)&prim->u3;
 
@@ -1655,9 +1655,9 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
 {
     s32 geomOffsetX;
     s32 geomOffsetY;
-    s32 temp_s0;
-    s32 temp_s1;
-    s32 temp_s2;
+    s32 offsetX;
+    s32 offsetY;
+    s32 offsetZ;
     s32 temp_a0;
     s16 geomScreen;
     s32 temp_v1;
@@ -1666,39 +1666,39 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     s32 var_s0;
     s32 var_t1;
     s32 var_v1;
-    s32 temp_s0_neg;
-    s32 temp_s1_neg;
-    s32 temp_s2_neg;
+    s32 negOffsetX;
+    s32 negOffsetY;
+    s32 negOffsetZ;
 
     ReadGeomOffset(&geomOffsetX, &geomOffsetY);
     geomScreen = ReadGeomScreen();
     SetGeomOffset(Q8(-4.0f), Q8(-4.0f));
     SetGeomScreen(16);
 
-    temp_s0 = g_WorldEnvWork.light.field_30.vx;
-    temp_s1 = g_WorldEnvWork.light.field_30.vy;
-    temp_s2 = g_WorldEnvWork.light.field_30.vz;
+    offsetX = g_WorldEnvWork.light.field_30.vx;
+    offsetY = g_WorldEnvWork.light.field_30.vy;
+    offsetZ = g_WorldEnvWork.light.field_30.vz;
 
-    var_t1 = Math_Vector3MagCalc(temp_s0, temp_s1, temp_s2);
+    var_t1 = Math_Vector3MagCalc(offsetX, offsetY, offsetZ);
     if (var_t1 == 0)
     {
         var_t1 = 1;
     }
 
-    temp_s0_neg = -temp_s0;
-    temp_s1_neg = -temp_s1;
-    temp_s2_neg = -temp_s2;
+    negOffsetX = -offsetX;
+    negOffsetY = -offsetY;
+    negOffsetZ = -offsetZ;
 
     *(u32*)&scratchData->rotMatrix_3E4[0][0] = *(u32*)&g_WorldEnvWork.light.field_28;
     scratchData->rotMatrix_3E4[0][2]         = g_WorldEnvWork.light.field_28.vz;
 
-    scratchData->rotMatrix_3E4[1][0] = Q12(temp_s0_neg) / var_t1;
-    scratchData->rotMatrix_3E4[1][1] = Q12(temp_s1_neg) / var_t1;
-    scratchData->rotMatrix_3E4[1][2] = Q12(temp_s2_neg) / var_t1;
+    scratchData->rotMatrix_3E4[1][0] = Q12(negOffsetX) / var_t1;
+    scratchData->rotMatrix_3E4[1][1] = Q12(negOffsetY) / var_t1;
+    scratchData->rotMatrix_3E4[1][2] = Q12(negOffsetZ) / var_t1;
 
-    scratchData->rotMatrix_3E4[2][0] = temp_s0_neg;
-    scratchData->rotMatrix_3E4[2][1] = temp_s1_neg;
-    scratchData->rotMatrix_3E4[2][2] = temp_s2_neg;
+    scratchData->rotMatrix_3E4[2][0] = negOffsetX;
+    scratchData->rotMatrix_3E4[2][1] = negOffsetY;
+    scratchData->rotMatrix_3E4[2][2] = negOffsetZ;
 
     gte_SetRotMatrix(scratchData->rotMatrix_3E4);
     gte_SetVector0(&scratchData->rotMatrix_3E4[2][0]);
@@ -1710,7 +1710,8 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
     scratchData->screenPos_3DC.vx += 1024; // TODO: Q8?
     scratchData->screenPos_3DC.vy += 1024;
 
-    var_s0  = (scratchData->screenPos_3DC.vx * scratchData->screenPos_3DC.vy) + (scratchData->screenPos_3DC.vy * (scratchData->depthP_3E0 >> 4));
+    var_s0  = (scratchData->screenPos_3DC.vx * scratchData->screenPos_3DC.vy) +
+              (scratchData->screenPos_3DC.vy * (scratchData->depthP_3E0 >> 4));
     var_s0 >>= 5;
     var_s0  -= 16;
     if (var_s0 < 0)
@@ -1780,13 +1781,13 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
                  Q12_MULT(g_WorldEnvWork.field_24.b + ((g_WorldEnvWork.worldTintColor.b * var_a1) >> 7), alpha));
 }
 
-void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
+void func_8005A838(s_GteScratchData* scratchData, q19_12 scale) // 0x8005A838
 {
     SVECTOR3 color;
 
-    color.vx = Q12_MULT(g_WorldEnvWork.light.field_28.vx, scale) >> 1;
-    color.vy = Q12_MULT(g_WorldEnvWork.light.field_28.vy, scale) >> 1;
-    color.vz = Q12_MULT(g_WorldEnvWork.light.field_28.vz, scale) >> 1;
+    color.vx = Q12_MULT(g_WorldEnvWork.light.field_28.vx, scale) >> 1; // `/ 2`.
+    color.vy = Q12_MULT(g_WorldEnvWork.light.field_28.vy, scale) >> 1; // `/ 2`.
+    color.vz = Q12_MULT(g_WorldEnvWork.light.field_28.vz, scale) >> 1; // `/ 2`.
     gte_SetLightSVector(&color);
 
     SetBackColor(Q12_MULT(g_WorldEnvWork.field_24.r, scale),
