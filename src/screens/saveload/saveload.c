@@ -290,10 +290,10 @@ void SaveScreen_SelectedElementIdxUpdate(s32 slotIdx, s32 unused) // 0x801E2F90
 
 void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType) // 0x801E2FCC
 {
-    #define OFFSET_X             SCREEN_POSITION_X(47.0f)
-    #define FILE_STR_MARGIN_X    SCREEN_POSITION_X(10.0f)
-    #define FILE_ID_STR_MARGIN_X FILE_STR_MARGIN_X + SCREEN_POSITION_X(15.75f)
-    #define POS_Y                SCREEN_POSITION_Y(14.75f)
+    #define OFFSET_X             150
+    #define FILE_STR_MARGIN_X    (SCREEN_WIDTH / 10)
+    #define FILE_ID_STR_MARGIN_X (FILE_STR_MARGIN_X + 50)
+    #define POS_Y                35
 
     const char* FILE_STR = "FILE";
 
@@ -330,20 +330,20 @@ bool SaveScreen_NextFearModeSave(s_MemCard_SaveMetadata* saveEntry) // 0x801E307
 
 void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E30C4
 {
-    #define OFFSET_X SCREEN_POSITION_X(47.0f)
-    #define MARGIN_X SCREEN_POSITION_X(28.25f)
-    #define OFFSET_Y SCREEN_POSITION_Y(8.5f)
-    #define MARGIN_Y SCREEN_POSITION_Y(22.25f)
+    #define OFFSET_X 150
+    #define MARGIN_X 90
+    #define OFFSET_Y (SCREEN_HEIGHT / 12)
+    #define MARGIN_Y 53
 
     s32 nameIdx = saveEntry->locationId;
 
     const u8 X_OFFSETS[] = {
-        82, 37, 30, 44,
-        81, 81, 61, 61,
-        59, 51, 84, 81,
+        82, 37,  30, 44,
+        81, 81,  61, 61,
+        59, 51,  84, 81,
         81, 109, 75, 111,
-        97, 38, 55, 45,
-        95, 48, 71, 102,
+        97, 38,  55, 45,
+        95, 48,  71, 102,
         77
     };
 

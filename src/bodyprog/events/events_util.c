@@ -297,7 +297,7 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
 
 const RECT D_8002AB10 =  // 0x8002AB10 .rodata
 {
-    SCREEN_POSITION_X(100.0f), 256,
+    SCREEN_WIDTH, 256,
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
@@ -1144,7 +1144,7 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879F
 void Event_PaperMapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
     static const RECT RECT = {
-        SCREEN_POSITION_X(100.0f), 256,
+        SCREEN_WIDTH, 256,
         SCREEN_WIDTH / 2, SCREEN_HEIGHT
     };
 

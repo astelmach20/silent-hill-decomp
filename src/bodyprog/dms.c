@@ -61,7 +61,7 @@ void Dms_CharacterTransformGet(VECTOR3* pos, SVECTOR3* rot, const char* charaNam
         Math_Vector3Zero(pos);
         Math_SVectorZero(rot);
 
-        Text_Debug_PositionSet(SCREEN_POSITION_X(15.75f), SCREEN_POSITION_Y(37.5f));
+        Text_Debug_PositionSet(50, 90);
 
 #if VERSION_EQUAL_OR_OLDER(PROTO_981216)
         // Code seen in 98-12-16 build.

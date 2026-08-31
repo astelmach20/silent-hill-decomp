@@ -285,7 +285,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
     if (!((D_800A9A68 >> 11) & (1 << 0)))
     {
 #if VERSION_REGION_IS(NTSCJ)
-        Gfx_StringPositionSet(SCREEN_POSITION_X(41.0f), 104);
+        Gfx_StringPositionSet(131, 104);
         Gfx_StringDraw("\x07PAUSE", DEFAULT_MAP_MESSAGE_LENGTH);
 #else
         Gfx_StringPositionSet(125, 104);
@@ -954,12 +954,12 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Gfx_StringPositionSet(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
+            Gfx_StringPositionSet(104, 104);
             Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             g_SysWork.sysStateStepData[0]++;
 
             if ((g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                   g_GameWorkPtr->config.controllerConfig.cancel)) ||
+                                                       g_GameWorkPtr->config.controllerConfig.cancel)) ||
                 g_SysWork.sysStateStepData[0] > SECONDS_60_FPS(4))
             {
                 SysWork_StateStepIncrement(0);
@@ -967,7 +967,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             break;
 
         case 4:
-            Gfx_StringPositionSet(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
+            Gfx_StringPositionSet(104, 104);
             Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(2.0f), false);
             break;

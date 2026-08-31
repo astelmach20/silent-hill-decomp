@@ -709,7 +709,7 @@ void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004B684
     g_MapMsg_WidthIdx               = 1;
     g_MapMsg_ActiveLine.unused      = 0;
     g_MapMsg_ActiveLine.positionIdx = 1;
-    g_StringPositionX1              = SCREEN_POSITION_X(-37.5f);
+    g_StringPositionX1              = -120;
     g_StringColorId                 = StringColorId_White;
     g_SysWork.enableHighResGlyphs   = false;
 }
