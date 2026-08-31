@@ -454,7 +454,7 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004AD90
     #undef ATLAS_COLUMN_COUNT
 }
 
-void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004AEA8
+void Gfx_MapMsg_Reset(void) // 0x8004AEA8
 {
     g_MapMsg_ActiveLine.unused = 0;
     g_MapMsg_ActiveLine.positionIdx = 1;

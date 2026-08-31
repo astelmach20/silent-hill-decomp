@@ -697,7 +697,7 @@ void func_8004B658(void) // 0x8004B658
     g_MapMsg_GlyphSprite.h         = 16;
 }
 
-void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004B684
+void Gfx_MapMsg_Reset(void) // 0x8004B684
 {
     g_MapMsg_WidthIdx               = 1;
     g_MapMsg_ActiveLine.unused      = 0;

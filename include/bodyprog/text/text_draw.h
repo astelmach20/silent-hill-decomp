@@ -125,7 +125,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength);
 /** @brief @unused? Might be from JAP builds. */
 void func_8004B658(void);
 
-void Gfx_MapMsg_DefaultStringInfoSet(void);
+/** @brief Resets global map message parameters to defaults. */
+void Gfx_MapMsg_Reset(void);
 
 /** @brief @unused Sets the global glyph sprite position relative to the center of the screen.
  *

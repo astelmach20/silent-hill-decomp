@@ -683,7 +683,7 @@ Gfx_StringColorSet                           = 0x8004A8DC; // type:func
 Gfx_StringDraw                               = 0x8004A8E8; // type:func
 Gfx_MapMsg_WidthsCompute                     = 0x8004ACF4; // type:func
 Gfx_MapMsg_StringDraw                        = 0x8004AF18; // type:func
-Gfx_MapMsg_DefaultStringInfoSet              = 0x8004B684; // type:func
+Gfx_MapMsg_Reset                             = 0x8004B684; // type:func
 Gfx_GlyphSprite_PositionSet                  = 0x8004B6D4;
 Gfx_StringDrawInt                            = 0x8004B9F8; // type:func
 
