@@ -1,12 +1,13 @@
-from pathlib import Path
+import json
+import logging
+import re
 from argparse import ArgumentParser
 from dataclasses import dataclass, asdict
-from elftools.elf.elffile import ELFFile
-import logging
+from pathlib import Path
+
 import yaml
-import json
-import sys
-import re
+from elftools.elf.elffile import ELFFile
+
 
 @dataclass
 class UnitMetadata:
@@ -47,10 +48,10 @@ def _create_config():
         raise ValueError(f"The given path {args.objects} is not pointing towards a valid config.")
 
     global is_ninja
-    is_ninja = (args.ninja) or False
+    is_ninja = args.ninja or False
     
     global game_version
-    game_version = (args.version)
+    game_version = args.version
     
     with open(args.config) as stream:
         try:
@@ -111,9 +112,9 @@ def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
     fixed_ext = re.sub( r'\.(s|c).o$', '', modified_path)
     
     if game_version != "ALL":
-        return (UnitMetadata(categories, f"src/{fixed_ext}.c"), fixed_ext, "")
+        return UnitMetadata(categories, f"src/{fixed_ext}.c"), fixed_ext, ""
     else:
-        return (UnitMetadata(categories, f"src/{fixed_ext}.c"), fixed_ext, re.search(r"/(USA|EUR|JAP[0-2])/", str(path))[0])
+        return UnitMetadata(categories, f"src/{fixed_ext}.c"), fixed_ext, re.search(r"/(USA|EUR|JAP[0-2])/", str(path))[0]
 
 def main():
     logging.basicConfig(level = logging.INFO)

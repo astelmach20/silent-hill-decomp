@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-import os
 import re
-from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Set, Dict
-from collections import defaultdict
+from pathlib import Path
+from typing import List, Set
 
 # Try to import pycparser, but make it optional
 try:

@@ -1,20 +1,20 @@
 import os
 import re
-import sys
-from pathlib import Path
-from argparse import ArgumentParser, FileType
+from argparse import ArgumentParser
 from dataclasses import dataclass
+from pathlib import Path
+
 
 @dataclass
-class version:
+class Version:
     checksum: int
     ftOffset: int
     ftSize: int
 
 VERSIONS = (
-    version(0, 0, 0), # NTSC 1.0
-    version(0, 0xB91C, 0x6138), # NTSC 1.1
-    version(0, 0xB8FC, 0) # PAL
+    Version(0, 0, 0),  # NTSC 1.0
+    Version(0, 0xB91C, 0x6138),  # NTSC 1.1
+    Version(0, 0xB8FC, 0) # PAL
     )
 
 def createParser():
@@ -74,8 +74,6 @@ def nameObfuscate(fileName):
         just like in the game however it was cut due
         budgets contraints"""
         
-    letterIndex = 0
-    tempName = 0
     for shift in range(4, 28, 6):
         letterIndex = (shift - 4) // 6
         if len(nameStr1) <= letterIndex:
@@ -165,7 +163,7 @@ def main():
         index += 1
     fileTable.close()
     
-    if fileTableOrig == []:
+    if not fileTableOrig:
         print(fileTableOrig)
         print("No new overlay to insert")
         return
@@ -176,7 +174,7 @@ def main():
     for path in buildOvlPaths:
         for ovlName in ovlNames:
             if Path(f"{args.buildFolder}{path}{ovlName}.BIN").is_file():
-                newOvl = open((f"{args.buildFolder}{path}{ovlName}.BIN"), "rb")
+                newOvl = open(f"{args.buildFolder}{path}{ovlName}.BIN", "rb")
                 newOvlSize = newOvl.seek(0, 2)
                 newOvlSize = round(newOvlSize / 256)
                 newOvl.close()
@@ -246,7 +244,6 @@ def main():
     # contain any overlay and the new file table already adjusted the file positions
     SILENT = open(args.silentFile, "rb")
     newSILENT = open(args.outputFolder+"/USA/new_SILENT.", "wb")
-    index = 0
     for x in fileTableNew:
         
         copyDataSize = ((fileTableOrig[x[4]][0] - 64 ) * 2048) - SILENT.tell()

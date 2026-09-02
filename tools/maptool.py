@@ -26,11 +26,11 @@
 
 import os
 import re
-import Levenshtein
-import sys
 import struct
 from dataclasses import dataclass
 from typing import List
+
+import Levenshtein
 
 MapVramAddress = 0x800C9578
 
@@ -580,7 +580,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             if funcToMatchBeforeUpdating is not None:
                 present = funcToMatchBeforeUpdating in sharedFuncSymbols.values() or funcToMatchBeforeUpdating in file2_syms.keys()
                 if not present:
-                    print(f"\n{funcToMatchBeforeUpdating} not found in this map, skipping --update");
+                    print(f"\n{funcToMatchBeforeUpdating} not found in this map, skipping --update")
                     return
 
         # Optional replacement in .c file

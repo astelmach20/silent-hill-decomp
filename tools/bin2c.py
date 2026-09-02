@@ -17,14 +17,13 @@ Recommend using @tools/bin2c.cfg argument to read in default settings/mappings.
 # - inner-structs might have issues with `self.struct_field_types`?
 # - to_initializer has issues getting the right type for bitfield members inside unions
 
-import sys
 import argparse
 import re
-import math
 from fractions import Fraction
-from io import StringIO
-from pycparser import c_parser, c_ast, parse_file
+
 from construct import *
+from pycparser import c_parser, c_ast
+
 
 def trim_float(x, digits=7):
     """Format to fixed decimals, then drop trailing zeros/dot."""
@@ -244,7 +243,7 @@ class StructParser:
             return type_node.name
         elif isinstance(type_node, c_ast.Union):
             # Return tuple to indicate this is a union
-            return ('union', type_node.name)
+            return 'union', type_node.name
         elif isinstance(type_node, c_ast.ArrayDecl):
             # Handle multi-dimensional arrays - preserve all dimensions
             base_type = self.parse_type(type_node.type)
@@ -254,9 +253,9 @@ class StructParser:
             if isinstance(base_type, tuple) and base_type[0] == 'array':
                 _, inner_type, *inner_dims = base_type
                 # Build tuple with all dimensions: ('array', base_type, dim1, dim2, ...)
-                return ('array', inner_type, size, *inner_dims)
+                return 'array', inner_type, size, *inner_dims
             else:
-                return ('array', base_type, size)
+                return 'array', base_type, size
         return None
 
     def build_union(self, union_name, union_decl):
@@ -1210,7 +1209,7 @@ Examples:
     offset = int(args.offset, 0)
 
     # silent-hill-decomp address hack
-    if offset >= 0x80024B60 and offset < 0x800C9578: # Bodyprog
+    if 0x80024B60 <= offset < 0x800C9578: # Bodyprog
         offset -= 0x80024B60
     elif offset >= 0x800C9578: # Maps
         offset -= 0x800C9578

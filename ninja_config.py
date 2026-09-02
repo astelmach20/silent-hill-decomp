@@ -1,25 +1,18 @@
 import argparse
 import os
-import shutil
-import sys
-import subprocess
 import re
-import yaml
-
-import threading
-from concurrent.futures import ThreadPoolExecutor
-import tools.get_o_files as get_o_files
-from ninja import ninja_syntax
+import shutil
+import subprocess
+import sys
 from dataclasses import dataclass
-from typing import Dict, List, Set, Union
 from pathlib import Path
-import splat
-import spimdisasm
+from typing import List
+
 import splat.scripts.split as split
 import splat.util.conf as split_info
-from splat.segtypes.linker_entry import LinkerEntry
+from ninja import ninja_syntax
 
-if sys.platform == "linux" or sys.platform == "linux2":
+if sys.platform in ["linux", 'linux2']:
     GAMEFILE_EXTENSION = "."
 elif sys.platform == "win32":
     GAMEFILE_EXTENSION = ""
@@ -668,10 +661,10 @@ def main():
     )
     args = parser.parse_args()
 
-    cleanCompilationFiles = (args.clean) or False
-    skipChecksumOption    = (args.skip_checksum) or False
-    objdiffConfigOption   = (args.objdiff_config) or False
-    nonMatchingOption     = (args.non_matching) or False
+    cleanCompilationFiles = args.clean or False
+    skipChecksumOption    = args.skip_checksum or False
+    objdiffConfigOption   = args.objdiff_config or False
+    nonMatchingOption     = args.non_matching or False
     gameVersionOption     = 0 # USA by default
     yamlsPaths            = []
     yamlMaps              = []

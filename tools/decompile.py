@@ -16,7 +16,7 @@ only_make_check = False
 
 # gets the root directory of the project
 # the way it works is that it looks for the directory 'src'
-def get_root_dir():
+def get_root_dir() -> str:
     def search_root_dir(base_dir):
         for dir in os.listdir(base_dir):
             if os.path.isdir(dir) and dir == "src":
@@ -27,8 +27,8 @@ def get_root_dir():
     return search_root_dir(base_dir=script_dir)
 
 
-def get_all_c_files(src_dir):
-    c_files_list = list()
+def get_all_c_files(src_dir:str):
+    c_files_list = []
     for root, dirs, files in os.walk(src_dir):
         for f in files:
             if f.endswith(".c"):
@@ -176,13 +176,13 @@ def check_injected_code(func) -> InjectRes:
         )
         result = compile_result.returncode
 
-    if result == 0:
+    if not result:
         # good news, the code was compilable
         # now checking for the checksum...
         check_result = subprocess.run(
             f"make build -j6 {make_defines}", cwd=root_dir, shell=True, check=False, capture_output=True
         )
-        if check_result.returncode == 0:
+        if not check_result.returncode:
             # decompilation successful! There is nothing else to do
             return InjectRes.SUCCESS
         else:
@@ -263,20 +263,20 @@ def resolve_jumptables(func: NonMatchingFunc):
                 # Build a regex to search for the standard jump table setup
                 lw_regex = rf"lw\s*\{jumpreg}, %lo\(([^)]*)\)\(\$at\)"
                 lwcheck = re.search(lw_regex, lines[i - 2])
-                if lwcheck == None:
+                if lwcheck is None:
                     break
                 jumptable_name = lwcheck.group(1)
                 print(f"Jumptable: {jumptable_name}")
                 addu_regex = r"addu\s*\$at, \$at, \$"
                 adducheck = re.search(addu_regex, lines[i - 3])
-                if adducheck == None:
+                if adducheck is None:
                     print("Couldn't get the addu")
                     print(lines[i - 3])
                     break
                 print("Good addu")
                 lui_regex = rf"lui\s*\$at, %hi\({jumptable_name}\)"
                 luicheck = re.search(lui_regex, lines[i - 4])
-                if luicheck == None:
+                if luicheck is None:
                     break
                 print("Good lui")
                 # Confirmed the jump table is as expected. Now find it.
@@ -293,16 +293,16 @@ def resolve_jumptables(func: NonMatchingFunc):
                             for line in all_rodata_lines:
                                 if jumptable_name in line or len(outlines) > 1:
                                     outlines.append(line)
-                                    if len(line) == 0:
+                                    if not len(line):
                                         print("Outputting")
                                         print(outlines)
                                         asm_file.write("\n".join(outlines))
                                         break
 
 
-def decompile(func_name: str, number_occurrence: int = None, force: bool = False, resolve_jtbl: bool = True):
+def decompile(func_name: str, number_occurrence: int | None = None, force: bool = False, resolve_jtbl: bool = True):
     funcs = get_nonmatching_functions(asm_dir, func_name)
-    if len(funcs) == 0:
+    if not len(funcs):
         print(f"function {func_name} not found or already decompiled")
 
     if force:

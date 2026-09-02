@@ -6,13 +6,13 @@
 # May need to round the result afterward
 # (mostly GPT written)
 
-import re
-import readline
-import math
-from fractions import Fraction
 import os
+import re
 import sys
+from fractions import Fraction
+
 import pyperclip
+
 
 # ---------- EventFlags converter ----------
 def _parse_mask(mask_str):
