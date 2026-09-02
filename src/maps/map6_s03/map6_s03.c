@@ -295,7 +295,7 @@ void Map_WorldObjectsInit(void) // 0x800D8818
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        g_SysWork.npcFlagsId = 3;
+        g_SysWork.npcFlagId = 3;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);

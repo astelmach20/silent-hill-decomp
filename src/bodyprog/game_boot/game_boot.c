@@ -302,7 +302,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 
     GameBoot_NpcClear();
 
-    g_SysWork.npcFlagsId = 5;
+    g_SysWork.npcFlagId = 5;
 
     func_8005E650(mapOvlId);
     func_80037124();

@@ -31,17 +31,17 @@ bool Chara_ProcessLoads(void) // 0x80088D0C
     return true;
 }
 
-void Chara_BonesInit(s32 idx) // 0x80088D34
+void Chara_BonesInit(s32 modelAnimsIdx) // 0x80088D34
 {
-    idx++;
-    Anim_BoneInit(g_CharaModelAnimsData[idx].activeAnmHdr, g_CharaModelAnimsData[idx].boneCoords);
+    modelAnimsIdx++;
+    Anim_BoneInit(g_CharaModelAnimsData[modelAnimsIdx].activeAnmHdr, g_CharaModelAnimsData[modelAnimsIdx].boneCoords);
 }
 
 s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
 {
     s_CollisionSurface surface;
     s32                i;
-    s32                npcFlagsId;
+    s32                npcFlagId;
     s32                activeSpawnFlags;
     s_SubCharacter*    chara;
 
@@ -71,16 +71,16 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
             return ARRAY_SIZE(g_SysWork.npcs);
         }
 
-        npcFlagsId = 0;
+        npcFlagId = 0;
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
             if (g_SysWork.npcs[i].model.charaId != Chara_None)
             {
-                npcFlagsId++;
+                npcFlagId++;
             }
         }
 
-        if (npcFlagsId >= g_SysWork.npcFlagsId)
+        if (npcFlagId >= g_SysWork.npcFlagId)
         {
             return 0;
         }
@@ -89,33 +89,36 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
     // Run through NPC slots.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
-        // Skip occupied slot.
+        // Find unoccupied slot.
         if (g_SysWork.npcs[i].model.charaId != Chara_None)
         {
             continue;
         }
 
+        // Clear character data.
         bzero(&g_SysWork.npcs[i], sizeof(s_SubCharacter));
 
         g_SysWork.npcs[i].model.charaId = charaId;
-        g_SysWork.npcs[i].field_40 = activeSpawnFlags;
+        g_SysWork.npcs[i].field_40      = activeSpawnFlags;
 
-        if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < 64)
+        if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < (1 << 6))
         {
             SET_FLAG(g_SysWork.field_228C, activeSpawnFlags);
         }
 
+        // Set registered NPC flag..
         SET_FLAG(&g_SysWork.npcFlags, i);
 
+        // Set NPC default control state and start position.
         g_SysWork.npcs[i].model.controlState = 0;
         g_SysWork.npcs[i].model.stateStep    = stateStep;
         g_SysWork.npcs[i].position.vx        = posX;
-
         Collision_SurfaceGet(&surface, posX, posZ);
-        g_SysWork.npcs[i].position.vy = surface.groundHeight;
-        g_SysWork.npcs[i].position.vz = posZ;
-        g_SysWork.npcs[i].rotation.vy = rotY;
+        g_SysWork.npcs[i].position.vy        = surface.groundHeight;
+        g_SysWork.npcs[i].position.vz        = posZ;
+        g_SysWork.npcs[i].rotation.vy        = rotY;
 
+        // Set visible.
         chara                    = &g_SysWork.npcs[i];
         chara->model.anim.flags |= AnimFlag_Visible;
 

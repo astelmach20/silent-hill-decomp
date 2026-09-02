@@ -54,7 +54,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     // Check for user input.
     hasInput = false;
     if ((g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                          g_GameWorkPtr->config.controllerConfig.cancel)) ||
+                                               g_GameWorkPtr->config.controllerConfig.cancel)) ||
         (g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.skip))
     {
         hasInput = true;

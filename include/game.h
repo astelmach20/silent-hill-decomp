@@ -434,13 +434,13 @@ typedef struct _SysWork
     /* 0x890    */ GsCOORDINATE2    playerBoneCoords[HarryBone_Count];
     /* 0xE30    */ GsCOORDINATE2    unkCoords_E30[5];                       // Might be part of previous array for 5 extra coords which go unused.
     /* 0xFC0    */ GsCOORDINATE2    npcBoneCoordBuffer[NPC_BONE_COUNT_MAX]; /** Contiguous NPC bone coord buffer. */
-    /* 0x2280   */ s8               npcFlagsId;                             // 1-based NPC ID for `npcFlags`.
+    /* 0x2280   */ s8               npcFlagId;                             // 1-based NPC ID for `npcFlags`.
     /* 0x2281   */ s8               loadingScreenIdx;
     /* 0x2282   */ s8               areaTransitionFlags;                /** `e_AreaTransitionFlags` */
     /* 0x2283   */ s8               sfxPairIdx;                         /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x2284   */ u16              charaGroupFlags[CHARA_GROUP_COUNT]; /** `e_CharaGroupFlags` */
                                                                         // Enabling a flag for Larval Stalkers causes them to die.
-    /* 0x228C   */ s32              field_228C[1];
+    /* 0x228C   */ s32              field_228C[1]; // Spawn flags for enemy characters?
     /* 0x2290   */ s32              npcFlags;       // Flags related to NPCs. Each bit corresponds to an `npcs` array entry.
     /* 0x2294   */ s8               unused_2294[4]; /** @unused */
     /* 0x2298   */ e_ProcessFlags   processFlags;

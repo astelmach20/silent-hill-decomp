@@ -3379,7 +3379,7 @@ void Map_WorldObjectsInit(void) // 0x800E5D44
     func_800E02E0();
     func_800E10F8();
 
-    g_SysWork.npcFlagsId = 3;
+    g_SysWork.npcFlagId = 3;
 }
 
 // rodata at the bottom of this file. TODO: Inline once all users are decomped.

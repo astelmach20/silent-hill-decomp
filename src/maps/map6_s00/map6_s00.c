@@ -366,15 +366,15 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
     switch (g_SavegamePtr->gameDifficulty)
     {
         case GameDifficulty_Normal:
-            g_SysWork.npcFlagsId = 4;
+            g_SysWork.npcFlagId = 4;
             break;
 
         case GameDifficulty_Easy:
-            g_SysWork.npcFlagsId = 3;
+            g_SysWork.npcFlagId = 3;
             break;
 
         default:
-            g_SysWork.npcFlagsId = 5;
+            g_SysWork.npcFlagId = 5;
             break;
     }
 

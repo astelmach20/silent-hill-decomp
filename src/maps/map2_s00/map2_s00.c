@@ -1985,19 +1985,19 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        g_SysWork.npcFlagsId = 2;
+        g_SysWork.npcFlagId = 2;
     }
     else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
-        g_SysWork.npcFlagsId = 3;
+        g_SysWork.npcFlagId = 3;
     }
     else
     {
-        g_SysWork.npcFlagsId = 4;
+        g_SysWork.npcFlagId = 4;
     }
 
-    g_SysWork.npcFlagsId++;
-    SysWork_NpcFlagSet(g_SysWork.npcFlagsId - 1);
+    g_SysWork.npcFlagId++;
+    SysWork_NpcFlagSet(g_SysWork.npcFlagId - 1);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);

@@ -33,15 +33,15 @@ void Map_WorldObjectsInit(void) // 0x800EA340
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        g_SysWork.npcFlagsId = 3;
+        g_SysWork.npcFlagId = 3;
     }
     else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
     {
-        g_SysWork.npcFlagsId = 4;
+        g_SysWork.npcFlagId = 4;
     }
     else
     {
-        g_SysWork.npcFlagsId = 5;
+        g_SysWork.npcFlagId = 5;
     }
 }
 
