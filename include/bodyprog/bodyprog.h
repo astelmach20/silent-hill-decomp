@@ -1009,9 +1009,20 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHdr* mapHdr);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
-s32 func_8003DD74(e_CharaId charaId, s32 arg1);
+/** @brief Gets the Y position of a color palette in VRAM.
+ *
+ * @param charaId @unused Character ID.
+ * @param paletteIdx Color palette index.
+ * @return CLUT Y position in VRAM.
+ */
+s32 WorldGfx_CharaClutYGet(e_CharaId charaId, s32 paletteIdx);
 
-void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by some chara init funcs.
+/** @brief Handles a mesh swap for a character.
+ *
+ * @param charaId ID of the character on which to perform the mesh swap.
+ * @param modelBone Packed model bone. See `MODEL_BONE`.
+ */
+void WorldGfx_CharaMeshSwap(e_CharaId charaId, s32 modelBone); // Called by some chara init funcs.
 
 bool Chara_ModelLoadedCheck(e_CharaId charaId);
 
@@ -1353,7 +1364,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 clutY, s_FsImageDesc* images);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s8 weaponAttack);
@@ -1532,7 +1543,7 @@ void StringCopy(char* prevStr, char* newStr);
 void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7);
 
 /** Crucial 3D drawing function. */
-void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5);
+void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
 
 s32 func_800571D0(u32 arg0);
 
@@ -2061,34 +2072,34 @@ void WorldGfx_CharaModelProcessAllLoads(void);
 
 void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
-void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4);
+void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 paletteIdx);
 
 /** Something for Harry. `arg` is a packed value. */
-void func_8003DE60(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Cybil. */
-void func_8003DF84(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Monster Cybil. */
-void func_8003E08C(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Dahlia. */
-void func_8003E194(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_DahliaMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Kaufmann. */
-void func_8003E238(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_KaufmannMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Stalker. */
-void func_8003E388(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_StalkerMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Split Head. */
-void func_8003E414(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_SplitHeadMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Puppet Nurse. */
-void func_8003E4A0(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_PuppetNurseMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 /** Something for Puppet Doctor. */
-void func_8003E544(s_Skeleton* skel, s32 modelBone);
+void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 modelBone);
 
 void func_8003ECBC(void);
 

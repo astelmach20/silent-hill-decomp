@@ -615,7 +615,7 @@ void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x80046
     g_Sd_VabPlayingInfo.typeIdx = g_Vab_InfoTable[audioIdx].vabProgIdx >> 8;
     g_Sd_VabPlayingInfo.progIdx = g_Vab_InfoTable[audioIdx].vabProgIdx & 0xFF;
     g_Sd_VabPlayingInfo.toneIdx = g_Vab_InfoTable[audioIdx].audioVabIdx;
-    g_Sd_VabPlayingInfo.noteIdx = g_Vab_InfoTable[audioIdx].noteIdx + (s8)(pitch * 5 / 127);
+    g_Sd_VabPlayingInfo.noteIdx = g_Vab_InfoTable[audioIdx].noteIdx + (s8)((pitch * 5) / 127);
 
     if (pitch > 0)
     {
@@ -623,12 +623,12 @@ void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x80046
     }
     else
     {
-        g_Sd_VabPlayingInfo.pitch = 127 - ABS(pitch * 5) % 127;
+        g_Sd_VabPlayingInfo.pitch = 127 - (ABS(pitch * 5) % 127);
     }
 
-    volMin                      = g_SdVolumeConfig.volumeSe + g_Vab_InfoTable[audioIdx].volumeMin;
-    convertedVol                = vol;
-    g_Sd_VabPlayingInfo.volumeLeft = volMin - (volMin * convertedVol) / 255;
+    volMin                         = g_SdVolumeConfig.volumeSe + g_Vab_InfoTable[audioIdx].volumeMin;
+    convertedVol                   = vol;
+    g_Sd_VabPlayingInfo.volumeLeft = volMin - ((volMin * convertedVol) / 255);
 
     Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volumeLeft, &g_Sd_VabPlayingInfo.volumeRight, g_Sd_VabPlayingInfo.volumeLeft);
 
@@ -909,7 +909,7 @@ static void Sd_XaAudioPlay(void) // 0x80046E00
                     break;
             }
 
-            g_SdVolumeConfig.volumeXa                 = g_SdVolumeConfig.volumeXaToSet;
+            g_SdVolumeConfig.volumeXa             = g_SdVolumeConfig.volumeXaToSet;
             Sd_XaVolumeSet(g_SdVolumeConfig.volumeXaToSet, g_SdVolumeConfig.volumeXaToSet);
             g_Sd_XaCdlInfo.cdlMode                = CdlModeSpeed | CdlModeRT | CdlModeSF;
             g_Sd_AudioStreamingStates.xaLoadState = XaLoadState_SetMode;
@@ -1243,7 +1243,7 @@ void Sd_TaskPoolAdd(u8 task) // 0x800478DC
     g_Sd_CurrentTask = g_Sd_TaskPool[0];
 }
 
-/** Updates a task pool by shifting a field. */
+/** @brief Updates a task pool by shifting a field. */
 static void Sd_TaskPoolUpdate(void) // 0x80047A70
 {
     static s32 i;
@@ -1444,7 +1444,7 @@ static void Sd_VabLoad_OffVagDataSet(void) // 0x80047E3C
 }
 
 /** @brief Moves VAG data from the temporary file location to the indicated `g_Sd_VabBuffers` buffer.
- * If the file is larger than `VAB_BUFFER_LIMIT`, it loops to move remaining beyond this size.
+ * If the file is larger than `VAB_BUFFER_LIMIT`, it loops to move remaining bytes beyond this size.
  */
 static void Sd_VabLoad_VagDataMove(void) // 0x80047F18
 {
@@ -1681,9 +1681,8 @@ static void Sd_KdtLoad_LoadCheck(void) // 0x80048498
     g_Sd_AudioWork.cdErrorCount++;
 }
 
-/** In Jan 16 Demo and the Nov 24, 98 Preview,
- * all these functions also nullsub. Additionally,
- * `func_800485C0` doesn't exist in the Jan 16 Demo.
+/** @note In Jan 16 Demo and the Nov 24, 98 Preview, all these functions also nullsub.
+ * Additionally, `func_800485C0` doesn't exist in the Jan 16 Demo.
  */
 
 void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4) {} // 0x800485B0
@@ -1741,7 +1740,8 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
 
     if (g_Sd_AudioWork.xaAudioIdx != 0)
     {
-        g_Sd_XaAudioPlayTracking.xaAudioPlayCurrentTime = VSync(SyncMode_Count) - g_Sd_XaAudioPlayTracking.vSyncTimeSinceBoot;
+        g_Sd_XaAudioPlayTracking.xaAudioPlayCurrentTime = VSync(SyncMode_Count) -
+                                                          g_Sd_XaAudioPlayTracking.vSyncTimeSinceBoot;
     }
 
     // Fade out background music.
@@ -1854,11 +1854,11 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
 u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
 {
     u8 syncRes;
-    u8 comCopy;
+    u8 comCpy;
 
-    comCopy = com;
+    comCpy = com;
 
-    if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res))
+    if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCpy, param, res))
     {
         g_Sd_AudioWork.cdErrorCount = 0;
         return false;

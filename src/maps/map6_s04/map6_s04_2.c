@@ -3474,7 +3474,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
                 WorldObjects_Add(&g_WorldObject_SFlauros.object, &g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
             }
 
-            if (!D_800ED840)
+            if (D_800ED840 == 0)
             {
                 SD_Call(Sfx_Unk1616);
                 SD_Call(Sfx_Unk1615);

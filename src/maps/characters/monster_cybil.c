@@ -353,7 +353,7 @@ void MonsterCybil_Init(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x8
     monsterCybilProps.field_116 = 0;
     monsterCybilProps.field_F4  = 0;
 
-    WorldGfx_HeldItemAttach(Chara_MonsterCybil, MODEL_BONE(1, 1));
+    WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MODEL_BONE(1, 1));
 }
 
 void func_800D8A90(s_SubCharacter* monsterCybil) // 0x800D8A90
@@ -522,11 +522,11 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (monsterCybil->model.anim.keyframeIdx >= 66)
             {
-                WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
             }
             else
             {
-                WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
             }
 
             monsterCybilProps.moveSpeed = Q12(0.0f);
@@ -590,7 +590,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             Model_AnimStatusKeyframeSet(*modelUpper, 20, true, MONSTER_CYBIL_ANIM_INFOS, 0);
-            WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
+            WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
             Chara_AnimStateReset(monsterCybil);
             break;
 
@@ -605,11 +605,11 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (modelUpper->anim.keyframeIdx >= 29)
             {
-                WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
             }
             else
             {
-                WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
             }
 
             Chara_AnimStateReset(monsterCybil);
@@ -623,7 +623,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             Model_AnimStatusKeyframeSet(*modelUpper, 19, true, MONSTER_CYBIL_ANIM_INFOS, 0);
-            WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
+            WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
             Chara_AnimStateReset(monsterCybil);
 
             if (!monsterCybil->model.stateStep)
@@ -1122,7 +1122,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (modelUpper->anim.keyframeIdx >= 29)
             {
-                WorldGfx_HeldItemAttach(Chara_MonsterCybil, 2);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
             }
 
             if (modelUpper->anim.keyframeIdx == D_800EA776 && D_800EBB48 < monsterCybilProps.freeze)
@@ -1305,7 +1305,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (ANIM_STATUS_IS_ACTIVE(modelUpper->anim.status) && modelUpper->anim.keyframeIdx < 209)
             {
-                WorldGfx_HeldItemAttach(Chara_MonsterCybil, 1);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
             }
 
             if (modelUpper->anim.keyframeIdx == MONSTER_CYBIL_ANIM_INFOS[modelUpper->anim.status].startKeyframeIdx)

@@ -156,7 +156,7 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
         case DahliaControl_6:
             Model_AnimStatusSet(&dahlia->model, DahliaAnim_14, false);
 #if defined(MAP7_S03)
-            WorldGfx_HeldItemAttach(Chara_EndingDahlia, MODEL_BONE(1, 0));
+            WorldGfx_CharaMeshSwap(Chara_EndingDahlia, MODEL_BONE(1, 0));
 #endif
             Chara_AnimStateReset(dahlia);
             break;
@@ -186,15 +186,15 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 
             if (dahlia->model.anim.keyframeIdx < 144)
             {
-                WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(1, 0));
+                WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(1, 0));
             }
             else
             {
 #if !defined(MAP6_S01) && !defined(MAP6_S04) && !defined(MAP7_S02) && !defined(MAP7_S03)
 #if defined(MAP3_S06)
-                WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(2, 0));
+                WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(2, 0));
 #else
-                WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(3, 0));
+                WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(3, 0));
 #endif
 #endif
             }
@@ -214,15 +214,15 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
             {
 #if !defined(MAP6_S01) && !defined(MAP6_S04) && !defined(MAP7_S02) && !defined(MAP7_S03)
 #if defined(MAP3_S06)
-                WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(2, 0));
+                WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(2, 0));
 #else
-                WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(3, 0));
+                WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(3, 0));
 #endif
 #endif
             }
             else
             {
-                WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(1, 0));
+                WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(1, 0));
             }
             break;
 
@@ -310,7 +310,7 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 
         case DahliaControl_25:
             Model_AnimStatusSet(&dahlia->model, DahliaAnim_11, false);
-            WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(1, 0));
+            WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(1, 0));
 
             if (dahlia->model.anim.keyframeIdx == 349)
             {
@@ -444,9 +444,9 @@ void Dahlia_Init(s_SubCharacter* dahlia)
     sharedData_800D16E4_2_s01 = 0;
 
 #ifdef MAP7_S03
-    WorldGfx_HeldItemAttach(Chara_EndingDahlia, MODEL_BONE(1, 0)); // TODO: MAP7_S03 Dahlia funcs could be EndingDahlia instead, if other Dahlia funcs don't match other overlays.
+    WorldGfx_CharaMeshSwap(Chara_EndingDahlia, MODEL_BONE(1, 0)); // TODO: MAP7_S03 Dahlia funcs could be EndingDahlia instead, if other Dahlia funcs don't match other overlays.
 #else
-    WorldGfx_HeldItemAttach(Chara_Dahlia, MODEL_BONE(1, 0));
+    WorldGfx_CharaMeshSwap(Chara_Dahlia, MODEL_BONE(1, 0));
 #endif
 
 #ifdef MAP7_S02

@@ -106,24 +106,24 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_2, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_2, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_3, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_3, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_4, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_4, 1));
                 break;
         }
     }
     else
     {
         func_8003D03C();
-        WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
+        WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
     }
 }
 
@@ -157,17 +157,17 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_2, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_2, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_3, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_3, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_4, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_4, 1));
                 break;
         }
     }
@@ -177,11 +177,11 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
 
         if (extra->model.anim.keyframeIdx >= 958)
         {
-            WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_5, 1));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_5, 1));
         }
         else
         {
-            WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
         }
     }
 }
@@ -637,7 +637,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(180, true));
 #ifdef MAP1_S03
             func_8003D03C();
-            WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_1, 1));
 #else
             keyframeIdx = 949;
             sharedFunc_800CDAA8_0_s02_Switch_Unk85(extra);

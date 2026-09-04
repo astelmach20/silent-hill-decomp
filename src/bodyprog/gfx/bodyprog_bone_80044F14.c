@@ -260,7 +260,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 
 extern s_WorldEnvWork const g_WorldEnvWork;
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 clutY, s_FsImageDesc* images) // 0x80045534
 {
     MATRIX         viewMat;
     MATRIX         worldMat;
@@ -278,7 +278,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoor
     s32            temp_s1_3;
     s32            temp_s1_4;
     s32            temp_v1;
-    s32            clutY;
+    s32            clutY1;
     s32            var_s2;
     s32            var_s3_2;
     s32            var_v0_2;
@@ -299,16 +299,16 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoor
         return;
     }
 
-    clutY = NO_VALUE;
+    clutY1 = NO_VALUE;
 
     if (images != NULL)
     {
         for (curImage = images; curImage->clutY != NO_VALUE; curImage++)
         {
-            if (clutY != curImage->clutY)
+            if (clutY1 != curImage->clutY)
             {
-                clutY = curImage->clutY;
-                Vw_CoordToViewSpaceMatrix(&boneCoords[clutY], &viewMat);
+                clutY1 = curImage->clutY;
+                Vw_CoordToViewSpaceMatrix(&boneCoords[clutY1], &viewMat);
                 SetRotMatrix(&viewMat);
                 SetTransMatrix(&viewMat);
             }
@@ -366,7 +366,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoor
                 *(s32*)&viewMat.m[0][0] = 0;
             }
 
-            func_80057090(&curBoneNode->bone.modelInfo, ot, arg2, &viewMat, &worldMat, arg5);
+            func_80057090(&curBoneNode->bone.modelInfo, ot, arg2, &viewMat, &worldMat, clutY);
 
             if (g_WorldEnvWork.isFogEnabled)
             {
@@ -456,8 +456,8 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoor
         var_s2 = Q8_TO_Q12(var_s4) - arg4;
         var_s2 = MAX(var_s2, 0);
 
-        clutY   = ReadGeomScreen();
-        var_v0_4 = Q12_TO_Q8(arg4) * clutY;
+        clutY1   = ReadGeomScreen();
+        var_v0_4 = Q12_TO_Q8(arg4) * clutY1;
 
         if (var_s4 >= 5)
         {

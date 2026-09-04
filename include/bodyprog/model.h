@@ -51,7 +51,7 @@ STATIC_ASSERT_SIZEOF(s_Model, 24);
 #define MODEL_BONE_MESH_VARIANT_IDX_GET(modelBone) \
     ((modelBone) & 0xF)
 
-/** @brief Retrieves ???
+/** @brief Retrieves ??? TODO: Is this the actual index of the real bone on the model to use for the mesh swap?
  *
  * @param modelBone Packed model bone containing a mesh variant index and ???
  * @return Unknown second index.

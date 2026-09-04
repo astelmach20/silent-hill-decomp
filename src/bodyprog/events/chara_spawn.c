@@ -41,7 +41,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
 {
     s_CollisionSurface surface;
     s32                i;
-    s32                npcFlagId;
+    s32                npcIdx;
     s32                activeSpawnFlags;
     s_SubCharacter*    chara;
 
@@ -71,16 +71,16 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
             return ARRAY_SIZE(g_SysWork.npcs);
         }
 
-        npcFlagId = 0;
+        npcIdx = 0;
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
             if (g_SysWork.npcs[i].model.charaId != Chara_None)
             {
-                npcFlagId++;
+                npcIdx++;
             }
         }
 
-        if (npcFlagId >= g_SysWork.npcFlagId)
+        if (npcIdx >= g_SysWork.npcFlagId)
         {
             return 0;
         }
@@ -106,7 +106,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
             SET_FLAG(g_SysWork.field_228C, activeSpawnFlags);
         }
 
-        // Set registered NPC flag..
+        // Set registered NPC flag.
         SET_FLAG(&g_SysWork.npcFlags, i);
 
         // Set NPC default control state and start position.
@@ -125,6 +125,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         return i;
     }
 
+    // Fall back on last NPC slot as failsafe.
     return ARRAY_SIZE(g_SysWork.npcs);
 }
 

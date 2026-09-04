@@ -607,17 +607,17 @@ WorldGfx_PlayerModelProcessLoad              = 0x8003D710; // type:func
 WorldGfx_CharaModelProcessAllLoads           = 0x8003D734; // type:func
 WorldGfx_CharaModelProcessLoad               = 0x8003D7A0; // type:func
 WorldGfx_CharaDraw                           = 0x8003D874; // type:func
-func_8003DD74                                = 0x8003DB4C; // type:func
-WorldGfx_HeldItemAttach                      = 0x8003DB58; // type:func
-func_8003DE60                                = 0x8003DC38; // type:func
-func_8003DF84                                = 0x8003DD5C; // type:func
-func_8003E08C                                = 0x8003DE64; // type:func
-func_8003E194                                = 0x8003DF6C; // type:func
-func_8003E238                                = 0x8003E010; // type:func
-func_8003E388                                = 0x8003E160; // type:func
-func_8003E414                                = 0x8003E1EC; // type:func
-func_8003E4A0                                = 0x8003E278; // type:func
-func_8003E544                                = 0x8003E31C; // type:func
+WorldGfx_CharaClutYGet                       = 0x8003DB4C; // type:func
+WorldGfx_CharaMeshSwap                       = 0x8003DB58; // type:func
+WorldGfx_HarryMeshSwap                       = 0x8003DC38; // type:func
+WorldGfx_CybilMeshSwap                       = 0x8003DD5C; // type:func
+WorldGfx_MonsterCybilMeshSwap                = 0x8003DE64; // type:func
+WorldGfx_DahliaMeshSwap                      = 0x8003DF6C; // type:func
+WorldGfx_KaufmannMeshSwap                    = 0x8003E010; // type:func
+WorldGfx_StalkerMeshSwap                     = 0x8003E160; // type:func
+WorldGfx_SplitHeadMeshSwap                   = 0x8003E1EC; // type:func
+WorldGfx_PuppetNurseMeshSwap                 = 0x8003E278; // type:func
+WorldGfx_PuppetDoctorMeshSwap                = 0x8003E31C; // type:func
 
 //------------------------------------------------------------------
 //--- PA: 0x019860   VA: 0x8003E3C0   subsegment: c, gfx/map_effects

@@ -123,7 +123,7 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
     }
 }
 
-void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 arg5) // 0x80057090
+void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 clutY) // 0x80057090
 {
     s32            temp_a0;
     GsOT_TAG*      otTag;
@@ -151,7 +151,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat
 
         if (modelHdr->field_B_0)
         {
-            g_WorldEnvWork.field_14C = arg5;
+            g_WorldEnvWork.clutY = clutY;
             func_8005A21C(modelInfo, otTag, arg2, viewMat);
         }
         else
@@ -1930,7 +1930,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     u_poly       poly;
 
     var_a3              = g_WorldEnvWork.field_0;
-    scratchData->u.s_1.field_8 = g_WorldEnvWork.field_14C << 16;
+    scratchData->u.s_1.field_8 = g_WorldEnvWork.clutY << 16;
 
     temp_a0 = 0x79C << (arg3 + 2);
     var_t9  = g_WorldEnvWork.isFogEnabled ? MIN(temp_a0, g_WorldEnvWork.fog.farDistance) : temp_a0;

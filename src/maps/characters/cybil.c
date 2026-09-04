@@ -221,15 +221,15 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
 
             if (cybil->model.anim.keyframeIdx < 91)
             {
-                WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(1, 1));
+                WorldGfx_CharaMeshSwap(Chara_Cybil, MODEL_BONE(1, 1));
             }
             else if (cybil->model.anim.keyframeIdx < 105)
             {
-                WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(2, 1));
+                WorldGfx_CharaMeshSwap(Chara_Cybil, MODEL_BONE(2, 1));
             }
             else
             {
-                WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(1, 2));
+                WorldGfx_CharaMeshSwap(Chara_Cybil, MODEL_BONE(1, 2));
             }
             break;
 
@@ -246,7 +246,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
         case CybilControl_9:
             Model_AnimStatusKeyframeSet(cybil->model, CybilAnim_10, true, CYBIL_ANIM_INFOS, 0);
             Chara_AnimStateReset(cybil);
-            WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(1, 1));
+            WorldGfx_CharaMeshSwap(Chara_Cybil, MODEL_BONE(1, 1));
             break;
 
         case CybilControl_10:
@@ -303,7 +303,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&cybil->model, CybilAnim_26, false);
             Model_AnimStatusKeyframeSet(cybil->model, CybilAnim_26, true, CYBIL_ANIM_INFOS, 0);
             Chara_AnimStateReset(cybil);
-            WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
+            WorldGfx_CharaMeshSwap(Chara_EndingCybil, MODEL_BONE(2, 1));
 
             if (cybil->model.anim.keyframeIdx == 295)
             {
@@ -316,14 +316,14 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&cybil->model, CybilAnim_27, false);
             Model_AnimStatusKeyframeSet(cybil->model, CybilAnim_27, true, CYBIL_ANIM_INFOS, 0);
             Chara_AnimStateReset(cybil);
-            WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
+            WorldGfx_CharaMeshSwap(Chara_EndingCybil, MODEL_BONE(2, 1));
             break;
 
         case CybilControl_23:
             Model_AnimStatusSet(&cybil->model, CybilAnim_28, false);
             Model_AnimStatusKeyframeSet(cybil->model, CybilAnim_28, true, CYBIL_ANIM_INFOS, 0);
             Chara_AnimStateReset(cybil);
-            WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
+            WorldGfx_CharaMeshSwap(Chara_EndingCybil, MODEL_BONE(2, 1));
 
             if (cybilProps.controlState != 23)
             {
@@ -335,7 +335,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&cybil->model, CybilAnim_29, false);
             Model_AnimStatusKeyframeSet(cybil->model, CybilAnim_29, true, CYBIL_ANIM_INFOS, 0);
             Chara_AnimStateReset(cybil);
-            WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
+            WorldGfx_CharaMeshSwap(Chara_EndingCybil, MODEL_BONE(2, 1));
             break;
 
         case CybilControl_25:
@@ -366,7 +366,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
         case CybilControl_30:
             Model_AnimStatusSet(&cybil->model, CybilAnim_31, false);
             Chara_AnimStateReset(cybil);
-            WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(2, 1));
+            WorldGfx_CharaMeshSwap(Chara_EndingCybil, MODEL_BONE(2, 1));
             break;
     }
 
@@ -537,8 +537,8 @@ void Cybil_Init(s_SubCharacter* cybil)
     sharedData_800E237C_0_s01 = 0;
 
 #ifdef MAP7_S03
-    WorldGfx_HeldItemAttach(Chara_EndingCybil, MODEL_BONE(1, 1));
+    WorldGfx_CharaMeshSwap(Chara_EndingCybil, MODEL_BONE(1, 1));
 #else
-    WorldGfx_HeldItemAttach(Chara_Cybil, MODEL_BONE(1, 1));
+    WorldGfx_CharaMeshSwap(Chara_Cybil, MODEL_BONE(1, 1));
 #endif
 }

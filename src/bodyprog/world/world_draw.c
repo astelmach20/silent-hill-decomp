@@ -1178,10 +1178,10 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
     }
 }
 
-void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4) // 0x8003DA9C
+void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 paletteIdx) // 0x8003DA9C
 {
     CVECTOR tintColor = { 0 };
-    s16     ret;
+    s16     clutY;
 
     // Check if character is invalid.
     if (charaId == Chara_None)
@@ -1197,7 +1197,7 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, 
         WorldGfx_HeldItemDraw();
     }
 
-    ret = func_8003DD74(charaId, arg4);
+    clutY = WorldGfx_CharaClutYGet(charaId, paletteIdx);
 
     if (timer != Q12(0.0f))
     {
@@ -1210,7 +1210,7 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, 
     }
 
     func_80045534(&g_WorldGfxWork.registeredCharaModels[charaId]->skeleton, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
-                  boneCoords, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), ret, CHARA_FILE_INFOS[charaId].field_8);
+                  boneCoords, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), clutY, CHARA_FILE_INFOS[charaId].field_8);
 
     if (timer != Q12(0.0f))
     {
@@ -1222,16 +1222,16 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, 
     }
 }
 
-s32 func_8003DD74(e_CharaId charaId, s32 arg1) // 0x8003DD74
+s32 WorldGfx_CharaClutYGet(e_CharaId charaId, s32 paletteIdx) // 0x8003DD74
 {
-    return (arg1 << 10) & 0xFC00;
+    return (paletteIdx << 10) & 0xFC00;
 }
 
 // ========================================
 // ITEM ATTACHMENT
 // ========================================
 
-void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone) // 0x8003DD80
+void WorldGfx_CharaMeshSwap(e_CharaId charaId, s32 modelBone) // 0x8003DD80
 {
     s_CharaModel* model;
 
@@ -1240,47 +1240,47 @@ void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone) // 0x8003DD80
     switch (charaId)
     {
         case Chara_Harry:
-            func_8003DE60(&model->skeleton, modelBone);
+            WorldGfx_HarryMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_Stalker:
-            func_8003E388(&model->skeleton, modelBone);
+            WorldGfx_StalkerMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_Cybil:
         case Chara_EndingCybil:
-            func_8003DF84(&model->skeleton, modelBone);
+            WorldGfx_CybilMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_MonsterCybil:
-            func_8003E08C(&model->skeleton, modelBone);
+            WorldGfx_MonsterCybilMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_Dahlia:
         case Chara_EndingDahlia:
-            func_8003E194(&model->skeleton, modelBone);
+            WorldGfx_DahliaMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_Kaufmann:
         case Chara_EndingKaufmann:
-            func_8003E238(&model->skeleton, modelBone);
+            WorldGfx_KaufmannMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_SplitHead:
-            func_8003E414(&model->skeleton, modelBone);
+            WorldGfx_SplitHeadMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_PuppetNurse:
-            func_8003E4A0(&model->skeleton, modelBone);
+            WorldGfx_PuppetNurseMeshSwap(&model->skeleton, modelBone);
             break;
 
         case Chara_PuppetDoctor:
-            func_8003E544(&model->skeleton, modelBone);
+            WorldGfx_PuppetDoctorMeshSwap(&model->skeleton, modelBone);
             break;
     }
 }
 
-void func_8003DE60(s_Skeleton* skel, s32 modelBone) // 0x8003DE60
+void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003DE60
 {
     s32 variantIdx;
     s32 idx1;
@@ -1344,7 +1344,7 @@ void func_8003DE60(s_Skeleton* skel, s32 modelBone) // 0x8003DE60
     }
 }
 
-void func_8003DF84(s_Skeleton* skel, s32 modelBone) // 0x8003DF84
+void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003DF84
 {
     s32 variantIdx;
     s32 idx1;
@@ -1389,7 +1389,7 @@ void func_8003DF84(s_Skeleton* skel, s32 modelBone) // 0x8003DF84
     }
 }
 
-void func_8003E08C(s_Skeleton* skel, s32 modelBone) // 0x8003E08C
+void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003E08C
 {
     s32 variantIdx;
 
@@ -1433,7 +1433,7 @@ void func_8003E08C(s_Skeleton* skel, s32 modelBone) // 0x8003E08C
     }
 }
 
-void func_8003E194(s_Skeleton* skel, s32 modelBone) // 0x8003E194
+void WorldGfx_DahliaMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003E194
 {
     s32 variantIdx;
 
@@ -1464,7 +1464,7 @@ void func_8003E194(s_Skeleton* skel, s32 modelBone) // 0x8003E194
     }
 }
 
-void func_8003E238(s_Skeleton* skel, s32 modelBone) // 0x8003E238
+void WorldGfx_KaufmannMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003E238
 {
     s32 variantIdx;
     s32 idx1;
@@ -1528,7 +1528,7 @@ void func_8003E238(s_Skeleton* skel, s32 modelBone) // 0x8003E238
     }
 }
 
-void func_8003E388(s_Skeleton* skel, s32 modelBone) // 0x8003E388
+void WorldGfx_StalkerMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003E388
 {
     s32 variantIdx;
 
@@ -1553,7 +1553,7 @@ void func_8003E388(s_Skeleton* skel, s32 modelBone) // 0x8003E388
     }
 }
 
-void func_8003E414(s_Skeleton* skel, s32 modelBone) // 0x8003E414
+void WorldGfx_SplitHeadMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003E414
 {
     s32 variantIdx;
 
@@ -1578,7 +1578,7 @@ void func_8003E414(s_Skeleton* skel, s32 modelBone) // 0x8003E414
     }
 }
 
-void func_8003E4A0(s_Skeleton* skel, s32 modelBone) // 0x8003E4A0
+void WorldGfx_PuppetNurseMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003E4A0
 {
     s32 variantIdx;
 
@@ -1610,7 +1610,7 @@ void func_8003E4A0(s_Skeleton* skel, s32 modelBone) // 0x8003E4A0
     }
 }
 
-void func_8003E544(s_Skeleton* skel, s32 modelBone) // 0x8003E544
+void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 modelBone) // 0x8003E544
 {
     s32 variantIdx;
 

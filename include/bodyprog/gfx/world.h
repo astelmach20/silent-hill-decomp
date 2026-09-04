@@ -82,7 +82,7 @@ typedef struct _WorldEnvWork
     /* 0x2C  */ MATRIX       colorMat;
     /* 0x50  */ s_PointLight light;
     /* 0xCC  */ u8           fogRamp[128]; // Fog-related values based on `fog.nearDistance`/`fog.farDistance`.
-    /* 0x14C */ u16          field_14C;
+    /* 0x14C */ u16          clutY;
 } s_WorldEnvWork;
 
 #endif

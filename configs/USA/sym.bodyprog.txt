@@ -438,7 +438,17 @@ WorldGfx_PlayerModelProcessLoad              = 0x8003D938; // type:func
 WorldGfx_CharaModelProcessAllLoads           = 0x8003D95C; // type:func
 WorldGfx_CharaModelProcessLoad               = 0x8003D9C8; // type:func
 WorldGfx_CharaDraw                           = 0x8003DA9C;
-WorldGfx_HeldItemAttach                      = 0x8003DD80; // type:func
+WorldGfx_CharaClutYGet                       = 0x8003DD74; // type:func
+WorldGfx_CharaMeshSwap                       = 0x8003DD80; // type:func
+WorldGfx_HarryMeshSwap                       = 0x8003DE60; // type:func
+WorldGfx_CybilMeshSwap                       = 0x8003DF84; // type:func
+WorldGfx_MonsterCybilMeshSwap                = 0x8003E08C; // type:func
+WorldGfx_DahliaMeshSwap                      = 0x8003E194; // type:func
+WorldGfx_KaufmannMeshSwap                    = 0x8003E238; // type:func
+WorldGfx_StalkerMeshSwap                     = 0x8003E388; // type:func
+WorldGfx_SplitHeadMeshSwap                   = 0x8003E414; // type:func
+WorldGfx_PuppetNurseMeshSwap                 = 0x8003E4A0; // type:func
+WorldGfx_PuppetDoctorMeshSwap                = 0x8003E544; // type:func
 
 //-----------------------------------------------------------------------------
 //--- PA: 0x019A88   VA: 0x8003E5E8   subsegment: c, gfx/option_brightness_line

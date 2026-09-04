@@ -138,7 +138,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
         }
     }
 
-    #undef NPC_FLAG_GET
+    #undef GET_NPC_FLAG
 }
 
 void Game_NpcUpdate(void) // 0x80038354
@@ -156,23 +156,21 @@ void Game_NpcUpdate(void) // 0x80038354
     u32             idxBits;
     s32             posZShift6;
     s32             posXShift6;
-    s32             temp_t1;
     s32             m;
     u8              vol;
     s32             j;
-    s32             var_s3;
+    bool            isExterior;
     s32             k;
     bool            isLowVisInterior;
     s32             closeNpcInfoIdx0;
-    s32             var_v1_3;
+    q27_4           distToNpc;
     s32             closeNpcInfoIdx1;
     s32             balance;
     s8              idx;
     s32             closeNpcInfoIdx;
     s32             bitIdx;
     u32             curDistToNpc;
-    u8              temp_a2;
-    u32             distToNpcCpy;
+    u32             curDistToNpcCpy;
     s32             l;
     s32             animDataIdx;
     s32             temp2;
@@ -306,9 +304,8 @@ void Game_NpcUpdate(void) // 0x80038354
             // TODO: Approximate Q12 values don't seem right.
 
             // Unload distant NPC to avoid drawing.
-            distToNpcCpy = curDistToNpc;
-            if (distToNpcCpy > ((!isLowVisInterior && curNpc->health < Q12(0.0f)) ? SQUARE(24) :
-                                                                                    SQUARE(40)))
+            curDistToNpcCpy = curDistToNpc;
+            if (curDistToNpcCpy > ((!isLowVisInterior && curNpc->health < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
             {
                 curNpc->model.charaId = Chara_None;
 
@@ -423,11 +420,11 @@ void Game_NpcUpdate(void) // 0x80038354
         }
         else
         {
-            var_s3 = 0;
+            isExterior = false;
             if (!(g_MapOverlayHdr.mapInfo->flags & MapFlag_Interior) ||
                 !(g_MapOverlayHdr.mapInfo->flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
             {
-                var_s3 = 1;
+                isExterior = true;
             }
 
             if (g_RadioNoise[l].idx >= 0)
@@ -435,13 +432,16 @@ void Game_NpcUpdate(void) // 0x80038354
                 closeNpcInfo = &closestNpcInfos[g_RadioNoise[l].closeNpcInfoIdx];
                 balance      = Vc_StereoBalanceGet(&closeNpcInfo->position);
 
-                var_v1_3 = SquareRoot12(closeNpcInfo->distanceToNpc << Q12_SHIFT) >> 8;
-                if (var_s3 != 0)
+                // Compute volume from distance.
+                distToNpc = Q12_TO_Q4(SquareRoot12(Q12(closeNpcInfo->distanceToNpc)));
+                if (isExterior)
                 {
-                    var_v1_3 >>= 1;
+                    distToNpc >>= 1; // `/ 2`.
                 }
 
-                vol = CLAMP(var_v1_3, 0, 0xFF);
+                // Compute clamped volume from Q4 distance. TODO: Is it Q4 here?
+                vol = CLAMP(distToNpc, Q8(0.0f), Q8_CLAMPED(1.0f));
+
                 Sd_SfxAttributesUpdate(Sfx_RadioInterferenceLoop + l, balance, vol, 0);
             }
             else
