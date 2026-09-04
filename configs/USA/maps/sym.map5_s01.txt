@@ -72,8 +72,8 @@ sharedFunc_800D2E8C_0_s00        = 0x800D1D70; // type:func
 sharedFunc_800D2E94_0_s00        = 0x800D1D78; // type:func
 sharedFunc_800D2E9C_0_s00        = 0x800D1D80; // type:func
 sharedFunc_800D2EA4_0_s00        = 0x800D21F8; // type:func
-sharedFunc_800D2EB4_0_s00        = 0x800D2208; // type:func
-sharedFunc_800D2EF4_0_s00        = 0x800D2248; // type:func
+Player_EmptyWeaponHandSet        = 0x800D2208; // type:func
+Player_WeaponAttackRestore       = 0x800D2248; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x008CE4   VA: 0x800D225C   subsegment: c, Chara_AirScreamer
@@ -325,7 +325,7 @@ g_ParticleCameraMoved            = 0x800ED5D8; // type:u8
 sharedData_800DD591_0_s00        = 0x800ED5D9; // type:u8
 sharedData_800DD592_0_s00        = 0x800ED5DA; // type:u8
 sharedData_800DD598_0_s00        = 0x800ED5DC;
-sharedData_800DD59C_0_s00        = 0x800ED5E0; // type:u8
+g_Player_PrevWeaponAttack        = 0x800ED5E0; // type:u8
 g_AirScreamer_ControlFuncs       = 0x800ED5E4; // size:0xD0
 sharedData_800EEAC4_2_s00        = 0x800ED6B4;
 sharedData_800DD870_0_s01        = 0x800ED6E4; // type:VECTOR3 size:0xC

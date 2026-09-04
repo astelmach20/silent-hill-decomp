@@ -36,6 +36,7 @@ bool Player_MoveSpeedIsZero(void);
 
 void Player_MoveSpeedClear(void);
 
+// High-level held item handler for player?
 void sharedFunc_800D2E6C_0_s00(void);
 
 void Player_FallBackward(void);
@@ -46,14 +47,16 @@ void Player_DamageFeetFront(void);
 
 void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec);
 
+// Handle damage? Lots of hardcoded character cases.
 bool sharedFunc_800D2E94_0_s00(void);
 
+// Something with a player collision offset.
 void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle);
 
 s32 sharedFunc_800D2EA4_0_s00(void);
 
-void sharedFunc_800D2EB4_0_s00(void);
+void Player_EmptyWeaponHandSet(void);
 
-void sharedFunc_800D2EF4_0_s00(void);
+void Player_WeaponAttackRestore(void);
 
 #endif

@@ -63,8 +63,8 @@ sharedFunc_800D2E8C_0_s00        = 0x800CE5CC; // type:func
 sharedFunc_800D2E94_0_s00        = 0x800CE5D4; // type:func
 sharedFunc_800D2E9C_0_s00        = 0x800CE5DC; // type:func
 sharedFunc_800D2EA4_0_s00        = 0x800CE5E4; // type:func
-sharedFunc_800D2EB4_0_s00        = 0x800CE5F4; // type:func
-sharedFunc_800D2EF4_0_s00        = 0x800CE634; // type:func
+Player_EmptyWeaponHandSet        = 0x800CE5F4; // type:func
+Player_WeaponAttackRestore       = 0x800CE634; // type:func
 
 //----------------------------------------------------------------------
 //--- PA: 0x0050D0   VA: 0x800CE648   subsegment: c, Chara_LarvalStalker
@@ -145,7 +145,7 @@ g_MapHeaderTable_38              = 0x800DA320;
 LOADABLE_INVENTORY_ITEMS         = 0x800DA3B0;
 sharedData_800DD584_0_s00        = 0x800DA3CF; // type:u8
 sharedData_800DD598_0_s00        = 0x800DA3D0;
-sharedData_800DD59C_0_s00        = 0x800DA3D4; // type:u8
+g_Player_PrevWeaponAttack        = 0x800DA3D4; // type:u8
 LARVAL_STALKER_ANIM_INFOS        = 0x800DA3D8;
 sharedData_800DA928_1_s00        = 0x800DA638; // size:0x14
 sharedData_800DA93C_1_s00        = 0x800DA64C; // size:0x14

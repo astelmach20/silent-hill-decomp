@@ -43,8 +43,8 @@ sharedFunc_800D2E8C_0_s00       = 0x800CC744; // type:func
 sharedFunc_800D2E94_0_s00       = 0x800CC74C; // type:func
 sharedFunc_800D2E9C_0_s00       = 0x800CC754; // type:func
 sharedFunc_800D2EA4_0_s00       = 0x800CC75C; // type:func
-sharedFunc_800D2EB4_0_s00       = 0x800CC76C; // type:func
-sharedFunc_800D2EF4_0_s00       = 0x800CC7AC; // type:func
+Player_EmptyWeaponHandSet       = 0x800CC76C; // type:func
+Player_WeaponAttackRestore      = 0x800CC7AC; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x003248   VA: 0x800CC7C0   subsegment: c, map2_s03
@@ -71,7 +71,7 @@ g_MapHeaderTable_38             = 0x800CCB8C;
 LOADABLE_INVENTORY_ITEMS        = 0x800CCBA4;
 sharedData_800DD584_0_s00       = 0x800CCBA5; // type:u8
 sharedData_800DD598_0_s00       = 0x800CCBA8;
-sharedData_800DD59C_0_s00       = 0x800CCBAC; // type:u8
+g_Player_PrevWeaponAttack       = 0x800CCBAC; // type:u8
 
 //----------------------------------------------------
 //--- PA: 0x003638   VA: 0x800CCBB0   subsegment: data

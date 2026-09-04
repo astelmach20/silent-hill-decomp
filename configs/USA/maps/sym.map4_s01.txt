@@ -51,8 +51,8 @@ sharedFunc_800D2E8C_0_s00       = 0x800CFD74; // type:func
 sharedFunc_800D2E94_0_s00       = 0x800CFD7C; // type:func
 sharedFunc_800D2E9C_0_s00       = 0x800CFD84; // type:func
 sharedFunc_800D2EA4_0_s00       = 0x800CFD8C; // type:func
-sharedFunc_800D2EB4_0_s00       = 0x800CFD9C; // type:func
-sharedFunc_800D2EF4_0_s00       = 0x800CFDDC; // type:func
+Player_EmptyWeaponHandSet       = 0x800CFD9C; // type:func
+Player_WeaponAttackRestore      = 0x800CFDDC; // type:func
 
 //--------------------------------------------------------------
 //--- PA: 0x006878   VA: 0x800CFDF0   subsegment: c, Chara_Cybil
@@ -66,10 +66,10 @@ Cybil_Init                      = 0x800D1084; // type:func
 //-------------------------------------------------------------
 //--- PA: 0x007B48   VA: 0x800D10C0   subsegment: c, map4_s01_2
 //-------------------------------------------------------------
-sharedFunc_800D88AC_0_s00       = 0x800D10C0; // type:func
-sharedFunc_800D88C0_0_s00       = 0x800D10D4; // type:func
+Chara_MovementReset             = 0x800D10C0; // type:func
+Chara_AnimReset                 = 0x800D10D4; // type:func
 Chara_AnimStateSet              = 0x800D1118; // type:func
-Chara_AnimReset                 = 0x800D1130; // type:func
+Chara_ControlStateReset         = 0x800D1130; // type:func
 Chara_AnimLock                  = 0x800D113C; // type:func
 Chara_AnimIsLocked              = 0x800D1150; // type:func
 Chara_AnimUnlock                = 0x800D1164; // type:func
@@ -111,7 +111,7 @@ g_MapHeaderTable_38             = 0x800D50A4;
 LOADABLE_INVENTORY_ITEMS        = 0x800D5124;
 sharedData_800DD584_0_s00       = 0x800D5147; // type:u8
 sharedData_800DD598_0_s00       = 0x800D5148;
-sharedData_800DD59C_0_s00       = 0x800D514C; // type:u8
+g_Player_PrevWeaponAttack       = 0x800D514C; // type:u8
 CYBIL_ANIM_INFOS                = 0x800D5150; // type:AnimInfo
 sharedData_800DF1F4_0_s00       = 0x800D5550; // type:s32
 sharedData_800DF1F8_0_s00       = 0x800D5554; // type:s16

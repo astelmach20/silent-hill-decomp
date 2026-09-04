@@ -236,7 +236,7 @@ void func_800D1910(void) // 0x800D1910
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(70.0f), Q12(150.0f), 0, 3);
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             D_800D6EF8 = 0;
 
@@ -345,7 +345,7 @@ void func_800D1910(void) // 0x800D1910
 
             SD_Call(19);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             break;
     }
 
@@ -396,7 +396,7 @@ void func_800D23E4(void) // 0x800D23E4
             Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), Q12_ANGLE(0.0f), 3);
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             D_800D6EF8 = 0;
 
@@ -574,7 +574,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             vcReturnPreAutoCamWork(false);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             break;
     }
 

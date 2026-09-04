@@ -188,7 +188,7 @@ void func_800D725C(void) // 0x800D725C
             D_800E1670 = 0;
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             func_8003D03C();
             Bgm_SongChange(BgmCmd_Track4);
             SysWork_StateStepIncrement(0);
@@ -478,7 +478,7 @@ void func_800D7A60(void) // 0x800D7A60
             g_SysWork.lightIntensity = Q12(1.0f);
 
             Game_TurnFlashlightOn();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             func_8003D01C();
             Anim_CharaTypeAnimInfoClear();
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, false, Q12(1.0f), false);
@@ -691,7 +691,7 @@ void func_800D8A5C(void) // 0x800D8A5C
             D_800E1678[3] = Q12(0.4f);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, Q12(0.0f), false);
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             func_8003D03C();
             SysWork_StateStepIncrement(0);
 
@@ -755,7 +755,7 @@ void func_800D8A5C(void) // 0x800D8A5C
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             func_8003D01C();
             vcReturnPreAutoCamWork(true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
@@ -2197,7 +2197,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 else if (g_SysWork.playerWork.player.position.vx > Q12(-62.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_485);
-                    sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
+                    Chara_MovementReset(&g_SysWork.npcs[0]);
                     Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(90.0f), Q12(-60.0f), Q12(-35.0f));
                     SD_Call(Sfx_XaAudio569);
                 }

@@ -85,8 +85,8 @@ sharedFunc_800D2E8C_0_s00           = 0x800D537C; // type:func
 sharedFunc_800D2E94_0_s00           = 0x800D5384; // type:func
 sharedFunc_800D2E9C_0_s00           = 0x800D538C; // type:func
 sharedFunc_800D2EA4_0_s00           = 0x800D5394; // type:func
-sharedFunc_800D2EB4_0_s00           = 0x800D53A4; // type:func
-sharedFunc_800D2EF4_0_s00           = 0x800D53E4; // type:func
+Player_EmptyWeaponHandSet           = 0x800D53A4; // type:func
+Player_WeaponAttackRestore          = 0x800D53E4; // type:func
 Stalker_Update                      = 0x800D53F8; // type:func
 Stalker_Init                        = 0x800D558C; // type:func
 sharedFunc_800D3308_0_s00           = 0x800D57F8; // type:func
@@ -122,10 +122,10 @@ Cheryl_Init                         = 0x800DAD78; // type:func
 //-------------------------------------------------------------
 //--- PA: 0x00F2F4   VA: 0x800DAD9C   subsegment: c, map0_s00_2
 //-------------------------------------------------------------
-sharedFunc_800D88AC_0_s00           = 0x800DAD9C; // type:func
-sharedFunc_800D88C0_0_s00           = 0x800DADB0; // type:func
+Chara_MovementReset                 = 0x800DAD9C; // type:func
+Chara_AnimReset                     = 0x800DADB0; // type:func
 Chara_AnimStateSet                  = 0x800DADF4; // type:func
-Chara_AnimReset                     = 0x800DAE0C; // type:func
+Chara_ControlStateReset             = 0x800DAE0C; // type:func
 Chara_AnimLock                      = 0x800DAE18; // type:func
 Chara_AnimIsLocked                  = 0x800DAE2C; // type:func
 Chara_AnimUnlock                    = 0x800DAE40; // type:func
@@ -196,7 +196,7 @@ sharedData_800DD592_0_s00           = 0x800DFA82;
 D_800DD593                          = 0x800DFA83;
 D_800DD594                          = 0x800DFA84;
 sharedData_800DD598_0_s00           = 0x800DFA88;
-sharedData_800DD59C_0_s00           = 0x800DFA8C;
+g_Player_PrevWeaponAttack           = 0x800DFA8C;
 sharedData_800DD5A0_0_s00           = 0x800DFA90;
 sharedData_800DD5A4_0_s00           = 0x800DFA94;
 sharedData_800DD5A6_0_s00           = 0x800DFA96;

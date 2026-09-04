@@ -264,7 +264,7 @@ void func_800DA248(void) // 0x800DA248
             D_800E9ECC = 0;
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             func_8003D03C();
             Bgm_SongChange(BgmCmd_Track4);
             SysWork_StateStepIncrement(0);
@@ -553,7 +553,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             g_SysWork.lightIntensity = Q12(1.0f);
 
             Game_TurnFlashlightOn();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             func_8003D01C();
             Anim_CharaTypeAnimInfoClear();
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, false, Q12(1.0f), false);
@@ -1979,7 +1979,7 @@ void func_800DF21C(void) // 0x800DF21C
             ScreenFade_ResetTimestep();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             Fs_QueueStartRead(FILE_ANIM_HALLWAY_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
@@ -2096,7 +2096,7 @@ void func_800DF21C(void) // 0x800DF21C
             SD_Call(19);
             Savegame_EventFlagSet(EventFlag_560);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             break;
     }

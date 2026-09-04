@@ -488,14 +488,14 @@ typedef struct _MapOverlayHdr
     /* 0x100 */ void                   (*func_100)();
     /* 0x104 */ void                   (*func_104)();
     /* 0x108 */ s32                    (*func_108)();
-    /* 0x10C */ void                   (*func_10C)();
-    /* 0x110 */ void                   (*func_110)();
+    /* 0x10C */ void                   (*playerEmptyWeaponHandSet)();
+    /* 0x110 */ void                   (*playerWeaponAttackRestore)();
     /* 0x114 */ void                   (*func_114)();
     /* 0x118 */ void                   (*func_118)();
-    /* 0x11C */ void                   (*func_11C)();
-    /* 0x120 */ void                   (*func_120)();
+    /* 0x11C */ void                   (*charaMovementReset)(s_SubCharacter* npc);
+    /* 0x120 */ void                   (*charaAnimReset)();
     /* 0x124 */ void                   (*charaAnimStateSet)(s_SubCharacter* chara, q19_12 afkTime);
-    /* 0x128 */ s32                    (*charaAnimReset)(s_SubCharacter* player); // TODO: Not only used by the player.
+    /* 0x128 */ s32                    (*charaControlStateReset)(s_SubCharacter* player); // TODO: Not only used by the player.
     /* 0x12C */ s32                    (*charaAnimLock)(s_SubCharacter* chara);
     /* 0x130 */ void                   (*charaAnimIsLocked)(s_SubCharacter* chara);
     /* 0x134 */ s32                    (*charaAnimUnlock)(s_SubCharacter* chara);

@@ -162,7 +162,7 @@ void func_800D0B64(void) // 0x800D0B64
             D_800D4362 = 0;
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             break;
 
         case 1:
@@ -322,7 +322,7 @@ void func_800D0B64(void) // 0x800D0B64
             D_800D4362 = Q12(1.0f);
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             playerChara.position.vx = Q12(17.8f);
             playerChara.position.vz = Q12(-137.7f);
             break;

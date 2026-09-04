@@ -26,7 +26,7 @@
     #define CHARA_CASE(id) default
 #endif
 
-void sharedFunc_800D88AC_0_s00(s_SubCharacter* npc)
+void Chara_MovementReset(s_SubCharacter* npc)
 {
     npc->properties.npc.field_F4         = 0;
     npc->properties.npc.freeze           = false;
@@ -34,13 +34,13 @@ void sharedFunc_800D88AC_0_s00(s_SubCharacter* npc)
     npc->properties.npc.moveSpeed        = Q12(0.0f);
 }
 
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* npc, bool cond)
+void Chara_AnimReset(s_SubCharacter* npc, bool cond)
 {
     npc->properties.npc.field_F4 = 1;
 
     if (cond)
     {
-        npc->model.anim.status      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+        npc->model.anim.status      = ANIM_STATUS(1, true);
         npc->model.anim.keyframeIdx = 0;
         npc->model.anim.time        = Q12(0.0f);
         npc->model.anim.alpha       = Q12(1.0f);
@@ -63,7 +63,7 @@ void Chara_AnimStateSet(s_SubCharacter* npc, s32 controlState)
     npc->model.stateStep                  = 0;
 }
 
-void Chara_AnimReset(s_SubCharacter* npc)
+void Chara_ControlStateReset(s_SubCharacter* npc)
 {
     npc->properties.npc.resetControlState = true;
 }

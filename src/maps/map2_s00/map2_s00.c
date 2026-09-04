@@ -1746,7 +1746,7 @@ void func_800EB174(void) // 0x800EB174
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(45.0f);
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1770,7 +1770,7 @@ void func_800EB174(void) // 0x800EB174
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
 
             Savegame_EventFlagSet(EventFlag_167);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);

@@ -55,8 +55,8 @@ sharedFunc_800D2E8C_0_s00         = 0x800CDB8C; // type:func
 sharedFunc_800D2E94_0_s00         = 0x800CDB94; // type:func
 sharedFunc_800D2E9C_0_s00         = 0x800CDB9C; // type:func
 sharedFunc_800D2EA4_0_s00         = 0x800CDBA4; // type:func
-sharedFunc_800D2EB4_0_s00         = 0x800CDBB4; // type:func
-sharedFunc_800D2EF4_0_s00         = 0x800CDBF4; // type:func
+Player_EmptyWeaponHandSet         = 0x800CDBB4; // type:func
+Player_WeaponAttackRestore        = 0x800CDBF4; // type:func
 Stalker_Update                    = 0x800CDC08; // type:func
 Stalker_Init                      = 0x800CDD9C; // type:func
 sharedFunc_800D3308_0_s00         = 0x800CE008; // type:func
@@ -91,10 +91,10 @@ Kaufmann_Init                     = 0x800D3AC0; // type:func
 //-------------------------------------------------------------
 //--- PA: 0x00A584   VA: 0x800D3AFC   subsegment: c, map5_s02_2
 //-------------------------------------------------------------
-sharedFunc_800D88AC_0_s00         = 0x800D3AFC; // type:func
-sharedFunc_800D88C0_0_s00         = 0x800D3B10; // type:func
+Chara_MovementReset               = 0x800D3AFC; // type:func
+Chara_AnimReset                   = 0x800D3B10; // type:func
 Chara_AnimStateSet                = 0x800D3B54; // type:func
-Chara_AnimReset                   = 0x800D3B6C; // type:func
+Chara_ControlStateReset           = 0x800D3B6C; // type:func
 Chara_AnimLock                    = 0x800D3B78; // type:func
 Chara_AnimIsLocked                = 0x800D3B8C; // type:func
 Chara_AnimUnlock                  = 0x800D3BA0; // type:func
@@ -139,7 +139,7 @@ g_MapHeaderTable_38               = 0x800D71A8;
 LOADABLE_INVENTORY_ITEMS          = 0x800D7248;
 sharedData_800DD584_0_s00         = 0x800D7269; // type:u8
 sharedData_800DD598_0_s00         = 0x800D726C;
-sharedData_800DD59C_0_s00         = 0x800D7270; // type:u8
+g_Player_PrevWeaponAttack         = 0x800D7270; // type:u8
 sharedData_800DD5A6_0_s00         = 0x800D7271; // type:u8
 STALKER_ANIM_INFOS                = 0x800D7274; // type:s32 unknown type
 sharedData_800DDBA8_0_s00         = 0x800D7874;

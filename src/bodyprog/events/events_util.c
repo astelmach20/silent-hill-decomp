@@ -162,7 +162,7 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
             }
             else
             {
-                g_MapOverlayHdr.charaAnimReset(chara);
+                g_MapOverlayHdr.charaControlStateReset(chara);
             }
             break;
     }

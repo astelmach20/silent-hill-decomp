@@ -111,7 +111,7 @@ void func_800D0C14(void) // 0x800D0C14
             D_800D2737 = false;
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             D_800D2738 = 0;
             D_800D2734 = Q12(0.0f);
@@ -135,7 +135,7 @@ void func_800D0C14(void) // 0x800D0C14
         case 3:
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Dahlia, 0, Q12(98.0f), Q12(100.0f), Q12_ANGLE(0.0f), 3);
-            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
+            Chara_MovementReset(&g_SysWork.npcs[0]);
 
             D_800D2737 = true;
             SysWork_StateStepIncrement(0);
@@ -331,7 +331,7 @@ void func_800D0C14(void) // 0x800D0C14
             g_Cutscene_Timer = NO_VALUE;
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_295);

@@ -226,7 +226,7 @@ void func_800D2668(void) // 0x800D2668
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(4.4f), Q12(269.9f), 0, 3);
 
-            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
+            Chara_MovementReset(&g_SysWork.npcs[0]);
             Dms_HeaderFixOffsets(FS_BUFFER_11);
 
             CutsceneBorder_ForceShow();
@@ -247,7 +247,7 @@ void func_800D2668(void) // 0x800D2668
 
             func_8008D438();
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             g_Cutscene_Timer = 0;
             D_800D5A4E = 0;
@@ -380,7 +380,7 @@ void func_800D2668(void) // 0x800D2668
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             Chara_ModelCharaIdClear(g_SysWork.npcs, 0, 0);
 
             g_Cutscene_Timer = NO_VALUE;

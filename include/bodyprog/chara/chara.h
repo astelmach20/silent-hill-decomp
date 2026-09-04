@@ -160,7 +160,7 @@ typedef struct _PropsPlayer
     /* 0x104 */ q19_12        field_104;    // Distance?
     /* 0x108 */ q19_12        runDistance;
     /* 0x10C */ u8            field_10C;    // Player SFX pitch?
-    /* 0x10D */ u8            field_10D;
+    /* 0x10D */ u8            field_10D;    // @unused? Set to 0 or 1.
     /* 0x10E */ s8            __pad_10E[2];
     /* 0x110 */ q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
     /* 0x114 */ q19_12        gasWeaponPowerTimer; // Timer for the rock drill and chainsaw power.

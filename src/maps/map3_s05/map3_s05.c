@@ -456,7 +456,7 @@ void func_800D64E0(void) // 0x800D64E0
             Event_CameraLookAtSet(NULL, Q12(20.96f), Q12(-1.13f), -Q12(19.93f), 0, 0, 0, 0, true);
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -582,7 +582,7 @@ void func_800D64E0(void) // 0x800D64E0
             g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             break;
     }
 
@@ -651,7 +651,7 @@ void func_800D6D1C(void) // 0x800D6D1C
 
             D_800DAC74 = 0;
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             Game_TurnFlashlightOn();
 
             SysWork_StateStepIncrement(0);
@@ -734,7 +734,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             SysWork_StateSetNext(SysState_Gameplay);
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 

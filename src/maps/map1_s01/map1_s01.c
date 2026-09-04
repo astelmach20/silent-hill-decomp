@@ -838,7 +838,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 85, false);
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -966,7 +966,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             if (D_800DD598 == 0)
             {
-                sharedFunc_800D2EF4_0_s00();
+                Player_WeaponAttackRestore();
             }
             break;
     }

@@ -479,7 +479,7 @@ void func_800EC42C(void) // 0x800EC42C
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 3, 0, false);
             Dms_HeaderFixOffsets((s_DmsHeader* )FS_BUFFER_13);
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             Game_TurnFlashlightOn();
 
             D_800F035C = 0;
@@ -649,7 +649,7 @@ void func_800EC42C(void) // 0x800EC42C
             Savegame_EventFlagSet(EventFlag_458);
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
 
             g_Cutscene_Timer = NO_VALUE;
 

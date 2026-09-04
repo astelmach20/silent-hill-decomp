@@ -273,7 +273,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             g_Cutscene_Timer = NO_VALUE;
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             WorldGfx_PlayerHeldItemSet(InvItemId_CutsceneAglaophotis);
 
@@ -430,9 +430,9 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 25:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 1, false);
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
 
         case 26:
@@ -467,7 +467,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             g_Cutscene_Timer = NO_VALUE;
 
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             func_8003D01C();
             func_8008D448();
             Game_FlashlightAttributesFix();
@@ -489,7 +489,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 33:
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
 
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
@@ -523,7 +523,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             g_SysWork.lightIntensity = Q12(1.0f);
 
             SD_Call(19);
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             func_8003D01C();
             break;
     }

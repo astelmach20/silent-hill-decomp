@@ -142,7 +142,7 @@ extern VECTOR3 sharedData_800DE190_0_s01;
 extern s_RayTrace sharedData_800E2330_0_s01;
 
 /** Packed weapon attack. `See `WEAPON_ATTACK`. */
-extern s8 sharedData_800DD59C_0_s00;
+extern s8 g_Player_PrevWeaponAttack;
 
 extern s32 sharedData_800DF1F4_0_s00;
 extern s16 sharedData_800DF1F8_0_s00;
@@ -393,13 +393,13 @@ void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
 void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
 
 /** NPC-only. Among other things, sets the NPC's anim to anim 3 (which might actually be flags if the field packs more data). */
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* npc, bool cond);
+void Chara_AnimReset(s_SubCharacter* npc, bool cond);
 
 /** NPC-only, sets `controlState` in properties. */
 void Chara_AnimStateSet(s_SubCharacter* npc, s32 controlState);
 
 /** NPC-only, sets `resetControlState` in properties. */
-void Chara_AnimReset(s_SubCharacter* npc);
+void Chara_ControlStateReset(s_SubCharacter* npc);
 
 /** Locks a character's animation. */
 void Chara_AnimLock(s_SubCharacter* chara);
@@ -445,7 +445,8 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx);
 
-void sharedFunc_800D88AC_0_s00(s_SubCharacter* npc);
+// Name uncertain.
+void Chara_MovementReset(s_SubCharacter* npc);
 
 /** @brief Gets the playback state of a character's active animation.
  *

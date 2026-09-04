@@ -68,8 +68,8 @@ sharedFunc_800D2E8C_0_s00       = 0x800CEDD0; // type:func
 sharedFunc_800D2E94_0_s00       = 0x800CEDD8; // type:func
 sharedFunc_800D2E9C_0_s00       = 0x800CEDE0; // type:func
 sharedFunc_800D2EA4_0_s00       = 0x800CEDE8; // type:func
-sharedFunc_800D2EB4_0_s00       = 0x800CEDF8; // type:func
-sharedFunc_800D2EF4_0_s00       = 0x800CEE38; // type:func
+Player_EmptyWeaponHandSet       = 0x800CEDF8; // type:func
+Player_WeaponAttackRestore      = 0x800CEE38; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x0058D4   VA: 0x800CEE4C   subsegment: c, Chara_Creeper
@@ -131,7 +131,7 @@ g_ParticleCameraMoved           = 0x800D3CAC; // type:u8
 sharedData_800DD591_0_s00       = 0x800D3CAD; // type:u8
 sharedData_800DD592_0_s00       = 0x800D3CAE; // type:u8
 sharedData_800DD598_0_s00       = 0x800D3CB0;
-sharedData_800DD59C_0_s00       = 0x800D3CB4; // type:u8
+g_Player_PrevWeaponAttack       = 0x800D3CB4; // type:u8
 CREEPER_ANIM_INFOS              = 0x800D3CB8; // type:s32 unknown type
 sharedData_800E0F78_1_s02       = 0x800D3EF8;
 sharedData_800E0FC8_1_s02       = 0x800D3F48;

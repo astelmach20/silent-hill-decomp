@@ -49,8 +49,8 @@ sharedFunc_800D2E8C_0_s00       = 0x800CE480; // type:func
 sharedFunc_800D2E94_0_s00       = 0x800CE488; // type:func
 sharedFunc_800D2E9C_0_s00       = 0x800CE490; // type:func
 sharedFunc_800D2EA4_0_s00       = 0x800CE498; // type:func
-sharedFunc_800D2EB4_0_s00       = 0x800CE4A8; // type:func
-sharedFunc_800D2EF4_0_s00       = 0x800CE4E8; // type:func
+Player_EmptyWeaponHandSet       = 0x800CE4A8; // type:func
+Player_WeaponAttackRestore      = 0x800CE4E8; // type:func
 
 //--------------------------------------------------------------
 //--- PA: 0x004F84   VA: 0x800CE4FC   subsegment: c, Chara_Cybil
@@ -73,10 +73,10 @@ Dahlia_Init                     = 0x800D031C; // type:func
 //-------------------------------------------------------------
 //--- PA: 0x006DE0   VA: 0x800D0358   subsegment: c, map6_s01_2
 //-------------------------------------------------------------
-sharedFunc_800D88AC_0_s00       = 0x800D0358; // type:func
-sharedFunc_800D88C0_0_s00       = 0x800D036C; // type:func
+Chara_MovementReset             = 0x800D0358; // type:func
+Chara_AnimReset                 = 0x800D036C; // type:func
 Chara_AnimStateSet              = 0x800D03B0; // type:func
-Chara_AnimReset                 = 0x800D03C8; // type:func
+Chara_ControlStateReset         = 0x800D03C8; // type:func
 Chara_AnimLock                  = 0x800D03D4; // type:func
 Chara_AnimIsLocked              = 0x800D03E8; // type:func
 Chara_AnimUnlock                = 0x800D03FC; // type:func
@@ -120,7 +120,7 @@ g_MapHeaderTable_38             = 0x800D353C;
 LOADABLE_INVENTORY_ITEMS        = 0x800D3574;
 sharedData_800DD584_0_s00       = 0x800D3595; // type:u8
 sharedData_800DD598_0_s00       = 0x800D3598;
-sharedData_800DD59C_0_s00       = 0x800D359C; // type:u8
+g_Player_PrevWeaponAttack       = 0x800D359C; // type:u8
 CYBIL_ANIM_INFOS                = 0x800D35A0;
 DAHLIA_ANIM_INFOS               = 0x800D39A0;
 sharedData_800DF1F4_0_s00       = 0x800D3CE0; // type:s32

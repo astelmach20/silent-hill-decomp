@@ -562,7 +562,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
     {
         case 0:
             Player_ControlFreeze();
-            sharedFunc_800D88AC_0_s00(&cherylChara);
+            Chara_MovementReset(&cherylChara);
             Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
 
             prevPlayerPosX = playerChara.position.vx;
@@ -644,7 +644,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            sharedFunc_800D88C0_0_s00(&cherylChara, false);
+            Chara_AnimReset(&cherylChara, false);
             break;
     }
 
@@ -1389,7 +1389,7 @@ void func_800DC33C(void) // 0x800DC33C
     if (!Savegame_EventFlagGet(EventFlag_5))
     {
         Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
-        sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
+        Chara_MovementReset(&g_SysWork.npcs[0]);
 
         Savegame_EventFlagSet(EventFlag_5);
     }
@@ -1413,7 +1413,7 @@ block7:
                 g_SysWork.npcs[0].position.vx = 1;
                 g_SysWork.npcs[0].properties.npc.moveDistance_124 = Q12(0.0f);
 
-                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs[0], false);
+                Chara_AnimReset(&g_SysWork.npcs[0], false);
 
                 Savegame_EventFlagSet(EventFlag_6);
                 return;
@@ -1486,7 +1486,7 @@ void func_800DC694(void) // 0x800DC694
 
     if (!Savegame_EventFlagGet(EventFlag_7))
     {
-        sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
+        Chara_MovementReset(&g_SysWork.npcs[0]);
         return;
     }
 
@@ -1505,7 +1505,7 @@ block7:
                 g_SysWork.npcs[0].position.vz = 1;
                 g_SysWork.npcs[0].position.vx = 1;
 
-                sharedFunc_800D88C0_0_s00(&g_SysWork.npcs[0], false);
+                Chara_AnimReset(&g_SysWork.npcs[0], false);
 
                 Savegame_EventFlagSet(EventFlag_9);
                 return;
@@ -1567,10 +1567,8 @@ void func_800DC8D8(void) // 0x800DC8D8
 
         if (mag < Q12(14.8f))
         {
-            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
-
+            Chara_MovementReset(&g_SysWork.npcs[0]);
             Savegame_EventFlagSet(EventFlag_10);
-
             Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(90.0f), Q12(-57.0f), Q12(47.0f));
         }
     }

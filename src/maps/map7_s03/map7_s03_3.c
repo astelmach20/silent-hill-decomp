@@ -991,7 +991,7 @@ void func_800E3390(void) // 0x800E3390
             g_Cutscene_Timer = Q12(0.0f);
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             func_800E94AC();
             func_800E94F4();
             Anim_CharaTypeAnimInfoClear();
@@ -1192,7 +1192,7 @@ void func_800E3390(void) // 0x800E3390
             g_Cutscene_Timer = NO_VALUE;
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             SD_Call(19);
             func_800E14DC(&g_SysWork.playerWork.player, &g_SysWork.npcs[2], 1);
 
@@ -1221,7 +1221,7 @@ void func_800E3B6C(void) // 0x800E3B6C
             g_SysWork.sysFlags       |= SysFlag_CutsceneActive;
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             func_8005E70C();
 
             D_800F4805++;
@@ -1283,7 +1283,7 @@ void func_800E3D18(void) // 0x800E3D18
             g_SysWork.sysFlags        |= SysFlag_CutsceneActive;
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             func_8005E70C();
             D_800F4805++;
 

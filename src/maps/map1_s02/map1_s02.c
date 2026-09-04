@@ -544,7 +544,7 @@ void func_800DB058(void) // 0x800DB058
             Event_CameraLookAtSet(NULL, Q12(56.7698f), Q12(-1.45f), Q12(19.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -591,7 +591,7 @@ void func_800DB058(void) // 0x800DB058
             Savegame_EventFlagSet(EventFlag_MapMark_AltSchool1F_SecretDoorArrows);
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             break;
     }
 }
@@ -653,7 +653,7 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
 
         case 5:
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             Game_TurnFlashlightOn();
 
             // Warp camera.
@@ -767,7 +767,7 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
             break;
 
         case 24:
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             SD_Call(19);
 
             D_800E1FD4 = WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
@@ -797,7 +797,7 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
 
             if (!D_800E1FD8)
             {
-                sharedFunc_800D2EF4_0_s00();
+                Player_WeaponAttackRestore();
             }
 
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);

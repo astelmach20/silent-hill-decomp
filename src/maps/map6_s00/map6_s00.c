@@ -147,7 +147,7 @@ void func_800EB11C(void) // 0x800EB11C
             Dms_HeaderFixOffsets(FS_BUFFER_15);
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             D_800F0684 = 0;
             D_800F0044 = 0;
@@ -272,7 +272,7 @@ void func_800EB11C(void) // 0x800EB11C
 
             SD_Call(19);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             Sd_SfxStop(Sfx_Unk1522);
             Sd_SfxStop(Sfx_Unk1599);
             sharedFunc_800D08B8_0_s00(6, 127);

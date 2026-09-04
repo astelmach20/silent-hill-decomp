@@ -60,8 +60,8 @@ sharedFunc_800D2E8C_0_s00        = 0x800D067C; // type:func
 sharedFunc_800D2E94_0_s00        = 0x800D0684; // type:func
 sharedFunc_800D2E9C_0_s00        = 0x800D068C; // type:func
 sharedFunc_800D2EA4_0_s00        = 0x800D0694; // type:func
-sharedFunc_800D2EB4_0_s00        = 0x800D06A4; // type:func
-sharedFunc_800D2EF4_0_s00        = 0x800D06E4; // type:func
+Player_EmptyWeaponHandSet        = 0x800D06A4; // type:func
+Player_WeaponAttackRestore       = 0x800D06E4; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x007180   VA: 0x800D06F8   subsegment: c, Chara_Stalker
@@ -156,10 +156,10 @@ GhostDoctor_CoordRotationUpdate  = 0x800D8C00; // type:func
 //-------------------------------------------------------------
 //--- PA: 0x00F6FC   VA: 0x800D8C74   subsegment: c, map7_s02_2
 //-------------------------------------------------------------
-sharedFunc_800D88AC_0_s00        = 0x800D8C74; // type:func
-sharedFunc_800D88C0_0_s00        = 0x800D8C88; // type:func
+Chara_MovementReset              = 0x800D8C74; // type:func
+Chara_AnimReset                  = 0x800D8C88; // type:func
 Chara_AnimStateSet               = 0x800D8CCC; // type:func
-Chara_AnimReset                  = 0x800D8CE4; // type:func
+Chara_ControlStateReset          = 0x800D8CE4; // type:func
 Chara_AnimLock                   = 0x800D8CF0; // type:func
 Chara_AnimIsLocked               = 0x800D8D04; // type:func
 Chara_AnimUnlock                 = 0x800D8D18; // type:func
@@ -213,7 +213,7 @@ g_MapHeaderTable_38              = 0x800E5A40;
 LOADABLE_INVENTORY_ITEMS         = 0x800E5B08;
 sharedData_800DD584_0_s00        = 0x800E5B30; // type:u8
 sharedData_800DD598_0_s00        = 0x800E5B34;
-sharedData_800DD59C_0_s00        = 0x800E5B38; // type:u8
+g_Player_PrevWeaponAttack        = 0x800E5B38; // type:u8
 sharedData_800DD5A6_0_s00        = 0x800E5B39; // type:u8
 STALKER_ANIM_INFOS               = 0x800E5B3C; // type:s32 unknown type
 sharedData_800DDBA8_0_s00        = 0x800E613C;

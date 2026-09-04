@@ -143,7 +143,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             ScreenFade_ResetTimestep();
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             Savegame_EventFlagClear(EventFlag_405);
 
@@ -290,7 +290,7 @@ void func_800CF0B8(void) // 0x800CF0B8
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
 
             Savegame_EventFlagSet(EventFlag_412);
             SysWork_StateStepIncrement(0);
@@ -315,7 +315,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             if (!hasSkippedEarly)
             {
                 func_8003D01C();
-                sharedFunc_800D2EF4_0_s00();
+                Player_WeaponAttackRestore();
             }
 
             // Warp player.
@@ -428,7 +428,7 @@ void func_800CFC34(void) // 0x800CFC34
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 3, Q12(0.0f), false);
             Dms_HeaderFixOffsets(FS_BUFFER_13);
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
 
@@ -521,7 +521,7 @@ void func_800CFC34(void) // 0x800CFC34
             Savegame_EventFlagSet(EventFlag_460);
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
 
             g_Cutscene_Timer = NO_VALUE;
 

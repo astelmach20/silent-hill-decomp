@@ -64,8 +64,8 @@ sharedFunc_800D2E8C_0_s00       = 0x800D0250; // type:func
 sharedFunc_800D2E94_0_s00       = 0x800D0258; // type:func
 sharedFunc_800D2E9C_0_s00       = 0x800D0260; // type:func
 sharedFunc_800D2EA4_0_s00       = 0x800D0268; // type:func
-sharedFunc_800D2EB4_0_s00       = 0x800D0278; // type:func
-sharedFunc_800D2EF4_0_s00       = 0x800D02B8; // type:func
+Player_EmptyWeaponHandSet       = 0x800D0278; // type:func
+Player_WeaponAttackRestore      = 0x800D02B8; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x006D54   VA: 0x800D02CC   subsegment: c, map1_s06
@@ -83,7 +83,7 @@ SplitHead_Control_5             = 0x800D246C; // type:func
 SplitHead_Control_6             = 0x800D2CC8; // type:func
 SplitHead_Control_7             = 0x800D2EF8; // type:func
 SplitHead_Control_8             = 0x800D30F0; // type:func
-SplitHead_MovementUpdate       = 0x800D3130; // type:func
+SplitHead_MovementUpdate        = 0x800D3130; // type:func
 sharedFunc_800D274C_1_s05       = 0x800D3200; // type:func
 sharedFunc_800D2D74_1_s05       = 0x800D3828; // type:func
 sharedFunc_800D3388_1_s05       = 0x800D3E3C; // type:func
@@ -128,7 +128,7 @@ g_ParticleCameraMoved           = 0x800D6E24; // type:u8
 sharedData_800DD591_0_s00       = 0x800D6E25; // type:u8
 sharedData_800DD592_0_s00       = 0x800D6E26;
 sharedData_800DD598_0_s00       = 0x800D6E28;
-sharedData_800DD59C_0_s00       = 0x800D6E2C; // type:u8
+g_Player_PrevWeaponAttack       = 0x800D6E2C; // type:u8
 sharedData_800D5880_1_s05       = 0x800D6E2E; // type:s16
 sharedData_800D5884_1_s05       = 0x800D6E30; // type:s32
 SPLIT_HEAD_ANIM_INFOS           = 0x800D6E34; // type:s32 unknown type

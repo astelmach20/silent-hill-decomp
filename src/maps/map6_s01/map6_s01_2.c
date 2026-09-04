@@ -181,7 +181,7 @@ void func_800D13D8(void) // 0x800D13D8
             g_Cutscene_UpdateDaria     = false;
 
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
 
             g_SysWork.lightBoneCoord     = NULL;
             g_SysWork.lensFlareBoneCoord = NULL;
@@ -493,7 +493,7 @@ void func_800D13D8(void) // 0x800D13D8
             Savegame_EventFlagSet(EventFlag_MapMark_ResortTown_LighthouseCircle);
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             break;
     }
@@ -681,7 +681,7 @@ void func_800D2658(void) // 0x800D2658
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 3, Q12(0.0f), false);
             Dms_HeaderFixOffsets(FS_BUFFER_13);
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
 
@@ -767,7 +767,7 @@ void func_800D2658(void) // 0x800D2658
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_ChannelingStone, 1, false);
 
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             g_Cutscene_Timer = NO_VALUE;
             Sd_SfxStop(Sfx_Unk1467);
             break;

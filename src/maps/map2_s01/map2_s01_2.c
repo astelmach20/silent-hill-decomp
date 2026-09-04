@@ -137,7 +137,7 @@ void func_800CED88(void) // 0x800CED88
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
-            sharedFunc_800D88AC_0_s00(dahliaChara);
+            Chara_MovementReset(dahliaChara);
 
             g_Cutscene_Timer = Q12(0.0f);
             CutsceneBorder_ForceShow();

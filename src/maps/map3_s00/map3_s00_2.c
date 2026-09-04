@@ -108,7 +108,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_15);
             Chara_Spawn(Chara_Kaufmann, 0, Q12(100.0f), Q12(100.0f), 0, 3);
-            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
+            Chara_MovementReset(&g_SysWork.npcs[0]);
 
             CutsceneBorder_ForceShow();
             g_Cutscene_Timer = Q12(0.0f);
@@ -119,7 +119,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             func_800625F4(&Q12_VECTOR3(96.05f, 0.0f, 101.07f), 0x48, 2, 1);
             func_800625F4(&Q12_VECTOR3(96.1f, 0.0f, 100.68f), 0x48, 2, 1);
             func_8003D03C();
-            sharedFunc_800D2EB4_0_s00();
+            Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
             break;
 
@@ -403,7 +403,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             Savegame_EventFlagSet(EventFlag_197);
             Savegame_EventFlagSet(EventFlag_198);
             func_8003D01C();
-            sharedFunc_800D2EF4_0_s00();
+            Player_WeaponAttackRestore();
             break;
     }
 

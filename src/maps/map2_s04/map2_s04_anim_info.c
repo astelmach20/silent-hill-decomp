@@ -75,4 +75,4 @@ u8 sharedData_800DD584_0_s00 = 0;
 
 s32 sharedData_800DD598_0_s00 = 0;
 
-u8 sharedData_800DD59C_0_s00 = 255;
+u8 g_Player_PrevWeaponAttack = 255;
