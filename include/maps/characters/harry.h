@@ -100,15 +100,23 @@ typedef enum _HarryBone
     HarryBone_Count         = 18
 } e_HarryBone;
 
-/** @brief Harry character hand mesh variant indices. */
-typedef enum _HarryHandMesh
+/** @brief Harry character swappable mesh IDs */
+typedef enum _HarrySwappableMesh
 {
-    HarryHandMesh_0 = 0,
-    HarryHandMesh_1 = 1,
-    HarryHandMesh_2 = 2,
-    HarryHandMesh_3 = 3,
-    HarryHandMesh_4 = 4,
-    HarryHandMesh_5 = 5
-} e_HarryHandMesh;
+    HarrySwappableMesh_None = 0,
+    HarrySwappableMesh_1    = 1, // } TODO: Left and right hands, not sure which is which.
+    HarrySwappableMesh_2    = 2  // }
+} e_HarrySwappableMesh;
+
+/** @brief Harry character variant mesh IDs. */
+typedef enum _HarryVariantMesh
+{
+    HarryVariantMesh_None = 0,
+    HarryVariantMesh_1    = 1,
+    HarryVariantMesh_2    = 2,
+    HarryVariantMesh_3    = 3,
+    HarryVariantMesh_4    = 4,
+    HarryVariantMesh_5    = 5
+} e_HarryVariantMesh;
 
 #endif

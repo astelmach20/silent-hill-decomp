@@ -132,23 +132,23 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&kaufmann->model, 3, false);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S03)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(4, 3));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(4, 3));
 #endif
             break;
 
         case KaufmannControl_5:
             Model_AnimStatusKeyframeSet(kaufmann->model, 1, true, KAUFMANN_ANIM_INFOS, 0);
             Chara_AnimStateReset(kaufmann);
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 0));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 0));
             break;
 
         case KaufmannControl_24:
             Model_AnimStatusKeyframeSet(kaufmann->model, 20, true, KAUFMANN_ANIM_INFOS, 0);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S03)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(4, 3));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(4, 3));
 #else
-            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(1, 3));
+            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(1, 3));
 #endif
             break;
 
@@ -156,7 +156,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusKeyframeSet(kaufmann->model, 4, true, KAUFMANN_ANIM_INFOS, 0);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP3_S00)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(3, 1));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(3, 1));
 #endif
             break;
 
@@ -170,7 +170,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&kaufmann->model, 5, false);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP3_S00)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(3, 1));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(3, 1));
 #endif
             break;
 
@@ -178,7 +178,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&kaufmann->model, 6, false);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP3_S00)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(3, 1));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(3, 1));
 #endif
             break;
 
@@ -188,12 +188,12 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
             if (kaufmann->model.anim.keyframeIdx < 139 || !ANIM_STATUS_IS_ACTIVE(kaufmann->model.anim.status))
             {
-                WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 1));
+                WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 1));
             }
             else
             {
                 Savegame_EventFlagSet(EventFlag_198);
-                WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 3));
+                WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 3));
             }
             break;
 
@@ -206,7 +206,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusKeyframeSet(kaufmann->model, 9, true, KAUFMANN_ANIM_INFOS, 0);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 1));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 1));
 #endif
             break;
 
@@ -214,7 +214,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusKeyframeSet(kaufmann->model, 22, true, KAUFMANN_ANIM_INFOS, 0);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 1));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 1));
 #endif
             break;
 
@@ -222,7 +222,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&kaufmann->model, 10, false);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 1));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 1));
 #endif
             break;
 
@@ -230,7 +230,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&kaufmann->model, 11, false);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S02)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 1));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 1));
 #endif
             break;
 
@@ -240,7 +240,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 
             if (kaufmann->model.anim.keyframeIdx >= 364 && ANIM_STATUS_IS_ACTIVE(kaufmann->model.anim.status))
             {
-                WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(4, 0));
+                WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(4, 0));
             }
             break;
 
@@ -248,14 +248,14 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&kaufmann->model, 2, false);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP5_S03)
-            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(1, 3));
+            WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(1, 3));
 #endif
             break;
 
         case KaufmannControl_25:
             Model_AnimStatusSet(&kaufmann->model, 21, false);
             Chara_AnimStateReset(kaufmann);
-            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(3, 3));
+            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(3, 3));
             break;
 
         case KaufmannControl_17:
@@ -271,11 +271,11 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             // TODO: Invert like case 15? can't find how to match.
             if (kaufmann->model.anim.keyframeIdx < 78 || !ANIM_STATUS_IS_ACTIVE(kaufmann->model.anim.status))
             {
-                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(1, 3));
+                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(1, 3));
             }
             else
             {
-                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(4, 3));
+                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(4, 3));
             }
 #endif
             break;
@@ -284,7 +284,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusSet(&kaufmann->model, 17, false);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP7_S03)
-            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(4, 3));
+            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(4, 3));
 #endif
             break;
 
@@ -295,11 +295,11 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
 #if defined(MAP7_S03)
             if (kaufmann->model.anim.keyframeIdx < 141)
             {
-                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(4, 3));
+                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(4, 3));
             }
             else
             {
-                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(1, 3));
+                WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(1, 3));
             }
 #endif
             break;
@@ -309,7 +309,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Chara_AnimStateReset(kaufmann);
 
 #if defined(MAP7_S03)
-            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(1, 1));
+            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(1, 1));
 #endif
             break;
 
@@ -317,7 +317,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             Model_AnimStatusKeyframeSet(kaufmann->model, 19, true, KAUFMANN_ANIM_INFOS, 0);
             Chara_AnimStateReset(kaufmann);
 #if defined(MAP7_S03)
-            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(1, 3));
+            WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(1, 3));
 #endif
             break;
 
@@ -430,9 +430,9 @@ void Kaufmann_Init(s_SubCharacter* kaufmann)
     sharedData_800D5CF4_3_s00 = 0;
 
 #ifdef MAP7_S03
-    WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MODEL_BONE(0, 1)); // TODO: MAP7_S03 `Kaufmann` funcs could be `EndingKaufmann` instead, if other `Kaufmann` funcs don't match other overlays.
+    WorldGfx_CharaMeshSwap(Chara_EndingKaufmann, MESH_SWAP_STATUS(0, 1)); // TODO: MAP7_S03 `Kaufmann` funcs could be `EndingKaufmann` instead, if other `Kaufmann` funcs don't match other overlays.
 #else
-    WorldGfx_CharaMeshSwap(Chara_Kaufmann, MODEL_BONE(0, 1));
+    WorldGfx_CharaMeshSwap(Chara_Kaufmann, MESH_SWAP_STATUS(0, 1));
 #endif
 
 #ifdef MAP7_S02

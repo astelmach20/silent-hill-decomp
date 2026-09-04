@@ -1580,60 +1580,60 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
 s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
 {
-    s_SubCharacter*  chara1;
-    s32              sp14;
-    s32              sp18;
-    s32              i;
-    q19_12           sinAngle;
-    q19_12           cosAngle;
-    s32              countX;
-    s32              countY;
-    s32              countZ;
-    s32              sp34;
-    s32              sp38;
-    s32              sp3C;
-    s32              sp40;
-    s32              sp44;
-    s32              sp48;
-    s32              sp4C;
-    q19_12           posX;
-    q19_12           posZ;
-    s32              sp58;
-    s32              sp5C;
-    s32              temp_s5;
-    s32              temp_s6;
-    q19_12           temp_a0;
-    s32              temp_a0_2;
-    s32              temp_a0_3;
-    s32              temp_lo_5;
-    s32              temp_s0;
-    s32              temp_s1;
-    s32              temp_s2;
-    q19_12           temp_s3;
-    s32              temp_t2;
-    s32              j;
-    q19_12           temp_t4;
-    s32              temp_t4_2;
-    s32              temp_t5;
-    s32              angle1;
-    s32              temp_v0_6;
-    s32              temp_v0_7;
-    s32              temp_v0_8;
-    q19_12           var_a1_2;
-    s32              var_fp;
-    s32              var_s1;
-    q19_12           var_s7;
-    s32              var_t1;
-    s32              var_t2;
-    s32              var_v0;
-    s32              var_v0_3;
-    s32              var_v0_6;
-    s32              var_v1;
-    s32              temp_a2;
-    u16              temp_v1;
-    q19_12           posY;
-    s32              temp4;
-    s_SubCharacter*  chara0;
+    s_SubCharacter*   chara1;
+    s32               sp14;
+    s32               sp18;
+    s32               i;
+    q19_12            sinAngle;
+    q19_12            cosAngle;
+    s32               countX;
+    s32               countY;
+    s32               countZ;
+    q19_12            sp34;
+    s32               sp38;
+    s32               sp3C;
+    s32               sp40;
+    s32               sp44;
+    s32               sp48;
+    s32               sp4C;
+    q19_12            posX;
+    q19_12            posZ;
+    q19_12            sp58;
+    s32               sp5C;
+    s32               temp_s5;
+    s32               temp_s6;
+    q19_12            temp_a0;
+    s32               temp_a0_2;
+    q19_12            temp_a0_3;
+    s32               temp_lo_5;
+    s32               temp_s0;
+    s32               temp_s1;
+    q19_12            unkX;
+    q19_12            temp_s3;
+    q19_12            temp_t2;
+    s32               j;
+    q19_12            temp_t4;
+    q19_12            temp_t4_2;
+    q19_12            temp_t5;
+    s32               angle1;
+    s32               temp_v0_6;
+    s32               temp_v0_7;
+    q19_12            temp_v0_8;
+    q19_12            var_a1_2;
+    s32               var_fp;
+    q19_12            unkZ;
+    q19_12            var_s7;
+    s32               var_t1;
+    s32               var_t2;
+    s32               var_v0;
+    q19_12            var_v0_3;
+    s32               var_v0_6;
+    q19_12            var_v1;
+    s32               temp_a2;
+    u16               temp_v1;
+    q19_12            posY;
+    s32               temp4;
+    s_SubCharacter*   chara0;
     static VECTOR3    D_800C4788[4];
     static VECTOR3    D_800C47B8;
     static s32        __pad_bss_800C47C4;
@@ -1777,7 +1777,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
         temp_s1 = chara1->position.vx;
         var_v1  = chara1->position.vy;
-        temp_s2 = chara1->position.vz;
+        unkX = chara1->position.vz;
 
         temp_s0 = chara1->collision.shapeOffsets.box.vx;
         temp_s3 = chara1->collision.shapeOffsets.box.vz;
@@ -1785,21 +1785,21 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         temp_s1 += temp_s0;
 
         var_v1  += chara1->collision.box.top;
-        temp_s2 += temp_s3;
+        unkX += temp_s3;
 
         D_800C47C8[1].vy = var_v1;
         temp_s3          = chara1->collision.cylinder.field_2;
 
-        angle1 = ratan2(temp_s1 - posX, temp_s2 - posZ);
+        angle1 = ratan2(temp_s1 - posX, unkX - posZ);
         temp_v0_6 = Math_Sin(angle1);
         temp_s0   = Q12_MULT_PRECISE(temp_s3, temp_v0_6);
 
-        var_s1 = Math_Cos(angle1);
+        unkZ = Math_Cos(angle1);
 
         posX = temp_s1 - temp_s0;
 
         D_800C47C8[1].vx = posX;
-        posZ             = temp_s2 - Q12_MULT_PRECISE(temp_s3, var_s1);
+        posZ             = unkX - Q12_MULT_PRECISE(temp_s3, unkZ);
 
         D_800C47C8[1].vz = posZ;
         var_v1           = Ray_TraceQuery(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
@@ -1837,7 +1837,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         }
 
         temp_s3  = chara1->collision.cylinder.field_2;
-        var_a1_2 = 0;
+        var_a1_2 = Q12(0.0f);
 
         if (temp_t2 < sp44)
         {
@@ -1848,7 +1848,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             var_a1_2 = temp_t2 - sp38;
         }
 
-        var_v1 = 0;
+        var_v1 = Q12(0.0f);
 
         if (temp_a0_3 < sp4C)
         {
@@ -1870,7 +1870,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             }
             else
             {
-                if (var_v1 == 0)
+                if (var_v1 == Q12(0.0f))
                 {
                     if (temp_s3 < var_a1_2)
                     {
@@ -1915,11 +1915,11 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
         sp5C = (temp_s5 + temp_s6) / 2;
 
-        temp_s2 = sp34 - temp_t4_2;
-        var_s1  = var_fp - temp_t5;
+        unkX = sp34 - temp_t4_2;
+        unkZ  = var_fp - temp_t5;
         temp_s0 = var_s7 - (sp58 + sp5C);
 
-        var_t1 = func_8008A058(func_80080540(temp_s2, 0, var_s1));
+        var_t1 = func_8008A058(func_80080540(unkX, Q12(0.0f), unkZ));
         var_t2 = (temp_s6 - temp_s5) / 2;
 
         if (var_t2 < 0)
@@ -1933,31 +1933,31 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             {
                 temp_lo_5 = Q12(temp_s3) / var_t1;
                 var_t1    = temp_s3;
-                temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
+                unkX   = Q12_MULT_PRECISE(temp_lo_5, unkX);
                 temp_s0   = Q12_MULT_PRECISE(temp_lo_5, temp_s0);
-                var_s1    = Q12_MULT_PRECISE(temp_lo_5, var_s1);
+                unkZ    = Q12_MULT_PRECISE(temp_lo_5, unkZ);
             }
             else if (var_t2 < temp_s0)
             {
                 temp_lo_5 = Q12(var_t2) / temp_s0;
                 temp_s0   = var_t2;
                 var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
-                temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
-                var_s1    = Q12_MULT_PRECISE(temp_lo_5, var_s1);
+                unkX   = Q12_MULT_PRECISE(temp_lo_5, unkX);
+                unkZ    = Q12_MULT_PRECISE(temp_lo_5, unkZ);
             }
             else if (temp_s0 < -var_t2)
             {
                 temp_lo_5 = Q12(-var_t2) / temp_s0;
                 temp_s0   = -var_t2;
                 var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
-                temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
-                var_s1    = Q12_MULT_PRECISE(temp_lo_5, var_s1);
+                unkX   = Q12_MULT_PRECISE(temp_lo_5, unkX);
+                unkZ    = Q12_MULT_PRECISE(temp_lo_5, unkZ);
             }
         }
 
-        D_800C47B8.vx = temp_t4_2 + temp_s2;
+        D_800C47B8.vx = temp_t4_2 + unkX;
         D_800C47B8.vy = (sp58 + sp5C) + temp_s0;
-        D_800C47B8.vz = temp_t5 + var_s1;
+        D_800C47B8.vz = temp_t5 + unkZ;
 
         if (func_8008B714(chara, chara1, &D_800C47B8, arg3))
         {

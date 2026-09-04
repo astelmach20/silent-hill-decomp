@@ -31,33 +31,30 @@ typedef struct _Model
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
 
-// TODO: Name might be wrong, but these have something to do with held item meshes.
-// First index is the mesh variant, second is the container of meshes (not bone index in skeleton)?
-// Data addresses are hardcoded.
-/** @brief Packs a model bone containing a mesh variant index and ??? in a single value.
+/** @brief Packs a mesh swap status containing a variant mesh ID and swappable mesh ID.
  *
- * @param variantIdx Mesh variant index.
- * @param idx1 ???
- * @return Packed model bone containing a mesh variant index and ???
+ * @param variantId Mesh variant ID.
+ * @param swappableId Swappable mesh ID.
+ * @return Packed mesh swap status containing the variant ID and swappable ID.
  */
-#define MODEL_BONE(variantIdx, idx1) \
-    (s16)((variantIdx) | ((idx1) << 4))
+#define MESH_SWAP_STATUS(variantId, swappableId) \
+    (s16)((variantId) | ((swappableId) << 4))
 
-/** @brief Retrieves the bone mesh variant index from a packed model bone.
+/** @brief Retrieves the variant mesh ID from a packed mesh swap status.
  *
- * @param modelBone Packed model bone containing  a mesh variant index and ???
- * @return Bone mesh variant index.
+ * @param meshSwap Packed mesh swap status containing a variant ID and swappable ID.
+ * @return Variant ID.
  */
-#define MODEL_BONE_MESH_VARIANT_IDX_GET(modelBone) \
-    ((modelBone) & 0xF)
+#define MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwap) \
+    ((meshSwap) & 0xF)
 
-/** @brief Retrieves ??? TODO: Is this the actual index of the real bone on the model to use for the mesh swap?
+/** @brief Retrieves the swappable mesh ID from a packed mesh swap status.
  *
- * @param modelBone Packed model bone containing a mesh variant index and ???
- * @return Unknown second index.
+ * @param meshSwap Packed mesh swap status containing a variant ID and swappable ID.
+ * @return Swappable ID.
  */
-#define MODEL_BONE_IDX_1_GET(modelBone) \
-    ((modelBone) & 0xF0)
+#define MESH_SWAP_STATUS_SWAPPABLE_ID_GET(meshSwap) \
+    ((meshSwap) & 0xF0)
 
 /** @brief Sets given animation flags for a model.
  *

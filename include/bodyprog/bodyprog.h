@@ -1020,9 +1020,9 @@ s32 WorldGfx_CharaClutYGet(e_CharaId charaId, s32 paletteIdx);
 /** @brief Handles a mesh swap for a character.
  *
  * @param charaId ID of the character on which to perform the mesh swap.
- * @param modelBone Packed model bone. See `MODEL_BONE`.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
  */
-void WorldGfx_CharaMeshSwap(e_CharaId charaId, s32 modelBone); // Called by some chara init funcs.
+void WorldGfx_CharaMeshSwap(e_CharaId charaId, s32 meshSwapStatus);
 
 bool Chara_ModelLoadedCheck(e_CharaId charaId);
 
@@ -1704,6 +1704,7 @@ void func_800899BC(s_SysWork_2514* arg0, s32 arg1);
 
 bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3);
 
+// Q12 square root?
 u32 func_8008A058(s32 arg0);
 
 /** @brief @unused Returns 0. */
@@ -2074,32 +2075,68 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
 void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 paletteIdx);
 
-/** Something for Harry. `arg` is a packed value. */
-void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Harry character.
+ *
+ * @param skel Harry model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Cybil. */
-void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Cybil character.
+ *
+ * @param skel Cybil model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Monster Cybil. */
-void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Monster Cybil character.
+ *
+ * @param skel Monster Cybil model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Dahlia. */
-void WorldGfx_DahliaMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Dahlia character.
+ *
+ * @param skel Dahlia model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_DahliaMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Kaufmann. */
-void WorldGfx_KaufmannMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Kaufmann character.
+ *
+ * @param skel Kaufmann model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_KaufmannMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Stalker. */
-void WorldGfx_StalkerMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Stalker character.
+ *
+ * @param skel Stalker model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_StalkerMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Split Head. */
-void WorldGfx_SplitHeadMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Split Head character.
+ *
+ * @param skel Split Head model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_SplitHeadMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Puppet Nurse. */
-void WorldGfx_PuppetNurseMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Puppet Nurse character.
+ *
+ * @param skel Puppet Nurse model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_PuppetNurseMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
-/** Something for Puppet Doctor. */
-void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 modelBone);
+/** @brief Handles a mesh swap for a Puppet Doctor character.
+ *
+ * @param skel Puppet Doctor model skeleton.
+ * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
+ */
+void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 meshSwapStatus);
 
 void func_8003ECBC(void);
 
@@ -2219,7 +2256,8 @@ q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);
  */
 q19_12 Rng_RandQ12(void);
 
-s32 func_80080540(s32 arg0, s32 arg1, s32 arg2);
+// Math with XYZ values.
+s32 func_80080540(q19_12 x, q19_12 y, q19_12 z);
 
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);

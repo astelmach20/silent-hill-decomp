@@ -905,17 +905,17 @@ static inline void func_80071968_Switch0(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_2, 2));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_3, 2));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_3, HarrySwappableMesh_2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_4, 2));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_4, HarrySwappableMesh_2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
@@ -933,7 +933,7 @@ static inline void func_80071968_Switch0(void)
     }
     else
     {
-        WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_2, 2));
+        WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_2));
     }
 }
 
@@ -964,17 +964,17 @@ static inline void func_80071968_Switch1(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_2, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_3, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_3, HarrySwappableMesh_1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MODEL_BONE(HarryHandMesh_4, 1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_4, HarrySwappableMesh_1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Tap):
@@ -992,7 +992,9 @@ static inline void func_80071968_Switch1(void)
     }
     else
     {
-        WorldGfx_CharaMeshSwap(Chara_Harry, g_SysWork.enablePlayerMatchAnim ? MODEL_BONE(2, 1) : MODEL_BONE(1, 1));
+        WorldGfx_CharaMeshSwap(Chara_Harry,
+                               g_SysWork.enablePlayerMatchAnim ? MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_1) :
+                                                                 MESH_SWAP_STATUS(HarryVariantMesh_1, HarrySwappableMesh_1));
     }
 }
 
@@ -9079,7 +9081,7 @@ q19_12 Rng_RandQ12(void) // 0x80080514
     return Q12_ANGLE_NORM_U(((rand16 * 2) ^ rand16) >> 3);
 }
 
-s32 func_80080540(s32 arg0, s32 arg1, s32 arg2) // 0x80080540
+s32 func_80080540(q19_12 x, q19_12 y, q19_12 z) // 0x80080540
 {
     s32 v0;
 
@@ -9105,10 +9107,10 @@ s32 func_80080540(s32 arg0, s32 arg1, s32 arg2) // 0x80080540
         "sll  $3, $3, 0x14\n"
         "or   %2, $3, $4\n"
 
-        : "r="(arg0), "r="(arg1), "r="(arg2), "r="(v0)
-        : "r"(arg0), "r"(arg1), "r"(arg2));
+        : "r="(x), "r="(y), "r="(z), "r="(v0)
+        : "r"(x), "r"(y), "r"(z));
 
-    return v0 + arg1 + arg2;
+    return v0 + y + z;
 }
 
 s32 Math_PreservedSignSubtract(s32 val, s32 subtractor) // 0x80080594

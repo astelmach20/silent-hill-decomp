@@ -353,7 +353,7 @@ void MonsterCybil_Init(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x8
     monsterCybilProps.field_116 = 0;
     monsterCybilProps.field_F4  = 0;
 
-    WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MODEL_BONE(1, 1));
+    WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(1, 1));
 }
 
 void func_800D8A90(s_SubCharacter* monsterCybil) // 0x800D8A90
