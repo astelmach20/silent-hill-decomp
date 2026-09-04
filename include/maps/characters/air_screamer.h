@@ -143,11 +143,18 @@ typedef enum _AirScreamerAnim
     AirScreamerAnim_28                     = 28
 } e_AirScreamerAnim;
 
+extern VECTOR3 sharedData_800DE1A0_0_s01; /** Q19.12 | Used for LOS offset. */
+extern VECTOR3 g_AirScreamer_TargetPosition2; /** Q19.12 */
+extern VECTOR3 sharedData_800DE1C0_0_s01; /** Q19.12 | Used for LOS offset. */
+extern VECTOR3 sharedData_800DE1E0_0_s01; /** Q19.12 | Used for wall collision offset. */
+extern VECTOR3 sharedData_800DE1F0_0_s01; // Q19.12 | Used for collision.
+extern s_CollisionResult g_AirScreamer_CollisionResult; // Cached result?
+
 /** @brief Updates an active Air Screamer or Night Flutter character.
  *
  * @param airScreamer Air Screamer or Night Flutter character to update.
- * @param animHdr Animation header.
- * @param boneCoords Model bone coordinates.
+ * @param animHdr Character animation data.
+ * @param boneCoords Character model bone coords.
  */
 void AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
@@ -227,7 +234,7 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer);
 q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2);
 q19_12 sharedFunc_800D71F0_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2, s32 arg3);
 
-s32 sharedFunc_800D7440_0_s01(s_CollisionResult* arg0, VECTOR* vec1, s_SubCharacter* airScreamer);
+s32 sharedFunc_800D7440_0_s01(s_CollisionResult* collResult, VECTOR* offset, s_SubCharacter* airScreamer);
 
 void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer);
 

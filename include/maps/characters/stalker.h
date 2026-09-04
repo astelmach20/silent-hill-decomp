@@ -209,6 +209,12 @@ typedef enum _StalkerVariantMesh
 
 extern s_AnimInfo STALKER_ANIM_INFOS[];
 
+// Next 4 set by `Stalker_Update`.
+extern q19_12 sharedData_800E3A20_0_s00; // Health.
+extern q19_12 sharedData_800E3A24_0_s00; // Health.
+extern q19_12 sharedData_800E3A28_0_s00;
+extern q19_12 sharedData_800E3A2C_0_s00;
+
 void Stalker_Control_2(s_SubCharacter* stalker);
 
 void Stalker_Control_3(s_SubCharacter* stalker);

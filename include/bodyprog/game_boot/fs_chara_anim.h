@@ -45,7 +45,7 @@ extern s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT];
  *
  * @param animDataIdx Index of the animation data to allocate.
  * @param charaId ID of the character associated with the animation.
- * @param anmHdr ANM data.
+ * @param anmHdr Character animation data.
  * @param boneCoords Character bone coords.
  */
 void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
@@ -55,7 +55,7 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
  *
  * @param animDataIdx Index of the animation data to update.
  * @param charaId ID of the character associated with the animation.
- * @param anmHdr ANM data.
+ * @param anmHdr Character animation data.
  * @param boneCoords Character bone coords.
  */
 void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);

@@ -884,5 +884,3 @@ void Creeper_CollisionUpdate(s_SubCharacter* creeper)
 
     Chara_CollisionShapeOffsetsUpdate(&creeper->collision.shapeOffsets, creeper);
 }
-
-#undef creeperProps

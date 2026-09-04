@@ -21,7 +21,7 @@ void SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINA
     {
         SplitHead_DamageTake(splitHead);
         SplitHead_ControlUpdate(splitHead);
-        sharedFunc_800D267C_1_s05(splitHead);
+        SplitHead_MovementUpdate(splitHead);
         sharedFunc_800D3AFC_1_s05(splitHead);
     }
 
@@ -1012,9 +1012,9 @@ void SplitHead_Control_8(s_SubCharacter* splitHead)
     splitHeadProps.flags      |= SplitHeadFlag_8;
 }
 
-void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
+void SplitHead_MovementUpdate(s_SubCharacter* splitHead)
 {
-    s_CollisionResult sp18;
+    s_CollisionResult collResult;
     VECTOR3    pos;
 
     splitHead->headingAngle = splitHead->rotation.vy;
@@ -1022,7 +1022,7 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
     sharedFunc_800D4408_1_s05(&pos, 2, Q8(0.0f), -57, 3);
 
     splitHead->collision.shapeOffsets.cylinder.vx = pos.vx - splitHead->position.vx;
-    splitHead->collision.box.top   = pos.vy;
+    splitHead->collision.box.top                  = pos.vy;
     splitHead->collision.shapeOffsets.cylinder.vz = pos.vz - splitHead->position.vz;
 
     if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_BiteAttack ||
@@ -1037,7 +1037,7 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
 
     splitHead->collision.state = CharaCollisionState_4;
 
-    Chara_MovementUpdate1(splitHead, &sp18, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
+    Chara_MovementUpdate1(splitHead, &collResult, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
 
     sharedData_800D8614_1_s05 = Q12(0.0f);
     sharedData_800D8616_1_s05 = Q12(0.0f);
@@ -1573,8 +1573,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
 
 void sharedFunc_800D3AFC_1_s05(s_SubCharacter* splitHead)
 {
-    sharedData_800D8684_1_s05 = 0;
-    sharedData_800D8688_1_s05 = 0;
+    sharedData_800D8684_1_s05 = Q12(0.0f);
+    sharedData_800D8688_1_s05 = Q12(0.0f);
     sharedFunc_800D3388_1_s05(splitHead, &sharedData_800D8684_1_s05, &sharedData_800D8688_1_s05);
 }
 
@@ -1591,6 +1591,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     s32                         var_v1;
     q3_12                       var_v1_3;
 
+    // Reset collision shapes.
     splitHead->collision.box.bottom               = Q12(0.0f);
     splitHead->collision.cylinder.radius          = Q12(0.0f);
     splitHead->collision.shapeOffsets.cylinder.vx = Q12(0.0f);

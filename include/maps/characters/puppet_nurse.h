@@ -66,6 +66,21 @@ typedef enum _PuppetNurseVariantMesh
     PuppetNurseVariantMesh_Head3 = 3
 } e_PuppetNurseVariantMesh;
 
+typedef struct
+{
+    u16 sfxId;
+    u16 vol;
+} s_SfxPair;
+
+extern s32 g_PuppetNurseHurtSfxIdxs[4];
+extern s_SfxPair g_NursePuppetSfxs[18];
+extern u8 g_NursePuppet_AnimSfxs[580];
+extern s32 g_PuppetNurse_AnimStatus0[2];
+extern s32 g_PuppetNurse_AnimStatus1[2];
+extern u8  g_PuppetNurse_AnimStatus2[2];
+extern u8  g_PuppetNurse_AnimStatus3[4];
+extern u8  g_PuppetNurse_AnimStatus4[4];
+
 s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
 
 void PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);
@@ -140,6 +155,7 @@ void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDI
 
 void sharedFunc_800D0828_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords);
 
+// TODO: `PuppetNurse_CollisionUpdate`?
 void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords);
 
 #endif

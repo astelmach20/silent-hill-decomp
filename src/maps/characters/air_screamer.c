@@ -8814,7 +8814,7 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
 
     if (sharedData_800E21D0_0_s01.flags & (1 << 27))
     {
-        unkVec = &airScreamerProps.position_110;
+        unkVec = &airScreamerProps.targetPosition2;
     }
     else
     {
@@ -9293,9 +9293,9 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
     angleDeltaToTarget = Q12_ANGLE_NORM_S(angleToTarget - rotY);
     targetPosY         = airScreamerProps.targetPosition.vy;
 
-    if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition, &sharedData_800DE1B0_0_s01))
+    if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition, &g_AirScreamer_TargetPosition2))
     {
-        airScreamerProps.position_110 = sharedData_800DE1B0_0_s01;
+        airScreamerProps.targetPosition2 = g_AirScreamer_TargetPosition2;
         return;
     }
 
@@ -9310,35 +9310,35 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         if (Ray_LosHitCheck(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, airScreamer) &&
             sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.groundHeight)
         {
-            airScreamerProps.position_110.vx = sharedData_800E2330_0_s01.target.vx;
-            airScreamerProps.position_110.vy = sharedData_800E2330_0_s01.groundHeight - Q12(1.5f);
-            airScreamerProps.position_110.vz = sharedData_800E2330_0_s01.target.vz;
+            airScreamerProps.targetPosition2.vx = sharedData_800E2330_0_s01.target.vx;
+            airScreamerProps.targetPosition2.vy = sharedData_800E2330_0_s01.groundHeight - Q12(1.5f);
+            airScreamerProps.targetPosition2.vz = sharedData_800E2330_0_s01.target.vz;
             return;
         }
     }
 
-    dist2 = distToTarget - Math_Distance2dGet(&airScreamer->position, &sharedData_800DE1B0_0_s01) + dist3;
+    dist2 = distToTarget - Math_Distance2dGet(&airScreamer->position, &g_AirScreamer_TargetPosition2) + dist3;
 
     var_s5 = INT_MAX;
     var_s7 = Q12(1.0f);
 
     for (i = 0, curAngle = (rotY + angleDeltaToTarget / 2) - Q12_ANGLE(90.0f); i < 9; i++, curAngle += Q12_ANGLE(22.5f))
     {
-        sharedData_800DE1B0_0_s01.vx = posX + Q12_MULT_PRECISE(Math_Sin(curAngle), Q12(8.0f));
-        sharedData_800DE1B0_0_s01.vy = targetPosY;
-        sharedData_800DE1B0_0_s01.vz = posZ + Q12_MULT_PRECISE(Math_Cos(curAngle), Q12(8.0f));
+        g_AirScreamer_TargetPosition2.vx = posX + Q12_MULT_PRECISE(Math_Sin(curAngle), Q12(8.0f));
+        g_AirScreamer_TargetPosition2.vy = targetPosY;
+        g_AirScreamer_TargetPosition2.vz = posZ + Q12_MULT_PRECISE(Math_Cos(curAngle), Q12(8.0f));
 
         new_var = dist2;
-        if (!sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01))
+        if (!sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &g_AirScreamer_TargetPosition2, &g_AirScreamer_TargetPosition2))
         {
-            dist1 = Math_Distance2dGet(&airScreamer->position, &sharedData_800DE1B0_0_s01);
+            dist1 = Math_Distance2dGet(&airScreamer->position, &g_AirScreamer_TargetPosition2);
         }
         else
         {
             dist1 = Q12(8.0f);
         }
 
-        dist3   = Math_Distance2dGet(&sharedData_800DE1B0_0_s01, &airScreamerProps.targetPosition);
+        dist3   = Math_Distance2dGet(&g_AirScreamer_TargetPosition2, &airScreamerProps.targetPosition);
         temp_a0 = Q12_MULT_PRECISE(new_var - dist1, dist3);
 
         temp_v0_3 = Q12_ANGLE_NORM_S(curAngle - rotY);
@@ -9351,26 +9351,26 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         {
             var_s5                        = temp_a0;
             var_s7                        = dist2_1_2;
-            airScreamerProps.position_110 = sharedData_800DE1B0_0_s01;
+            airScreamerProps.targetPosition2 = g_AirScreamer_TargetPosition2;
         }
     }
 
-    dist1 = Math_Distance2dGet(&airScreamerProps.position_110, &airScreamer->position);
-    dist4 = Math_Distance2dGet(&airScreamerProps.position_110, &airScreamerProps.targetPosition);
+    dist1 = Math_Distance2dGet(&airScreamerProps.targetPosition2, &airScreamer->position);
+    dist4 = Math_Distance2dGet(&airScreamerProps.targetPosition2, &airScreamerProps.targetPosition);
 
     dist5 = dist1 + dist4;
     if (dist5 == Q12(0.0f))
     {
-        airScreamerProps.position_110.vy = targetPosY;
+        airScreamerProps.targetPosition2.vy = targetPosY;
         return;
     }
 
-    airScreamerProps.position_110.vy = FP_TO(Q12_MULT_PRECISE(targetPosY, dist1) +
+    airScreamerProps.targetPosition2.vy = FP_TO(Q12_MULT_PRECISE(targetPosY, dist1) +
                                                  Q12_MULT_PRECISE(posY, dist4),
                                              Q12_SHIFT) /
                                        dist5;
 
-    sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01);
+    sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &g_AirScreamer_TargetPosition2, &g_AirScreamer_TargetPosition2);
 }
 
 q19_12 sharedFunc_800D5274_0_s01(void)
@@ -10466,10 +10466,10 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     sharedData_800F21FC_2_s00.vz = Q12_MULT_PRECISE(g_DeltaTime, playerOffsetZ);
 
     if (g_DeltaTime != Q12(0.0f) &&
-        Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork.player))
+        Collision_WallDetect(&g_AirScreamer_CollisionResult, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork.player))
     {
-        playerOffsetX = sharedData_800E2350_0_s01.offset.vx;
-        playerOffsetZ = sharedData_800E2350_0_s01.offset.vz;
+        playerOffsetX = g_AirScreamer_CollisionResult.offset.vx;
+        playerOffsetZ = g_AirScreamer_CollisionResult.offset.vz;
 
         playerMoveSpeed    = SquareRoot12(Q12_SQUARE_PRECISE(playerOffsetX) +
                                           Q12_SQUARE_PRECISE(playerOffsetZ));
@@ -10661,7 +10661,7 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
     s32              temp_a1;
     s32              temp_s2;
     s32              temp_t3;
-    s32              var_a0;
+    s32              idx1;
     s32              var_a2;
     s32              var_t1;
     s32              var_t2;
@@ -10674,8 +10674,8 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
     s32              idx;
     s_func_800D2E04* ptr;
 
-    temp_s2 = func_80080478(&airScreamer->position, &airScreamerProps.position_110);
-    temp_t3 = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.position_110);
+    temp_s2 = func_80080478(&airScreamer->position, &airScreamerProps.targetPosition2);
+    temp_t3 = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition2);
     temp_s2 = Q12_ANGLE_NORM_S(temp_s2 - airScreamer->rotation.vy);
 
     temp_a1 = airScreamer->model.anim.status | 1;
@@ -10695,12 +10695,12 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
 
     if (temp_a1 == 0x31)
     {
-        var_a0   = 3;
+        idx1   = 3;
         var_v1_2 = 0x1F;
     }
     else if (airScreamer->collision.cylinder.radius + 0xCC >= temp_t3)
     {
-        var_a0   = 2;
+        idx1   = 2;
         var_v1_2 = 0x1E;
     }
     else
@@ -10718,18 +10718,18 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
         {
             if (cond)
             {
-                var_a0   = 3;
+                idx1   = 3;
                 var_v1_2 = 0x1F;
             }
             else
             {
-                var_a0   = 0;
+                idx1   = 0;
                 var_v1_2 = 0x1C;
             }
         }
         else
         {
-            var_a0   = 2;
+            idx1   = 2;
             var_v1_2 = 0x1E;
         }
     }
@@ -10751,13 +10751,13 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
         }
     }
 
-    temp  = sharedData_800CAA98_0_s01.field_380[var_a0][0];
-    temp2 = sharedData_800CAA98_0_s01.field_380[var_a0][1];
+    temp  = sharedData_800CAA98_0_s01.field_380[idx1][0];
+    temp2 = sharedData_800CAA98_0_s01.field_380[idx1][1];
 
     sharedData_800E21D0_0_s01.field_B4[0][1] = temp2;
     sharedData_800E21D0_0_s01.field_B4[0][2] = temp;
 
-    if (temp_a1 != 0x31)
+    if (temp_a1 != 49)
     {
         sharedData_800E21D0_0_s01.field_B4[0][3] = temp_t3;
         sharedData_800E21D0_0_s01.field_B4[0][0] = 1;
@@ -11007,8 +11007,8 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 d
     // TODO: Not used as ground height in this func?
     prevGroundHeight = airScreamerProps.groundHeight;
 
-    vec_x = airScreamerProps.position_110.vx;
-    vec_z = airScreamerProps.position_110.vz;
+    vec_x = airScreamerProps.targetPosition2.vx;
+    vec_z = airScreamerProps.targetPosition2.vz;
 
     if (prevGroundHeight < groundHeight)
     {
@@ -11069,7 +11069,7 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer)
     s_func_800D2E04* ptr;
 
     pos   = &airScreamer->position;
-    pos0  = &airScreamerProps.position_110;
+    pos0  = &airScreamerProps.targetPosition2;
     dist  = Math_Distance2dGet(pos, pos0);
     angle = Q12_ANGLE_NORM_S(func_80080478(pos, pos0) - airScreamer->rotation.vy);
 
@@ -11574,7 +11574,7 @@ void sharedFunc_800E021C_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
     s32              temp4;
     s_func_800D2E04* ptr;
 
-    pos = &airScreamerProps.position_110;
+    pos = &airScreamerProps.targetPosition2;
 
     angleToUnk = func_80080478(&airScreamer->position, pos);
     temp       = Math_Distance2dGet(&airScreamer->position, pos);
@@ -11986,13 +11986,13 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 
     airScreamer->collision.cylinder.radius = Q12(0.0f);
 
-    Collision_WallDetect(&sharedData_800E2350_0_s01, &sharedData_800DE1D0_0_s01, airScreamer);
+    Collision_WallDetect(&g_AirScreamer_CollisionResult, &sharedData_800DE1D0_0_s01, airScreamer);
 
     sharedFunc_800D8244_0_s01(airScreamer);
 
-    posX += sharedData_800E2350_0_s01.offset.vx;
-    posY += sharedData_800E2350_0_s01.offset.vy;
-    posZ += sharedData_800E2350_0_s01.offset.vz;
+    posX += g_AirScreamer_CollisionResult.offset.vx;
+    posY += g_AirScreamer_CollisionResult.offset.vy;
+    posZ += g_AirScreamer_CollisionResult.offset.vz;
 
     groundHeight = Collision_GroundHeightGet(posX, posZ);
 
@@ -12057,10 +12057,10 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer)
     sharedData_800DE1E0_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DE1F0_0_s01.vy);
     sharedData_800DE1E0_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DE1F0_0_s01.vz);
 
-    temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset,
+    temp_s0 = sharedFunc_800D6A60_0_s01(&g_AirScreamer_CollisionResult.offset,
                                         &sharedData_800DE1F0_0_s01,
                                         airScreamer,
-                                        sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE1E0_0_s01, airScreamer),
+                                        sharedFunc_800D7440_0_s01(&g_AirScreamer_CollisionResult, &sharedData_800DE1E0_0_s01, airScreamer),
                                         &sharedData_800E21D0_0_s01.field_11C);
 
     airScreamerProps.flags &= ~AirScreamerFlag_29;
@@ -12160,8 +12160,8 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     sharedData_800DE200_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime, posY);
     sharedData_800DE200_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime, posZ);
 
-    temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, airScreamer);
-    temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
+    temp = sharedFunc_800D7440_0_s01(&g_AirScreamer_CollisionResult, &sharedData_800DE200_0_s01, airScreamer);
+    temp = sharedFunc_800D6A60_0_s01(&g_AirScreamer_CollisionResult.offset, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
 
     sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_140);
 
@@ -12593,47 +12593,48 @@ void sharedFunc_800D72E8_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_1
     sharedFunc_800D72E8_0_s01_subfunc(angle1 - airScreamer->rotation.vz, 4);
 }
 
-s32 sharedFunc_800D7440_0_s01(s_CollisionResult* arg0, VECTOR* offset, s_SubCharacter* airScreamer)
+s32 sharedFunc_800D7440_0_s01(s_CollisionResult* collResult, VECTOR* offset, s_SubCharacter* airScreamer)
 {
-    q19_12      groundHeight;
-    q19_12      posY;
-    s32         result;
-    s32         cond;
-    s_CollisionResult* localArg0C;
+    q19_12             groundHeight;
+    q19_12             posY;
+    s32                wallResponse;
+    s32                cond;
+    s_CollisionResult* localCollResult;
 
-    localArg0C = arg0;
+    localCollResult = collResult;
 
     sharedFunc_800D81D0_0_s01(airScreamer);
     sharedFunc_800D8714_0_s01(airScreamer, airScreamer->moveSpeed, airScreamer->headingAngle);
     sharedFunc_800D87FC_0_s01(airScreamer);
 
-    result = Collision_WallDetect(localArg0C, offset, airScreamer);
+    wallResponse = Collision_WallDetect(localCollResult, offset, airScreamer);
 
     posY         = airScreamer->position.vy;
-    groundHeight = Collision_GroundHeightGet(airScreamer->position.vx + localArg0C->offset.vx, airScreamer->position.vz + localArg0C->offset.vz);
+    groundHeight = Collision_GroundHeightGet(airScreamer->position.vx + localCollResult->offset.vx,
+                                             airScreamer->position.vz + localCollResult->offset.vz);
 
     if (sharedFunc_800D4A80_0_s01(airScreamer) != 4)
     {
         if (offset->vy > Q12(0.0f) && groundHeight < (posY - Q12(0.5f)))
         {
-            localArg0C->offset.vx = Q12(0.0f);
-            localArg0C->offset.vz = Q12(0.0f);
+            localCollResult->offset.vx = Q12(0.0f);
+            localCollResult->offset.vz = Q12(0.0f);
         }
     }
     else if (groundHeight < posY)
     {
-        localArg0C->offset.vx = Q12(0.0f);
-        localArg0C->offset.vz = Q12(0.0f);
+        localCollResult->offset.vx = Q12(0.0f);
+        localCollResult->offset.vz = Q12(0.0f);
     }
 
-    if ((FP_FROM(offset->vx, Q4_SHIFT) != FP_FROM(localArg0C->offset.vx, Q4_SHIFT)) ||
-        (FP_FROM(offset->vz, Q4_SHIFT) != FP_FROM(localArg0C->offset.vz, Q4_SHIFT)))
+    if ((FP_FROM(offset->vx, Q4_SHIFT) != FP_FROM(localCollResult->offset.vx, Q4_SHIFT)) ||
+        (FP_FROM(offset->vz, Q4_SHIFT) != FP_FROM(localCollResult->offset.vz, Q4_SHIFT)))
     {
-        result = 1;
+        wallResponse = 1;
     }
 
     sharedFunc_800D8244_0_s01(airScreamer);
-    return result;
+    return wallResponse;
 }
 
 void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer)

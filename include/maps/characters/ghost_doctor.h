@@ -30,20 +30,41 @@ extern s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[];
     { Anim_PlaybackLoop, ANIM_STATUS(1, true), false, NO_VALUE, { Q12(15) }, 0, 15 }
 };*/
 
+/** @brief Updates an active Ghost Doctor character.
+ *
+ * @param ghostDoc Ghost Doctor character to update.
+ * @param anmHdr Character animation data.
+ * @param boneCoords Character model bone coords.
+ */
 void GhostDoctor_Update(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
+/** @brief Updates the animation of a Ghost Doctor character.
+ *
+ * @param ghostDoc Ghost Doctor character to update.
+ * @param anmHdr Character animation data.
+ * @param boneCoords Character model bone coords.
+ */
 void GhostDoctor_AnimUpdate(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-/** @brief Updates the transform of the `coord` matrix to the character's position, converting
- * from world-space to geometry space.
+/** @brief Updates the transform of the `coord` matrix to the character's position, converting from world-space to
+ * geometry space.
  *
- * @param chara Reference character.
- * @param coord Output coord to update.
+ * @param ghostDoc Reference Ghost Doctor character.
+ * @param boneCoords Output bone coords to update.
  */
-void Character_CoordTransformUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords);
+void GhostDoctor_CoordTransformUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords);
 
+/** @brief Initializes a Ghost Doctor character.
+ *
+ * @param ghostDoc Ghost Doctor character to initialize.
+ */
 void GhostDoctor_Init(s_SubCharacter* ghostDoc);
 
-void func_800D8C00(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords);
+/** @brief Updates the rotation of the 'coord' matrix to the character's rotation.
+ *
+ * @param ghostDoc Reference Ghost Doctor character.
+ * @param boneCoords Output bone coords to update.
+ */
+void GhostDoctor_CoordRotationUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords);
 
 #endif

@@ -844,7 +844,7 @@ void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
     }
     else
     {
-        if (incubusProps.timer_E8 < 0)
+        if (incubusProps.timer_E8 < Q12(0.0f))
         {
             Savegame_EventFlagSet(EventFlag_578);
             incubus->model.controlState = IncubusControl_13;

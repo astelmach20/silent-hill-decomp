@@ -11,8 +11,8 @@ void GhostDoctor_Update(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOORDIN
         GhostDoctor_Init(ghostDoc);
     }
 
-    func_800D8C00(ghostDoc, boneCoords);
-    Character_CoordTransformUpdate(ghostDoc, boneCoords);
+    GhostDoctor_CoordRotationUpdate(ghostDoc, boneCoords);
+    GhostDoctor_CoordTransformUpdate(ghostDoc, boneCoords);
     GhostDoctor_AnimUpdate(ghostDoc, anmHdr, boneCoords);
 }
 
@@ -21,7 +21,7 @@ void GhostDoctor_AnimUpdate(s_SubCharacter* ghostDoc, s_AnmHeader* anmHdr, GsCOO
     Chara_AnimUpdate(ghostDoc, anmHdr, boneCoords, GHOST_DOCTOR_ANIM_INFOS);
 }
 
-void Character_CoordTransformUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords) // 0x800D8BAC
+void GhostDoctor_CoordTransformUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords) // 0x800D8BAC
 {
     boneCoords[GhostDoctorBone_Root].coord.t[0] = Q12_TO_Q8(ghostDoc->position.vx);
     boneCoords[GhostDoctorBone_Root].coord.t[1] = Q12_TO_Q8(ghostDoc->position.vy);
@@ -33,7 +33,7 @@ void GhostDoctor_Init(s_SubCharacter* ghostDoc) // 0x800D8BE0
     Chara_CollisionReset(ghostDoc);
 }
 
-void func_800D8C00(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords) // 0x800D8C00
+void GhostDoctor_CoordRotationUpdate(s_SubCharacter* ghostDoc, GsCOORDINATE2* boneCoords) // 0x800D8C00
 {
     if (ghostDocProps.controlState == GhostDoctorControl_Still)
     {

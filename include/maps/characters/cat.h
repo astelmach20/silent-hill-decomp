@@ -38,6 +38,12 @@ typedef enum _CatAnim
 
 extern s_AnimInfo CAT_ANIM_INFOS[]; // 0x800DC924
 
+/** @brief Updates an active Cat Doctor character.
+ *
+ * @param cat Cat character to update.
+ * @param anmHdr Character animation data.
+ * @param boneCoords Character model bone coords.
+ */
 void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 #endif

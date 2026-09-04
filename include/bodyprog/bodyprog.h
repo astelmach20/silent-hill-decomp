@@ -1285,7 +1285,7 @@ q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo);
  * @note Used for one-shot actions such as stopping and attacking.
  *
  * @param model Character model to animate.
- * @param anmHdr Active animation header.
+ * @param anmHdr Character animation data.
  * @param boneCoords Character model bone coords.
  * @param animInfo Active character animation info.
  */
@@ -1297,7 +1297,7 @@ void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
  * @note Used for looped actions such as running and walking.
  *
  * @param model Character model to animate.
- * @param anmHdr Active animation header.
+ * @param anmHdr Character animation data.
  * @param boneCoords Character model bone coords.
  * @param animInfo Character animation info.
  */
@@ -1309,7 +1309,7 @@ void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
  * @note Used as the entry transition for almost every new animation status.
  *
  * @param model Character model to animate.
- * @param anmHdr Active animation header.
+ * @param anmHdr Character animation data.
  * @param boneCoords Character model bone coords.
  * @param animInfo Character animation info.
  */
@@ -1321,7 +1321,7 @@ void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCo
  * @unused?
  *
  * @param model Character model to animate.
- * @param anmHdr Active animation header.
+ * @param anmHdr Character animation data.
  * @param boneCoords Character model bone coords.
  * @param animInfo Character animation info.
  */

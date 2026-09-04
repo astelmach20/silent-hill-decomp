@@ -64,6 +64,24 @@ typedef enum _RomperAnim
 
 extern s_AnimInfo ROMPER_ANIM_INFOS[];
 
+extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
+
+extern s_sharedData_800ED2D4_2_s02 sharedData_800ED2D4_2_s02[];
+
+extern s32 sharedData_800EC950_2_s02;
+
+extern s32 sharedData_800ECA4C_2_s02;
+
+extern s32 sharedData_800ECACC_2_s02;
+
+extern s16 sharedData_800ECB22_2_s02;
+
+extern s16 sharedData_800ECBC2_2_s02;
+
+extern s16 sharedData_800ECBD0_2_s02;
+
+extern s_sharedData_800ED2D4_2_s02 sharedData_800ED314_2_s02[];
+
 void Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Romper_Init(s_SubCharacter* romper);

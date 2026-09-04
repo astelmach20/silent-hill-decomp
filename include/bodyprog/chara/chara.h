@@ -182,7 +182,7 @@ typedef struct
     /* 0x8  */ s32         field_8;
     /* 0xC  */ s32         field_C;
     /* 0x10 */ s8          unk_10[8];
-    /* 0x18 */ s32         field_18;
+    /* 0x18 */ q19_12      field_18; // Angle?
     /* 0x1C */ s32         idx_1C;
     /* 0x20 */ s32         field_20;
     /* 0x24 */ s_AnimInfo* animInfo_24;
@@ -237,7 +237,7 @@ typedef struct _PropsAirScreamer
     /* 0xF4    */ s32     field_F4;
     /* 0xF8    */ VECTOR3 targetPosition;     /** Q19.12 */
     /* 0x104   */ VECTOR3 headTargetPosition; /** Q19.12 */
-    /* 0x110   */ VECTOR3 position_110;
+    /* 0x110   */ VECTOR3 targetPosition2;    /** Q19.12 | TODO: Unknown purpose. */
     /* 0x11C   */ s32     flags; /** `e_AirScreamerFlags` */
     /* 0x120   */ q19_12  timer_120;
     /* 0x124   */ q19_12  groundHeight;
@@ -727,7 +727,7 @@ extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
  * @note This is only for NPCs which use the `s_PropsNpc` part of the `s_SubCharacter::properties` union.
  *
  * @param chara Character to update.
- * @param anmHdr ANM file header.
+ * @param anmHdr Character animation data.
  * @param boneCoords Character model bone coords.
  * @param animInfos Character animation infos.
  */
