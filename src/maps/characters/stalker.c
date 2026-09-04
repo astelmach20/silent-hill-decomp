@@ -2081,7 +2081,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     s_AnimInfo*                  animInfo;
     s_sharedFunc_800D6970_0_s00* ptr;
 
-    WorldGfx_CharaMeshSwap(stalker->model.charaId, 2);
+    WorldGfx_CharaMeshSwap(stalker->model.charaId, MESH_SWAP_STATUS(StalkerSwappableMesh_None, StalkerVariantMesh_2));
 
     switch (stalker->model.anim.status)
     {

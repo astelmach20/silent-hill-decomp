@@ -51,6 +51,22 @@ typedef enum _SplitHeadAnim
     SplitHeadAnim_14          = 14  // something idle?
 } e_SplitHeadAnim;
 
+/** @brief Split Head character swappable mesh IDs. */
+typedef enum _SplitHeadSwappableMesh
+{
+    SplitHeadSwappableMesh_None = 0,
+    SplitHeadSwappableMesh_1    = 1,
+    SplitHeadSwappableMesh_2    = 2
+} e_SplitHeadSwappableMesh;
+
+/** @brief Split Head character variant mesh IDs. */
+typedef enum _SplitHeadVariantMesh
+{
+    SplitHeadVariantMesh_None = 0,
+    SplitHeadVariantMesh_1    = 1,
+    SplitHeadVariantMesh_2    = 2
+} e_SplitHeadVariantMesh;
+
 typedef struct
 {
     s32 field_0; // Distance/Magnitude?

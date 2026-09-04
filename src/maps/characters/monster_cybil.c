@@ -4,6 +4,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
 
+#include "maps/characters/cybil.h"
 #include "maps/characters/monster_cybil.h"
 
 // Weird access pattern using `npcs` array instead of function param.
@@ -522,11 +523,11 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (monsterCybil->model.anim.keyframeIdx >= 66)
             {
-                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_1));
             }
             else
             {
-                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_2));
             }
 
             monsterCybilProps.moveSpeed = Q12(0.0f);
@@ -590,7 +591,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             Model_AnimStatusKeyframeSet(*modelUpper, 20, true, MONSTER_CYBIL_ANIM_INFOS, 0);
-            WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
+            WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_1));
             Chara_AnimStateReset(monsterCybil);
             break;
 
@@ -605,11 +606,11 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (modelUpper->anim.keyframeIdx >= 29)
             {
-                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_2));
             }
             else
             {
-                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_1));
             }
 
             Chara_AnimStateReset(monsterCybil);
@@ -623,7 +624,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             Model_AnimStatusKeyframeSet(*modelUpper, 19, true, MONSTER_CYBIL_ANIM_INFOS, 0);
-            WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
+            WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_2));
             Chara_AnimStateReset(monsterCybil);
 
             if (!monsterCybil->model.stateStep)
@@ -1122,7 +1123,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (modelUpper->anim.keyframeIdx >= 29)
             {
-                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 2);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_2));
             }
 
             if (modelUpper->anim.keyframeIdx == D_800EA776 && D_800EBB48 < monsterCybilProps.freeze)
@@ -1305,7 +1306,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (ANIM_STATUS_IS_ACTIVE(modelUpper->anim.status) && modelUpper->anim.keyframeIdx < 209)
             {
-                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, 1);
+                WorldGfx_CharaMeshSwap(Chara_MonsterCybil, MESH_SWAP_STATUS(CybilSwappableMesh_None, CybilVariantMesh_1));
             }
 
             if (modelUpper->anim.keyframeIdx == MONSTER_CYBIL_ANIM_INFOS[modelUpper->anim.status].startKeyframeIdx)

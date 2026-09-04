@@ -66,6 +66,21 @@ typedef enum _DahliaAnim
     DahliaAnim_25    = 25
 } e_DahliaAnim;
 
+/** @brief Dahlia character swappable mesh IDs. */
+typedef enum _DahliaSwappableMesh
+{
+    DahliaSwappableMesh_None = 0
+} e_DahliaSwappableMesh;
+
+/** @brief Dahlia character variant mesh IDs. */
+typedef enum _DahliaVariantMesh
+{
+    DahliaVariantMesh_None = 0,
+    DahliaVariantMesh_1    = 1,
+    DahliaVariantMesh_2    = 2,
+    DahliaVariantMesh_3    = 3
+} e_DahliaVariantMesh;
+
 /** @brief Dahlia character anim infos. */
 extern s_AnimInfo DAHLIA_ANIM_INFOS[];
 

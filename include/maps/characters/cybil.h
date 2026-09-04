@@ -80,6 +80,22 @@ typedef enum _CybilBone
     CybilBone_Root = 0
 } e_CybilBone;
 
+/** @brief Cybil character swappable mesh IDs. */
+typedef enum _CybilSwappableMesh
+{
+    CybilSwappableMesh_None = 0,
+    CybilSwappableMesh_1    = 1,
+    CybilSwappableMesh_2    = 2
+} e_CybilSwappableMesh;
+
+/** @brief Cybil character variant mesh IDs. */
+typedef enum _CybilVariantMesh
+{
+    CybilVariantMesh_None = 0,
+    CybilVariantMesh_1    = 1,
+    CybilVariantMesh_2    = 2
+} e_CybilVariantMesh;
+
 /** @brief Cybil character anim infos. */
 extern s_AnimInfo CYBIL_ANIM_INFOS[];
 

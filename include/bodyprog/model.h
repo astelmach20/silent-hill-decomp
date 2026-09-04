@@ -31,30 +31,32 @@ typedef struct _Model
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
 
-/** @brief Packs a mesh swap status containing a variant mesh ID and swappable mesh ID.
+/** @brief Packs a mesh swap status containing a swappable ID and variant ID.
  *
- * @param variantId Mesh variant ID.
  * @param swappableId Swappable mesh ID.
- * @return Packed mesh swap status containing the variant ID and swappable ID.
+ * @param variantId Mesh variant ID.
+ * @return Packed mesh swap status containing the swappable ID and variant ID.
  */
-#define MESH_SWAP_STATUS(variantId, swappableId) \
-    (s16)((variantId) | ((swappableId) << 4))
-
-/** @brief Retrieves the variant mesh ID from a packed mesh swap status.
- *
- * @param meshSwap Packed mesh swap status containing a variant ID and swappable ID.
- * @return Variant ID.
- */
-#define MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwap) \
-    ((meshSwap) & 0xF)
+#define MESH_SWAP_STATUS(swappableId, variantId) \
+    (s16)(((swappableId) << 4) | (variantId))
 
 /** @brief Retrieves the swappable mesh ID from a packed mesh swap status.
  *
- * @param meshSwap Packed mesh swap status containing a variant ID and swappable ID.
+ * @note The value remains shifted left by 4.
+ *
+ * @param meshSwap Packed mesh swap status containing a swappable ID and variant ID.
  * @return Swappable ID.
  */
 #define MESH_SWAP_STATUS_SWAPPABLE_ID_GET(meshSwap) \
     ((meshSwap) & 0xF0)
+
+/** @brief Retrieves the variant mesh ID from a packed mesh swap status.
+ *
+ * @param meshSwap Packed mesh swap status containing a swappable ID and variant ID.
+ * @return Variant ID.
+ */
+#define MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwap) \
+    ((meshSwap) & 0xF)
 
 /** @brief Sets given animation flags for a model.
  *

@@ -1386,10 +1386,10 @@ void PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDI
     animInfoBase = nurseProps.field_124->animInfo_24;
     sfxIdx0      = PuppetNurse_AnimSfxGet(FP_FROM(nurse->model.anim.time, Q12_SHIFT));
 
-    WorldGfx_CharaMeshSwap(nurse->model.charaId, nurseProps.modelVariantIdx);
+    WorldGfx_CharaMeshSwap(nurse->model.charaId, MESH_SWAP_STATUS(PuppetNurseSwappableMesh_None, nurseProps.modelVariantIdx));
     Math_MatrixTransform(&nurse->position, &nurse->rotation, boneCoords);
 
-    if (nurse->model.anim.status != ANIM_STATUS(0, false))
+    if (nurse->model.anim.status != ANIM_STATUS(PuppetNurseAnim_Still, false))
     {
         (&animInfoBase[nurse->model.anim.status])->playbackFunc(&nurse->model, anmHdr, boneCoords, &animInfoBase[nurse->model.anim.status]);
     }

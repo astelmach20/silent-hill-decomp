@@ -100,23 +100,23 @@ typedef enum _HarryBone
     HarryBone_Count         = 18
 } e_HarryBone;
 
-/** @brief Harry character swappable mesh IDs */
+/** @brief Harry character swappable mesh IDs. */
 typedef enum _HarrySwappableMesh
 {
-    HarrySwappableMesh_None = 0,
-    HarrySwappableMesh_1    = 1, // } TODO: Left and right hands, not sure which is which.
-    HarrySwappableMesh_2    = 2  // }
+    HarrySwappableMesh_None      = 0,
+    HarrySwappableMesh_RightHand = 1,
+    HarrySwappableMesh_LeftHand  = 2
 } e_HarrySwappableMesh;
 
 /** @brief Harry character variant mesh IDs. */
 typedef enum _HarryVariantMesh
 {
-    HarryVariantMesh_None = 0,
-    HarryVariantMesh_1    = 1,
-    HarryVariantMesh_2    = 2,
-    HarryVariantMesh_3    = 3,
-    HarryVariantMesh_4    = 4,
-    HarryVariantMesh_5    = 5
+    HarryVariantMesh_None           = 0,
+    HarryVariantMesh_RightHandEmpty = 1,
+    HarryVariantMesh_HandMelee      = 2, // Used for both hands?
+    HarryVariantMesh_RightHandGun   = 3,
+    HarryVariantMesh_RightHandRifle = 4,
+    HarryVariantMesh_5              = 5  // Unsure, only used in `sharedFunc_800CDAA8_0_s02_Switch_Unk85`.
 } e_HarryVariantMesh;
 
 #endif

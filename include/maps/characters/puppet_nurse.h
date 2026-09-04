@@ -51,6 +51,23 @@ typedef enum _PuppetNurseAnim
     PuppetNurseAnim_21    = 21
 } e_PuppetNurseAnim;
 
+/** @brief Puppet Nurse or Puppet Doctor character swappable mesh IDs. */
+typedef enum _PuppetNurseSwappableMesh
+{
+    PuppetNurseSwappableMesh_None = 0,
+    PuppetNurseSwappableMesh_1    = 1,
+    PuppetNurseSwappableMesh_2    = 2
+} e_PuppetNurseSwappableMesh;
+
+/** @brief Puppet Nurse or Puppet Doctor character variant mesh IDs. */
+typedef enum _PuppetNurseVariantMesh
+{
+    PuppetNurseVariantMesh_None = 0,
+    PuppetNurseVariantMesh_1    = 1,
+    PuppetNurseVariantMesh_2    = 2,
+    PuppetNurseVariantMesh_3    = 3
+} e_PuppetNurseVariantMesh;
+
 s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
 
 void PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);

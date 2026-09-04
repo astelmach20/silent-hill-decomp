@@ -3265,7 +3265,7 @@ void Gfx_PlayerHeldItemAttach(u8 weaponAttack) // 0x800546A8
     switch (weaponAttack)
     {
         case EquippedWeaponId_KitchenKnife:
-            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_2));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_HandMelee));
             break;
 
         case EquippedWeaponId_SteelPipe:
@@ -3274,17 +3274,17 @@ void Gfx_PlayerHeldItemAttach(u8 weaponAttack) // 0x800546A8
         case EquippedWeaponId_Katana:
         case EquippedWeaponId_Axe:
         case EquippedWeaponId_RockDrill:
-            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_2));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_HandMelee));
             break;
 
         case EquippedWeaponId_Handgun:
         case EquippedWeaponId_HuntingRifle:
         case EquippedWeaponId_Shotgun:
-            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_3, HarrySwappableMesh_1));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
             break;
 
         default:
-            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_1, HarrySwappableMesh_None));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_None, HarryVariantMesh_RightHandEmpty));
             break;
     }
 }

@@ -56,8 +56,28 @@ typedef enum _KaufmannAnim
     KaufmannAnim_18    = 18,
     KaufmannAnim_19    = 19,
     KaufmannAnim_20    = 20,
-    KaufmannAnim_21    = 21
+    KaufmannAnim_21    = 21,
+    KaufmannAnim_22    = 22
 } e_KaufmannAnim;
+
+/** @brief Kaufmann character swappable mesh IDs. */
+typedef enum _KaufmannSwappableMesh
+{
+    KaufmannSwappableMesh_None = 0,
+    KaufmannSwappableMesh_1    = 1,
+    KaufmannSwappableMesh_2    = 2,
+    KaufmannSwappableMesh_3    = 3
+} e_KaufmannSwappableMesh;
+
+/** @brief Kaufmann character variant mesh IDs. */
+typedef enum _KaufmannVariantMesh
+{
+    KaufmannVariantMesh_None = 0,
+    KaufmannVariantMesh_1    = 1,
+    KaufmannVariantMesh_2    = 2,
+    KaufmannVariantMesh_3    = 3,
+    KaufmannVariantMesh_4    = 4
+} e_KaufmannVariantMesh;
 
 /** @brief Kaufmann character anim infos. */
 extern s_AnimInfo KAUFMANN_ANIM_INFOS[];

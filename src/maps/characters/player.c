@@ -1051,7 +1051,7 @@ void sharedFunc_800D2EB4_0_s00(void)
     g_SysWork.playerCombat.weaponAttack = NO_VALUE;
     sharedData_800DD59C_0_s00 = prevVar;
 
-    WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_1, HarrySwappableMesh_1));
+    WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandEmpty));
 }
 
 void sharedFunc_800D2EF4_0_s00(void)

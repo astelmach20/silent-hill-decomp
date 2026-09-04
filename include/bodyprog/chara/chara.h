@@ -198,7 +198,7 @@ typedef struct _PropsNpc
 {
     /* 0xE8  */ s32    controlState; /** `e_*Control` */
     /* 0xEC  */ s16    field_EC;
-    /* 0xEE  */ s16    field_EE; // Anim index?
+    /* 0xEE  */ s16    field_EE; // Anim index (or full anim status?) in MonsterCybil.
     /* 0xF0  */ s32    freeze; // `bool`, `q19_12` timer in MonsterCybil.
     /* 0xF4  */ s32    field_F4;
     /* 0xF8  */ s32    resetControlState; // `bool`, `q19_12` timer in MonsterCybil.

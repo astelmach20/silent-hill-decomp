@@ -13,6 +13,12 @@
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
+#include "maps/characters/cybil.h"
+#include "maps/characters/dahlia.h"
+#include "maps/characters/kaufmann.h"
+#include "maps/characters/puppet_nurse.h"
+#include "maps/characters/split_head.h"
+#include "maps/characters/stalker.h"
 
 const s32 __pad_rodata_80025524 = 0;
 
@@ -1303,19 +1309,19 @@ void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DE60
 
         switch (variantId)
         {
-            case HarryVariantMesh_1:
+            case HarryVariantMesh_RightHandEmpty:
                 func_80045468(skel, &D_800A9ED0, true);
                 break;
 
-            case HarryVariantMesh_2:
+            case HarryVariantMesh_HandMelee:
                 func_80045468(skel, &D_800A9ED4, true);
                 break;
 
-            case HarryVariantMesh_3:
+            case HarryVariantMesh_RightHandGun:
                 func_80045468(skel, &D_800A9ED8, true);
                 break;
 
-            case HarryVariantMesh_4:
+            case HarryVariantMesh_RightHandRifle:
                 func_80045468(skel, &D_800A9EDC, true);
                 break;
 
@@ -1333,11 +1339,11 @@ void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DE60
 
         switch (swappableId)
         {
-            case MESH_SWAP_STATUS(HarrySwappableMesh_None, HarrySwappableMesh_1):
+            case MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarrySwappableMesh_None):
                 func_80045468(skel, &D_800A9EE8, true);
                 break;
 
-            case MESH_SWAP_STATUS(HarrySwappableMesh_None, HarrySwappableMesh_2):
+            case MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarrySwappableMesh_None):
                 func_80045468(skel, &D_800A9EEC, true);
                 break;
         }
@@ -1354,34 +1360,36 @@ void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DF84
     static s32 D_800A9EF8 = 0x0000FE12;
     static s32 D_800A9EFC = 0x00FE1312;
 
+    // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != CybilVariantMesh_None)
     {
         switch (variantId)
         {
-            case 1:
+            case CybilVariantMesh_1:
                 func_80045468(skel, &D_800A9EF4, false);
                 func_80045468(skel, &D_800A9EF0, true);
                 break;
 
-            case 2:
+            case CybilVariantMesh_2:
                 func_80045468(skel, &D_800A9EF0, false);
                 func_80045468(skel, &D_800A9EF4, true);
                 break;
         }
     }
 
+    // Process swappable mesh.
     variantId = MESH_SWAP_STATUS_SWAPPABLE_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != CybilSwappableMesh_None)
     {
         switch (variantId)
         {
-            case MESH_SWAP_STATUS(0, 1):
+            case MESH_SWAP_STATUS(CybilSwappableMesh_1, CybilVariantMesh_None):
                 func_80045468(skel, &D_800A9EFC, false);
                 func_80045468(skel, &D_800A9EF8, true);
                 break;
 
-            case MESH_SWAP_STATUS(0, 2):
+            case MESH_SWAP_STATUS(CybilSwappableMesh_2, CybilVariantMesh_None):
                 func_80045468(skel, &D_800A9EF8, false);
                 func_80045468(skel, &D_800A9EFC, true);
                 break;
@@ -1398,34 +1406,36 @@ void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
     static s32 D_800A9F08 = 0x0000FE00;
     static s32 D_800A9F0C = 0x00FE0100;
 
+    // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != CybilVariantMesh_None)
     {
         switch (variantId)
         {
-            case 1:
+            case CybilVariantMesh_1:
                 func_80045468(skel, &D_800A9F04, false);
                 func_80045468(skel, &D_800A9F00, true);
                 break;
 
-            case 2:
+            case CybilVariantMesh_2:
                 func_80045468(skel, &D_800A9F00, false);
                 func_80045468(skel, &D_800A9F04, true);
                 break;
         }
     }
 
+    // Process swappable mesh.
     variantId = MESH_SWAP_STATUS_SWAPPABLE_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != CybilSwappableMesh_None)
     {
         switch (variantId)
         {
-            case MESH_SWAP_STATUS(0, 1):
+            case MESH_SWAP_STATUS(CybilSwappableMesh_1, CybilVariantMesh_None):
                 func_80045468(skel, &D_800A9F0C, false);
                 func_80045468(skel, &D_800A9F08, true);
                 break;
 
-            case MESH_SWAP_STATUS(0, 2):
+            case MESH_SWAP_STATUS(CybilSwappableMesh_2, CybilVariantMesh_None):
                 func_80045468(skel, &D_800A9F08, false);
                 func_80045468(skel, &D_800A9F0C, true);
                 break;
@@ -1442,22 +1452,23 @@ void WorldGfx_DahliaMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E194
     static s32 D_800A9F18 = 0x00FE0201;
     static s32 D_800A9F1C = 0x0000FE03;
 
+    // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != DahliaVariantMesh_None)
     {
         func_80045468(skel, &D_800A9F10, false);
 
         switch (variantId)
         {
-            case 1:
+            case DahliaVariantMesh_1:
                 func_80045468(skel, &D_800A9F14, true);
                 break;
 
-            case 2:
+            case DahliaVariantMesh_2:
                 func_80045468(skel, &D_800A9F18, true);
                 break;
 
-            case 3:
+            case DahliaVariantMesh_3:
                 func_80045468(skel, &D_800A9F1C, true);
                 break;
         }
@@ -1480,48 +1491,49 @@ void WorldGfx_KaufmannMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E2
     static s32 D_800A9F40 = 0x0000FE01;
     static s32 D_800A9F44 = 0x00FE0201;
 
+    // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != KaufmannVariantMesh_None)
     {
         func_80045468(skel, &D_800A9F20, false);
 
         switch (variantId)
         {
-            case 1:
+            case KaufmannVariantMesh_1:
                 func_80045468(skel, &D_800A9F28, true);
                 break;
 
-            case 2:
+            case KaufmannVariantMesh_2:
                 func_80045468(skel, &D_800A9F2C, true);
                 break;
 
-            case 3:
+            case KaufmannVariantMesh_3:
                 func_80045468(skel, &D_800A9F30, true);
                 break;
 
-            case 4:
+            case KaufmannVariantMesh_4:
                 func_80045468(skel, &D_800A9F34, true);
                 break;
         }
     }
 
-
+    // Process swappable mesh.
     swappableId = MESH_SWAP_STATUS_SWAPPABLE_ID_GET(meshSwapStatus);
-    if (swappableId != 0)
+    if (swappableId != KaufmannSwappableMesh_None)
     {
         func_80045468(skel, &D_800A9F38, false);
 
         switch (swappableId)
         {
-            case MESH_SWAP_STATUS(0, 1):
+            case MESH_SWAP_STATUS(KaufmannSwappableMesh_1, KaufmannVariantMesh_None):
                 func_80045468(skel, &D_800A9F3C, true);
                 break;
 
-            case MESH_SWAP_STATUS(0, 2):
+            case MESH_SWAP_STATUS(KaufmannSwappableMesh_2, KaufmannVariantMesh_None):
                 func_80045468(skel, &D_800A9F40, true);
                 break;
 
-            case MESH_SWAP_STATUS(0, 3):
+            case MESH_SWAP_STATUS(KaufmannSwappableMesh_3, KaufmannVariantMesh_None):
                 func_80045468(skel, &D_800A9F44, true);
                 break;
         }
@@ -1535,17 +1547,18 @@ void WorldGfx_StalkerMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E38
     static s32 D_800A9F48 = 0x0000FE05;
     static s32 D_800A9F4C = 0x0000FE06;
 
+    // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != StalkerVariantMesh_None)
     {
         switch (variantId)
         {
-            case 1:
+            case StalkerVariantMesh_1:
                 func_80045468(skel, &D_800A9F4C, false);
                 func_80045468(skel, &D_800A9F48, true);
                 break;
 
-            case 2:
+            case StalkerVariantMesh_2:
                 func_80045468(skel, &D_800A9F48, false);
                 func_80045468(skel, &D_800A9F4C, true);
                 break;
@@ -1560,17 +1573,18 @@ void WorldGfx_SplitHeadMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E
     static s32 D_800A9F50 = 0xFE19FD11;
     static s32 D_800A9F54 = 0xFE22FD1A;
 
+    // @note Unique disuse of `MESH_SWAP_STATUS_VARIANT_ID_GET`. This masks bits 0-1 instead of 0-3.
     variantId = meshSwapStatus & 0x3;
-    if (variantId != 0)
+    if (variantId != SplitHeadVariantMesh_None)
     {
         switch (variantId)
         {
-            case 1:
+            case SplitHeadVariantMesh_1:
                 func_80045468(skel, &D_800A9F50, false);
                 func_80045468(skel, &D_800A9F54, true);
                 break;
 
-            case 2:
+            case SplitHeadVariantMesh_2:
                 func_80045468(skel, &D_800A9F54, false);
                 func_80045468(skel, &D_800A9F50, true);
                 break;
@@ -1588,22 +1602,23 @@ void WorldGfx_PuppetNurseMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x800
     static s32 D_800A9F64 = 0x00FE0603;
     static s32 D_800A9F68 = 0x00FE0704;
 
+    // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != PuppetNurseVariantMesh_None)
     {
         func_80045468(skel, &D_800A9F58, false);
 
         switch (variantId)
         {
-            case 1:
+            case PuppetNurseVariantMesh_1:
                 func_80045468(skel, &D_800A9F60, true);
                 break;
 
-            case 2:
+            case PuppetNurseVariantMesh_2:
                 func_80045468(skel, &D_800A9F64, true);
                 break;
 
-            case 3:
+            case PuppetNurseVariantMesh_3:
                 func_80045468(skel, &D_800A9F68, true);
                 break;
         }
@@ -1620,22 +1635,23 @@ void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
     static s32 D_800A9F78 = 0x00FE0603;
     static s32 D_800A9F7C = 0x00FE0704;
 
+    // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
-    if (variantId != 0)
+    if (variantId != PuppetNurseVariantMesh_None)
     {
         func_80045468(skel, &D_800A9F6C, false);
 
         switch (variantId)
         {
-            case 1:
+            case PuppetNurseVariantMesh_1:
                 func_80045468(skel, &D_800A9F74, true);
                 break;
 
-            case 2:
+            case PuppetNurseVariantMesh_2:
                 func_80045468(skel, &D_800A9F78, true);
                 break;
 
-            case 3:
+            case PuppetNurseVariantMesh_3:
                 func_80045468(skel, &D_800A9F7C, true);
                 break;
         }

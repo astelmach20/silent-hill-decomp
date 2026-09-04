@@ -94,6 +94,20 @@ typedef enum _StalkerAnim
     StalkerAnim_47    = 47
 } e_StalkerAnim;
 
+/** @brief Stalker character swappable mesh IDs. */
+typedef enum _StalkerSwappableMesh
+{
+    StalkerSwappableMesh_None = 0
+} e_StalkerSwappableMesh;
+
+/** @brief Stalker character variant mesh IDs. */
+typedef enum _StalkerVariantMesh
+{
+    StalkerVariantMesh_None = 0,
+    StalkerVariantMesh_1    = 1, // @unused?
+    StalkerVariantMesh_2    = 2
+} e_StalkerVariantMesh;
+
 /*s_AnimInfo STALKER_ANIM_INFOS[] = {
     { Anim_BlendLinear, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },

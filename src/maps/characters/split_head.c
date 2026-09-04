@@ -1066,11 +1066,11 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
         case ANIM_STATUS(SplitHeadAnim_13, true):
         case ANIM_STATUS(SplitHeadAnim_14, false):
         case ANIM_STATUS(SplitHeadAnim_14, true):
-            WorldGfx_CharaMeshSwap(splitHead->model.charaId, 2);
+            WorldGfx_CharaMeshSwap(splitHead->model.charaId, MESH_SWAP_STATUS(SplitHeadSwappableMesh_None, SplitHeadVariantMesh_2));
             break;
 
         default:
-            WorldGfx_CharaMeshSwap(splitHead->model.charaId, 1);
+            WorldGfx_CharaMeshSwap(splitHead->model.charaId, MESH_SWAP_STATUS(SplitHeadSwappableMesh_None, SplitHeadVariantMesh_1));
             break;
     }
 

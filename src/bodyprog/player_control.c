@@ -905,17 +905,17 @@ static inline void func_80071968_Switch0(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_2));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_HandMelee));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_3, HarrySwappableMesh_2));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_RightHandGun));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_4, HarrySwappableMesh_2));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_RightHandRifle));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
@@ -933,7 +933,7 @@ static inline void func_80071968_Switch0(void)
     }
     else
     {
-        WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_2));
+        WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_HandMelee));
     }
 }
 
@@ -964,17 +964,17 @@ static inline void func_80071968_Switch1(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_HandMelee));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_3, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_4, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandRifle));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Tap):
@@ -993,8 +993,8 @@ static inline void func_80071968_Switch1(void)
     else
     {
         WorldGfx_CharaMeshSwap(Chara_Harry,
-                               g_SysWork.enablePlayerMatchAnim ? MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_1) :
-                                                                 MESH_SWAP_STATUS(HarryVariantMesh_1, HarrySwappableMesh_1));
+                               g_SysWork.enablePlayerMatchAnim ? MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_HandMelee) :
+                                                                 MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandEmpty));
     }
 }
 

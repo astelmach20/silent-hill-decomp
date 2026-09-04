@@ -106,24 +106,24 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_HandMelee));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_3, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_4, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandRifle));
                 break;
         }
     }
     else
     {
         func_8003D03C();
-        WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_1, HarrySwappableMesh_1));
+        WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandEmpty));
     }
 }
 
@@ -157,17 +157,17 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_2, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_HandMelee));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_3, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_4, HarrySwappableMesh_1));
+                WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandRifle));
                 break;
         }
     }
@@ -177,11 +177,11 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
 
         if (extra->model.anim.keyframeIdx >= 958)
         {
-            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_5, HarrySwappableMesh_1));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_5));
         }
         else
         {
-            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_1, HarrySwappableMesh_1));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandEmpty));
         }
     }
 }
@@ -637,7 +637,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(180, true));
 #ifdef MAP1_S03
             func_8003D03C();
-            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarryVariantMesh_1, HarrySwappableMesh_1));
+            WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandEmpty));
 #else
             keyframeIdx = 949;
             sharedFunc_800CDAA8_0_s02_Switch_Unk85(extra);
