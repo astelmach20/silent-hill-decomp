@@ -148,7 +148,7 @@ extern VECTOR sharedData_800DD880_0_s01;
 
 /** Could be a padded `VECTOR`, but the ASM for the function `vec = vec` assignments copies only the first 3 fields. */
 extern VECTOR3 sharedData_800DE170_0_s01;
-extern VECTOR3 sharedData_800DE180_0_s01; // Q19.12 player position relevant to Air Screamer.
+extern VECTOR3 g_AirScreamer_HeadTargetPosition;
 extern VECTOR3 sharedData_800DE190_0_s01;
 
 extern s_RayTrace sharedData_800E2330_0_s01;
@@ -175,8 +175,8 @@ extern s32    sharedData_800E39E4_0_s00;
 extern s32    sharedData_800E39E8_0_s00;
 extern s32    sharedData_800E39EC_0_s00[];
 extern u16    sharedData_800E3A0C_0_s00[]; // Angles?
-extern q19_12 sharedData_800E3A18_0_s00;   // Player X position?
-extern q19_12 sharedData_800E3A1C_0_s00;   // Player Z position?
+extern q19_12 g_Stalker_TargetPositionX;
+extern q19_12 g_Stalker_TargetPositionZ;
 
 // Two variables used by `Creeper_Init`.
 extern s8 sharedData_800E57CC_1_s02;

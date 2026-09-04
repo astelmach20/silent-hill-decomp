@@ -563,8 +563,8 @@ void Stalker_ControlUpdate(s_SubCharacter* stalker)
         if (sharedData_800DD5A6_0_s00 != 5)
         {
             sharedData_800DD5A6_0_s00++;
-            sharedData_800E3A18_0_s00 = g_SysWork.playerWork.player.position.vx;
-            sharedData_800E3A1C_0_s00 = g_SysWork.playerWork.player.position.vz;
+            g_Stalker_TargetPositionX = g_SysWork.playerWork.player.position.vx;
+            g_Stalker_TargetPositionZ = g_SysWork.playerWork.player.position.vz;
         }
         else
         {
@@ -583,8 +583,8 @@ void Stalker_ControlUpdate(s_SubCharacter* stalker)
             }
 
             temp_s1                   = sharedData_800E39EC_0_s00[0] + (angle1 >> 2);
-            sharedData_800E3A18_0_s00 = ((temp_s1 * Math_Sin(angle)) >> 14) + g_SysWork.playerWork.player.position.vx;
-            sharedData_800E3A1C_0_s00 = ((temp_s1 * Math_Cos(angle)) >> 14) + g_SysWork.playerWork.player.position.vz;
+            g_Stalker_TargetPositionX = ((temp_s1 * Math_Sin(angle)) >> 14) + g_SysWork.playerWork.player.position.vx;
+            g_Stalker_TargetPositionZ = ((temp_s1 * Math_Cos(angle)) >> 14) + g_SysWork.playerWork.player.position.vz;
         }
     }
 
@@ -654,12 +654,12 @@ void Stalker_Control_2(s_SubCharacter* stalker)
     s32    i;
 
     // TODO: Doesn't match?
-    //distToPlayer  = Math_Vector2MagCalcSafeQ6(sharedData_800E3A18_0_s00 - stalker->position.vx,
-    //                                 sharedData_800E3A1C_0_s00 - stalker->position.vz);
-    distToPlayer   = SquareRoot0(SQUARE((sharedData_800E3A18_0_s00 - stalker->position.vx) >> 6) + SQUARE((sharedData_800E3A1C_0_s00 - stalker->position.vz) >> 6));
+    //distToPlayer  = Math_Vector2MagCalcSafeQ6(g_Stalker_TargetPositionX - stalker->position.vx,
+    //                                 g_Stalker_TargetPositionZ - stalker->position.vz);
+    distToPlayer   = SquareRoot0(SQUARE((g_Stalker_TargetPositionX - stalker->position.vx) >> 6) + SQUARE((g_Stalker_TargetPositionZ - stalker->position.vz) >> 6));
     distToPlayer <<= 6;
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(sharedData_800E3A18_0_s00 - stalker->position.vx,
-                                              sharedData_800E3A1C_0_s00 - stalker->position.vz) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_Stalker_TargetPositionX - stalker->position.vx,
+                                              g_Stalker_TargetPositionZ - stalker->position.vz) -
                                        stalker->rotation.vy);
 
     if (distToPlayer > Q12(8.0f) && (stalkerProps.flags & StalkerFlag_0) && !(g_SysWork.sysFlags & SysFlag_MenuActive))
@@ -706,8 +706,8 @@ void Stalker_Control_2(s_SubCharacter* stalker)
                     stalker->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f));
                 }
 
-                angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(sharedData_800E3A18_0_s00 - stalker->position.vx,
-                                                          sharedData_800E3A1C_0_s00 - stalker->position.vz) -
+                angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_Stalker_TargetPositionX - stalker->position.vx,
+                                                          g_Stalker_TargetPositionZ - stalker->position.vz) -
                                                    stalker->rotation.vy);
             }
 
@@ -862,10 +862,10 @@ void Stalker_Control_3(s_SubCharacter* stalker)
     q25_6  temp;
     q19_12 temp2;
 
-    distToPlayer  = Math_Vector2MagCalcSafeQ6(sharedData_800E3A18_0_s00 - stalker->position.vx,
-                                        sharedData_800E3A1C_0_s00 - stalker->position.vz);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(sharedData_800E3A18_0_s00 - stalker->position.vx,
-                                              sharedData_800E3A1C_0_s00 - stalker->position.vz) -
+    distToPlayer  = Math_Vector2MagCalcSafeQ6(g_Stalker_TargetPositionX - stalker->position.vx,
+                                        g_Stalker_TargetPositionZ - stalker->position.vz);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_Stalker_TargetPositionX - stalker->position.vx,
+                                              g_Stalker_TargetPositionZ - stalker->position.vz) -
                                        stalker->rotation.vy);
 
     if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & ((1 << 0) | (1 << 1))))
@@ -899,8 +899,8 @@ void Stalker_Control_3(s_SubCharacter* stalker)
 
     if (cond1 || func_80070360(stalker, distToPlayer, Q12(1.0f)))
     {
-        stalkerProps.targetPositionX = sharedData_800E3A18_0_s00;
-        stalkerProps.targetPositionZ = sharedData_800E3A1C_0_s00;
+        stalkerProps.targetPositionX = g_Stalker_TargetPositionX;
+        stalkerProps.targetPositionZ = g_Stalker_TargetPositionZ;
 
         if (!(stalkerProps.flags & StalkerFlag_10))
         {
@@ -966,8 +966,8 @@ void Stalker_Control_3(s_SubCharacter* stalker)
                         stalker->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
                     }
 
-                    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(sharedData_800E3A18_0_s00 - stalker->position.vx,
-                                                              sharedData_800E3A1C_0_s00 - stalker->position.vz) -
+                    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_Stalker_TargetPositionX - stalker->position.vx,
+                                                              g_Stalker_TargetPositionZ - stalker->position.vz) -
                                                        stalker->rotation.vy);
                 }
 
@@ -2081,7 +2081,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     s_AnimInfo*                  animInfo;
     s_sharedFunc_800D6970_0_s00* ptr;
 
-    WorldGfx_CharaMeshSwap(stalker->model.charaId, MESH_SWAP_STATUS(StalkerSwappableMesh_None, StalkerVariantMesh_2));
+    WorldGfx_CharaMeshSwap(stalker->model.charaId, MESH_SWAP_STATUS(StalkerSwappableMesh_Head, StalkerVariantMesh_2));
 
     switch (stalker->model.anim.status)
     {
@@ -2219,8 +2219,8 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
 
         if (temp < Q12(3.0f) && ABS(ptr->angle_46) < Q12_ANGLE(45.0f))
         {
-            if (sharedData_800E3A18_0_s00 == stalkerProps.targetPositionX &&
-                sharedData_800E3A1C_0_s00 == stalkerProps.targetPositionZ)
+            if (g_Stalker_TargetPositionX == stalkerProps.targetPositionX &&
+                g_Stalker_TargetPositionZ == stalkerProps.targetPositionZ)
             {
                 if (ptr->angle_46 > Q12_ANGLE(0.0f))
                 {

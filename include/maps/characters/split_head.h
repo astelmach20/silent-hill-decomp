@@ -54,17 +54,15 @@ typedef enum _SplitHeadAnim
 /** @brief Split Head character swappable mesh IDs. */
 typedef enum _SplitHeadSwappableMesh
 {
-    SplitHeadSwappableMesh_None = 0,
-    SplitHeadSwappableMesh_1    = 1,
-    SplitHeadSwappableMesh_2    = 2
+    SplitHeadSwappableMesh_Head = 0
 } e_SplitHeadSwappableMesh;
 
 /** @brief Split Head character variant mesh IDs. */
 typedef enum _SplitHeadVariantMesh
 {
     SplitHeadVariantMesh_None = 0,
-    SplitHeadVariantMesh_1    = 1,
-    SplitHeadVariantMesh_2    = 2
+    SplitHeadVariantMesh_1    = 1, // } Open and closed heads?
+    SplitHeadVariantMesh_2    = 2  // }
 } e_SplitHeadVariantMesh;
 
 typedef struct

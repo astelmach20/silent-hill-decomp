@@ -69,7 +69,7 @@ typedef enum _DahliaAnim
 /** @brief Dahlia character swappable mesh IDs. */
 typedef enum _DahliaSwappableMesh
 {
-    DahliaSwappableMesh_None = 0
+    DahliaSwappableMesh_Head = 0 // TODO: Need to check if it's actually the head or something else.
 } e_DahliaSwappableMesh;
 
 /** @brief Dahlia character variant mesh IDs. */

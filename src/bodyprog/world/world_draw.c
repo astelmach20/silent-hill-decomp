@@ -1610,15 +1610,15 @@ void WorldGfx_PuppetNurseMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x800
 
         switch (variantId)
         {
-            case PuppetNurseVariantMesh_1:
+            case PuppetNurseVariantMesh_Head1:
                 func_80045468(skel, &D_800A9F60, true);
                 break;
 
-            case PuppetNurseVariantMesh_2:
+            case PuppetNurseVariantMesh_Head2:
                 func_80045468(skel, &D_800A9F64, true);
                 break;
 
-            case PuppetNurseVariantMesh_3:
+            case PuppetNurseVariantMesh_Head3:
                 func_80045468(skel, &D_800A9F68, true);
                 break;
         }
@@ -1643,15 +1643,15 @@ void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
 
         switch (variantId)
         {
-            case PuppetNurseVariantMesh_1:
+            case PuppetNurseVariantMesh_Head1:
                 func_80045468(skel, &D_800A9F74, true);
                 break;
 
-            case PuppetNurseVariantMesh_2:
+            case PuppetNurseVariantMesh_Head2:
                 func_80045468(skel, &D_800A9F78, true);
                 break;
 
-            case PuppetNurseVariantMesh_3:
+            case PuppetNurseVariantMesh_Head3:
                 func_80045468(skel, &D_800A9F7C, true);
                 break;
         }

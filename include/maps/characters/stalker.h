@@ -97,7 +97,7 @@ typedef enum _StalkerAnim
 /** @brief Stalker character swappable mesh IDs. */
 typedef enum _StalkerSwappableMesh
 {
-    StalkerSwappableMesh_None = 0
+    StalkerSwappableMesh_Head = 0
 } e_StalkerSwappableMesh;
 
 /** @brief Stalker character variant mesh IDs. */
@@ -105,7 +105,7 @@ typedef enum _StalkerVariantMesh
 {
     StalkerVariantMesh_None = 0,
     StalkerVariantMesh_1    = 1, // @unused?
-    StalkerVariantMesh_2    = 2
+    StalkerVariantMesh_2    = 2  // Head variant?
 } e_StalkerVariantMesh;
 
 /*s_AnimInfo STALKER_ANIM_INFOS[] = {
