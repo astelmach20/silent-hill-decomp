@@ -659,11 +659,11 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
     switch (monsterCybilProps.controlState)
     {
         case MonsterCybilControl_9:
-            sharedFunc_800D908C_0_s00(41, monsterCybil, 5, 16, sfxId, pitch0);
+            Npc_FootstepSoundPlay(41, monsterCybil, 5, 16, sfxId, pitch0);
             break;
 
         case MonsterCybilControl_10:
-            sharedFunc_800D9188_0_s00(37, monsterCybil, 29, Sfx_Unk1620);
+            Npc_SfxPlay(37, monsterCybil, 29, Sfx_Unk1620);
             break;
 
         case MonsterCybilControl_11:
@@ -672,28 +672,28 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
             }
 
-            sharedFunc_800D9188_0_s00(39, monsterCybil, 38, Sfx_Unk1622);
+            Npc_SfxPlay(39, monsterCybil, 38, Sfx_Unk1622);
             break;
 
         case MonsterCybilControl_4:
-            sharedFunc_800D9188_0_s00(9, monsterCybil, 69, Sfx_Unk1621);
+            Npc_SfxPlay(9, monsterCybil, 69, Sfx_Unk1621);
             break;
 
         case MonsterCybilControl_5:
             if (monsterCybil->model.anim.keyframeIdx < 312)
             {
-                sharedFunc_800D9188_0_s00(29, monsterCybil, 289, Sfx_Unk1632);
+                Npc_SfxPlay(29, monsterCybil, 289, Sfx_Unk1632);
             }
             else
             {
-                sharedFunc_800D9188_0_s00(29, monsterCybil, 313, Sfx_Unk1631);
+                Npc_SfxPlay(29, monsterCybil, 313, Sfx_Unk1631);
             }
             break;
     }
 
     if (monsterCybilProps.field_EC == 1)
     {
-        sharedFunc_800D908C_0_s00(3, monsterCybil, 5, 16, sfxId, pitch0);
+        Npc_FootstepSoundPlay(3, monsterCybil, 5, 16, sfxId, pitch0);
     }
 
     switch (monsterCybilProps.field_EE)

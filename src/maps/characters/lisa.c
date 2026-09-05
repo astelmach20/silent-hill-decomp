@@ -234,21 +234,21 @@ void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
     switch (lisaProps.controlState)
     {
         case LisaControl_1:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_2, true), lisa, 14, 31, sfxId, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_2, true), lisa, 14, 31, sfxId, pitch0);
             break;
 
         case LisaControl_8:
             if (lisa->model.anim.keyframeIdx <= 125)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), lisa, 125, 138, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_5, true), lisa, 125, 138, sfxId, pitch0);
             }
             else if (lisa->model.anim.keyframeIdx <= 153)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), lisa, 153, 138, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_5, true), lisa, 153, 138, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_5, true), lisa, 189, 184, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_5, true), lisa, 189, 184, sfxId, pitch0);
             }
             break;
 
@@ -256,82 +256,82 @@ void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
             if (lisa->model.anim.keyframeIdx <= 258)
             {
                 // @bug From the other `keyframeIdx` checks here, should this be 258 instead of 263?
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), lisa, 263, 258, sfxId, pitch1);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_9, true), lisa, 263, 258, sfxId, pitch1);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_9, true), lisa, 263, 266, sfxId, pitch1);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_9, true), lisa, 263, 266, sfxId, pitch1);
             }
             break;
 
         case LisaControl_13:
             if (lisa->model.anim.keyframeIdx <= 332)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), lisa, 332, 337, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_10, true), lisa, 332, 337, sfxId, pitch0);
             }
             else if (lisa->model.anim.keyframeIdx <= 344)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), lisa, 344, 337, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_10, true), lisa, 344, 337, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_10, true), lisa, 352, 348, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_10, true), lisa, 352, 348, sfxId, pitch0);
             }
             break;
 
         case LisaControl_11:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_8, true), lisa, 240, 240, sfxId, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_8, true), lisa, 240, 240, sfxId, pitch0);
             break;
 
         case LisaControl_15:
 #if defined(MAP7_S00)
-            sharedFunc_800D9188_0_s00(ANIM_STATUS(LisaAnim_12, true), lisa, 408, Sfx_Unk1639);
+            Npc_SfxPlay(ANIM_STATUS(LisaAnim_12, true), lisa, 408, Sfx_Unk1639);
 #endif
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_12, true), lisa, 406, 406, sfxId, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_12, true), lisa, 406, 406, sfxId, pitch0);
             break;
 
         case LisaControl_16:
             if (lisa->model.anim.keyframeIdx <= 423)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), lisa, 423, 425, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_13, true), lisa, 423, 425, sfxId, pitch0);
             }
             else if (lisa->model.anim.keyframeIdx <= 429)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), lisa, 429, 425, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_13, true), lisa, 429, 425, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_13, true), lisa, 435, 432, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_13, true), lisa, 435, 432, sfxId, pitch0);
             }
             break;
 
         case LisaControl_17:
             if (lisa->model.anim.keyframeIdx <= 460)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), lisa, 460, 477, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_14, true), lisa, 460, 477, sfxId, pitch0);
             }
             else if (lisa->model.anim.keyframeIdx <= 497)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), lisa, 497, 477, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_14, true), lisa, 497, 477, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_14, true), lisa, 536, 516, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_14, true), lisa, 536, 516, sfxId, pitch0);
             }
             break;
 
         case LisaControl_18:
             if (lisa->model.anim.keyframeIdx <= 551)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), lisa, 551, 555, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_15, true), lisa, 551, 555, sfxId, pitch0);
             }
             else if (lisa->model.anim.keyframeIdx <= 559)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), lisa, 559, 555, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_15, true), lisa, 559, 555, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(LisaAnim_15, true), lisa, 564, 564, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(LisaAnim_15, true), lisa, 564, 564, sfxId, pitch0);
             }
             break;
     }

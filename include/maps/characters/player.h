@@ -7,7 +7,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
 void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
-void sharedFunc_800D209C_0_s00(void);
+void Player_CutsceneWeaponUnequip(void);
 
 void Player_MatchArmAnimDisable(void);
 
@@ -53,7 +53,7 @@ bool sharedFunc_800D2E94_0_s00(void);
 // Something with a player collision offset.
 void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle);
 
-s32 sharedFunc_800D2EA4_0_s00(void);
+s32 Player_PropertyField10DGet(void);
 
 void Player_EmptyWeaponHandSet(void);
 

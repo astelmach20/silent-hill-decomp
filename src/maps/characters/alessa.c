@@ -179,7 +179,7 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
     switch (alessaProps.controlState)
     {
         case AlessaControl_2:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForward, true), alessa, 24, 37, sfxId, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_WalkForward, true), alessa, 24, 37, sfxId, pitch0);
             break;
 
         case AlessaControl_3:
@@ -187,45 +187,45 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
             {
                 if (alessa->model.anim.keyframeIdx <= 60)
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 60, 71, sfxId, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 60, 71, sfxId, pitch0);
                 }
                 else if (alessa->model.anim.keyframeIdx <= 81)
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 81, 71, sfxId, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 81, 71, sfxId, pitch0);
                 }
                 else
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 89, 89, sfxId, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 89, 89, sfxId, pitch0);
                 }
             }
             else
             {
                 if (alessa->model.anim.keyframeIdx <= 111)
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 121, 111, sfxId, pitch1);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 121, 111, sfxId, pitch1);
                 }
                 else
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 121, 128, sfxId, pitch1);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_WalkForwardTurnStumble, true), alessa, 121, 128, sfxId, pitch1);
                 }
             }
             break;
 
         case AlessaControl_5:
-            sharedFunc_800D9188_0_s00(alessa->model.anim.status, alessa, 210, Sfx_Unk1638);
+            Npc_SfxPlay(alessa->model.anim.status, alessa, 210, Sfx_Unk1638);
 
             if (alessa->model.anim.keyframeIdx <= 173)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_StumbleForwardCrumple, true), alessa, 182, 173, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_StumbleForwardCrumple, true), alessa, 182, 173, sfxId, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_StumbleForwardCrumple, true), alessa, 182, 199, sfxId, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_StumbleForwardCrumple, true), alessa, 182, 199, sfxId, pitch0);
             }
             break;
 
         case AlessaControl_8:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(AlessaAnim_StandLookRight, true), alessa, 298, 298, sfxId, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(AlessaAnim_StandLookRight, true), alessa, 298, 298, sfxId, pitch0);
             break;
     }
 

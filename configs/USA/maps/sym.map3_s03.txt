@@ -25,7 +25,7 @@ sharedData_800CB094_3_s01       = 0x800CB310;
 //--- PA: 0x001EE8   VA: 0x800CB460   subsegment: c, particle
 //-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CB460; // type:func
-sharedFunc_800D08B8_0_s00       = 0x800CB5C8; // type:func
+Particle_EnvironmentSet         = 0x800CB5C8; // type:func
 sharedFunc_800D0A60_0_s00       = 0x800CB748; // type:func
 sharedFunc_800D0B18_0_s00       = 0x800CB800; // type:func
 Particle_SoundStop              = 0x800CB964; // type:func
@@ -37,7 +37,7 @@ Particle_BeamDraw               = 0x800CC1FC; // type:func
 //---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CC5E8; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CCC4C; // type:func
-sharedFunc_800D209C_0_s00       = 0x800CD09C; // type:func
+Player_CutsceneWeaponUnequip    = 0x800CD09C; // type:func
 Player_MatchArmAnimDisable      = 0x800CD0D8; // type:func
 Player_ControlFreeze            = 0x800CD0E4; // type:func
 Player_ControlUnfreeze          = 0x800CD244; // type:func
@@ -57,7 +57,7 @@ Player_DamageFeetFront          = 0x800CD62C; // type:func
 sharedFunc_800D2E8C_0_s00       = 0x800CD634; // type:func
 sharedFunc_800D2E94_0_s00       = 0x800CD63C; // type:func
 sharedFunc_800D2E9C_0_s00       = 0x800CD644; // type:func
-sharedFunc_800D2EA4_0_s00       = 0x800CD64C; // type:func
+Player_PropertyField10DGet      = 0x800CD64C; // type:func
 Player_EmptyWeaponHandSet       = 0x800CD65C; // type:func
 Player_WeaponAttackRestore      = 0x800CD69C; // type:func
 

@@ -53,8 +53,8 @@ void SplitHead_Init(s_SubCharacter* splitHead)
     Chara_AnimSet(splitHead, ANIM_STATUS(SplitHeadAnim_StandIdle, true), 162);
     ModelAnim_AnimInfoSet(&splitHead->model.anim, SPLIT_HEAD_ANIM_INFOS);
 
-    sharedData_800D8614_1_s05 = Q12(0.0f);
-    sharedData_800D8616_1_s05 = Q12(0.0f);
+    g_SplitHead_MovementOffsetX = Q12(0.0f);
+    g_SplitHead_MovementOffsetZ = Q12(0.0f);
 
     Chara_DamageClear(splitHead);
 
@@ -269,11 +269,11 @@ void SplitHead_ControlUpdate(s_SubCharacter* splitHead)
 
     if (splitHead->model.anim.status == ANIM_STATUS(SplitHeadAnim_WalkForward, true))
     {
-        splitHeadProps.animTime_F8 = splitHead->model.anim.time;
+        splitHeadProps.animTime = splitHead->model.anim.time;
     }
     else if (splitHead->model.anim.status == ANIM_STATUS(SplitHeadAnim_WalkForward, false))
     {
-        splitHeadProps.animTime_F8 = Q12(201.0f);
+        splitHeadProps.animTime = Q12(201.0f);
     }
 }
 
@@ -1037,10 +1037,10 @@ void SplitHead_MovementUpdate(s_SubCharacter* splitHead)
 
     splitHead->collision.state = CharaCollisionState_4;
 
-    Chara_MovementUpdate1(splitHead, &collResult, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
+    Chara_MovementUpdate1(splitHead, &collResult, g_SplitHead_MovementOffsetX, g_SplitHead_MovementOffsetZ);
 
-    sharedData_800D8614_1_s05 = Q12(0.0f);
-    sharedData_800D8616_1_s05 = Q12(0.0f);
+    g_SplitHead_MovementOffsetX = Q12(0.0f);
+    g_SplitHead_MovementOffsetZ = Q12(0.0f);
 }
 
 void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
@@ -1831,17 +1831,17 @@ void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q2
     pos->vz = Q8_TO_Q12(scratch->field_28.vz);
 }
 
-void sharedFunc_800D450C_1_s05(q19_12 offsetX, q19_12 offsetZ)
+void SplitHead_MovementOffsetSet(q19_12 offsetX, q19_12 offsetZ)
 {
-    sharedData_800D8614_1_s05 += offsetX;
-    sharedData_800D8616_1_s05 += offsetZ;
+    g_SplitHead_MovementOffsetX += offsetX;
+    g_SplitHead_MovementOffsetZ += offsetZ;
 }
 
 bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead)
 {
     q19_12 animTime;
 
-    animTime = splitHeadProps.animTime_F8;
+    animTime = splitHeadProps.animTime;
     return ((animTime <  Q12(0.0f) || animTime > Q12(198.0f)) && splitHead->model.anim.time < Q12(175.0f)) ||
            ((animTime >= Q12(0.0f) && animTime < Q12(175.0f)) && splitHead->model.anim.time > Q12(198.0f));
 }

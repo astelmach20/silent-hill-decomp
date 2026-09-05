@@ -28,7 +28,7 @@ sharedFunc_800CCF30_1_s05       = 0x800CCF30; // type:func
 //--- PA: 0x004074   VA: 0x800CD5EC   subsegment: c, particle
 //-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CD5EC; // type:func
-sharedFunc_800D08B8_0_s00       = 0x800CD754; // type:func
+Particle_EnvironmentSet         = 0x800CD754; // type:func
 sharedFunc_800D0A60_0_s00       = 0x800CD8D4; // type:func
 sharedFunc_800D0B18_0_s00       = 0x800CD98C; // type:func
 Particle_SoundStop              = 0x800CDAF0; // type:func
@@ -40,7 +40,7 @@ Particle_BeamDraw               = 0x800CE388; // type:func
 //---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CE774; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CEA68; // type:func
-sharedFunc_800D209C_0_s00       = 0x800CEE94; // type:func
+Player_CutsceneWeaponUnequip    = 0x800CEE94; // type:func
 Player_MatchArmAnimDisable      = 0x800CEED0; // type:func
 Player_ControlFreeze            = 0x800CEEDC; // type:func
 Player_ControlUnfreeze          = 0x800CF03C; // type:func
@@ -60,7 +60,7 @@ Player_DamageFeetFront          = 0x800CF424; // type:func
 sharedFunc_800D2E8C_0_s00       = 0x800CF42C; // type:func
 sharedFunc_800D2E94_0_s00       = 0x800CF7A4; // type:func
 sharedFunc_800D2E9C_0_s00       = 0x800CF7AC; // type:func
-sharedFunc_800D2EA4_0_s00       = 0x800CF7B4; // type:func
+Player_PropertyField10DGet      = 0x800CF7B4; // type:func
 Player_EmptyWeaponHandSet       = 0x800CF7C4; // type:func
 Player_WeaponAttackRestore      = 0x800CF804; // type:func
 
@@ -88,7 +88,7 @@ sharedFunc_800D3AFC_1_s05       = 0x800D3AFC; // type:func
 sharedFunc_800D3B30_1_s05       = 0x800D3B30; // type:func
 sharedFunc_800D4070_1_s05       = 0x800D4070; // type:func
 sharedFunc_800D4408_1_s05       = 0x800D4408; // type:func
-sharedFunc_800D450C_1_s05       = 0x800D450C; // type:func
+SplitHead_MovementOffsetSet     = 0x800D450C; // type:func
 sharedFunc_800D4530_1_s05       = 0x800D4530; // type:func
 sharedFunc_800D4594_1_s05       = 0x800D4594; // type:func
 sharedFunc_800D929C_0_s00       = 0x800D489C; // type:func
@@ -173,8 +173,8 @@ sharedData_800E0CBA_0_s00       = 0x800D8606; // type:s8
 sharedData_800E39D8_0_s00       = 0x800D8608; // type:s32
 g_Player_MoveSpeed              = 0x800D860C; // type:s32
 sharedData_800D8610_1_s05       = 0x800D8610; // type:s32
-sharedData_800D8614_1_s05       = 0x800D8614; // type:s16
-sharedData_800D8616_1_s05       = 0x800D8616; // type:s16
+g_SplitHead_MovementOffsetX     = 0x800D8614; // type:s16
+g_SplitHead_MovementOffsetZ     = 0x800D8616; // type:s16
 sharedData_800D8618_1_s05       = 0x800D8618;
 sharedData_800D8684_1_s05       = 0x800D8684; // type:s32
 sharedData_800D8688_1_s05       = 0x800D8688; // type:s32

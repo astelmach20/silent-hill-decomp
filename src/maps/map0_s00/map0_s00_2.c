@@ -1008,7 +1008,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             }
 
         case 7:
-            sharedFunc_800D209C_0_s00();
+            Player_CutsceneWeaponUnequip();
             SysWork_StateStepIncrement(0);
 
         case 8:

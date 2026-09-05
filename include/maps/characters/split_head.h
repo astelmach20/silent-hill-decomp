@@ -121,8 +121,8 @@ extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
 // Three variables used by `SplitHead_Init`.
-extern q3_12 sharedData_800D8614_1_s05; // Offset X.
-extern q3_12 sharedData_800D8616_1_s05; // Offset Z.
+extern q3_12 g_SplitHead_MovementOffsetX;
+extern q3_12 g_SplitHead_MovementOffsetZ;
 
 extern s32 sharedData_800D5884_1_s05;
 
@@ -190,7 +190,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead);
 void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead);
 
 /** Accumulates an unknown XZ offset. */
-void sharedFunc_800D450C_1_s05(q19_12 offsetX, q19_12 offsetZ);
+void SplitHead_MovementOffsetSet(q19_12 offsetX, q19_12 offsetZ);
 
 bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead);
 

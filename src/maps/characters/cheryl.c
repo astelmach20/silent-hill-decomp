@@ -191,11 +191,11 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
         switch (cherylProps.controlState)
         {
             case CherylControl_WalkForward:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_WalkForward, true), cheryl, 16, 28, Sfx_CherylFootstep, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CherylAnim_WalkForward, true), cheryl, 16, 28, Sfx_CherylFootstep, pitch0);
                 break;
 
             case CherylControl_RunForward:
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CherylAnim_RunForward, true), cheryl, 53, 42, Sfx_CherylFootstep, pitch1);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CherylAnim_RunForward, true), cheryl, 53, 42, Sfx_CherylFootstep, pitch1);
                 break;
         }
     }

@@ -109,15 +109,15 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
         case BloodyLisaControl_6:
             if (bloodyLisa->model.anim.keyframeIdx <= 12)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), bloodyLisa, 12, 27, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(BloodyLisaAnim_Walk, true), bloodyLisa, 12, 27, sfx, pitch0);
             }
             else if (bloodyLisa->model.anim.keyframeIdx <= 49)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), bloodyLisa, 49, 27, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(BloodyLisaAnim_Walk, true), bloodyLisa, 49, 27, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(BloodyLisaAnim_Walk, true), bloodyLisa, 92, 69, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(BloodyLisaAnim_Walk, true), bloodyLisa, 92, 69, sfx, pitch0);
             }
             break;
     }

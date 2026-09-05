@@ -2892,7 +2892,7 @@ void func_800E787C(void) // 0x800E787C
 
     if (g_SysWork.sysStateSteps[0] == 31)
     {
-        sharedFunc_800D08B8_0_s00(2, 127);
+        Particle_EnvironmentSet(2, 127);
     }
 
     if (g_SysWork.sysStateSteps[0] >= 31)
@@ -3286,7 +3286,7 @@ void func_800E86BC(void) // 0x800E86BC
 
     if (g_SysWork.sysStateSteps[0] == 8)
     {
-        sharedFunc_800D08B8_0_s00(2, 127);
+        Particle_EnvironmentSet(2, 127);
     }
 
     if (g_SysWork.sysStateSteps[0] >= 8)

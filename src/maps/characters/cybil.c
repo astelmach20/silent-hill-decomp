@@ -380,74 +380,74 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
     switch (cybilProps.controlState)
     {
         case CybilControl_1:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_3, true), cybil, 32, 45, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_3, true), cybil, 32, 45, sfx, pitch0);
             break;
 
         case CybilControl_2:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_21, true), cybil, 18, 7, sfx, pitch1);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_21, true), cybil, 18, 7, sfx, pitch1);
             break;
 
         case CybilControl_3:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_4, true), cybil, 61, 57, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_4, true), cybil, 61, 57, sfx, pitch0);
             break;
 
         case CybilControl_4:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_5, true), cybil, 70, 74, sfx, pitch1);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_5, true), cybil, 70, 74, sfx, pitch1);
             break;
 
         case CybilControl_8:
-            sharedFunc_800D9188_0_s00(cybil->model.anim.status, cybil, 128, Sfx_Unk1368);
+            Npc_SfxPlay(cybil->model.anim.status, cybil, 128, Sfx_Unk1368);
             break;
 
         case CybilControl_6:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_7, true), cybil, 83, 86, sfx, pitch0);
-            sharedFunc_800D9188_0_s00(ANIM_STATUS(CybilAnim_7, true), cybil, 92, Sfx_Unk1369);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_7, true), cybil, 83, 86, sfx, pitch0);
+            Npc_SfxPlay(ANIM_STATUS(CybilAnim_7, true), cybil, 92, Sfx_Unk1369);
             break;
 
         case CybilControl_13:
             if (cybil->model.anim.keyframeIdx <= 185)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_13, true), cybil, 185, 189, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_13, true), cybil, 185, 189, sfx, pitch0);
             }
             else if (cybil->model.anim.keyframeIdx <= 192)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_13, true), cybil, 192, 189, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_13, true), cybil, 192, 189, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_13, true), cybil, 227, 222, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_13, true), cybil, 227, 222, sfx, pitch0);
             }
             break;
 
         case CybilControl_15:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_15, true), cybil, 260, 260, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_15, true), cybil, 260, 260, sfx, pitch0);
             break;
 
         case CybilControl_14:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_14, true), cybil, 239, 239, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_14, true), cybil, 239, 239, sfx, pitch0);
             break;
 
         case CybilControl_19:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_19, true), cybil, 362, 357, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_19, true), cybil, 362, 357, sfx, pitch0);
             break;
 
         case CybilControl_20:
             if (cybil->model.anim.keyframeIdx <= 373)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_20, true), cybil, 373, 380, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_20, true), cybil, 373, 380, sfx, pitch0);
             }
             else if (cybil->model.anim.keyframeIdx <= 391)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_20, true), cybil, 391, 380, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_20, true), cybil, 391, 380, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_20, true), cybil, 403, 398, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_20, true), cybil, 403, 398, sfx, pitch0);
             }
             break;
 
         case CybilControl_10:
-            sharedFunc_800D9188_0_s00(cybil->model.anim.status, cybil, 167, Sfx_Unk1370);
+            Npc_SfxPlay(cybil->model.anim.status, cybil, 167, Sfx_Unk1370);
             break;
 
         case CybilControl_25:
@@ -455,34 +455,34 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             {
                 if (cybil->model.anim.keyframeIdx <= 30)
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), cybil, 30, 39, sfx, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_22, true), cybil, 30, 39, sfx, pitch0);
                 }
                 else if (cybil->model.anim.keyframeIdx <= 46)
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), cybil, 46, 39, sfx, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_22, true), cybil, 46, 39, sfx, pitch0);
                 }
                 else
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), cybil, 63, 56, sfx, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_22, true), cybil, 63, 56, sfx, pitch0);
                 }
             }
             else
             {
                 if (cybil->model.anim.keyframeIdx <= 81)
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), cybil, 81, 74, sfx, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_22, true), cybil, 81, 74, sfx, pitch0);
                 }
                 else
                 {
-                    sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_22, true), cybil, 97, 91, sfx, pitch0);
+                    Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_22, true), cybil, 97, 91, sfx, pitch0);
                 }
             }
             break;
 
         case CybilControl_28:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(CybilAnim_25, true), cybil, 201, 198, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(CybilAnim_25, true), cybil, 201, 198, sfx, pitch0);
 
-            if (sharedFunc_800D9188_0_s00(cybil->model.anim.status, cybil, 228, Sfx_Unk1699))
+            if (Npc_SfxPlay(cybil->model.anim.status, cybil, 228, Sfx_Unk1699))
             {
                 func_800892A4(6);
             }
@@ -507,11 +507,11 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             break;
 
         case CybilControl_24:
-            sharedFunc_800D9188_0_s00(ANIM_STATUS(CybilAnim_29, true), cybil, 327, Sfx_Unk1672);
+            Npc_SfxPlay(ANIM_STATUS(CybilAnim_29, true), cybil, 327, Sfx_Unk1672);
             break;
 
         case CybilControl_21:
-            sharedFunc_800D9188_0_s00(ANIM_STATUS(CybilAnim_26, true), cybil, 282, Sfx_Unk1539);
+            Npc_SfxPlay(ANIM_STATUS(CybilAnim_26, true), cybil, 282, Sfx_Unk1539);
             break;
     }
 

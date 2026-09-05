@@ -6865,7 +6865,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
             sp40.vz = Q12(0.0f);
         }
 
-        g_MapOverlayHdr.func_158(-sp40.vx, -sp40.vz);
+        g_MapOverlayHdr.splitHeadMovementOffsetSet(-sp40.vx, -sp40.vz);
     }
 
     player->position.vx += g_Player_CollisionResult.offset.vx;

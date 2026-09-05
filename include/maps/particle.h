@@ -193,8 +193,7 @@ bool func_800D0600(void);
 
 void Particle_BoundaryClamp(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);
 
-/** `Particle_EnvironmentSet`? */
-void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
+void Particle_EnvironmentSet(s8 arg0, u32 arg1);
 
 void sharedFunc_800D0A60_0_s00(s32 caseArg);
 

@@ -453,7 +453,7 @@ typedef struct _PropsSplitHead
     /* 0xF2  */ q4_12   timer_F2;
     /* 0xF4  */ q4_12   timer_F4;
     /* 0xF8  */ s8      __pad_F8[2];
-    /* 0xF8  */ q19_12  animTime_F8;
+    /* 0xF8  */ q19_12  animTime; // Set to `Q12(201.0f)` if not walking forward.
     /* 0xFC  */ s32     field_FC;
     /* 0x100 */ s32     field_100;
     /* 0x104 */ s8      unk_104[4];

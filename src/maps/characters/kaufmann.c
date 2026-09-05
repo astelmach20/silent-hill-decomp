@@ -333,74 +333,74 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
     switch (kaufmannProps.controlState)
     {
         case KaufmannControl_1:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_3, true), kaufmann, 53, 41, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_3, true), kaufmann, 53, 41, sfx, pitch0);
             break;
 
         case KaufmannControl_6:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_4, true), kaufmann, 80, 0, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_4, true), kaufmann, 80, 0, sfx, pitch0);
             break;
 
         case KaufmannControl_7:
-            sharedFunc_800D9188_0_s00(kaufmann->model.anim.status, kaufmann, 95, Sfx_Unk1492);
+            Npc_SfxPlay(kaufmann->model.anim.status, kaufmann, 95, Sfx_Unk1492);
             break;
 
         case KaufmannControl_9:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_7, true), kaufmann, 132, 174, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_7, true), kaufmann, 132, 174, sfx, pitch0);
             break;
 
         case KaufmannControl_10:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_8, true), kaufmann, 191, 0, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_8, true), kaufmann, 191, 0, sfx, pitch0);
             break;
 
         case KaufmannControl_17:
-            sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_13, true), kaufmann, 393, 0, sfx, pitch0);
+            Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_13, true), kaufmann, 393, 0, sfx, pitch0);
             break;
 
         case KaufmannControl_13:
-            sharedFunc_800D9188_0_s00(ANIM_STATUS(KaufmannAnim_10, true), kaufmann, 307, Sfx_Unk1594);
+            Npc_SfxPlay(ANIM_STATUS(KaufmannAnim_10, true), kaufmann, 307, Sfx_Unk1594);
             break;
 
         case KaufmannControl_15:
             if (kaufmann->model.anim.keyframeIdx <= 353)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_12, true), kaufmann, 357, 353, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_12, true), kaufmann, 357, 353, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_12, true), kaufmann, 357, 361, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_12, true), kaufmann, 357, 361, sfx, pitch0);
             }
             break;
 
         case KaufmannControl_16:
             if (kaufmann->model.anim.keyframeIdx <= 21)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_2, true), kaufmann, 28, 21, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_2, true), kaufmann, 28, 21, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_2, true), kaufmann, 28, 34, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_2, true), kaufmann, 28, 34, sfx, pitch0);
             }
             break;
 
         case KaufmannControl_25:
             if (kaufmann->model.anim.keyframeIdx <= 247)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_21, true), kaufmann, 254, 247, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_21, true), kaufmann, 254, 247, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_21, true), kaufmann, 254, 260, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_21, true), kaufmann, 254, 260, sfx, pitch0);
             }
             break;
 
         case KaufmannControl_22:
             if (kaufmann->model.anim.keyframeIdx <= 211)
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_19, true), kaufmann, 217, 211, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_19, true), kaufmann, 217, 211, sfx, pitch0);
             }
             else
             {
-                sharedFunc_800D908C_0_s00(ANIM_STATUS(KaufmannAnim_19, true), kaufmann, 217, 221, sfx, pitch0);
+                Npc_FootstepSoundPlay(ANIM_STATUS(KaufmannAnim_19, true), kaufmann, 217, 221, sfx, pitch0);
             }
             break;
     }

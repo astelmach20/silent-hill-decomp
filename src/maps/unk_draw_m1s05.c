@@ -8,7 +8,7 @@
 #include "maps/shared.h"
 
 // Unknown drawing code included in M1S05 and M1S06
-// Splithead enemy code seems to call into this, maybe related to drawing it?
+// Split Head enemy code seems to call into this, maybe related to drawing it?
 // TODO: Make this separate split in each map instead of `#include`.
 
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)

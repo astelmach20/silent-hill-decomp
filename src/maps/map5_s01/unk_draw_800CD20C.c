@@ -234,8 +234,8 @@ void func_800CD860(void) // 0x800CD860
 
     for (i = 0; i < 6; i++)
     {
-        g_Items_Transforms[i].rotate.vz = 0;
-        g_Items_Transforms[i].rotate.vx = 0;
+        g_Items_Transforms[i].rotate.vz = Q12_ANGLE(0.0f);;
+        g_Items_Transforms[i].rotate.vx = Q12_ANGLE(0.0f);;
         g_Items_Transforms[i].trans.vz  = 0;
         g_Items_Transforms[i].trans.vy  = 0;
         g_Items_Transforms[i].trans.vx  = 0;
@@ -244,22 +244,22 @@ void func_800CD860(void) // 0x800CD860
         {
             case 0:
             case 5:
-                g_Items_Transforms[i].rotate.vy = 0x500;
+                g_Items_Transforms[i].rotate.vy = Q12_ANGLE(112.5f);
                 break;
 
             default:
                 D_800F1594[i] = temp_a0         = var_s1 % 10;
                 var_s1                          = var_s1 / 10;
-                g_Items_Transforms[i].rotate.vy = (temp_a0 << 9) + 0xB00;
+                g_Items_Transforms[i].rotate.vy = (temp_a0 << 9) + Q12_ANGLE(247.5f);
                 break;
         }
 
-        g_Items_Transforms[0].rotate.vy = 0xD00;
-        g_Items_Transforms[5].rotate.vy = 0xD00;
+        g_Items_Transforms[0].rotate.vy = Q12_ANGLE(292.5f);
+        g_Items_Transforms[5].rotate.vy = Q12_ANGLE(292.5f);
 
         for (i = 1; i < 5; i++)
         {
-            g_Items_Transforms[i].rotate.vy = (D_800F1598[i - 1] << 9) + 0xB00;
+            g_Items_Transforms[i].rotate.vy = (D_800F1598[i - 1] << 9) + Q12_ANGLE(247.5f);
         }
     }
 
@@ -273,21 +273,21 @@ void func_800CD860(void) // 0x800CD860
         switch (i)
         {
             case 0:
-                g_Items_Coords[i].coord.t[0] = 0;
-                g_Items_Coords[i].coord.t[1] = -0x34;
-                g_Items_Coords[i].coord.t[2] = -0x2080;
+                g_Items_Coords[i].coord.t[0] = Q8(0.0f);
+                g_Items_Coords[i].coord.t[1] = Q8(-0.205f);
+                g_Items_Coords[i].coord.t[2] = Q8(-32.5f);
                 break;
 
             case 5:
-                g_Items_Coords[i].coord.t[0] = 0;
-                g_Items_Coords[i].coord.t[1] = -0x14;
-                g_Items_Coords[i].coord.t[2] = -0x2080;
+                g_Items_Coords[i].coord.t[0] = Q8(0.0f);
+                g_Items_Coords[i].coord.t[1] = Q8(-0.08f);
+                g_Items_Coords[i].coord.t[2] = Q8(-32.5f);
                 break;
 
             default:
-                g_Items_Coords[i].coord.t[0] = 0;
-                g_Items_Coords[i].coord.t[1] = 0x18E - 0x6A * i;
-                g_Items_Coords[i].coord.t[2] = -0x2080;
+                g_Items_Coords[i].coord.t[0] = Q8(0.0f);
+                g_Items_Coords[i].coord.t[1] = Q8(1.555f) - (Q8(0.415f) * i);
+                g_Items_Coords[i].coord.t[2] = Q8(-32.5f);
                 break;
         }
     }
@@ -305,12 +305,12 @@ void func_800CDA8C(void) // 0x800CDA8C
         D_800F1450[i][0].vy = g_Items_Coords[i].coord.t[1];
         D_800F1450[i][0].vz = g_Items_Coords[i].coord.t[2] + 0x4E20;
 
-        D_800F1450[i][1].vx = 0x1000;
+        D_800F1450[i][1].vx = Q12(1.0f);
         D_800F1450[i][1].vy = 0;
         D_800F1450[i][1].vz = 0;
     }
 
-    GsSetAmbient(0x100, 0x100, 0x100);
+    GsSetAmbient(256, 256, 256);
     GsSetLightMode(1);
 }
 
@@ -328,9 +328,9 @@ void func_800CDB14(s32 arg0, s32 arg1) // 0x800CDB14
 
     for (i = 0; i < 2; i++)
     {
-        D_800F1450[arg0][i].r = 0xFF;
-        D_800F1450[arg0][i].g = 0xFF;
-        D_800F1450[arg0][i].b = 0xFF;
+        D_800F1450[arg0][i].r = 255;
+        D_800F1450[arg0][i].g = 255;
+        D_800F1450[arg0][i].b = 255;
     }
 }
 
@@ -355,18 +355,18 @@ void func_800CDB98(void) // 0x800CDB98
 
         if (D_800F159C == 0)
         {
-            setRGB0(poly_g3, D_800F159D * 4, D_800F159D * 4, D_800F159D * 0x70 / 32);
-            setRGB1(poly_g3, D_800F159D * 0x62 / 32, D_800F159D * 0x62 / 32, D_800F159D * 0x54 / 32);
-            setRGB2(poly_g3, D_800F159D * 0x62 / 32, D_800F159D * 0x62 / 32, D_800F159D * 0x54 / 32);
+            setRGB0(poly_g3, D_800F159D * 4, D_800F159D * 4, (D_800F159D * 112) / 32);
+            setRGB1(poly_g3, (D_800F159D * 98) / 32, (D_800F159D * 98) / 32, (D_800F159D * 84) / 32);
+            setRGB2(poly_g3, (D_800F159D * 98) / 32, (D_800F159D * 98) / 32, (D_800F159D * 84) / 32);
         }
         else
         {
-            setRGB0(poly_g3, 0x80, 0x80, 0x70);
-            setRGB1(poly_g3, 0x62, 0x62, 0x54);
-            setRGB2(poly_g3, 0x62, 0x62, 0x54);
+            setRGB0(poly_g3, 128, 128, 112);
+            setRGB1(poly_g3, 98, 98, 84);
+            setRGB2(poly_g3, 98, 98, 84);
         }
 
-        temp_s5 = 0x5A;
+        temp_s5 = 90;
 
         setXY0Fast(poly_g3, 0, 0);
         setXY1Fast(poly_g3, Q12_MULT(Math_Sin(i << 8), temp_s5), Q12_MULT(Math_Cos(i << 8), temp_s5));
@@ -385,20 +385,20 @@ void func_800CDB98(void) // 0x800CDB98
 
         if (D_800F159C == 0)
         {
-            setRGB0(poly_g4, D_800F159D * 3, D_800F159D * 3, D_800F159D * 0x54 / 32);
-            setRGB1(poly_g4, D_800F159D * 3, D_800F159D * 3, D_800F159D * 0x54 / 32);
+            setRGB0(poly_g4, D_800F159D * 3, D_800F159D * 3, (D_800F159D * 84) / 32);
+            setRGB1(poly_g4, D_800F159D * 3, D_800F159D * 3, (D_800F159D * 84) / 32);
         }
         else
         {
-            setRGB0(poly_g4, 0x60, 0x60, 0x54);
-            setRGB1(poly_g4, 0x60, 0x60, 0x54);
+            setRGB0(poly_g4, 96, 96, 84);
+            setRGB1(poly_g4, 96, 96, 84);
         }
 
         setRGB2(poly_g4, 0, 0, 0);
         setRGB3(poly_g4, 0, 0, 0);
 
-        temp_s7 = 0x5A;
-        temp_s6 = 0xB4;
+        temp_s7 = 90;
+        temp_s6 = 180;
 
         setXY0Fast(poly_g4, Q12_MULT(Math_Sin(i << 8), temp_s7), Q12_MULT(Math_Cos(i << 8), temp_s7));
         setXY1Fast(poly_g4, Q12_MULT(Math_Sin((i + 1) << 8), temp_s7), Q12_MULT(Math_Cos((i + 1) << 8), temp_s7));
@@ -409,7 +409,7 @@ void func_800CDB98(void) // 0x800CDB98
         GsOUT_PACKET_P = poly_g4 + 1;
     }
 
-    Gfx_Primitive2dTextureSet(0, 0, 0xA, 1);
+    Gfx_Primitive2dTextureSet(0, 0, 10, 1);
 }
 
 void func_800CE180(void) // 0x800CE180
@@ -427,13 +427,13 @@ void func_800CE180(void) // 0x800CE180
         setPolyG3(poly_g3);
         setSemiTrans(poly_g3, 1);
 
-        setRGB0(poly_g3, 0xC0, 0x80, 0);
-        setRGB1(poly_g3, 0xC0, 0x80, 0);
-        setRGB2(poly_g3, 0xFF, 0x40, 0);
+        setRGB0(poly_g3, 192, 128, 0);
+        setRGB1(poly_g3, 192, 128, 0);
+        setRGB2(poly_g3, 255, 64, 0);
 
-        setXY0Fast(poly_g3, -0x30 + 0x60 * i, (0x1D - D_800ED5C8 * 0x14));
-        setXY1Fast(poly_g3, -0x30 + 0x60 * i, (0x2D - D_800ED5C8 * 0x14));
-        setXY2Fast(poly_g3, -0x40 + 0x80 * i, (0x25 - D_800ED5C8 * 0x14));
+        setXY0Fast(poly_g3, -48 + (96  * i), 29 - (D_800ED5C8 * 20));
+        setXY1Fast(poly_g3, -48 + (96  * i), 45 - (D_800ED5C8 * 20));
+        setXY2Fast(poly_g3, -64 + (128 * i), 37 - (D_800ED5C8 * 20));
 
         addPrim(&ot->org[9], poly_g3);
 

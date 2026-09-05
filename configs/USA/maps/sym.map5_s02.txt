@@ -22,7 +22,7 @@ sharedData_800CAB70_0_s00         = 0x800CA618; // type:VECTOR
 //--- PA: 0x002154   VA: 0x800CB6CC   subsegment: c, particle
 //-----------------------------------------------------------
 Particle_SystemUpdate             = 0x800CB6CC; // type:func
-sharedFunc_800D08B8_0_s00         = 0x800CB834; // type:func
+Particle_EnvironmentSet           = 0x800CB834; // type:func
 sharedFunc_800D0A60_0_s00         = 0x800CB9B4; // type:func
 sharedFunc_800D0B18_0_s00         = 0x800CBA6C; // type:func
 Particle_SoundStop                = 0x800CBBD0; // type:func
@@ -34,7 +34,7 @@ Particle_BeamDraw                 = 0x800CC468; // type:func
 //-------------------------------------------------------------
 sharedFunc_800CDAA8_0_s02         = 0x800CC854; // type:func
 sharedFunc_800D1C38_0_s00         = 0x800CD1A4; // type:func
-sharedFunc_800D209C_0_s00         = 0x800CD5F4; // type:func
+Player_CutsceneWeaponUnequip      = 0x800CD5F4; // type:func
 Player_MatchArmAnimDisable        = 0x800CD630; // type:func
 Player_ControlFreeze              = 0x800CD63C; // type:func
 Player_ControlUnfreeze            = 0x800CD79C; // type:func
@@ -54,7 +54,7 @@ Player_DamageFeetFront            = 0x800CDB84; // type:func
 sharedFunc_800D2E8C_0_s00         = 0x800CDB8C; // type:func
 sharedFunc_800D2E94_0_s00         = 0x800CDB94; // type:func
 sharedFunc_800D2E9C_0_s00         = 0x800CDB9C; // type:func
-sharedFunc_800D2EA4_0_s00         = 0x800CDBA4; // type:func
+Player_PropertyField10DGet        = 0x800CDBA4; // type:func
 Player_EmptyWeaponHandSet         = 0x800CDBB4; // type:func
 Player_WeaponAttackRestore        = 0x800CDBF4; // type:func
 Stalker_Update                    = 0x800CDC08; // type:func
@@ -102,8 +102,8 @@ Chara_AnimPlaybackStateGet        = 0x800D3BB4; // type:func
 Chara_PathWaypointExecute         = 0x800D3C50; // type:func
 Chara_VisibleSet                  = 0x800D42B4; // type:func
 Chara_InvisibleSet                = 0x800D42C8; // type:func
-sharedFunc_800D908C_0_s00         = 0x800D42DC; // type:func
-sharedFunc_800D9188_0_s00         = 0x800D43D8; // type:func
+Npc_FootstepSoundPlay             = 0x800D42DC; // type:func
+Npc_SfxPlay                       = 0x800D43D8; // type:func
 Chara_AnimStartKeyframeIdxGet     = 0x800D44A0; // type:func
 Chara_CollisionReset              = 0x800D44AC; // type:func
 sharedFunc_800D929C_0_s00         = 0x800D450C; // type:func

@@ -211,7 +211,7 @@ void func_800DA384(void) // 0x800DA384
             Player_ControlFreeze();
             Game_TurnFlashlightOn();
 
-            sharedFunc_800D08B8_0_s00(6, 127);
+            Particle_EnvironmentSet(6, 127);
             Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
 
             playerChara.vx = Q12(-13.3f);
@@ -1326,7 +1326,7 @@ void MapEvent_ClassroomKeyItemTake(void) // 0x800DD208
 }
 void func_800DD420(void) // 0x800DD420
 {
-    sharedFunc_800D08B8_0_s00(6, 127);
+    Particle_EnvironmentSet(6, 127);
     Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
     Savegame_EventFlagClear(EventFlag_225);
     SysWork_StateSetNext(SysState_Gameplay);

@@ -430,7 +430,7 @@ void Chara_InvisibleSet(s_SubCharacter* chara)
     chara->model.anim.flags &= ~AnimFlag_Visible;
 }
 
-bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch)
+bool Npc_FootstepSoundPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch)
 {
     // TODO: Seems each of the s_PropsNpcs characters get passed to this func.
     // May share the same `flags` values based on code below?
@@ -471,7 +471,7 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
     return false;
 }
 
-bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId)
+bool Npc_SfxPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId)
 {
     if (chara->model.anim.status == animStatus)
     {

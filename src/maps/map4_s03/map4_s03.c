@@ -1712,7 +1712,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             if (D_800E05A8 > Q12(1.0f))
             {
                 // NOTE: Changed return type to `s32` in context.
-                if (sharedFunc_800D2EA4_0_s00())
+                if (Player_PropertyField10DGet())
                 {
                     Savegame_EventFlagSet(EventFlag_322);
                 }

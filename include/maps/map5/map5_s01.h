@@ -58,6 +58,7 @@ extern u16             D_800EFC80[];
 
 s16 func_800CD20C(void);
 
+// Loads number pad.
 void func_800CD818(void);
 
 void func_800CD860(void);

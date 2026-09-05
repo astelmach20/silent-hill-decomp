@@ -32,7 +32,7 @@ static void Math_MatrixTransform(const VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2
 void GameBoot_WolrdEnvInit(s32 unused) // 0x80035B58
 {
     WorldEnv_MapPresetSet(&g_MapOverlayHdr);
-    g_MapOverlayHdr.enviromentSet(g_MapOverlayHdr.field_17, g_MapOverlayHdr.field_16);
+    g_MapOverlayHdr.particleEnviromentSet(g_MapOverlayHdr.field_17, g_MapOverlayHdr.field_16);
 }
 
 void func_80035B98(void)

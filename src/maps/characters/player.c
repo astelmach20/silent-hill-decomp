@@ -217,10 +217,10 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
     boneCoords[HarryBone_Root].coord.t[2] = Q12_TO_Q8(player->position.vz);
 }
 
-void sharedFunc_800D209C_0_s00(void)
+void Player_CutsceneWeaponUnequip(void)
 {
     g_SysWork.playerCombat.weaponAttack = NO_VALUE;
-    g_SavegamePtr->equippedWeapon         = InvItemId_Unequipped;
+    g_SavegamePtr->equippedWeapon       = InvItemId_Unequipped;
 
     Player_ControlFreeze();
     Player_AnimStateSet(PlayerState_Unk84);
@@ -755,8 +755,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
         g_SysWork.playerWork.player.properties.player.field_118 = Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz));
     }
 
-    if (posX == Q12(0.0f) &&
-        posZ == Q12(0.0f))
+    if (posX == Q12(0.0f) && posZ == Q12(0.0f))
     {
         return;
     }
@@ -1044,7 +1043,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 #endif
 }
 
-s32 sharedFunc_800D2EA4_0_s00(void)
+s32 Player_PropertyField10DGet(void)
 {
     return g_SysWork.playerWork.player.properties.player.field_10D;
 }
