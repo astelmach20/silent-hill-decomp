@@ -852,7 +852,7 @@ extern s8 D_800C39A0;
  */
 // extern s_WorldEnvWork g_WorldEnvWork;
 
-extern GsCOORDINATE2* D_800C42B8; // Set to view coord.
+extern GsCOORDINATE2* g_ViewCoord;
 
 extern q4_12 g_Player_RotationDeltaToTargetY;
 extern q4_12 g_Player_RotationDeltaToTargetX;
@@ -946,6 +946,10 @@ s32 Map_TypeGet(void);
 
 void Collision_FlagsLocationUpdate(const s_SubCharacter* chara);
 
+/** @brief Frees a character model.
+ *
+ * @param model Character model to release.
+ */
 void Chara_ModelFree(s_CharaModel* model);
 
 void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
@@ -956,14 +960,26 @@ void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
  */
 bool WorldGfx_ChunkInitCheck(void);
 
-void WorldGfx_Draw(bool arg0);
+/** @brief Draws world objects, chunks, and 2D screen effects.
+ *
+ * @param otShift Ordering table shift.
+ */
+void WorldGfx_Draw(s32 otShift);
 
-void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr);
+/** @brief Sets the name of a world object model.
+ *
+ * @param model World object model to update.
+ * @param name Name to set.
+ */
+void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* name);
 
 /** Submits a world object model to draw. */
 void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot);
 
-/** @unused Returns held item ID. */
+/** @brief @unused Returns held item ID.
+ *
+ * @return Held item ID.
+ */
 s32 WorldGfx_HeldItemIdGet(void);
 
 s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat);
@@ -996,8 +1012,13 @@ void WorldGfx_CharaModelMaterialSet(e_CharaId charaId, s32 blendMode);
 /** @brief Makes a character transparent. */
 void WorldGfx_CharaModelTransparentSet(e_CharaId charaId, bool isTransparent);
 
+/** @brief Frees a registered character model.
+ *
+ * @param model Character model to release.
+ */
 void WorldGfx_CharaFree(s_CharaModel* model);
 
+/** @brief Loads the Harry character model. */
 void WorldGfx_HarryCharaLoad(void);
 
 /** @brief Loads default characters in the map overlay.
@@ -1205,7 +1226,7 @@ bool WorldMap_NextChunkLoadCheck(void);
 /** Checks if a position is within the current map chunk. */
 bool WorldMap_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ);
 
-void WorldMap_ChunksDraw(GsOT* ot, bool arg1);
+void WorldMap_ChunksDraw(GsOT* ot, s32 otShift);
 
 bool WorldMap_ChunkPositionMatchCheck(s_MapChunk* chunk, s_WorldMapWork* terrain);
 
@@ -1246,13 +1267,13 @@ void func_80044044(s_IpdHeader* ipd, s32 chunkX, s32 chunkZ);
 
 /** @brief Draws an IPD chunk.
  *
- * @param ipdHdr Header of the IPD chunk to draw.
+ * @param ipdHdr IPD chunk data to draw.
  * @param posX X world position.
  * @param posZ Z world position.
  * @param ot Ordering table.
- * @param arg4 TODO
+ * @param otShift Ordering table shift.
  */
-void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool arg4);
+void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 otShift);
 
 /** @brief Checks if an IPD chunk subcell is visible.
  *
@@ -1471,11 +1492,11 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent);
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag);
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, s32 otShift, GsOT_TAG* tag);
 
-void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag);
+void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 otShift, GsOT_TAG* tag);
 
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat);
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* viewMat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -1491,7 +1512,7 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
-void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool arg3);
+void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool otShift);
 
 void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
@@ -1543,13 +1564,13 @@ void StringCopy(char* prevStr, char* newStr);
 void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7);
 
 /** Crucial 3D drawing function. */
-void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
+void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 otShift, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
 
 s32 func_800571D0(u32 arg0);
 
 void WorldEnv_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat);
+void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* mat);
 
 void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
@@ -1562,7 +1583,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 /** Main quad drawing func? */
-void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, bool arg3);
+void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
 
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
@@ -1570,7 +1591,7 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void*
 /** Initializes values in `D_800AE204` array. */
 void func_8005B55C(GsCOORDINATE2* viewCoord);
 
-void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5);
+void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 otShift);
 
 u32 func_8005C478(s16* arg0, q19_12 x0, q19_12 y0, q19_12 x1, q19_12 y1, q19_12 x2, q19_12 y2);
 
@@ -2014,7 +2035,7 @@ void WorldGfx_IpdSamplePointReset(void);
  */
 void WorldGfx_CloseRangeChunksInit(void);
 
-/** @brief Clears the array containing world objects to draw by resetting its size variable.
+/** @brief Resets the collection of world objects to draw.
  *
  * @param worldGfx World GFX workspace.
  */
@@ -2026,9 +2047,7 @@ void WorldObjects_Clear(s_WorldGfxWork* worldGfxWork);
  */
 void WorldObjects_DrawAllObjects(s_WorldGfxWork* worldGfxWork);
 
-/** @brief Initialize draw for a world object.
- * Get values correspondent to perspective and then passes those values
- * to `WorldObjects_DrawStep`.
+/** @brief Draws a world object, taking into account its position relative to the camera.
  *
  * @param obj World object.
  */

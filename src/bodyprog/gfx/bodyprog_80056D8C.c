@@ -123,7 +123,7 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
     }
 }
 
-void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat, MATRIX* worldMat, u16 clutY) // 0x80057090
+void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 otShift, MATRIX* viewMat, MATRIX* worldMat, u16 clutY) // 0x80057090
 {
     s32            temp_a0;
     GsOT_TAG*      otTag;
@@ -140,7 +140,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat
     temp_a0 = modelHdr->field_B_4;
     if ((temp_a0 & 0xFF) && temp_a0 >= 0 && temp_a0 < 4) // TODO: `& 0xFF` needed for match.
     {
-        func_80059D50(temp_a0, modelInfo, viewMat, arg2, otTag);
+        func_80059D50(temp_a0, modelInfo, viewMat, otShift, otTag);
     }
     else
     {
@@ -152,11 +152,11 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* viewMat
         if (modelHdr->field_B_0)
         {
             g_WorldEnvWork.clutY = clutY;
-            func_8005A21C(modelInfo, otTag, arg2, viewMat);
+            func_8005A21C(modelInfo, otTag, otShift, viewMat);
         }
         else
         {
-            func_80057344(modelInfo, otTag, arg2, viewMat);
+            func_80057344(modelInfo, otTag, otShift, viewMat);
         }
     }
 }
@@ -210,7 +210,7 @@ void WorldEnv_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECT
     gte_stsv(&g_WorldEnvWork.light.field_30);
 }
 
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat) // 0x80057344
+void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* mat) // 0x80057344
 {
     u32               normalOffset;
     u32               vertOffset;
@@ -253,7 +253,7 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* m
         }
 
         func_80057B7C(curMeshHdr, vertOffset, scratchData, mat);
-        Gfx_MeshDraw(curMeshHdr, scratchData, otTag, arg2);
+        Gfx_MeshDraw(curMeshHdr, scratchData, otTag, otShift);
     }
 }
 
@@ -598,7 +598,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     }
 }
 
-void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, bool arg3) // 0x8005801C
+void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 otShift) // 0x8005801C
 {
     s32          sp10;
     s32          sp14;
@@ -653,7 +653,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
     POLY_GT4*    poly3;
     POLY_FT4*    poly4;
 
-    temp_v1 = 0x79C << (arg3 + 2);
+    temp_v1 = 0x79C << (otShift + 2);
 
     if (!g_WorldEnvWork.isFogEnabled)
     {
@@ -851,16 +851,16 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                             packet1 = poly1 + 1;
 
                             SetPriority(packet1, 0, 0);
-                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet1);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet1);
 
                             setSemiTrans(poly1, 1);
-                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly1);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly1);
 
                             packet1 = (PACKET*)(poly1 + 1) + 12;
                             SetPriority(packet1, 1, 1);
-                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet1);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet1);
 
-                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
 
                             poly3 = (PACKET*)(poly1 + 1) + 12 + 12;
                             poly1  = poly3 + 1;
@@ -869,8 +869,8 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                         {
                             setSemiTrans(poly3, 1);
 
-                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
-                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly1);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly1);
 
                             poly3 = poly1 + 1;
                             poly1  = poly3 + 1;
@@ -988,7 +988,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
                     setlen(poly3, 12);
 
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
                     poly3++;
                 }
             }
@@ -1160,14 +1160,14 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
                     SetPriority(packet0, 0, 0);
 
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet0);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet0);
                     setSemiTrans(poly2, 1);
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly2);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly2);
 
                     packet0 = (PACKET*)(poly2 + 1) + 12;
                     SetPriority(packet0, 1, 1);
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet0);
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet0);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
 
                     poly3  = (PACKET*)(poly2 + 1) + 12 + 12;
                     poly2 = poly3 + 1;
@@ -1175,8 +1175,8 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 else
                 {
                     setSemiTrans(poly3, 1);
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly2);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly2);
 
                     poly3  = poly2 + 1;
                     poly2 = poly3 + 1;
@@ -1324,7 +1324,7 @@ __block1530:
 
             setlen(poly0, 12);
 
-            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly0);
+            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly0);
             poly0++;
         }
     }
@@ -1416,7 +1416,7 @@ __block19CC:
 
             setlen(poly4, 9);
 
-            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly4);
+            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly4);
 
             poly4++;
         }
@@ -1425,7 +1425,7 @@ __block19CC:
     GsOUT_PACKET_P = poly4;
 }
 
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3, GsOT_TAG* tag) // 0x80059D50
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, s32 otShift, GsOT_TAG* tag) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     curMeshHdr;
@@ -1439,11 +1439,11 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, bool arg3,
     {
         func_800574D4(curMeshHdr, scratchData);
         func_80057B7C(curMeshHdr, 0, scratchData, viewMat);
-        func_80059E34(arg0, curMeshHdr, scratchData, arg3, tag);
+        func_80059E34(arg0, curMeshHdr, scratchData, otShift, tag);
     }
 }
 
-void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag) // 0x80059E34
+void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 otShift, GsOT_TAG* tag) // 0x80059E34
 {
     s32          sp0;
     s32          var_t2;
@@ -1483,7 +1483,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
             break;
     }
 
-    temp_v1 = Q8(7.61f) << (arg3 + 2);
+    temp_v1 = Q8(7.61f) << (otShift + 2);
     var_t9  = g_WorldEnvWork.isFogEnabled ? MIN(temp_v1, g_WorldEnvWork.fog.farDistance) : temp_v1;
 
     poly                        = (POLY_FT4*)GsOUT_PACKET_P;
@@ -1566,7 +1566,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
         }
         else
         {
-            tag0 = &tag[var_t2 >> (arg3 + 2)];
+            tag0 = &tag[var_t2 >> (otShift + 2)];
         }
 
         addPrim(tag0, poly);
@@ -1576,7 +1576,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* viewMat) // 0x8005A21C
+void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* viewMat) // 0x8005A21C
 {
     s16               var_v1;
     u32               normalOffset;
@@ -1637,7 +1637,7 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* v
             func_8005AA08(curMeshHdr, normalOffset, scratchData);
         }
 
-        func_8005AC50(curMeshHdr, scratchData, otTag, arg2);
+        func_8005AC50(curMeshHdr, scratchData, otTag, otShift);
     }
 }
 
@@ -1903,7 +1903,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     gte_strgb3(&points->vx, &points->vy, &points->vz); // Store result from final `gte_nct`.
 }
 
-void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool arg3) // 0x8005AC50
+void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool otShift) // 0x8005AC50
 {
     typedef union
     {
@@ -1932,7 +1932,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     var_a3              = g_WorldEnvWork.field_0;
     scratchData->u.s_1.field_8 = g_WorldEnvWork.clutY << 16;
 
-    temp_a0 = 0x79C << (arg3 + 2);
+    temp_a0 = 0x79C << (otShift + 2);
     var_t9  = g_WorldEnvWork.isFogEnabled ? MIN(temp_a0, g_WorldEnvWork.fog.farDistance) : temp_a0;
 
     for (prim = meshHdr->primitives, poly.packet = GsOUT_PACKET_P; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
@@ -1983,7 +1983,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
 
             setlen(poly.gt3, 9);
 
-            addPrim(&ot[(temp_t4 >> arg3) >> 2], poly.gt3);
+            addPrim(&ot[(temp_t4 >> otShift) >> 2], poly.gt3);
             poly.gt3++;
         }
         else
@@ -2043,7 +2043,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
 
             setlen(poly.gt4, 12);
 
-            addPrim(&ot[(temp_t4 >> arg3) >> 2], poly.gt4);
+            addPrim(&ot[(temp_t4 >> otShift) >> 2], poly.gt4);
             poly.gt4++;
         }
     }

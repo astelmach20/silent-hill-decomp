@@ -1068,7 +1068,7 @@ bool WorldMap_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ) // 0x8004393C
     return false;
 }
 
-void WorldMap_ChunksDraw(GsOT* ot, bool arg1) // 0x80043A24
+void WorldMap_ChunksDraw(GsOT* ot, s32 otShift) // 0x80043A24
 {
     s32         loadState;
     s_MapChunk* curChunk;
@@ -1091,9 +1091,10 @@ void WorldMap_ChunksDraw(GsOT* ot, bool arg1) // 0x80043A24
          curChunk < &g_WorldMapWork.activeChunks[g_WorldMapWork.activeChunkCount];
          curChunk++)
     {
-        if (WorldMap_ChunkLoadStateGet(curChunk) >= MapModelLoadState_Loaded && WorldMap_ChunkPositionMatchCheck(curChunk, &g_WorldMapWork))
+        if (WorldMap_ChunkLoadStateGet(curChunk) >= MapModelLoadState_Loaded &&
+            WorldMap_ChunkPositionMatchCheck(curChunk, &g_WorldMapWork))
         {
-            WorldMap_Draw(curChunk->ipdHdr, g_WorldMapWork.positionX, g_WorldMapWork.positionZ, ot, arg1);
+            WorldMap_Draw(curChunk->ipdHdr, g_WorldMapWork.positionX, g_WorldMapWork.positionZ, ot, otShift);
         }
     }
 }
@@ -1303,7 +1304,7 @@ void func_80044044(s_IpdHeader* ipd, s32 chunkX, s32 chunkZ) // 0x80044044
     ipd->collisionData.positionZ += (chunkZ - prevChunkZ) * Q8(CHUNK_SIZE);
 }
 
-void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool arg4) // 0x80044090
+void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 otShift) // 0x80044090
 {
     // TODO: Rename `CHUNK_SUBCELL_SIZE`
     #define CHUNK_SUBCELL_SIZE Q8(8.0f)
@@ -1370,7 +1371,7 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
                 modelCoord.workm.t[2] += chunkBoundZ;
 
                 Vw_CoordToWorldAndViewMatrices(&modelCoord, &worldMat, &viewMat);
-                func_80057090(&modelInfo, ot, arg4, &viewMat, &worldMat, 0);
+                func_80057090(&modelInfo, ot, otShift, &viewMat, &worldMat, 0);
             }
         }
 
@@ -1383,7 +1384,7 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
                                       Q8_TO_Q12(curUnk->vx + chunkBoundX),
                                       Q8_TO_Q12(curUnk->vy),
                                       Q8_TO_Q12(curUnk->vz + chunkBoundZ),
-                                      ot, arg4);
+                                      ot, otShift);
                     break;
 
                 case 1:
@@ -1391,7 +1392,7 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
                                       Q8_TO_Q12(curUnk->vx + chunkBoundX),
                                       Q8_TO_Q12(curUnk->vy),
                                       Q8_TO_Q12(curUnk->vz + chunkBoundZ),
-                                      ot, arg4);
+                                      ot, otShift);
                     break;
             }
         }

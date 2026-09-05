@@ -120,11 +120,10 @@ extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 /** Set to Split Head bone coords. */
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
-// Three variables used by `SplitHead_Init`.
 extern q3_12 g_SplitHead_MovementOffsetX;
 extern q3_12 g_SplitHead_MovementOffsetZ;
 
-extern s32 sharedData_800D5884_1_s05;
+extern q19_12 g_SplitHead_MovementAnimDuration;
 
 extern s16 sharedData_800D5A8C_1_s05;
 
@@ -166,7 +165,7 @@ void SplitHead_Control_3(s_SubCharacter* splitHead);
 
 void SplitHead_MovementUpdate(s_SubCharacter* splitHead);
 
-void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr);
+void SplitHead_AnimUpdate(s_SubCharacter* splitHead, s_AnmHeader* anmHdr);
 
 void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead);
 

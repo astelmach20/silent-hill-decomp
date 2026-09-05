@@ -3517,7 +3517,7 @@ g_Items_Coords                               = 0x800C64A0;
 //--- PA: 0x0A1C60   VA: 0x800C67C0   subsegment: bss
 //---------------------------------------------------
 g_WorldEnvWork                               = 0x800C67C0;
-D_800C42B8                                   = 0x800C6910;
+g_ViewCoord                                  = 0x800C6910;
 
 //---------------------------------------------------------------
 //--- PA: 0x0A1DB8   VA: 0x800C6918   subsegment: .bss, sound/sfx

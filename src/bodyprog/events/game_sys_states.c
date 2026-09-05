@@ -186,7 +186,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         Game_NpcUpdate();
         func_8005E89C();
         WorldGfx_CloseRangeChunksInit();
-        WorldGfx_Draw(true);
+        WorldGfx_Draw(1);
         Demo_DemoRandSeedAdvance();
     }
 }
