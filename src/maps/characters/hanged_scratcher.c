@@ -341,8 +341,8 @@ void HangedScratcher_Control_1(s_SubCharacter* scratcher)
     if (distToPlayer < Q12(1.0f) &&
         !Los_NpcToPlayerHitCheck(scratcher, &g_SysWork.playerWork.player) &&
         (((g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & 0x3) == 2 && func_8006FD90(scratcher, 1, Q12(2.0f), Q12(1.5f))) ||
-         ((g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1)) &&
-          (g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0)) &&
+         ((g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0] & (1 << 1)) &&
+          (g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0] & (1 << 0)) &&
           func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.3f)))))
     {
         scratcher->model.controlState = HangedScratcherControl_RunForward;

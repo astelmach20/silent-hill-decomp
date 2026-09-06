@@ -349,22 +349,13 @@ typedef struct _PlayerCombat
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
-typedef union
-{
-    /* 0x0 */ s32 field_0; // Flags?
-              struct
-              {
-                  u8 field_0; // Flags. (1 << 0) Might be flashlight enabled.
-                  u8 field_1;
-                  u8 field_2;
-                  s8 __pad_3;
-    /* 0x4 */ } s_field_0;
-} u_Unk0;
-
 /** @brief Map effects info. */
 typedef struct _MapEffectsInfo
 {
-    /* 0x0  */ u_Unk0  field_0;
+    /* 0x0  */ union {
+                  s32 field_0; // Flags?
+                  u8  field_00[4];
+              } field_0;
     /* 0x4  */ q3_12   field_4; // Alpha.
     /* 0x6  */ q3_12   field_6; // World tint color intensity.
     /* 0x8  */ q3_12   worldTintR;
@@ -397,15 +388,15 @@ typedef struct
 {
     /* 0x0   */ s32             primitiveType; /** `e_PrimitiveType` */
     /* 0x4   */ s8*             field_4;       /** Points to different types of data depending on `field_0`. */
-    /* 0x8   */ s32             field_8;       // } Q19.12?
-    /* 0xC   */ s32             field_C;       // }
+    /* 0x8   */ q19_12          field_8;
+    /* 0xC   */ q19_12          field_C;
     /* 0x10  */ s32             field_10;
     /* 0x14  */ u8              field_14;                /** `bool` */
     /* 0x15  */ u8              isFlashlightOn;          /** `bool` */
     /* 0x16  */ u8              isFlashlightUnavailable; /** `bool` */
                 // 1 byte of padding.
     /* 0x18  */ q3_12           flashlightIntensity;
-    /* 0x1A  */ u16             field_1A;
+                // 2 byte of padding.
     /* 0x1C  */ s_StructUnk3    field_1C[2];
     /* 0x84  */ s_StructUnk3    field_84[2];
     /* 0xEC  */ s_StructUnk3    field_EC[2];

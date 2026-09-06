@@ -40,7 +40,7 @@ void func_8003EDA8(void);
 void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
 /** @brief @unused */
-void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
+void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 
 void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1);
 

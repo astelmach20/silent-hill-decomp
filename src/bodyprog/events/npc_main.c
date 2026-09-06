@@ -315,8 +315,8 @@ void Game_NpcUpdate(void) // 0x80038354
             }
 
             // Set NPC visibility.
-            if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & 0x2 && curDistToNpc > SQUARE(15)) ||
-                (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & 0x2) &&
+            if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0] & 0x2 && curDistToNpc > SQUARE(15)) ||
+                (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0] & 0x2) &&
                     Camera_Distance2dGet(&curNpc->position) > SQUARE(15)))
             {
                 curNpc->model.anim.flags &= ~AnimFlag_Visible;

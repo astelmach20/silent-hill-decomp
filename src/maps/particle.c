@@ -4290,7 +4290,7 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
             break;
 
         case 2:
-            if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1)))
+            if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0] & (1 << 1)))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
@@ -4302,13 +4302,13 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
                 prim->g0 = 0xFF;
                 prim->b0 = 0xFF;
             }
-            else if (g_SysWork.field_2388.field_1C[0].effectsInfo.field_0.s_field_0.field_0 & 1)
+            else if (g_SysWork.field_2388.field_1C[0].effectsInfo.field_0.field_00[0] & 1)
             {
                 prim->r0 = 0x30;
                 prim->g0 = 0x30;
                 prim->b0 = 0x30;
             }
-            else if (!(g_SysWork.field_2388.field_1C[1].effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))
+            else if (!(g_SysWork.field_2388.field_1C[1].effectsInfo.field_0.field_00[0] & (1 << 0)))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;

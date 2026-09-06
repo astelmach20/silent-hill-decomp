@@ -835,6 +835,10 @@ extern s8* D_800BCDE0; // Type assumed.
 /** Angles. */
 extern s16 D_800BCDE8[8];
 
+extern u16 g_CollisionTriggerFlags;
+
+extern s16 __pad_800BCE14;
+
 extern s_WorldGfxWork g_WorldGfxWork;
 
 extern s8* D_800C15B0;

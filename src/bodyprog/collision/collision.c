@@ -15,13 +15,6 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-// Note - Will: I added a bunch of poorly written comments among the code
-// to have a better follow up of a code comprehension, some may be
-// misleading as I'm mostly based on code functionallity with barely any
-// in-game test.
-// Please delete them or rewrite them properly after properly recognizing
-// the function purpose.
-
 s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 void Collision_Init(void) // 0x800697EC

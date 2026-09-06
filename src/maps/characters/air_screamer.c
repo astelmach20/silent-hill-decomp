@@ -805,7 +805,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
         angleToPlayer    = Math_AngleBetweenPositionsGet(airScreamer->position, g_SysWork.playerWork.player.position);
         angleToPlayerCpy = angleToPlayer;
 
-        offsetZ = g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0;
+        offsetZ = g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0];
         if (!(offsetZ & 0x2))
         {
             // @hack Permuter find.
@@ -8890,7 +8890,7 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
 {
-    if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & 0x1) &&
+    if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0] & 0x1) &&
         (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal || airScreamer->model.charaId == Chara_AirScreamer))
     {
         return false;
@@ -8942,7 +8942,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
     }
 
     if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
-        (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0)) ||
+        (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_00[0] & (1 << 0)) ||
          (g_SavegamePtr->gameDifficulty > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
     {
         if (sharedFunc_800DC3BC_2_s00(airScreamer) && (AirScreamer_IsGroundedCheck(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
