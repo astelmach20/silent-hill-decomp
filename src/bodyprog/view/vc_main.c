@@ -272,7 +272,7 @@ void vcSetSubjChara(VECTOR3* chara_pos,
     vcWork.chara_pos        = *chara_pos;
     vcWork.chara_bottom_y   = chara_bottom_y;
     vcWork.chara_top_y      = chara_top_y;
-    vcWork.chara_center_y   = (chara_bottom_y + chara_top_y) >> 1; // `/ 2`.
+    vcWork.chara_center_y   = DIV_FAST(chara_bottom_y + chara_top_y, 2);
     vcWork.chara_grnd_y     = chara_grnd_y;
     vcWork.chara_head_pos   = *chara_head_pos;
     vcWork.chara_mv_spd     = chara_mv_spd;
@@ -2422,12 +2422,12 @@ void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3* tgt_mv_vec, VC_WORK* w_p, q19_
 
         if (max_x < min_x)
         {
-            min_x = (min_x + max_x) >> 1; // `/ 2`.
+            min_x = DIV_FAST(min_x + max_x, 2);
             max_x = min_x;
         }
         if (max_z < min_z)
         {
-            min_z = (min_z + max_z) >> 1; // `/ 2`.
+            min_z = DIV_FAST(min_z + max_z, 2);
             max_z = min_z;
         }
 

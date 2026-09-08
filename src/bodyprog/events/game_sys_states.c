@@ -602,7 +602,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
     // Set savegame flag based on `g_MapEventData->completeEventFlag` flag ID.
     Savegame_EventFlagSetAlt(g_MapEventData->completeEventFlag);
 
-    // Return to game.
+    // Return to gameplay.
     Game_StateSetNext(GameState_InGame);
 
     // If flag is set, returns to `GameState_InGame` with `gameStateSteps[0]` = 1.

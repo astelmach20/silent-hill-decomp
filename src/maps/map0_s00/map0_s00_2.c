@@ -929,21 +929,21 @@ void func_800DB26C(void) // 0x800DB26C
             break;
 
         case 3:
-            g_DeltaTime >>= 1; // `/ 2`.
+            g_DeltaTime = DIV_FAST(g_DeltaTime, 2);
 
             Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 4:
-            g_DeltaTime >>= 1; // `/ 2`.
+            g_DeltaTime = DIV_FAST(g_DeltaTime, 2);
 
             Savegame_EventFlagSet(EventFlag_8);
             Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         case 5:
-            g_DeltaTime >>= 1;
+            g_DeltaTime = DIV_FAST(g_DeltaTime, 2);
             Event_WaitTimer(Q12(1.0f), false);
             break;
 
@@ -952,8 +952,9 @@ void func_800DB26C(void) // 0x800DB26C
             Savegame_EventFlagSet(EventFlag_7);
 
             Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
-            Player_ControlUnfreeze(false);
 
+            // Return to gameplay.
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }

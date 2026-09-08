@@ -280,7 +280,7 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     s32    scaledSinPlayerRotY;
     s32    scaledCosRotY;
 
-    halfSinRotY   = Math_Sin(g_SysWork.playerWork.player.rotation.vy) >> 1; // `/ 2`.
+    halfSinRotY   = DIV_FAST(Math_Sin(g_SysWork.playerWork.player.rotation.vy), 2);
     scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0)) * mapPoint->triggerParam1;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
@@ -305,7 +305,7 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     {
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
-            halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork.player.rotation.vy) >> 1; // `/ 2`.
+            halfCosPlayerRotY   = DIV_FAST(Math_Cos(g_SysWork.playerWork.player.rotation.vy), 2);
             scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0)) *
                                   mapPoint->triggerParam1;
 

@@ -14,7 +14,7 @@ typedef enum _GroanerFlags
     GroanerFlag_6        = 1 << 6,
     GroanerFlag_7        = 1 << 7,
     GroanerFlag_8        = 1 << 8,
-    GroanerFlag_9        = 1 << 9,
+    GroanerFlag_Jumping  = 1 << 9,
     GroanerFlag_10       = 1 << 10,
     GroanerFlag_11       = 1 << 11,
     GroanerFlag_12       = 1 << 12

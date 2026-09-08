@@ -1198,7 +1198,7 @@ void AirScreamer_Control_0(s_SubCharacter* airScreamer)
             controlState = AirScreamerControl_Glide;
             stateStep = 67;
             var2 = 2;
-            airScreamer->health -= airScreamer->health >> 2; // `/ 4`.
+            airScreamer->health -= DIV_FAST(airScreamer->health, 4);
             break;
 #endif
     }
@@ -13250,8 +13250,8 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
 
         airScreamer->collision.cylinder.field_2 = var_t1;
 
-        height += (height - offsetY) >> 2; // `/ 4`.
-        top    += (top    - offsetY) >> 2; // `/ 4`.
+        height += DIV_FAST(height - offsetY, 4);
+        top    += DIV_FAST(top    - offsetY, 4);
 
         airScreamer->collision.box.offsetY = offsetY;
         airScreamer->collision.box.field_8 = offsetY;

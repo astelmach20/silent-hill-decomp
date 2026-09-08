@@ -1292,7 +1292,7 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
                 {
                     offsetX += Q12(0.0008f);
                 }
-                splitHead->collision.shapeOffsets.box.vx = offsetX >> 2; // `/ 4`.
+                splitHead->collision.shapeOffsets.box.vx = DIV_FAST(offsetX, 4);
 
                 offsetZ = (sp20[0].vz - splitHead->position.vz) * 3;
                 if (offsetZ < Q12(0.0f))
@@ -1300,7 +1300,7 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
                     offsetZ += Q12(0.0008f);
                 }
 
-                splitHead->collision.shapeOffsets.box.vz = offsetZ >> 2; // `/ 4`.
+                splitHead->collision.shapeOffsets.box.vz = DIV_FAST(offsetZ, 4);
                 return;
             }
         }

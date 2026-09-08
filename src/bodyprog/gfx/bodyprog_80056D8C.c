@@ -1785,9 +1785,9 @@ void func_8005A838(s_GteScratchData* scratchData, q19_12 scale) // 0x8005A838
 {
     SVECTOR3 color;
 
-    color.vx = Q12_MULT(g_WorldEnvWork.light.field_28.vx, scale) >> 1; // `/ 2`.
-    color.vy = Q12_MULT(g_WorldEnvWork.light.field_28.vy, scale) >> 1; // `/ 2`.
-    color.vz = Q12_MULT(g_WorldEnvWork.light.field_28.vz, scale) >> 1; // `/ 2`.
+    color.vx = DIV_FAST(Q12_MULT(g_WorldEnvWork.light.field_28.vx, scale), 2);
+    color.vy = DIV_FAST(Q12_MULT(g_WorldEnvWork.light.field_28.vy, scale), 2);
+    color.vz = DIV_FAST(Q12_MULT(g_WorldEnvWork.light.field_28.vz, scale), 2);
     gte_SetLightSVector(&color);
 
     SetBackColor(Q12_MULT(g_WorldEnvWork.field_24.r, scale),

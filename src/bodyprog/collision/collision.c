@@ -344,7 +344,7 @@ void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_1
     }
 
     // Cap base ground height.
-    baseGroundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
+    baseGroundHeight = DIV_FAST(groundHeightMin + groundHeightMax, 2);
     if (baseGroundHeight < (groundHeight - INTERSECTION_BUFFER))
     {
         baseGroundHeight = groundHeight - INTERSECTION_BUFFER;
@@ -367,7 +367,7 @@ void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_1
     }
 
     // Compute offset away from wall.
-    pushAngle             = Q8(leftLowestGroundHeightIdx + rightLowestGroundHeightIdx) >> 1; // `/ 2`.
+    pushAngle             = DIV_FAST(Q8(leftLowestGroundHeightIdx + rightLowestGroundHeightIdx), 2);
     collResult->offset.vx = Q12_MULT_PRECISE(Math_Sin(pushAngle), Q12(1.0f / 16.0f));
     collResult->offset.vz = Q12_MULT_PRECISE(Math_Cos(pushAngle), Q12(1.0f / 16.0f));
 

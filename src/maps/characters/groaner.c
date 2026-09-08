@@ -129,29 +129,32 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     q3_12              newHeadingAngle;
     q3_12              unkAngle;
     q19_12             unkDist;
-    s32                temp_v0;
+    q19_12             damagePosY;
     s32                prevControlState;
 
     if (groaner->health > Q12(0.0f))
     {
         Collision_SurfaceGet(&surface, groaner->position.vx, groaner->position.vz);
 
-        if (surface.groundType == 12 && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position.vy)
+        if (surface.groundType == GroundType_None && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position.vy)
         {
             groaner->damage.amount = Q12(1000.0f);
         }
     }
 
+    // Return early if no damage taken.
     if (groaner->damage.amount == Q12(0.0f))
     {
         return;
     }
 
+    // Return early if dead.
     if (groaner->health < Q12(0.0f))
     {
         return;
     }
 
+    // Store previous control state.
     prevControlState = groaner->model.controlState;
 
     if (groaner->health > Q12(0.0f))
@@ -182,15 +185,15 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     // TODO: Unsure if `field_FE` is an angle.
     groanerProps.field_FE = CLAMP_LOW(unkDist >> 2, Q12_ANGLE(90.0f));
 
-    temp_v0 = FP_TO(groaner->damage.position.vy, Q12_SHIFT);
+    damagePosY = Q12(groaner->damage.position.vy);
 
     groaner->headingAngle = newHeadingAngle;
 
     Chara_DamageClear(groaner);
 
     groanerProps.flags.val16[0] |= GroanerFlag_1;
-    groaner->moveSpeed           = FP_TO(unkDist, Q12_SHIFT) / Q12(1.2f);
-    groaner->fallSpeed          += temp_v0 / Q12(1.2f);
+    groaner->moveSpeed           = Q12(unkDist) / Q12(1.2f);
+    groaner->fallSpeed          += damagePosY / Q12(1.2f);
 
     if (groanerProps.flags.val16[0] & GroanerFlag_3)
     {
@@ -619,7 +622,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
     q19_12  distToPlayer;
     q19_12  deltaX;
     q19_12  deltaZ;
-    q19_12  deltaY;
+    q19_12  deltaHeadingAngleToPlayer;
     q19_12  unkAngle;
     q19_12  rotMax;
     s32     var_v0;
@@ -697,17 +700,17 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
     }
     else if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_JumpAttack)
     {
-        if (!(groanerProps.flags.val16[0] & GroanerFlag_9))
+        if (!(groanerProps.flags.val16[0] & GroanerFlag_Jumping))
         {
-            groanerProps.flags.val16[0] |= GroanerFlag_9;
+            groanerProps.flags.val16[0] |= GroanerFlag_Jumping;
             var_v0                       = g_SysWork.playerWork.player.collision.cylinder.field_2 + Q12(0.14f);
             var_v0                       = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed           = MIN(var_v0, Q12(4.5f));
 
-            deltaY                    = g_SysWork.playerWork.player.position.vy - groaner->position.vy;
+            deltaHeadingAngleToPlayer = g_SysWork.playerWork.player.position.vy - groaner->position.vy;
             groaner->field_44.field_0 = 1;
             groanerProps.field_10F    = 2;
-            groaner->fallSpeed        = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
+            groaner->fallSpeed        = Q12_MULT_PRECISE(deltaHeadingAngleToPlayer - Q12(1.4f), Q12(2.35f));
         }
     }
 
@@ -716,13 +719,13 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         newPos.vx = groaner->position.vx + groaner->collision.shapeOffsets.cylinder.vx;
         newPos.vy = groaner->position.vy - Q12(0.8f);
         newPos.vz = groaner->position.vz + groaner->collision.shapeOffsets.cylinder.vz;
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &newPos, &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &newPos,
+                      &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
     if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 14u)
     {
         groaner->fallSpeed += g_GravitySpeed;
-
         Chara_MoveSpeedUpdate3(groaner, Q12(0.3f), Q12(0.0f));
     }
 
@@ -739,17 +742,17 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         g_SysWork.charaGroupFlags[3]    &= ~CharaGroupFlag_1;
 
         Chara_AnimSet(groaner, ANIM_STATUS(GroanerAnim_RunForward, true), 363);
-        groanerProps.flags.val16[0] &= ~GroanerFlag_9;
+        groanerProps.flags.val16[0] &= ~GroanerFlag_Jumping;
     }
 }
 
 void Groaner_Control4(s_SubCharacter* groaner)
 {
-    s32    temp_a3;
-    s32    distMax;
+    q19_12 headingAngleDeltaToTarget;
+    q19_12 distMax;
     bool   hasLosHit;
     q19_12 distToPlayer;
-    q19_12 var_s0_2;
+    q19_12 runForwardChance;
     s32    i;
 
     if (groanerProps.flags.val16[0] & GroanerFlag_1)
@@ -759,8 +762,8 @@ void Groaner_Control4(s_SubCharacter* groaner)
 
     if (!(groanerProps.flags.val16[0] & GroanerFlag_8))
     {
-        groanerProps.field_108          = 0;
-        groanerProps.timer_104          = Q12(0.0f);
+        groanerProps.field_108       = 0;
+        groanerProps.timer_104       = Q12(0.0f);
         groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
@@ -806,10 +809,10 @@ void Groaner_Control4(s_SubCharacter* groaner)
 
     for (i = 0; i < 2; i++)
     {
-        temp_a3 = Math_AngleNormalizeSigned((groanerProps.angleToTarget - groaner->rotation.vy));
-        if (((g_DeltaTime >> 3) + 1) < ABS(temp_a3))
+        headingAngleDeltaToTarget = Math_AngleNormalizeSigned((groanerProps.angleToTarget - groaner->rotation.vy));
+        if (((g_DeltaTime >> 3) + 1) < ABS(headingAngleDeltaToTarget))
         {
-            if (temp_a3 > Q12_ANGLE(0.0f))
+            if (headingAngleDeltaToTarget > Q12_ANGLE(0.0f))
             {
                 groaner->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
             }
@@ -824,7 +827,7 @@ void Groaner_Control4(s_SubCharacter* groaner)
         }
     }
 
-    temp_a3 = Math_AngleNormalizeSigned(groanerProps.angleToTarget - groaner->rotation.vy);
+    headingAngleDeltaToTarget = Math_AngleNormalizeSigned(groanerProps.angleToTarget - groaner->rotation.vy);
 
     if (groanerProps.timer_104 >= Q12(0.0f))
     {
@@ -832,40 +835,40 @@ void Groaner_Control4(s_SubCharacter* groaner)
     }
     else
     {
-        temp_a3 = Q12(1.0f) - (((temp_a3 - 227) * 3) >> 1);
-        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(temp_a3, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))));
+        headingAngleDeltaToTarget = Q12(1.0f) - (((headingAngleDeltaToTarget - 227) * 3) >> 1);
+        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(headingAngleDeltaToTarget, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))));
     }
 
-    var_s0_2                = 0;
+    runForwardChance        = Q12(0.0f);
     groanerProps.field_108 += g_DeltaTime;
 
     if (groanerProps.field_108 > Q12(6.0f))
     {
         if (groanerProps.field_108 > Q12(7.5f))
         {
-            var_s0_2 = Q12(0.5f);
+            runForwardChance = Q12(0.5f);
         }
         else
         {
-            var_s0_2 = (Q12_MULT_PRECISE(groanerProps.field_108 - Q12(6.0f), Q12(1.5f)) >> 2) + Q12(0.25f);
+            runForwardChance = (Q12_MULT_PRECISE(groanerProps.field_108 - Q12(6.0f), Q12(1.5f)) >> 2) + Q12(0.25f);
         }
     }
 
     distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-                                       g_SysWork.playerWork.player.position.vz - groaner->position.vz);
+                                             g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     if (distToPlayer > Q12(3.5f))
     {
         if (distToPlayer > Q12(5.25f))
         {
-            var_s0_2 += Q12(0.5f);
+            runForwardChance += Q12(0.5f);
         }
         else
         {
-            var_s0_2 += Q12(0.25f) + (Q12_MULT_PRECISE(distToPlayer - Q12(3.5f), Q12(1.75f)) >> 2);
+            runForwardChance += Q12(0.25f) + DIV_FAST(Q12_MULT_PRECISE(distToPlayer - Q12(3.5f), Q12(1.75f)), 4);
         }
     }
 
-    if (Rng_GenerateUInt(0, Q12_CLAMPED(1.0f)) < var_s0_2)
+    if (Rng_GenerateUInt(0, Q12_CLAMPED(1.0f)) < runForwardChance)
     {
         groaner->model.controlState = GroanerControl_RunForward;
     }
@@ -1051,7 +1054,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        groaner->fallSpeed += g_GravitySpeed >> 1;
+        groaner->fallSpeed += DIV_FAST(g_GravitySpeed, 2);
     }
 
     if (groanerProps.flags.val16[0] & GroanerFlag_1)
@@ -1266,7 +1269,7 @@ void Groaner_AnimUpdate(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINA
     }
 
     // Apply head flex rotation.
-    Math_SetSVectorFast(&flex->rotation, Q12_ANGLE(0.0f), groanerProps.flexAngle >> 2, Q12_ANGLE(0.0f));
+    Math_SetSVectorFast(&flex->rotation, Q12_ANGLE(0.0f), DIV_FAST(groanerProps.flexAngle, 4), Q12_ANGLE(0.0f));
     Math_RotMatrixZxyNegGte(&flex->rotation, &flex->rotationMat);
     MulMatrix(&boneCoords[GroanerBone_Head].coord, &flex->rotationMat);
     MulMatrix(&boneCoords[GroanerBone_Jaw].coord,  &flex->rotationMat);
@@ -1864,7 +1867,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
     s32    keyframeIdx;
     q19_12 sfxVol;
     s32    sfxPitch;
-    s32    temp_a0;
+    s32    field_10F;
 
     if (groanerProps.timer_10C > Q12(0.0f))
     {
@@ -1888,11 +1891,11 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
     switch (groanerProps.field_10E)
     {
         default:
-            temp_a0 = groanerProps.field_10F;
-            if (temp_a0 == 4)
+            field_10F = groanerProps.field_10F;
+            if (field_10F == 4)
             {
                 groanerProps.timer_10C = Q12(1.0f);
-                groanerProps.field_10E = temp_a0;
+                groanerProps.field_10E = field_10F;
 
                 if (groaner->health > Q12(0.0f) &&
                     (groanerProps.flags.val32 & (GroanerFlag_3 | GroanerFlag_12)) == GroanerFlag_3)
@@ -1907,10 +1910,10 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
                 groanerProps.flags.val16[0] &= ~GroanerFlag_12;
                 break;
             }
-            else if (groanerProps.field_10E != 2 && temp_a0 == 2)
+            else if (groanerProps.field_10E != 2 && field_10F == 2)
             {
                 groanerProps.timer_10C = Q12(-0.3f);
-                groanerProps.field_10E = temp_a0;
+                groanerProps.field_10E = field_10F;
                 break;
             }
 

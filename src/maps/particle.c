@@ -4271,7 +4271,7 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
     gte_stsxy(&prim->x1);
 
     // Return if `depth / 2` isn't in range `[1, 158]`.
-    if ((depth >> 1) < 1 || (depth >> 1) > 158)
+    if (DIV_FAST(depth, 2) < 1 || DIV_FAST(depth, 2) > 158)
     {
         return;
     }

@@ -1941,7 +1941,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 if (playerProps.moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) >> 1; // `/ 2`.
+                    playerProps.moveSpeed -= DIV_FAST(TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)), 2);
                     if ((playerProps.moveSpeed >> 16) & 1)
                     {
                         playerProps.moveSpeed = Q12(0.0f);
@@ -1950,8 +1950,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             }
             else if (playerProps.moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) >> 2; // `/ 4`.
-
+                playerProps.moveSpeed -= DIV_FAST(TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)), 4);
                 if ((playerProps.moveSpeed >> 16) & 1)
                 {
                     playerProps.moveSpeed = Q12(0.0f);
@@ -7305,11 +7304,11 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             switch (g_SavegamePtr->gameDifficulty)
             {
                 case GameDifficulty_Easy:
-                    player->damage.amount = (player->damage.amount * 3) >> 2; // `/ 4`.
+                    player->damage.amount = DIV_FAST(player->damage.amount * 3, 4);
                     break;
 
                 case GameDifficulty_Hard:
-                    player->damage.amount = (player->damage.amount * 6) >> 2; // `/ 4`.
+                    player->damage.amount = DIV_FAST(player->damage.amount * 6, 4);
                     break;
             }
 

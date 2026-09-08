@@ -436,7 +436,7 @@ void Game_NpcUpdate(void) // 0x80038354
                 distToNpc = Q12_TO_Q4(SquareRoot12(Q12(closeNpcInfo->distanceToNpc)));
                 if (isExterior)
                 {
-                    distToNpc >>= 1; // `/ 2`.
+                    distToNpc = DIV_FAST(distToNpc, 2);
                 }
 
                 // Compute clamped volume from Q4 distance. TODO: Is it Q4 here?
