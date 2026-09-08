@@ -281,7 +281,7 @@ void Gfx_MapEnvSet(s32 idx0, s32 idx1) // 0x8003ED74
 
 void func_8003EDA8(void) // 0x8003EDA8
 {
-    g_SysWork.field_2388.field_14 = true;
+    g_SysWork.field_2388.flashEffect = true;
 }
 
 void func_8003EDB8(CVECTOR* color0, CVECTOR* color1) // 0x8003EDB8
@@ -384,7 +384,7 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
     u8              flags;
     q19_12          lightIntensity;
     GsCOORDINATE2*  lightBoneCoord;
-    s_StructUnk3*   ptr2;
+    s_StructUnk3*   currentInGameGfx;
     s_SysWork_2388* ptr;
 
     ptr = &g_SysWork.field_2388;
@@ -400,10 +400,11 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
 
     g_SysWork.field_2388.flashlightIntensity = CLAMP(g_SysWork.field_2388.flashlightIntensity, Q12(0.0f), Q12(1.0f));
 
+    /** @unused See `s_MapEffectsInfo::field_E`. */
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity != Q12(0.0f)].effectsInfo.field_E == 3)
     {
         Vw_CoordToViewSpaceMatrix(g_SysWork.lightBoneCoord, &viewMat);
-        ApplyMatrixLV(&viewMat, (VECTOR*)&g_SysWork.lightPosition, &sp48); // Bug? `g_SysWork.lightPosition` is `VECTOR3`.
+        ApplyMatrixLV(&viewMat, &g_SysWork.lightPosition, &sp48);
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity != Q12(0.0f)].fogDistance = sp48.vz + Q8_TO_Q12(viewMat.t[2]);
     }
 
@@ -427,32 +428,32 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
 
     func_8003F838(&ptr->field_154, &ptr->field_1C[0], &ptr->field_1C[1], ptr->flashlightIntensity);
 
-    ptr2 = &ptr->field_154;
+    currentInGameGfx = &ptr->field_154;
 
-    if (ptr->field_14)
+    if (ptr->flashEffect)
     {
-        flags         = ptr->field_154.effectsInfo.field_0.field_00[0];
-        ptr->field_14 = false;
+        flags            = ptr->field_154.effectsInfo.field_0.field_00[0];
+        ptr->flashEffect = false;
 
         if (flags & (1 << 0))
         {
-            Gfx_FogParametersSet(ptr2, &MAP_EFFECTS_INFOS[8]);
+            Gfx_FogParametersSet(currentInGameGfx, &MAP_EFFECTS_INFOS[8]);
         }
         else if (flags & (1 << 1))
         {
-            ptr2->effectsInfo.field_4 += Q12(0.3f);
+            currentInGameGfx->effectsInfo.field_4 += Q12(0.3f);
         }
     }
 
-    ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo);
-    WorldEnv_FogLightingParamsUpdate(ptr2);
+    ptr->field_10 = func_8003FEC0(&currentInGameGfx->effectsInfo);
+    WorldEnv_FogLightingParamsUpdate(currentInGameGfx);
 
-    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo.field_4, ptr2->effectsInfo.field_0.field_00[2], Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
+    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, currentInGameGfx->effectsInfo.field_4, currentInGameGfx->effectsInfo.field_0.field_00[2], Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
 
-    Gfx_FlashlightPositionUpdate(lightIntensity, ptr2->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
+    Gfx_FlashlightPositionUpdate(lightIntensity, currentInGameGfx->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
                             g_SysWork.lightPosition.vx, g_SysWork.lightPosition.vy, g_SysWork.lightPosition.vz,
                             g_WorldGfxWork.mapInfo->waterZones);
-    func_80055814(ptr2->fogDistance);
+    func_80055814(currentInGameGfx->fogDistance);
 
     if (ptr->field_154.effectsInfo.field_0.field_00[0] & (1 << 3))
     {
@@ -468,7 +469,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha,
 
     // TODO: `arg4` is the value from `VC_ROAD_DATA::field_15`.
 
-    if (arg3 != 2)
+    if (arg3 != (1 << 1))
     {
         lensFlare = LensFlareType_Custom;
     }
@@ -721,7 +722,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
             arg0->effectsInfo.field_4                   = Math_WeightedAverageGet(Q12(0.0f), weight0, weight2);
         }
     }
-    else if (arg1->effectsInfo.field_0.field_00[2] == 2 && arg2->effectsInfo.field_0.field_00[2] == 1)
+    else if (arg1->effectsInfo.field_0.field_00[2] == (1 << 1) && arg2->effectsInfo.field_0.field_00[2] == (1 << 0))
     {
         if (weight < Q12(1.0f / 6.0f))
         {

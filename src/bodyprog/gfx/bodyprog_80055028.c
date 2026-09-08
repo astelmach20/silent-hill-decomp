@@ -63,7 +63,7 @@ void WorldEnv_Init(void) // 0x80055028
     g_WorldEnvWork.fog.color.g = 255;
     g_WorldEnvWork.fog.color.b = 255;
 
-    g_WorldEnvWork.light.field_0            = 0;
+    g_WorldEnvWork.light.field_0            = Q4(0.0f);
     g_WorldEnvWork.light.lensFlareIntensity = Q12(0.0f);
     g_WorldEnvWork.waterZones               = NULL;
     g_WorldEnvWork.fog.intensity            = 0;
@@ -156,7 +156,7 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
     GsOUT_PACKET_P = packet + 24;
 }
 
-void WorldEnv_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
+void WorldEnv_WorldLightingParamSet(u8 arg0, q19_12 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
 {
     g_WorldEnvWork.field_0          = arg0;
     g_WorldEnvWork.field_20         = arg1;
@@ -261,7 +261,7 @@ void Gfx_FlashlightPositionUpdate(q19_12 lightIntensity, q3_12 lensFlareIntensit
     }
 
     vwVectorToAngle(&g_WorldEnvWork.light.rotation, &g_WorldEnvWork.light.direction);
-    g_WorldEnvWork.light.field_0 = lightIntensity >> 8;
+    g_WorldEnvWork.light.field_0 = Q12_TO_Q4(lightIntensity);
     func_80055648(lightIntensity, &g_WorldEnvWork.light.direction);
 }
 

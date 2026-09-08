@@ -357,13 +357,31 @@ typedef struct _MapEffectsInfo
                    s32 field_0; // Flags?
                    u8  field_00[4];
                } field_0;
-    /* 0x4  */ q3_12   field_4; // Alpha.
-    /* 0x6  */ q3_12   field_6; // World tint color intensity.
+    /* 0x4  */ q3_12   field_4; // } Both are some sort of world tint intensity indicator.
+    /* 0x6  */ q3_12   field_6; // }
     /* 0x8  */ q3_12   worldTintR;
     /* 0xA  */ q3_12   worldTintG;
     /* 0xC  */ q3_12   worldTintB;
-    /* 0xE  */ u8      field_E; // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
-                                // Sets the transparent grey layer overlaid on characters and the enviroment.
+    /* 0xE  */ u8      field_E; /** Some fog state information.
+                                 * It works basically as a boolean to determine if fog is or not enabled, however,
+                                 * the code count with probably unused features as some pieces of code handle cases
+                                 * where this variable is set to 2 and 3.
+                                 * * In `Gfx_FogParametersSet` if this variable is set to 3 has the same behaviour of
+                                 * * 0 and 1 (which is setting the targ et fog distance), but if it is set to 2 the fog.
+                                 * * distance is set to 0.
+                                 * * In `Gfx_EffectsUpdate` setting the value to 3 sets some special behaviour and
+                                 * * adjust the fog distance.
+                                 * The only way this value is set is through the defined enviroment preset at `MAP_EFFECTS_INFOS`
+                                 * and by that it can be confirmed that 2 is unused as it is never defined in any preset, 3 only
+                                 * at the sixth (index 5) element defined, but, it seems the code never uses that preset.
+                                 * Forcing the load of the preset that assigns 3 at the beginning of the game result in a dark
+                                 * scene with the flashlight emitting a gigantic light effect, similar to the light that the
+                                 * flauros emits at the scene where Dahlia kidnap Alessa, but more intense and a slight purple
+                                 * world tone.
+                                 *
+                                 * Possibly state 2 and 3 were some early attempt to circumvent some issue with some effect
+                                 * that were left unused.
+                                 */
     /* 0x10 */ q19_12  fogDistance;
     /* 0x14 */ CVECTOR fogColor;
     /* 0x18 */ u8      enableTintLightOverlap; /** `bool` */
@@ -392,12 +410,20 @@ typedef struct
     /* 0x8   */ q19_12       field_8;
     /* 0xC   */ q19_12       field_C;
     /* 0x10  */ s32          field_10;
-    /* 0x14  */ u8           field_14;                /** `bool` */
+    /* 0x14  */ u8           flashEffect;             /** `bool`. Trigger world flash effect (used for weapons). */
     /* 0x15  */ u8           isFlashlightOn;          /** `bool` */
     /* 0x16  */ u8           isFlashlightUnavailable; /** `bool` */
                 // 1 byte of padding.
     /* 0x18  */ q3_12        flashlightIntensity;
                 // 2 bytes of padding.
+                
+                /** Each of these arrays represent some sort of graphical configuration for the
+                 * in-game state. The reason of two is because one (first index) is used when the
+                 * flashlight is not being used and the other (second index) is when it is being used.
+                 * `field_154` store live graphic details as it is the current state of the flashlight
+                 * intensity. Notice this is the live graphic details and not the target preset as this
+                 * is also used to handle the transition so the values can slowly fade.
+                 */
     /* 0x1C  */ s_StructUnk3 field_1C[2];
     /* 0x84  */ s_StructUnk3 field_84[2];
     /* 0xEC  */ s_StructUnk3 field_EC[2];

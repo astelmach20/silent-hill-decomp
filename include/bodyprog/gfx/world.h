@@ -49,7 +49,7 @@ typedef struct
 /** @brief Dynamic point light. */
 typedef struct _PointLight
 {
-    /* 0x0  */ s32               field_0; // Light intensity in Q4?
+    /* 0x0  */ s32               field_0; // Depth for something related about the lighting. The value used here is meant to be used in `gte_lddqa`.
     /* 0x4  */ q3_12             lensFlareIntensity;
     /* 0x8  */ q19_12            intensity;
     /* 0xC  */ SVECTOR           direction; /** Q3.12 */
@@ -76,11 +76,11 @@ typedef struct _WorldEnvWork
     /* 0x4   */ s_WaterZone* waterZones;
     /* 0x8   */ s32          screenBrightness;
     /* 0xC   */ s_Fog        fog;
-    /* 0x20  */ s32          field_20; // Map lighting.
+    /* 0x20  */ q19_12       field_20; // Map lighting.
     /* 0x24  */ CVECTOR      field_24; // Character color lighting.
     /* 0x28  */ CVECTOR      worldTintColor;
     /* 0x2C  */ MATRIX       colorMat;
-    /* 0x50  */ s_PointLight light;
+    /* 0x4C  */ s_PointLight light;
     /* 0xCC  */ u8           fogRamp[128]; // Fog-related values based on `fog.nearDistance`/`fog.farDistance`.
     /* 0x14C */ u16          clutY;
 } s_WorldEnvWork;
