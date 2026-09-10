@@ -1,7 +1,9 @@
 #ifndef _BODYPROG_EVENTS_MAP_MSG_H
 #define _BODYPROG_EVENTS_MAP_MSG_H
 
-#define DEFAULT_MAP_MESSAGE_LENGTH 99
+#define MAP_MSG_UNSKIPPABLE_AUDIO_TYPE_FLAG (1 << 0)
+#define DEFAULT_MAP_MESSAGE_LENGTH          99
+
 
 #if VERSION_REGION_IS(NTSC)
     #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400 /** Long string length is used to display a whole message instantly without a rollout. */
@@ -58,18 +60,13 @@ typedef enum _MapMsgState
     MapMsgState_SelectEntry2 = 3         /** Third entry selected in selection dialog. */
 } e_MapMsgState;
 
-/** @brief Map message audio types.
- *
- * TODO: Code sometimes checks for `g_MapMsg_AudioType & (1 << 0)`, which evaluates as `true` for
- * `MapMsgAudioType_VoiceClip` and `MapMsgAudioType_VoiceStream`. While `MapMsgAudioType_2` is also for voice clips,
- * what makes it unique?
- */
+/** @brief Map message audio types. */
 typedef enum _MapMsgAudioType
 {
-    MapMsgAudioType_None        = 0,
-    MapMsgAudioType_VoiceClip   = 1, /** Set by `~J0`. For cutscenes with individual audio files per message page. */
-    MapMsgAudioType_2           = 2, /** Set by `~J1`. TODO: Similar to `MapMsgAudioType_VoiceClip`? */
-    MapMsgAudioType_VoiceStream = 3  /** Set by `~J2`. For cutscenes with a single audio file (e.g. video tape cutscene). */
+    MapMsgAudioType_None              = 0,
+    MapMsgAudioType_VoiceClip         = 1, /** Set by `~J0`. For unskippable cutscenes with individual audio files per message page. */
+    MapMsgAudioType_ViceClipSkippable = 2, /** Set by `~J1`. For skippable cutscenes with individual audio files per message page. */
+    MapMsgAudioType_VoiceStream       = 3  /** Set by `~J2`. For unskippable cutscenes with a single audio file (e.g. video tape cutscene). */
 } e_MapMsgAudioType;
 
 typedef struct _MapMsgSelect
@@ -79,11 +76,8 @@ typedef struct _MapMsgSelect
 } s_MapMsgSelect;
 
 extern s_MapMsgSelect g_MapMsg_Select;
-
-// 2 flags?
-extern u8 g_MapMsg_AudioType;
-
-extern s8 g_MapMsg_SelectCancelIdx;
+extern u8             g_MapMsg_AudioType; /** `e_MapMsgAudioType` */
+extern s8             g_MapMsg_SelectCancelIdx;
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
 

@@ -37,11 +37,12 @@ s8             g_MapMsg_SelectCancelIdx;
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
+    #define GLYPH_ADVANCE   2
     #define FINISH_CUTSCENE 0xFF
     #define FINISH_MAP_MSG  0xFF
 
     s32         curRolloutState;
-    bool        interrupt;
+    bool        skip;
     s32         curMenuSelection;
     s32         unkJapVal;
     static s32  rolloutState;
@@ -51,13 +52,13 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     static s32  displayLengthInc;
     static bool loadAudio;
 
-    // Check for interrupting user input.
-    interrupt = false;
+    // Check for user input to skip.
+    skip = false;
     if ((g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
                                                g_GameWorkPtr->config.controllerConfig.cancel)) ||
         (g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.skip))
     {
-        interrupt = true;
+        skip = true;
     }
 
     g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = Q12(0.0f);
@@ -80,7 +81,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             menuSelection                    = 0;
             activeMapMsgIdx                  = mapMsgIdx;
             displayLength                    = 0;
-            displayLengthInc                 = 2; // Advance 2 glyphs at a time.
+            displayLengthInc                 = GLYPH_ADVANCE;
 
             Gfx_MapMsg_Reset();
             unkJapVal = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
@@ -152,7 +153,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 {
                     if (g_MapMsg_Select.maxIdx == curMenuSelection)
                     {
-                        if (!((g_MapMsg_AudioType & (1 << 0)) || !interrupt) ||
+                        if (!((g_MapMsg_AudioType & MAP_MSG_UNSKIPPABLE_AUDIO_TYPE_FLAG) || !skip) ||
                             (g_MapMsg_AudioType != MapMsgAudioType_None && g_SysWork.mapMsgTimer == Q12(0.0f)))
                         {
                             menuSelection = FINISH_MAP_MSG;
@@ -203,7 +204,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         break;
                     }
                 }
-                else if ((!(g_MapMsg_AudioType & (1 << 0)) && interrupt && g_MapMsg_Select.maxIdx != 0) ||
+                else if ((!(g_MapMsg_AudioType & MAP_MSG_UNSKIPPABLE_AUDIO_TYPE_FLAG) && skip && g_MapMsg_Select.maxIdx != 0) ||
                          (g_MapMsg_AudioType != MapMsgAudioType_None && g_SysWork.mapMsgTimer == Q12(0.0f)))
                 {
                     if (g_MapMsg_Select.maxIdx != NO_VALUE)
@@ -255,7 +256,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             }
             else
             {
-                if (interrupt)
+                if (skip)
                 {
                     displayLength = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
                 }
