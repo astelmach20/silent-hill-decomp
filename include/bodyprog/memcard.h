@@ -210,7 +210,7 @@ typedef struct _MemCard_Work
     /* 0x38 */ s32 MemCardIoMode; /** `e_MemCardIoMode` */
     /* 0x3C */ s32 deviceId;
 
-    /* 0x40 */ s_MemCard_Directory* directories_40; /** Array of files on the card, pointer supplied by caller to `MemCard_WorkSet`. */
+    /* 0x40 */ s_MemCard_Directory* directories; /** Array of files on the card, pointer supplied by caller to `MemCard_WorkSet`. */
 
     /* 0x44 */ char  filePath[28];
     /* 0x60 */ s32   createBlockCount; /** Block count passed to `open` when creating new file. */
@@ -220,7 +220,7 @@ typedef struct _MemCard_Work
     /* 0x70 */ bool  hasNewDevice;
     /* 0x74 */ s32   fileHandle;
     /* 0x78 */ s32   retryCount;
-    /* 0x7C */ s32   field_7C; // TODO
+    /* 0x7C */ s32   field_7C; // Dead code.
 } s_MemCard_Work;
 STATIC_ASSERT_SIZEOF(s_MemCard_Work, 128);
 
@@ -260,13 +260,14 @@ typedef struct _SaveScreenElement
     /* 0x6 */ s8                      fileIdx;
     /* 0x7 */ s8                      elementIdx;
     /* 0x8 */ s8                      locationId;
-    /* 0x9 */ s8                      __pad_9[3];
+    /* 0x9 */ s8                      __pad[3];
     /* 0xC */ s_MemCard_SaveMetadata* saveMetadata;
 } s_SaveScreenElement;
 STATIC_ASSERT_SIZEOF(s_SaveScreenElement, 16);
 
-/** @brief Appended to `ShSavegame` and `ShSaveUserConfig` during agame save. Contains 8-bit XOR checksum + magic.
- * Checksum generated via `MemCard_ChecksumGenerate`.
+/** @brief Appended to `s_Savegame` and `s_OptionsConfig` during game save. Contains 8-bit XOR checksum + magic.
+ *
+ * @note Checksum generated via `MemCard_ChecksumGenerate`.
  */
 typedef struct _Savegame_Footer
 {
@@ -287,23 +288,23 @@ STATIC_ASSERT_SIZEOF(s_Savegame_Container, 640);
 typedef struct _Savegame_OptionsConfig
 {
     /* 0x0  */ s_OptionsConfig   config;
-    /* 0x38 */ u8                __pad_38[68];
-    /* 0x7C */ s_Savegame_Footer footer_7C;
+    /* 0x38 */ u8                unused_38[68];
+    /* 0x7C */ s_Savegame_Footer footer;
 } s_Savegame_OptionsConfig;
 
 typedef struct _MemCard_TotalSavesInfo
 {
     /* 0x0 */ s32 totalSavegameCount;
     /* 0x4 */ s32 fileIdx;
-    /* 0x8 */ s32 saveIdx_8;
+    /* 0x8 */ s32 saveIdx;
 } s_MemCard_TotalSavesInfo;
 
 typedef struct _MemCard_SaveHeader
 {
-    /* 0x0  */ s32                    unk_0;
+    /* 0x0  */ s32                    unused_0;
     /* 0x4  */ s_MemCard_SaveMetadata saveMetadata[MEMCARD_SAVES_COUNT_MAX];
-    /* 0x88 */ s8                     unk_88[116];
-    /* 0xFC */ s_Savegame_Footer      footer_FC;
+    /* 0x88 */ s8                     unused_88[116];
+    /* 0xFC */ s_Savegame_Footer      footer;
 } s_MemCard_SaveHeader;
 STATIC_ASSERT_SIZEOF(s_MemCard_SaveHeader, 256);
 
@@ -330,13 +331,16 @@ typedef struct _MemCard_Process
 } s_MemCard_Process;
 STATIC_ASSERT_SIZEOF(s_MemCard_Process, 24);
 
-// OPM16 has `MCM_FUNC_WORK` struct with size 0x6D8, close to this 0x718.
+/** @brief See `g_MemCard_SaveWork`.
+ *
+ * @note OPM16 has `MCM_FUNC_WORK` struct with size 0x6D8, close to this 0x718.
+ */
 typedef struct _MemCard_SaveWork
 {
     /* 0x0   */ s_MemCard_DeviceInfo     devices[MEMCARD_DEVICE_COUNT_MAX];
-    /* 0xE0  */ s_MemCard_Process        saveWork[2];       // This seems to be used mainly for processes. Element 0 is used for general processes while 1 is exclusively used for
+    /* 0xE0  */ s_MemCard_Process        saveWork[2];
     /* 0x110 */ s32                      memCardInitalized; /** `bool` */
-    /* 0x114 */ s32                      unused_114;        /** @unused */
+    /* 0x114 */ s32                      unused_114;
     /* 0x118 */ s_PsxSaveBlock           saveBlock;
     /* 0x318 */ s_MemCard_SaveHeader     saveInfo;
     /* 0x418 */ s_Savegame_OptionsConfig optionsConfig;
@@ -378,21 +382,14 @@ extern s8 g_SaveScreen_IsLoadError; // `bool`
 // This is done until a way to replicate `common`
 // segment behavior is found.
 
-extern s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
-
-extern s_MemCard_SaveHeader g_MemCard_BasicSaveInfo2[MEMCARD_FILE_COUNT_MAX];
-
-extern s_MemCard_SaveHeader g_MemCard_BasicSaveInfo3[MEMCARD_FILE_COUNT_MAX];
-
+extern s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot1[MEMCARD_FILE_COUNT_MAX];
+extern s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot2[MEMCARD_FILE_COUNT_MAX];
+extern s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Null[MEMCARD_FILE_COUNT_MAX];
 /** @brief Defines if the game can use the memory card. */
-extern bool g_MemCard_AvailibityStatus;
-
+extern bool g_MemCard_SysAvailibityStatus;
 extern s32 __pad_bss_800B5484;
-
 extern s_MemCard_Work g_MemCard_Work; // 0x800B5488
-
 extern s_MemCard_SaveWork g_MemCard_SaveWork;
-
 extern s32 g_MemCard_PrevSavegameCount;
 
 // ====================
@@ -400,39 +397,26 @@ extern s32 g_MemCard_PrevSavegameCount;
 // ====================
 
 extern s16 g_MemCard_SavegameCount;
-
 extern s16 __pad_bss_800BCD2A;
-
 extern s_SaveScreenElement* g_MemCard_ActiveMemCardSlotSaves;
-
 /** @brief Amount of elements in each memory card. */
 extern u8  g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
-
 extern s16 __pad_bss_800BCD32;
-
 /** @brief Stores statuses of all memory cards/devices. */
 extern u32 g_MemCard_AllMemCardsStatus;
-
 /** @brief Some determinator for the state of the save screen.
  * 2 - Saving, 3 - Loading.
  */
 extern s8 g_SaveScreen_SaveScreenState;
-
 extern s8 __pad_bss_800BCD39;
-
 /** @brief Counts all elements of all inserted memory cards. */
 extern s16 g_MemCard_TotalElementsCount;
-
 /** @brief Amount of elements in each memory card. */
 extern u8 g_Savegame_ElementCount1[MEMCARD_SLOT_COUNT_MAX];
-
 /** @brief Index of selected element in each memory card. */
 extern u8 g_Savegame_SelectedElementIdx;
-
 extern s8 g_SelectedFileIdx;
-
 extern s8 g_SelectedDeviceId;
-
 extern s8 __pad_bss_800BCD41[3];
 
 // ==========
@@ -441,32 +425,65 @@ extern s8 __pad_bss_800BCD41[3];
 
 /** @brief Initializes memory card system.
  * This Initializes the entire memory card handling system while
- * `MemCard_Init` exclusively initalizes the memory cards.
+ * `MemCard_WorkInit` exclusively initalizes the memory cards.
+ *
+ * Scratch 1: https://decomp.me/scratch/TYf23
+ * Scratch 2: https://decomp.me/scratch/Jde6W
  */
 void MemCard_SysInit(void);
 
-/** @brief Clear memory card data in RAM. */
-void MemCard_RamClear(s32 deviceId);
-
-/** @brief Clear all files status. */
-void MemCard_FileStatusClear(s32 deviceId);
-
-bool MemCard_AreAllFilesUsed(s32 deviceId);
-
+/** @brief Enables game memory card handling system.
+ * Additionally, it initializes card events.
+ * 
+ * Scratch 1: https://decomp.me/scratch/Tdfjl
+ * Scratch 2: https://decomp.me/scratch/XPlxF
+ */
 void MemCard_SysEnable(void);
 
-/** @brief Disables memory card. */
+/** @brief Enables game memory card handling system.
+ * Additionally, it stop card events.
+ * 
+ * Scratch: https://decomp.me/scratch/NSB17
+ */
 void MemCard_SysDisable(void);
 
+/** @brief Sets `g_MemCard_SaveWork.memCardInitalized` to true.
+ * 
+ * Scratch: https://decomp.me/scratch/V506y
+ */
 void MemCard_InitStatus(void);
 
-void MemCard_StatusInitNotConnected(void);
+/** @unused @brief Sets `g_MemCard_SaveWork.memCardInitalized`
+ * to false and initalizes a null "Save Work" process with a
+ * last saved memory card state as `MemCardResult_NotConnected`.
+ * 
+ * Scratch 1: https://decomp.me/scratch/DTZBs
+ * Scratch 2: https://decomp.me/scratch/L8XKw
+ */
+void MemCard_InitStatusNotConnected(void);
 
+/** @brief Get all the currently connected memory card status.
+ * 
+ * Scratch: https://decomp.me/scratch/x4Wrk
+ *
+ * @return Value list in bit-field like. In order to retrieve the data for usage `MemCard_StatusGet`.
+ */
 s32 MemCard_AllMemCardsStatusGet(void);
 
+/** @unused @brief Identical to `MemCard_InitStatus`.
+ * 
+ * Scratch: https://decomp.me/scratch/Ws9R9
+ */
 void func_8002E8D4(void);
 
-void MemCard_StatusInitSuccess(void);
+/** @unused @brief Sets `g_MemCard_SaveWork.memCardInitalized`
+ * to false and initalizes a null "Save Work" process with a
+ * last saved memory card state as `MemCardResult_Success`.
+ * 
+ * Scratch 1: https://decomp.me/scratch/uHWZ1
+ * Scratch 2: https://decomp.me/scratch/bBBHt
+ */
+void MemCard_InitStatusSuccess(void);
 
 s32 func_8002E914(void);
 
@@ -545,7 +562,7 @@ s32 MemCard_FileClear(s32 deviceId, char* fileName);
 
 s32 MemCard_FileRename(s32 deviceId, char* prevName, char* newName);
 
-void MemCard_Init(void);
+void MemCard_WorkInit(void);
 
 void MemCard_EventsInit(void);
 

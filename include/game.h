@@ -406,10 +406,14 @@ STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 typedef struct
 {
     /* 0x0   */ s32          primitiveType; /** `e_PrimitiveType` */
-    /* 0x4   */ s8*          field_4;       /** Points to different types of data depending on `field_0`. */
-    /* 0x8   */ q19_12       field_8;
-    /* 0xC   */ q19_12       field_C;
-    /* 0x10  */ s32          field_10;
+    /* 0x4   */ s8*          field_4;       // } This stores a pointer to some data from overlays.
+    /* 0x8   */ q19_12       field_8;       // } All this values are related to `primitiveType` which seemly does some special work for
+                                            // } some special flashlight/spotlight effect.
+    /* 0xC   */ q19_12       field_C;       // }
+    /* 0x10  */ q19_12       field_10;      /** @unused Dead code. This variable stores a value returned by `func_8003FEC0`
+                                             * (which is the only instance in the code this function is ever used), but it's
+                                             * never used.
+                                             */
     /* 0x14  */ u8           flashEffect;             /** `bool`. Trigger world flash effect (used for weapons). */
     /* 0x15  */ u8           isFlashlightOn;          /** `bool` */
     /* 0x16  */ u8           isFlashlightUnavailable; /** `bool` */
