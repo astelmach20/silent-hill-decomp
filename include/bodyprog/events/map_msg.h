@@ -58,13 +58,19 @@ typedef enum _MapMsgState
     MapMsgState_SelectEntry2 = 3         /** Third entry selected in selection dialog. */
 } e_MapMsgState;
 
-typedef enum _MapMsgAudioLoadBlock
+/** @brief Map message audio types.
+ *
+ * TODO: Code sometimes checks for `g_MapMsg_AudioType & (1 << 0)`, which evaluates as `true` for
+ * `MapMsgAudioType_VoiceClip` and `MapMsgAudioType_VoiceStream`. While `MapMsgAudioType_2` is also for voice clips,
+ * what makes it unique?
+ */
+typedef enum _MapMsgAudioType
 {
-    MapMsgAudioLoadBlock_None = 0, // TODO: Some code checks only for bit 0, so it should mean something.
-    MapMsgAudioLoadBlock_Unk1 = 1,
-    MapMsgAudioLoadBlock_J2   = 3  // `J2` map messages set this, causing voice audio to not load.
-                                   // `J2` cutscenes use single audio file for all lines (e.g. video tape cutscene).
-} e_MapMsgAudioLoadBlock;
+    MapMsgAudioType_None        = 0,
+    MapMsgAudioType_VoiceClip   = 1, /** Set by `~J0`. For cutscenes with individual audio files per message page. */
+    MapMsgAudioType_2           = 2, /** Set by `~J1`. TODO: Similar to `MapMsgAudioType_VoiceClip`? */
+    MapMsgAudioType_VoiceStream = 3  /** Set by `~J2`. For cutscenes with a single audio file (e.g. video tape cutscene). */
+} e_MapMsgAudioType;
 
 typedef struct _MapMsgSelect
 {
@@ -75,7 +81,7 @@ typedef struct _MapMsgSelect
 extern s_MapMsgSelect g_MapMsg_Select;
 
 // 2 flags?
-extern u8 g_MapMsg_AudioLoadBlock;
+extern u8 g_MapMsg_AudioType;
 
 extern s8 g_MapMsg_SelectCancelIdx;
 

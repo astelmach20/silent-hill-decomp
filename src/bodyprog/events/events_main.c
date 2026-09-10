@@ -226,8 +226,8 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
     if (g_TickCount > D_800A9A20)
     {
         rotY       = g_SysWork.playerWork.player.rotation.vy;
-        D_800A9A24 = g_SysWork.playerWork.player.position.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
-        D_800A9A28 = g_SysWork.playerWork.player.position.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
+        D_800A9A24 = g_SysWork.playerWork.player.position.vx - DIV_FAST(Math_Sin(rotY), 8);
+        D_800A9A28 = g_SysWork.playerWork.player.position.vz - DIV_FAST(Math_Cos(rotY), 8);
         D_800A9A20 = g_TickCount;
     }
 
@@ -285,7 +285,7 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
-    temp_a0_2 = scaledCosRotY >> 4; // `/ 16`.
+    temp_a0_2 = DIV_FAST(scaledCosRotY, 16);
     deltaX    = mapPoint->positionX - g_SysWork.playerWork.player.position.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
@@ -311,7 +311,7 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
-            temp_a0_2 = scaledSinPlayerRotY >> 4; // `/ 16`.
+            temp_a0_2 = DIV_FAST(scaledSinPlayerRotY, 16);
             deltaZ    = mapPoint->positionZ - g_SysWork.playerWork.player.position.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;

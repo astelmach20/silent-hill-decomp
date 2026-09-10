@@ -3334,7 +3334,7 @@ g_Bgm_LayersUpdated                          = 0x800BF3B4;
 //--- PA: 0x09A858   VA: 0x800BF3B8   subsegment: .bss, events/map_msg_display
 //----------------------------------------------------------------------------
 g_MapMsg_Select                              = 0x800BF3D0; // size:2
-g_MapMsg_AudioLoadBlock                      = 0x800BF3D2;
+g_MapMsg_AudioType                           = 0x800BF3D2;
 
 //----------------------------------------------------------------------------
 //--- PA: 0x09A878   VA: 0x800BF3D8   subsegment: .bss, events/game_sys_states

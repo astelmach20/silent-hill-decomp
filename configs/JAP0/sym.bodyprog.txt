@@ -3316,7 +3316,7 @@ g_Bgm_LayersUpdated                          = 0x800BF28C;
 //--- PA: 0x09A730   VA: 0x800BF290   subsegment: .bss, events/map_msg_display
 //----------------------------------------------------------------------------
 g_MapMsg_Select                              = 0x800BF2A8; // size:2
-g_MapMsg_AudioLoadBlock                      = 0x800BF2AA;
+g_MapMsg_AudioType                           = 0x800BF2AA;
 g_MapMsg_SelectCancelIdx                     = 0x800BF2AB;
 
 //----------------------------------------------------------------------------

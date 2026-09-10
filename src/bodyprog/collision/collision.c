@@ -547,7 +547,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
     if (cylinder->collisionState == CharaCollisionState_Default)
     {
         Collision_DefaultResultSet(collResult, moveOffset->vx, moveOffset->vy, moveOffset->vz, cylinder->position.vy);
-        return false;
+        return 0;
     }
 
     // Dampen movement offset.

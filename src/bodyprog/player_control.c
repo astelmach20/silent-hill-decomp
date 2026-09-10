@@ -6797,8 +6797,8 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     moveOffsetZ = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
 
     // Compute displacement alpha from ground slope.
-    moveOffsetAlphaX = Math_Cos(ABS(surface.tiltAngleX) >> 3); // `/ 8`.
-    moveOffsetAlphaZ = Math_Cos(ABS(surface.tiltAngleZ) >> 3); // `/ 8`.
+    moveOffsetAlphaX = Math_Cos(DIV_FAST(ABS(surface.tiltAngleX), 8));
+    moveOffsetAlphaZ = Math_Cos(DIV_FAST(ABS(surface.tiltAngleZ), 8));
 
     // Compute adjusted displacement.
     adjMoveOffsetX = Q12_MULT(Q12_MULT(moveOffsetX, moveOffsetAlphaX), moveOffsetAlphaX);

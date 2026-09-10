@@ -497,9 +497,9 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
     s32   charCode;
     char* mapMsg;
 
-    ret                     = 0;
-    D_800C5E1C              = 1;
-    g_MapMsg_AudioLoadBlock = 0;
+    ret                = 0;
+    D_800C5E1C         = 1;
+    g_MapMsg_AudioType = MapMsgAudioType_None;
 
     for (i = 0; i < FONT_12X16_LINE_COUNT_MAX; i++)
     {
@@ -516,6 +516,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
 
             switch (charCode)
             {
+                // Ignore tabs, newlines, and spaces. TODO: These serve a purpose in Japanese code?
                 case '\t':
                 case '\n':
                 case ' ':
@@ -537,7 +538,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
                     {
                         if (posIdx == 2)
                         {
-                            g_MapMsg_AudioLoadBlock = 3;
+                            g_MapMsg_AudioType = MapMsgAudioType_VoiceStream;
                         }
 
                         while (posIdx != ' ' && posIdx != '\t')
@@ -577,6 +578,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
 
             switch (charCode)
             {
+                // Ignore tabs, newlines, and spaces.
                 case '\t':
                 case '\n':
                 case ' ':
@@ -617,6 +619,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
                             break;
 
                         case MAP_MSG_CODE_JUMP:
+                            // Ignore spaces and tabs.
                             while (posIdx != ' ' && posIdx != '\t')
                             {
                                 posIdx = *++mapMsg;
@@ -701,6 +704,7 @@ void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
         {
             switch (*mapMsg)
             {
+                // Ignore tabs and spaces.
                 case '\t':
                 case ' ':
                     mapMsg++;
@@ -729,6 +733,7 @@ void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
         {
             switch (*mapMsg)
             {
+                // Ignore tabs and spaces.
                 case '\t':
                 case ' ':
                     mapMsg++;

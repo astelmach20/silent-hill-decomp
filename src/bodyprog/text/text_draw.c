@@ -275,8 +275,8 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
     s32 posIdx;
     u8* mapMsg;
 
-    g_MapMsg_WidthIdx       = 1;
-    g_MapMsg_AudioLoadBlock = 0;
+    g_MapMsg_WidthIdx  = 1;
+    g_MapMsg_AudioType = MapMsgAudioType_None;
 
     for (i = (FONT_12X16_LINE_COUNT_MAX - 1); i >= 0; i--)
     {
@@ -291,6 +291,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
 
         switch (charCode)
         {
+            // Ignore tabs, newlines, and spaces.
             case '\t':
             case '\n':
             case ' ':
@@ -329,9 +330,10 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
                     case MAP_MSG_CODE_JUMP:
                         if (posIdx == 2)
                         {
-                            g_MapMsg_AudioLoadBlock = 3;
+                            g_MapMsg_AudioType = MapMsgAudioType_VoiceStream;
                         }
 
+                        // Ignore spaces and tabs.
                         while (posIdx != ' ' && posIdx != '\t')
                         {
                             posIdx = *++mapMsg;
@@ -520,9 +522,9 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
                         {
                             s32 c;
 
-                            mapMsg                  = mapMsg + 2;
-                            c                       = *mapMsg;
-                            g_MapMsg_AudioLoadBlock = arg + 1;
+                            mapMsg             = mapMsg + 2;
+                            c                  = *mapMsg;
+                            g_MapMsg_AudioType = arg + 1;
 
                             while (c != ')')
                             {
@@ -556,6 +558,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
                         }
                         else
                         {
+                            // Ignore spaces and tabs.
                             while (arg != ' ' && arg != '\t')
                             {
                                 arg = *++mapMsg;
