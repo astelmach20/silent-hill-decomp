@@ -63,10 +63,10 @@ typedef enum _MapMsgState
 /** @brief Map message audio types. */
 typedef enum _MapMsgAudioType
 {
-    MapMsgAudioType_None              = 0,
-    MapMsgAudioType_VoiceClip         = 1, /** Set by `~J0`. For unskippable cutscenes with individual audio files per message page. */
-    MapMsgAudioType_ViceClipSkippable = 2, /** Set by `~J1`. For skippable cutscenes with individual audio files per message page. */
-    MapMsgAudioType_VoiceStream       = 3  /** Set by `~J2`. For unskippable cutscenes with a single audio file (e.g. video tape cutscene). */
+    MapMsgAudioType_None                 = 0,
+    MapMsgAudioType_VoiceClipUnskippable = 1, /** Set by `~J0`. For unskippable cutscenes with individual audio files per message page. */
+    MapMsgAudioType_VoiceClipSkippable   = 2, /** Set by `~J1`. For skippable cutscenes with individual audio files per message page. */
+    MapMsgAudioType_VoiceStream          = 3  /** Set by `~J2`. For unskippable cutscenes with a single audio file (e.g. video tape cutscene). */
 } e_MapMsgAudioType;
 
 typedef struct _MapMsgSelect

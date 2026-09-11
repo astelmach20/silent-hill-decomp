@@ -187,8 +187,8 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
                 setPolyFT4(glyphPoly);
                 setRGB0(glyphPoly, glyphColor, glyphColor >> 8, glyphColor >> 16);
                 setXY4(glyphPoly,
-                       posX,                             posY * 2,
-                       posX,                             (posY * 2) + 30,
+                       posX,                           posY * 2,
+                       posX,                           (posY * 2) + 30,
                        posX + FONT_12X16_GLYPH_SIZE_X, posY * 2,
                        posX + FONT_12X16_GLYPH_SIZE_X, (posY * 2) + 30);
 
@@ -209,7 +209,7 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
                 posXCpy = (u16)posX;
 
                 glyphSprt              = (SPRT*)packet;
-                *((u32*)&glyphSprt->w) = 0x10000C;
+                *((u32*)&glyphSprt->w) = 0x10000C; // `w`, `h`.
 
                 glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
                 posX    += FONT_12X16_GLYPH_WIDTHS[glyphIdx];
@@ -236,8 +236,8 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
             posX  = g_StringPositionX1;
             posY += FONT_12X16_GLYPH_SIZE_Y;
         }
-        // New color.
-        else if (charCode >= '\x01' && charCode < '\b')
+        // New color (`e_ColorId`).
+        else if (charCode > 0 && charCode <= 7)
         {
             glyphColor      = STRING_COLORS[charCode];
             g_StringColorId = charCode;

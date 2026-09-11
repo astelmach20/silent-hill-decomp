@@ -955,7 +955,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
         case 3:
             Gfx_StringPositionSet(104, 104);
-            Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
+            Gfx_StringDraw("\7GAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             g_SysWork.sysStateStepData[0]++;
 
             if ((g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
@@ -968,7 +968,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
         case 4:
             Gfx_StringPositionSet(104, 104);
-            Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
+            Gfx_StringDraw("\7GAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(2.0f), false);
             break;
 

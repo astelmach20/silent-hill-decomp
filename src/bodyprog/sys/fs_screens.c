@@ -51,5 +51,5 @@ void GameFs_SaveLoadBinLoad(void) // 0x80032CA8
 void func_80032CE8(void) // 0x80032CE8
 {
     Gfx_StringPositionSet(108, 104);
-    Gfx_StringDraw("\x7Now_loading.", 100);
+    Gfx_StringDraw("\7Now_loading.", 100);
 }
