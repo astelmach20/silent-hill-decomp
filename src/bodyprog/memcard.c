@@ -12,6 +12,11 @@
     s32 __pad_bss_800B5484;
 #endif
 
+/** @unused Formatting feature.
+ * Commonly PS1 features an option to format the PS1. This game also count with a fully working
+ * format feature, but there is no way to trigger it.
+ */
+
 // ========================================
 // STATIC VARIABLES
 // ========================================
@@ -232,11 +237,7 @@ void MemCard_InitStatusSuccess(void)
     MemCard_SaveWork_SetParams(&g_MemCard_SaveWork.saveWork[1], 0, 0, 0, 0, 0, MemCardResult_Success);
 }
 
-// ========================================
-// MEMORY CARD - HELPERS
-// ========================================
-
-s32 func_8002E914(void) // 0x8002E914
+s32 func_8002E914(void)
 {
     s32 ret;
     s32 i;
@@ -250,23 +251,23 @@ s32 func_8002E914(void) // 0x8002E914
     return ret;
 }
 
-bool MemCard_ProcessSet(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E94C
+bool MemCard_ProcessSet(s32 processId, s32 deviceId, s32 fileIdx, s32 saveIdx)
 {
     if (g_MemCard_SaveWork.saveWork[0].processId != MemCardProcess_None)
     {
         return false;
     }
 
-    MemCard_SaveWork_SetParams(&g_MemCard_SaveWork.saveWork[0], arg0, deviceId, fileIdx, saveIdx, 0, MemCardResult_Success);
+    MemCard_SaveWork_SetParams(&g_MemCard_SaveWork.saveWork[0], processId, deviceId, fileIdx, saveIdx, 0, MemCardResult_Success);
     return true;
 }
 
-s32 MemCard_LastMemCardResultGet(void) // 0x8002E990
+s32 MemCard_LastMemCardResultGet(void)
 {
     return g_MemCard_SaveWork.saveWork[0].lastMemCardResult;
 }
 
-s32 MemCard_FileStatusesGet(s32 deviceId) // 0x8002E9A0
+s32 MemCard_FilesStatusesGet(s32 deviceId)
 {
     s32 ret;
     s32 i;
@@ -281,12 +282,12 @@ s32 MemCard_FileStatusesGet(s32 deviceId) // 0x8002E9A0
     return ret;
 }
 
-s_MemCard_SaveMetadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
+s_MemCard_SaveMetadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx)
 {
     return &g_MemCard_SaveWork.devices[deviceId].saveHeader[fileIdx].saveMetadata[saveIdx];
 }
 
-s32 MemCard_UsedFileCount(s32 deviceId) // 0x8002EA28
+s32 MemCard_UsedFileCount(s32 deviceId)
 {
     s32 ret;
     s32 i;
@@ -304,12 +305,12 @@ s32 MemCard_UsedFileCount(s32 deviceId) // 0x8002EA28
     return ret;
 }
 
-s32 MemCard_FreeFilesCount(s32 deviceId) // 0x8002EA78
+s32 MemCard_FreeFilesCount(s32 deviceId)
 {
     return g_MemCard_SaveWork.devices[deviceId].fileLimit - MemCard_UsedFileCount(deviceId);
 }
 
-bool MemCard_NoSavesDoneCheck(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx) // 0x8002EABC
+bool MemCard_NoSavesDoneCheck(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx)
 {
     s_MemCard_TotalSavesInfo saveInfo;
     s32                      i;
@@ -380,7 +381,7 @@ void MemCard_Update(void) // 0x8002EB88
 
     switch (statusPtr->processId)
     {
-        case MemCardProcess_Init: // Also used as update process.
+        case MemCardProcess_Init: // Works on updating memory card too.
             MemCard_Process_Init(statusPtr);
             break;
 
@@ -413,7 +414,13 @@ void MemCard_Update(void) // 0x8002EB88
     }
 }
 
-void MemCard_Process_Format(s_MemCard_Process* statusPtr) // 0x8002ECE0
+/** @brief Process to format memory card.
+ *
+ * Scratch: https://decomp.me/scratch/hChGg
+ *
+ * @param statusPtr Memory card process work information.
+ */
+static void MemCard_Process_Format(s_MemCard_Process* statusPtr)
 {
     if (MemCard_DeviceFormat(statusPtr->deviceId) != 0)
     {
@@ -431,7 +438,14 @@ void MemCard_Process_Format(s_MemCard_Process* statusPtr) // 0x8002ECE0
     }
 }
 
-void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
+/** @brief Process to initalize memory card.
+ *
+ * Scratch 1: https://decomp.me/scratch/n0yu4
+ * Scratch 2: https://decomp.me/scratch/nUPKd
+ *
+ * @param statusPtr Memory card process work information.
+ */
+static void MemCard_Process_Init(s_MemCard_Process* statusPtr)
 {
     char                       filePath[24];
     s32                        memCardResult;
@@ -439,9 +453,9 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
     s_MemCard_SaveHeader*      saveHeaderPtr;
     s_MemCard_DeviceInfo*      deviceInfoPtr;
     static s32                 fileIdx;
-    static s32                 D_800B261C;
+    static s32                 readDataErrorAttempt;
     static s32                 checkSumValidationAttempts;
-    static s32                 D_800B2624;
+    static s32                 D_800B2624; // Unused.
     static s_MemCard_Directory directoryInfoCpy;
 
     statusPtr->lastMemCardResult = MemCardResult_Success;
@@ -451,7 +465,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
     switch (statusPtr->processState)
     {
         case 0: // Start memcard process initialization.
-            D_800B261C = 0;
+            readDataErrorAttempt = 0;
 
             if (MemCard_WorkSet(MemCardIoMode_Init, statusPtr->deviceId, NULL, NULL, 0, 0, NULL, 0))
             {
@@ -465,7 +479,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             {
                 case MemCardResult_NotConnected:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
-                    deviceInfoPtr->status           = MemCardState_Unavailable;
+                    deviceInfoPtr->status        = MemCardState_Unavailable;
                     statusPtr->lastMemCardResult = memCardResult;
                     break;
 
@@ -576,7 +590,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
 
                     statusPtr->lastMemCardResult = memCardResult;
-                    deviceInfoPtr->status           = MemCardState_Unavailable;
+                    deviceInfoPtr->status        = MemCardState_Unavailable;
                     break;
 
                 case MemCardResult_FileOpenError:
@@ -584,7 +598,9 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
                 case MemCardResult_FileIoError:
                     statusPtr->processState = 0;
 
-                    if (D_800B261C >= 3)
+                    // If read data check fails start a process where the memory card will be read three times,
+                    // if the file fails to read after three attempts the file will be qualified to be damage.
+                    if (readDataErrorAttempt >= 3)
                     {
                         MemCard_DeviceInfoClear(statusPtr->deviceId);
 
@@ -593,7 +609,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
                         break;
                     }
 
-                    D_800B261C++;
+                    readDataErrorAttempt++;
                     statusPtr->processState = 2;
                     break;
 
@@ -610,7 +626,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             if (MemCard_ChecksumValidate(&saveHeaderPtr->footer, (s8*)saveHeaderPtr, sizeof(s_MemCard_SaveHeader)))
             {
                 deviceInfoPtr->fileState[fileIdx] = FileState_Used;
-                statusPtr->processState          = 5;
+                statusPtr->processState           = 5;
                 return;
             }
 
@@ -620,7 +636,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
 
             if (checkSumValidationAttempts >= 3)
             {
-                statusPtr->processState          = 5;
+                statusPtr->processState           = 5;
                 deviceInfoPtr->fileState[fileIdx] = FileState_Damaged;
                 return;
             }
@@ -637,7 +653,16 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
     }
 }
 
-s32 MemCard_FileLimitUpdate(s32 deviceId, s_MemCard_Directory* dir) // 0x8002F278
+
+/** @brief 
+ *
+ * Scratch: https://decomp.me/scratch/VUvee
+ *
+ * @param deviceId
+ * @param dir
+ * @return 
+ */
+static s32 MemCard_FileLimitUpdate(s32 deviceId, s_MemCard_Directory* dir) // 0x8002F278
 {
     s32 ret;
     s32 i;
@@ -652,7 +677,7 @@ s32 MemCard_FileLimitUpdate(s32 deviceId, s_MemCard_Directory* dir) // 0x8002F27
     return ret + MemCard_UsedFileCount(deviceId);
 }
 
-void MemCard_Process_Load(s_MemCard_Process* statusPtr)
+static void MemCard_Process_Load(s_MemCard_Process* statusPtr)
 {
     char                  filePath[24];
     s32                   memCardResult;
@@ -717,13 +742,13 @@ void MemCard_Process_Load(s_MemCard_Process* statusPtr)
         case 1: // Reads savegame data or reads game configurations.
             if (statusPtr->processId == MemCardProcess_Load_Game) // Load only game configurations.
             {
-                saveData0Offset = 0x300;
+                saveData0Offset = sizeof(s_PsxSaveBlock) + sizeof(s_MemCard_SaveHeader);
                 saveData0Buf    = (s8*)&g_MemCard_SaveWork.optionsConfig;
                 saveData0Size   = sizeof(s_Savegame_OptionsConfig);
             }
             else
             {
-                saveData0Offset = 0x300 + sizeof(s_Savegame_OptionsConfig) + (statusPtr->saveIdx * sizeof(s_Savegame_Container));
+                saveData0Offset = sizeof(s_PsxSaveBlock) + sizeof(s_MemCard_SaveHeader) + sizeof(s_Savegame_OptionsConfig) + (statusPtr->saveIdx * sizeof(s_Savegame_Container));
                 saveData0Buf    = (s8*)&g_MemCard_SaveWork.savegame;
                 saveData0Size   = sizeof(s_Savegame_Container);
             }
@@ -794,7 +819,7 @@ void MemCard_Process_Load(s_MemCard_Process* statusPtr)
     }
 }
 
-void MemCard_Process_Save(s_MemCard_Process* statusPtr)
+static void MemCard_Process_Save(s_MemCard_Process* statusPtr)
 {
     char                  filePath[24];
     s32                   fileIdx;
@@ -818,12 +843,12 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                     switch (deviceInfoPtr->fileState[fileIdx])
                     {
                         case FileState_Unused:
-                            fileIdxCpy                 = fileIdx;
+                            fileIdxCpy              = fileIdx;
                             statusPtr->processState = 1;
                             break;
 
                         case FileState_Used:
-                            fileIdxCpy                 = fileIdx;
+                            fileIdxCpy              = fileIdx;
                             statusPtr->processState = 3;
                             break;
 
@@ -839,7 +864,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 {
                     if (MemCard_AreAllFilesUsed(statusPtr->deviceId) == true)
                     {
-                        fileIdxCpy                 = 0;
+                        fileIdxCpy              = 0;
                         statusPtr->processState = 1;
                     }
                     else
@@ -897,13 +922,13 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 case MemCardResult_NotConnected:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = memCardResult;
-                    deviceInfoPtr->status           = MemCardState_Unavailable;
+                    deviceInfoPtr->status        = MemCardState_Unavailable;
                     break;
 
                 case MemCardResult_FileCreateError:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = memCardResult;
-                    deviceInfoPtr->status           = MemCardState_Null;
+                    deviceInfoPtr->status        = MemCardState_Null;
                     break;
 
                 case MemCardResult_FileOpenError:
@@ -912,7 +937,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
 
                     statusPtr->lastMemCardResult = MemCardResult_FileIoError;
-                    deviceInfoPtr->status           = MemCardState_Null;
+                    deviceInfoPtr->status        = MemCardState_Null;
 
                     MemCard_FilenameGenerate(filePath, fileIdxCpy);
                     MemCard_FileClear(statusPtr->deviceId, filePath);
@@ -953,7 +978,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 case MemCardResult_NotConnected:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = memCardResult;
-                    deviceInfoPtr->status           = MemCardState_Unavailable;
+                    deviceInfoPtr->status        = MemCardState_Unavailable;
                     break;
 
                 case MemCardResult_FileOpenError:
@@ -961,7 +986,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 case MemCardResult_FileIoError:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = MemCardResult_FileIoError;
-                    deviceInfoPtr->status           = MemCardState_Null;
+                    deviceInfoPtr->status        = MemCardState_Null;
                     break;
 
                 case MemCardResult_FileIoComplete:
@@ -990,7 +1015,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 case MemCardResult_NotConnected:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = memCardResult;
-                    deviceInfoPtr->status           = MemCardState_Unavailable;
+                    deviceInfoPtr->status        = MemCardState_Unavailable;
                     break;
 
                 case MemCardResult_FileOpenError:
@@ -998,7 +1023,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 case MemCardResult_FileIoError:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = MemCardResult_FileIoError;
-                    deviceInfoPtr->status           = MemCardState_Null;
+                    deviceInfoPtr->status        = MemCardState_Null;
                     break;
 
                 case MemCardResult_FileIoComplete:
@@ -1027,7 +1052,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 case MemCardResult_NotConnected:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = memCardResult;
-                    deviceInfoPtr->status           = MemCardState_Unavailable;
+                    deviceInfoPtr->status        = MemCardState_Unavailable;
                     break;
 
                 case MemCardResult_FileOpenError:
@@ -1035,7 +1060,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 case MemCardResult_FileIoError:
                     MemCard_DeviceInfoClear(statusPtr->deviceId);
                     statusPtr->lastMemCardResult = MemCardResult_FileIoError;
-                    deviceInfoPtr->status           = MemCardState_Null;
+                    deviceInfoPtr->status        = MemCardState_Null;
                     break;
 
                 case MemCardResult_FileIoComplete:

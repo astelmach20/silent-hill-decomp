@@ -59,7 +59,7 @@ static bool MemCard_FilesDamagedCheck(s32 deviceId) // 0x800334D8
     s32  fileStatus;
 
     res = false;
-    fileStatuses = MemCard_FileStatusesGet(deviceId);
+    fileStatuses = MemCard_FilesStatusesGet(deviceId);
 
     for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
@@ -273,7 +273,7 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
         }
         else
         {
-            fileStatuses[i] = MemCard_FileStatusesGet(i);
+            fileStatuses[i] = MemCard_FilesStatusesGet(i);
 
             for (j = 0; j < MEMCARD_FILE_COUNT_MAX; j++)
             {

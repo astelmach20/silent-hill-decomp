@@ -92,7 +92,7 @@ func_8002E8D4                                = 0x8002E8D4;
 MemCard_InitStatusSuccess                    = 0x8002E8E4;
 MemCard_ProcessSet                           = 0x8002E94C;
 MemCard_LastMemCardResultGet                 = 0x8002E990;
-MemCard_FileStatusesGet                      = 0x8002E9A0; // type:func
+MemCard_FilesStatusesGet                     = 0x8002E9A0; // type:func
 MemCard_SaveMetadataGet                      = 0x8002E9EC; // type:func
 MemCard_UsedFileCount                        = 0x8002EA28; // type:func
 MemCard_FreeFilesCount                       = 0x8002EA78; // type:func
@@ -2970,16 +2970,17 @@ chantype                                     = 0x800B25C8; // type:s32 static fo
 //--- PA: 0x08DAB8   VA: 0x800B2618   subsegment: .bss, memcard
 //-------------------------------------------------------------
 fileIdx.80                                   = 0x800B2618;
-D_800B261C                                   = 0x800B261C;
-checkSumValidationAttempts                   = 0x800B2620;
-D_800B2624                                   = 0x800B2624;
-directoryInfoCpy                             = 0x800B2628;
-fileIdx.89                                   = 0x800B2774;
-fileIdxCpy                                   = 0x800B2778;
+readDataErrorAttempt.00                      = 0x800B261C;
+checkSumValidationAttempts.00                = 0x800B2620;
+D_800B2624.00                                = 0x800B2624;
+directoryInfoCpy.00                          = 0x800B2628;
+fileIdx.00                                   = 0x800B2774;
+fileIdxCpy.00                                = 0x800B2778;
+D_800B277C.00                                = 0x800B277C;
 g_MemCard_SaveHeaderInfo_Slot1               = 0x800B2780;
 g_MemCard_SaveHeaderInfo_Slot2               = 0x800B3680;
 g_MemCard_SaveHeaderInfo_Null                = 0x800B4580;
-g_MemCard_SysAvailibityStatus                = 0x800B5480;
+g_MemCard_SysAvailibityStatus                = 0x800B5480; // size:0x4
 g_MemCard_Work                               = 0x800B5488; // size:0x80
 g_MemCard_SaveWork                           = 0x800B5508; // size:0x718
 
