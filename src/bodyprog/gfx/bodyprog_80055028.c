@@ -49,7 +49,7 @@ void WorldEnv_Init(void) // 0x80055028
     func_80040BAC();
     func_8008D41C();
 
-    g_WorldEnvWork.field_0  = 0;
+    g_WorldEnvWork.field_0  = UnkGfxEnum_0;
     g_WorldEnvWork.field_20 = Q12(1.0f);
 
     g_WorldEnvWork.worldTintColor.r = 128;
@@ -90,12 +90,12 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
         func_80041074(ot, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
     }
 
-    if (g_WorldEnvWork.field_0 == 1 && g_WorldEnvWork.light.lensFlareIntensity != Q12(0.0f))
+    if (g_WorldEnvWork.field_0 == UnkGfxEnum_1 && g_WorldEnvWork.light.lensFlareIntensity != Q12(0.0f))
     {
         func_8008D470(g_WorldEnvWork.light.lensFlareIntensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position, g_WorldEnvWork.waterZones);
     }
 
-    if (g_WorldEnvWork.screenBrightness > 0)
+    if (g_WorldEnvWork.screenBrightness > Q12(0.0f))
     {
         poly            = (POLY_G4*)GsOUT_PACKET_P;
         mode            = (DR_MODE*)(GsOUT_PACKET_P + sizeof(POLY_G4));
@@ -573,7 +573,7 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
     pos[1] = Q12_TO_Q8(posY) - Q12_TO_Q8(g_WorldEnvWork.light.position.vy);
     pos[2] = Q12_TO_Q8(posZ) - Q12_TO_Q8(g_WorldEnvWork.light.position.vz);
 
-    if (g_WorldEnvWork.field_0 != 0)
+    if (g_WorldEnvWork.field_0 != UnkGfxEnum_0)
     {
         ptr1 = &g_WorldEnvWork.light.field_38;
         for (i = 0, ptr0 = ptr1, var_a3 = 0xFF;
@@ -624,7 +624,7 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     color->cd = prev_cd;
 }
 
-// Used for the transition world effect during Cereal Silent Hill.
+// Used for the transition world effect during Central Silent Hill.
 void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* worldMat) // 0x80055ECC
 {
     func_80055E90(color, func_80055F08(arg1, arg2, worldMat));

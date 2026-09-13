@@ -144,7 +144,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 otShift, MATRIX* view
     }
     else
     {
-        if (worldMat != NULL && g_WorldEnvWork.field_0 != 0)
+        if (worldMat != NULL && g_WorldEnvWork.field_0 != UnkGfxEnum_0)
         {
             WorldEnv_LightTransform(worldMat, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
         }
@@ -240,14 +240,14 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX*
 
         switch (g_WorldEnvWork.field_0)
         {
-            case 0:
+            case UnkGfxEnum_0:
                 break;
 
-            case 1:
+            case UnkGfxEnum_1:
                 func_80057658(curMeshHdr, normalOffset, scratchData, &g_WorldEnvWork.light.field_28, &g_WorldEnvWork.light.field_30);
                 break;
 
-            case 2:
+            case UnkGfxEnum_2:
                 func_80057A3C(curMeshHdr, normalOffset, scratchData, &g_WorldEnvWork.light.field_28);
                 break;
         }
@@ -674,7 +674,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
     scratchData->field_380.s_0.field_8    = g_WorldEnvWork.worldTintColor;
     scratchData->field_380.s_0.field_8.cd = 60;
 
-    if (g_WorldEnvWork.field_0 == 0)
+    if (g_WorldEnvWork.field_0 == UnkGfxEnum_0)
     {
         gte_lddp(Q12(1.0f) - g_WorldEnvWork.field_20);
         gte_ldrgb(&scratchData->field_380.s_0.field_8);
@@ -689,9 +689,9 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
     prim = meshHdr->primitives;
 
-    if (g_WorldEnvWork.field_0 != 0)
+    if (g_WorldEnvWork.field_0 != UnkGfxEnum_0)
     {
-        if (g_WorldEnvWork.isFogEnabled != 0)
+        if (g_WorldEnvWork.isFogEnabled)
         {
             if (*(s32*)&scratchData->field_380.s_0.field_C & 0xFFFFFF)
             {
@@ -1605,18 +1605,18 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX*
 
     switch (g_WorldEnvWork.field_0)
     {
-        case 0:
+        case UnkGfxEnum_0:
             func_8005A42C(scratchData, var_v1);
             break;
 
-        case 1:
+        case UnkGfxEnum_1:
             func_8005A478(scratchData, var_v1);
             SetColorMatrix(&g_WorldEnvWork.colorMat);
             gte_lddqa(g_WorldEnvWork.light.field_0);
             gte_lddqb_0();
             break;
 
-        case 2:
+        case UnkGfxEnum_2:
             func_8005A838(scratchData, var_v1);
             SetColorMatrix(&g_WorldEnvWork.colorMat);
             gte_lddqa(g_WorldEnvWork.light.field_0);
@@ -1632,7 +1632,7 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX*
     {
         func_8005A900(curMeshHdr, vertOffset, scratchData, viewMat);
 
-        if (g_WorldEnvWork.field_0 != 0)
+        if (g_WorldEnvWork.field_0 != UnkGfxEnum_0)
         {
             func_8005AA08(curMeshHdr, normalOffset, scratchData);
         }
@@ -1964,7 +1964,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
             *(s32*)&poly.gt3->x1 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1];
             *(s32*)&poly.gt3->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
 
-            if (var_a3 != 0)
+            if (var_a3 != UnkGfxEnum_0)
             {
                 *(s32*)&poly.gt3->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
                 *(s32*)&poly.gt3->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];
@@ -2019,7 +2019,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
             *(s32*)&poly.gt4->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
             *(s32*)&poly.gt4->x3 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_3];
 
-            if (var_a3 != 0)
+            if (var_a3 != UnkGfxEnum_0)
             {
                 *(s32*)&poly.gt4->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
                 *(s32*)&poly.gt4->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];

@@ -459,12 +459,13 @@ Game_TurnFlashlightOff                       = 0x8003ECE4; // type:func
 Game_FlashlightToggle                        = 0x8003ED08; // type:func
 Game_FlashlightIsOn                          = 0x8003ED64; // type:func
 Gfx_MapEnvSet                                = 0x8003ED74; // type:func
+func_8003EDB8                                = 0x8003EDB8;
 Gfx_LoadScreenMapEffectsUpdate               = 0x8003EEDC; // type:func
 Gfx_MapEnvUpdate                             = 0x8003EF10; // type:func
 Gfx_MapEnvStepUpdate                         = 0x8003EF74; // type:func
 Gfx_FogParametersSet                         = 0x8003F08C; // type:func
 Gfx_EffectsUpdate                            = 0x8003F170; // type:func
-Gfx_ProgressAlphaGet                         = 0x8003F6F0;
+func_8003F6F0                                = 0x8003F6F0;
 Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
 WorldEnv_FogLightingParamsUpdate             = 0x8003FF2C;
 

@@ -288,6 +288,23 @@ typedef enum _GameEndingFlags
     GameEndingFlag_7        = 1 << 7  // Set if ranking has been seen and ending was UFO?
 } e_GameEndingFlags;
 
+typedef enum _SpecialEnvEventFlags
+{
+    SpecialEnvEventFlags_None              = 0,
+    SpecialEnvEventFlags_DarkEnvironment   = 1 << 0, // Double check.
+    SpecialEnvEventFlags_FlashlightAllowed = 1 << 1,
+    SpecialEnvEventFlags_EnableBrightness  = 1 << 2,
+    SpecialEnvEventFlags_UseLighter        = 1 << 3,
+    SpecialEnvEventFlags_EnableLensflare   = 1 << 4,
+} e_SpecialEnvEventFlags;
+
+typedef enum _UnkGfxEnum
+{
+    UnkGfxEnum_0 = 0,
+    UnkGfxEnum_1 = 1,
+    UnkGfxEnum_2 = 2,
+} e_UnkGfxEnum;
+
 /** @brief Game workspace. Stores miscellaneous gameplay-related data. */
 typedef struct _GameWork
 {
@@ -354,11 +371,11 @@ typedef struct _MapEffectsInfo
 {
     /* 0x0  */ union
                {
-                   s32 field_0; // Flags?
-                   u8  field_00[4];
-               } field_0;
-    /* 0x4  */ q3_12   field_4; // } Both are some sort of world tint intensity indicator.
-    /* 0x6  */ q3_12   field_6; // }
+                   s32 field_0;     // }
+                   u8  field_00[4]; // } Index 0 `e_SpecialEnvEventFlags` | Index 2 `e_UnkGfxEnum`.
+               } flags;
+    /* 0x4  */ q3_12   spotLightIntensity;
+    /* 0x6  */ q3_12   worldLightIntensity;
     /* 0x8  */ q3_12   worldTintR;
     /* 0xA  */ q3_12   worldTintG;
     /* 0xC  */ q3_12   worldTintB;
@@ -387,7 +404,23 @@ typedef struct _MapEffectsInfo
     /* 0x18 */ u8      enableTintLightOverlap; /** `bool` */
     /* 0x19 */ CVECTOR pointLightTint;         /** Volumetric point light color. */
     /* 0x1D */ CVECTOR worldTint;              /** Subtractive. */
-    /* 0x21 */ CVECTOR field_21;               // Particle effect related. Only the first value affects snow transparency.
+    
+                                /** Odd use. (Particle related)
+                                 * This variables are only ever used in the maps' particle system. At `Particle_SystemUpdate`
+                                 * these variables values are retrieved to two different global variables by using  `func_8003EDB8`
+                                 *
+                                 * The values from `field_21` are only used in the code that handles the snow effect to define the color of the particles.
+                                 * The values from `field_26` are used in the code that handles the snow and rain effect from the first
+                                 * overlay, to define the color of the particles.
+                                 *
+                                 * The first variable shouldn't do any real impact as by default the game uses only the red value
+                                 * to represent all of the other three values, despite the existance of code that handle each of the
+                                 * variables from the struct, that code is never used. That code is also exclusive of the first overlay
+                                 * other overlays doesn't have the function that uses this value.
+                                 * The second variable seems to be either broken or doesn't do any real impact neither in rain the
+                                 * effect or the snow effect.
+                                 */
+    /* 0x21 */ CVECTOR field_21;
     /* 0x25 */ CVECTOR field_25;
                // 3 bytes of padding.
 } s_MapEffectsInfo;
@@ -428,9 +461,9 @@ typedef struct
                  * intensity. Notice this is the live graphic details and not the target preset as this
                  * is also used to handle the transition so the values can slowly fade.
                  */
-    /* 0x1C  */ s_StructUnk3 field_1C[2];
-    /* 0x84  */ s_StructUnk3 field_84[2];
-    /* 0xEC  */ s_StructUnk3 field_EC[2];
+    /* 0x1C  */ s_StructUnk3 field_1C[2]; /** Stores adjusted/updated values to then being used by `field_154`. */
+    /* 0x84  */ s_StructUnk3 field_84[2]; /** Stores current selected enviroment preset. */
+    /* 0xEC  */ s_StructUnk3 field_EC[2]; /** Stores previous selected enviroment preset. */
     /* 0x154 */ s_StructUnk3 field_154;
 } s_SysWork_2388;
 STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);

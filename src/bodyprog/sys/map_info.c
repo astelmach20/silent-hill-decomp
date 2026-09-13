@@ -4,9 +4,9 @@
 
 s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
     {
-        .field_0                = { .field_0 = 0xFF00 },
-        .field_4                = Q12(0.0f),
-        .field_6                = Q12(1.15f),
+        .flags                  = { .field_00 = { SpecialEnvEventFlags_None, 0xFF, UnkGfxEnum_0, 0 }},
+        .spotLightIntensity     = Q12(0.0f),
+        .worldLightIntensity    = Q12(1.15f),
         .worldTintR             = Q12(1.0f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.0f),
@@ -19,10 +19,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 64, 64, 64, 0 },
         .field_25               = { 12, 12, 28, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0xFF00 },
-        .field_4                = Q12(0.0f),
-        .field_6                = Q12(1.1f),
+    {
+        .flags                  = { .field_00 = { SpecialEnvEventFlags_None, 0xFF, UnkGfxEnum_0, 0 }},
+        .spotLightIntensity     = Q12(0.0f),
+        .worldLightIntensity    = Q12(1.1f),
         .worldTintR             = Q12(0.95f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.08f),
@@ -35,10 +35,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 48, 48, 48, 0 },
         .field_25               = { 14, 14, 30, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0x2FF00 },
-        .field_4                = Q12(0.6f),
-        .field_6                = Q12(0.6f),
+    {
+        .flags                  = { .field_00 = { SpecialEnvEventFlags_None, 0xFF, UnkGfxEnum_2, 0 }},
+        .spotLightIntensity     = Q12(0.6f),
+        .worldLightIntensity    = Q12(0.6f),
         .worldTintR             = Q12(0.9f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.05f),
@@ -51,10 +51,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 48, 48, 48, 0 },
         .field_25               = { 13, 13, 29, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0x1FF16 },
-        .field_4                = Q12(1.3f),
-        .field_6                = Q12(0.0f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_EnableLensflare), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(1.3f),
+        .worldLightIntensity    = Q12(0.0f),
         .worldTintR             = Q12(0.95f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.08f),
@@ -67,10 +67,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 48, 48, 48, 0 },
         .field_25               = { 12, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0x1FF16 },
-        .field_4                = Q12(0.7f),
-        .field_6                = Q12(0.0f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_EnableLensflare), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(0.7f),
+        .worldLightIntensity    = Q12(0.0f),
         .worldTintR             = Q12(0.9f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.05f),
@@ -83,10 +83,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 48, 48, 48, 0 },
         .field_25               = { 12, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0x1FF16 },
-        .field_4                = Q12(1.3f),
-        .field_6                = Q12(0.1f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_EnableLensflare), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(1.3f),
+        .worldLightIntensity    = Q12(0.1f),
         .worldTintR             = Q12(0.95f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.08f),
@@ -99,10 +99,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 32, 32, 40, 0 },
         .field_25               = { 12, 12, 28, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0xFF07 },
-        .field_4                = Q12(0.0f),
-        .field_6                = Q12(0.44f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0xFF, UnkGfxEnum_0, 0 }},
+        .spotLightIntensity     = Q12(0.0f),
+        .worldLightIntensity    = Q12(0.44f),
         .worldTintR             = Q12(0.4f),
         .worldTintG             = Q12(0.7f),
         .worldTintB             = Q12(1.0f),
@@ -115,10 +115,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 16, 16, 24, 0 },
         .field_25               = { 8, 8, 20, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0xFF07 },
-        .field_4                = Q12(0.0f),
-        .field_6                = Q12(0.44f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0xFF, UnkGfxEnum_0, 0 }},
+        .spotLightIntensity     = Q12(0.0f),
+        .worldLightIntensity    = Q12(0.44f),
         .worldTintR             = Q12(0.4f),
         .worldTintG             = Q12(0.7f),
         .worldTintB             = Q12(1.0f),
@@ -131,10 +131,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 16, 16, 24, 0 },
         .field_25               = { 8, 8, 20, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 0x15006 },
-        .field_4                = Q12(0.35f),
-        .field_6                = Q12(0.4f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0x50, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(0.35f),
+        .worldLightIntensity    = Q12(0.4f),
         .worldTintR             = Q12(0.7f),
         .worldTintG             = Q12(0.8f),
         .worldTintB             = Q12(1.0f),
@@ -147,10 +147,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 64, 64, 64, 0 },
         .field_25               = { 12, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 130822 },
-        .field_4                = Q12(1.8f),
-        .field_6                = Q12(0.15f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(1.8f),
+        .worldLightIntensity    = Q12(0.15f),
         .worldTintR             = Q12(1.0f),
         .worldTintG             = Q12(0.7f),
         .worldTintB             = Q12(0.6f),
@@ -163,10 +163,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 64, 32, 16, 0 },
         .field_25               = { 24, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 102926 },
-        .field_4                = Q12(0.5f),
-        .field_6                = Q12(0.0f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_UseLighter), 0x92, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(0.5f),
+        .worldLightIntensity    = Q12(0.0f),
         .worldTintR             = Q12(1.0f),
         .worldTintG             = Q12(0.8f),
         .worldTintB             = Q12(0.6f),
@@ -179,10 +179,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 32, 24, 16, 0 },
         .field_25               = { 18, 8, 8, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 130822 },
-        .field_4                = Q12(1.8f),
-        .field_6                = Q12(0.15f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(1.8f),
+        .worldLightIntensity    = Q12(0.15f),
         .worldTintR             = Q12(1.3f),
         .worldTintG             = Q12(0.4f),
         .worldTintB             = Q12(0.2f),
@@ -195,10 +195,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 64, 32, 16, 0 },
         .field_25               = { 24, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 130838 },
-        .field_4                = Q12(1.3f),
-        .field_6                = Q12(0.1f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_EnableLensflare), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(1.3f),
+        .worldLightIntensity    = Q12(0.1f),
         .worldTintR             = Q12(0.95f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.08f),
@@ -211,10 +211,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 48, 48, 48, 0 },
         .field_25               = { 12, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 65280 },
-        .field_4                = Q12(0.0f),
-        .field_6                = Q12(0.78f),
+    {
+        .flags                  = { .field_00 = { SpecialEnvEventFlags_None, 0xFF, UnkGfxEnum_0, 0 }},
+        .spotLightIntensity     = Q12(0.0f),
+        .worldLightIntensity    = Q12(0.78f),
         .worldTintR             = Q12(0.74f),
         .worldTintG             = Q12(0.85f),
         .worldTintB             = Q12(1.0f),
@@ -227,10 +227,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 16, 16, 24, 0 },
         .field_25               = { 8, 8, 20, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 79894 },
-        .field_4                = Q12(0.7f),
-        .field_6                = Q12(0.05f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_EnableLensflare), 0x38, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(0.7f),
+        .worldLightIntensity    = Q12(0.05f),
         .worldTintR             = Q12(1.1f),
         .worldTintG             = Q12(0.6f),
         .worldTintB             = Q12(0.65f),
@@ -243,10 +243,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 48, 48, 48, 0 },
         .field_25               = { 12, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 115718 },
-        .field_4                = Q12(1.2f),
-        .field_6                = Q12(0.2f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0xC4, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(1.2f),
+        .worldLightIntensity    = Q12(0.2f),
         .worldTintR             = Q12(0.7f),
         .worldTintG             = Q12(0.45f),
         .worldTintB             = Q12(0.45f),
@@ -259,10 +259,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 64, 32, 16, 0 },
         .field_25               = { 24, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 130822 },
-        .field_4                = Q12(1.4f),
-        .field_6                = Q12(0.05f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(1.4f),
+        .worldLightIntensity    = Q12(0.05f),
         .worldTintR             = Q12(0.85f),
         .worldTintG             = Q12(0.6f),
         .worldTintB             = Q12(0.6f),
@@ -275,10 +275,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 64, 32, 16, 0 },
         .field_25               = { 24, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 65280 },
-        .field_4                = Q12(0.0f),
-        .field_6                = Q12(1.0f),
+    {
+        .flags                  = { .field_00 = { SpecialEnvEventFlags_None, 0xFF, UnkGfxEnum_0, 0 }},
+        .spotLightIntensity     = Q12(0.0f),
+        .worldLightIntensity    = Q12(1.0f),
         .worldTintR             = Q12(0.95f),
         .worldTintG             = Q12(0.9f),
         .worldTintB             = Q12(0.9f),
@@ -291,10 +291,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 48, 48, 48, 0 },
         .field_25               = { 14, 14, 30, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 130838 },
-        .field_4                = Q12(2.5f),
-        .field_6                = Q12(0.15f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_EnableLensflare), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(2.5f),
+        .worldLightIntensity    = Q12(0.15f),
         .worldTintR             = Q12(1.0f),
         .worldTintG             = Q12(0.7f),
         .worldTintB             = Q12(0.7f),
@@ -307,10 +307,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 64, 32, 16, 0 },
         .field_25               = { 24, 12, 12, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 65287 },
-        .field_4                = 0,
-        .field_6                = Q12(0.55f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness), 0xFF, UnkGfxEnum_0, 0 }},
+        .spotLightIntensity     = 0,
+        .worldLightIntensity    = Q12(0.55f),
         .worldTintR             = Q12(0.5f),
         .worldTintG             = Q12(0.88f),
         .worldTintB             = Q12(1.25f),
@@ -323,10 +323,10 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
         .field_21               = { 16, 16, 24, 0 },
         .field_25               = { 8, 8, 20, 0 }
     },
-    { 
-        .field_0                = { .field_0 = 130838 },
-        .field_4                = Q12(0.8f),
-        .field_6                = Q12(0.2f),
+    {
+        .flags                  = { .field_00 = { (SpecialEnvEventFlags_FlashlightAllowed | SpecialEnvEventFlags_EnableBrightness | SpecialEnvEventFlags_EnableLensflare), 0xFF, UnkGfxEnum_1, 0 }},
+        .spotLightIntensity     = Q12(0.8f),
+        .worldLightIntensity    = Q12(0.2f),
         .worldTintR             = Q12(0.95f),
         .worldTintG             = Q12(1.0f),
         .worldTintB             = Q12(1.08f),

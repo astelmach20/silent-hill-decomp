@@ -6,8 +6,6 @@ void Options_BrightnessMenu_LinesDraw(s32 brightness);
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad(void);
 
-void func_8003E740(void);
-
 void Game_SpotlightLoadScreenAttribsFix(void);
 
 /** @brief Adjust light point attributes to make it simile a flashlight. */
@@ -51,21 +49,8 @@ void Gfx_MapEnvStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInf
 
 void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* preset);
 
+// https://decomp.me/scratch/XWo1G
 void Gfx_EffectsUpdate(void);
-
-/** Adjust spotlight/flashlight lighting atributes. */
-q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 lensFlare, s_SysWork* sysWork);
-
-u32 func_8003F654(s_SysWork_2388* arg0);
-
-/** @brief Computes the normalized progress alpha in the range `[0.0f, 1.0f]`.
- *
- * @param val Current value.
- * @param min Minumum range.
- * @param max Maximum range.
- * @return Normalized progress alpha.
- */
-q19_12 Gfx_ProgressAlphaGet(s32 val, s32 min, s32 max);
 
 /** @brief Computes the weighted average of `a` and `b`.
  *
@@ -75,12 +60,6 @@ q19_12 Gfx_ProgressAlphaGet(s32 val, s32 min, s32 max);
  * @return Weighted average of `a` and `b`.
  */
 q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);
-
-void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight);
-
-void func_8003FCB0(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo);
-
-void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight0, q19_12 weight1, q19_12 alphaTo);
 
 void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo);
 

@@ -143,7 +143,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
         u8 x = -x;
     }
 
-    if (g_WorldEnvWork.field_0 == 0)
+    if (g_WorldEnvWork.field_0 == UnkGfxEnum_0)
     {
         colors[4].r = Q12_MULT(g_WorldEnvWork.worldTintColor.r, g_WorldEnvWork.field_20);
         colors[4].g = Q12_MULT(g_WorldEnvWork.worldTintColor.g, g_WorldEnvWork.field_20);
@@ -174,15 +174,15 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
 
         switch (g_WorldEnvWork.field_0)
         {
-            case 0:
-            case 1:
+            case UnkGfxEnum_0:
+            case UnkGfxEnum_1:
                 func_8005A478(&sp90, fogAlpha);
                 SetColorMatrix(&g_WorldEnvWork.colorMat);
                 gte_lddqa(g_WorldEnvWork.light.field_0);
                 gte_lddqb_0();
                 break;
 
-            case 2:
+            case UnkGfxEnum_2:
                 func_8005A838(&sp90, fogAlpha);
                 SetColorMatrix(&g_WorldEnvWork.colorMat);
                 break;
@@ -215,7 +215,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
             lightPosY = Q12_MULT(lightPosY, temp_lo);
             lightPosZ = Q12_MULT(lightPosZ, temp_lo);
 
-            if (g_WorldEnvWork.field_0 == 1)
+            if (g_WorldEnvWork.field_0 == UnkGfxEnum_1)
             {
                 gte_lddp(temp_lo);
                 gte_ldir_stbk();

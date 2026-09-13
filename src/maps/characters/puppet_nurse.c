@@ -706,7 +706,7 @@ s32 sharedFunc_800CEEAC_3_s03(void)
 {
     s32 temp_a0;
 
-    temp_a0 = g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & 0x3;
+    temp_a0 = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
     if (temp_a0 == 0)
     {
         return 0;
