@@ -267,7 +267,7 @@ s32 MemCard_LastMemCardResultGet(void)
     return g_MemCard_SaveWork.saveWork[0].lastMemCardResult;
 }
 
-s32 MemCard_FilesStatusesGet(s32 deviceId)
+s32 MemCard_FileStatusesGet(s32 deviceId)
 {
     s32 ret;
     s32 i;

@@ -37,8 +37,7 @@ s8             g_MapMsg_SelectCancelIdx;
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
-    #define GLYPH_ADVANCE   2
-    #define FINISH_CUTSCENE 0xFF
+    #define ROLLOUT_ADVANCE 2
     #define FINISH_MAP_MSG  0xFF
 
     s32         curRolloutState;
@@ -81,7 +80,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             menuSelection                    = 0;
             activeMapMsgIdx                  = mapMsgIdx;
             displayLength                    = 0;
-            displayLengthInc                 = GLYPH_ADVANCE;
+            displayLengthInc                 = ROLLOUT_ADVANCE;
 
             Gfx_MapMsg_Reset();
             unkJapVal = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
@@ -128,7 +127,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
             Gfx_StringColorSet(StringColorId_White);
 #if VERSION_REGION_IS(NTSC)
-            Gfx_StringPositionSet(40, 160);
+            Gfx_StringPositionSet(SCREEN_WIDTH / 8, (SCREEN_HEIGHT / 3) * 2);
 #endif
 
             displayLength += displayLengthInc;
@@ -265,7 +264,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             rolloutState  = 0;
             menuSelection = Gfx_MapMsg_SelectionUpdate(g_MapMsg_CurrentIdx, &displayLength);
 
-            if (menuSelection != MapMsgReturnCode_None && menuSelection < MapMsgReturnCode_Select4)
+            if (menuSelection != MapMsgReturnCode_None && menuSelection < MapMsgReturnCode_YesOrNo)
             {
                 rolloutState = NO_VALUE;
             }
@@ -287,7 +286,6 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     return g_MapMsg_Select.selectedEntryIdx + 1;
 
-    #undef FINISH_CUTSCENE
     #undef FINISH_MAP_MSG
 }
 
@@ -316,14 +314,15 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength) // 0x80036B5C
 
         case MapMsgReturnCode_Select2:
         case MapMsgReturnCode_Select3:
-        case MapMsgReturnCode_Select4:
+        case MapMsgReturnCode_YesOrNo:
             g_MapMsg_Select.maxIdx   = 1;
-            g_MapMsg_SelectCancelIdx = (returnCode == 3) ? 2 : 1;
+            g_MapMsg_SelectCancelIdx = (returnCode == MapMsgReturnCode_Select3) ? 2 : 1;
 
-            if (returnCode == MapMsgReturnCode_Select4)
+            // Yes/no selection prompt.
+            if (returnCode == MapMsgReturnCode_YesOrNo)
             {
                 // Shows selection prompt with map messages at indices 0 and 1.
-                // All maps have "Yes" and "No" as messages 0 and 1, respectively.
+                // @note All maps have "Yes" and "No" as messages 0 and 1, respectively.
                 for (i = 0; i < 2; i++)
                 {
                     if (g_MapMsg_Select.selectedEntryIdx == i)
@@ -336,23 +335,25 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength) // 0x80036B5C
                     }
 
 #if VERSION_REGION_IS(NTSC)
-                    Gfx_StringPositionSet(32, (STRING_LINE_OFFSET * i) + 98);
+                    Gfx_StringPositionSet(SCREEN_WIDTH / 10, (STRING_LINE_OFFSET * i) + 98);
                     Gfx_StringDraw(g_MapOverlayHdr.mapMessages[i], MAP_MESSAGE_DISPLAY_ALL_LENGTH);
 #else
                     Gfx_StringDraw_JP(g_MapOverlayHdr.mapMessages[i], i);
 #endif
                 }
 
-                returnCode = 2;
+                returnCode = MapMsgReturnCode_Select2;
             }
+            // 2-3 option selection prompt.
             else
             {
                 // Shows selection prompt with 2 or 3 map messages from current index + 1/2/3.
-                // Requires prompt options to be arranged sequentially in the map message array, e.g.
+                // Requires prompt options to be arranged sequentially in the map message array with the last option
+                // being to cancel, e.g.
                 // `[idx]`:     "Select one of 3 options. ~S3"
                 // `[idx + 1]`: "Option 1"
                 // `[idx + 2]`: "Option 2"
-                // `[idx + 3]`: "Option 3"
+                // `[idx + 3]`: "Cancel"
                 for (i = 0; i < returnCode; i++)
                 {
                     if (g_MapMsg_Select.selectedEntryIdx == i)
@@ -394,6 +395,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength) // 0x80036B5C
             returnCode = NO_VALUE;
             break;
 
+        // @unused This code is never returned and instant text rollout is handled elsewhere.
         case MapMsgReturnCode_DisplayAll:
             *displayLength = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
             break;

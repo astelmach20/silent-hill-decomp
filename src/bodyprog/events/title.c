@@ -450,7 +450,7 @@ static void MainMenu_MainTextDraw(void) // 0x8003B568
     }
 }
 
-static void MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
+static void MainMenu_DifficultyTextDraw(s32 selectedEntryIdx) // 0x8003B678
 {
     #define DIFFICULTY_MENU_SELECTION_COUNT 3
     #define COLUMN_POS_X                    158
@@ -472,7 +472,7 @@ static void MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
         Gfx_StringPositionSet(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringColorSet(StringColorId_White);
 
-        if (i == idx)
+        if (i == selectedEntryIdx)
         {
             Gfx_StringDraw("[", DEFAULT_MAP_MESSAGE_LENGTH);
         }
@@ -483,7 +483,7 @@ static void MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
 
         Gfx_StringDraw(DIFFICULTY_MENU_ENTRY_STRINGS[i], DEFAULT_MAP_MESSAGE_LENGTH);
 
-        if (i == idx)
+        if (i == selectedEntryIdx)
         {
             Gfx_StringDraw("]", DEFAULT_MAP_MESSAGE_LENGTH);
         }

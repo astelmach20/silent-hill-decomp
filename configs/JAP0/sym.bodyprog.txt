@@ -196,7 +196,7 @@ MemCard_InitStatusSuccess                    = 0x8002E604; // type:func
 func_8002E914                                = 0x8002E634; // type:func
 MemCard_ProcessSet                           = 0x8002E66C; // type:func
 MemCard_LastMemCardResultGet                 = 0x8002E6B0; // type:func
-MemCard_FilesStatusesGet                     = 0x8002E6C0; // type:func
+MemCard_FileStatusesGet                      = 0x8002E6C0; // type:func
 MemCard_SaveMetadataGet                      = 0x8002E70C; // type:func
 MemCard_UsedFileCount                        = 0x8002E748; // type:func
 MemCard_FreeFilesCount                       = 0x8002E798; // type:func
@@ -305,7 +305,7 @@ GameFs_StreamBinSeek                         = 0x80032908; // type:func
 GameFs_StreamBinLoad                         = 0x80032928; // type:func
 GameFs_OptionBinLoad                         = 0x80032950; // type:func
 GameFs_SaveLoadBinLoad                       = 0x80032990; // type:func
-func_80032CE8                                = 0x800329D0; // type:func
+GameFs_LoadingTextDraw                       = 0x800329D0; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x00DEA4   VA: 0x80032A04   subsegment: c, sys/game_main

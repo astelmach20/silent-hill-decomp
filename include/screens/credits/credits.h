@@ -3,6 +3,23 @@
 
 #include "common.h"
 
+#define CREDITS_CODE_OFFSET_POS_1   '\x10'
+#define CREDITS_CODE_OFFSET_POS_2   '\x11'
+#define CREDITS_CODE_OFFSET_POS_4   '\x12'
+#define CREDITS_CODE_OFFSET_POS_8   '\x13'
+#define CREDITS_CODE_OFFSET_POS_16  '\x14'
+#define CREDITS_CODE_OFFSET_POS_32  '\x15'
+#define CREDITS_CODE_OFFSET_POS_64  '\x16'
+#define CREDITS_CODE_OFFSET_POS_128 '\x17'
+#define CREDITS_CODE_OFFSET_NEG_1   '\x18'
+#define CREDITS_CODE_OFFSET_NEG_2   '\x19'
+#define CREDITS_CODE_OFFSET_NEG_4   '\x1A'
+#define CREDITS_CODE_OFFSET_NEG_8   '\x1B'
+#define CREDITS_CODE_OFFSET_NEG_16  '\x1C'
+#define CREDITS_CODE_OFFSET_NEG_32  '\x1D'
+#define CREDITS_CODE_OFFSET_NEG_64  '\x1E'
+#define CREDITS_CODE_OFFSET_NEG_128 '\x1F'
+
 /** @brief Used for normal credits screen. */
 typedef struct
 {

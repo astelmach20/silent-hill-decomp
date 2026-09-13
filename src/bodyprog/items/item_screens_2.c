@@ -419,8 +419,8 @@ void Gfx_Results_Save(void) // 0x8004D1A0
 
 #if VERSION_REGION_IS(NTSC)
     const char* SAVE_DIALOG_STRS[] = {
-        "\x07Is_it_OK_to_save?",
-        "\x07Yes_____________No"
+        "\7Is_it_OK_to_save?",
+        "\7Yes_____________No"
     };
 #endif
 
@@ -465,10 +465,10 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     g_SysWork.enableHalfHeightGlyphs = true;
 
     Gfx_StringPositionSet(90, 92);
-    Gfx_StringDraw("\x07Is_it_OK_to_save?", DEFAULT_MAP_MESSAGE_LENGTH);
+    Gfx_StringDraw("\7Is_it_OK_to_save?", DEFAULT_MAP_MESSAGE_LENGTH);
 
     Gfx_StringPositionSet(94, 122);
-    Gfx_StringDraw("\x07Yes_____________No", DEFAULT_MAP_MESSAGE_LENGTH);
+    Gfx_StringDraw("\7Yes_____________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
     g_SysWork.enableHalfHeightGlyphs = false;
 

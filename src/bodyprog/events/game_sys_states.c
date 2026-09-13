@@ -286,10 +286,10 @@ void SysState_GamePaused_Update(void) // 0x800391E8
     {
 #if VERSION_REGION_IS(NTSCJ)
         Gfx_StringPositionSet(131, 104);
-        Gfx_StringDraw("\x07PAUSE", DEFAULT_MAP_MESSAGE_LENGTH);
+        Gfx_StringDraw("\7PAUSE", DEFAULT_MAP_MESSAGE_LENGTH);
 #else
         Gfx_StringPositionSet(125, 104);
-        Gfx_StringDraw("\x07PAUSED", DEFAULT_MAP_MESSAGE_LENGTH);
+        Gfx_StringDraw("\7PAUSED", DEFAULT_MAP_MESSAGE_LENGTH);
 #endif
     }
 

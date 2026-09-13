@@ -8487,10 +8487,10 @@ s16 Player_AnimGetSomething(void) // 0x8007F308
 
 void Player_Controller(void) // 0x8007F32C
 {
-    s32 attackBtnInput;
+    s32 heldAttackActionFlag;
 
-    g_Player_IsMovingForward    = (g_Player_IsMovingForward * 2) & 0x3;
-    g_Player_IsSteppingLeftTap  = (g_Player_IsSteppingLeftTap * 2) & 0x3F;
+    g_Player_IsMovingForward    = (g_Player_IsMovingForward    * 2) & 0x3;
+    g_Player_IsSteppingLeftTap  = (g_Player_IsSteppingLeftTap  * 2) & 0x3F;
     g_Player_IsSteppingRightTap = (g_Player_IsSteppingRightTap * 2) & 0x3F;
 
     if (g_Controller0->rawSticks.sticks_0.leftY < -STICK_DEADZONE || g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE ||
@@ -8501,12 +8501,12 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsMovingForward |= g_Controller0->rawSticks.sticks_0.leftY < -STICK_DEADZONE;
         g_Player_IsMovingBackward = g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE;
         g_Player_HasMoveInput     = g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.stepLeft |
-                                                                      (ControllerFlag_LStickLowUp    |
-                                                                       ControllerFlag_LStickLowRight |
-                                                                       ControllerFlag_LStickLowDown  |
-                                                                       ControllerFlag_LStickLowLeft) |
-                                                                      g_GameWorkPtr->config.controllerConfig.stepRight |
-                                                                      g_GameWorkPtr->config.controllerConfig.aim);
+                                                                          (ControllerFlag_LStickLowUp    |
+                                                                           ControllerFlag_LStickLowRight |
+                                                                           ControllerFlag_LStickLowDown  |
+                                                                           ControllerFlag_LStickLowLeft) |
+                                                                          g_GameWorkPtr->config.controllerConfig.stepRight |
+                                                                          g_GameWorkPtr->config.controllerConfig.aim);
     }
     else
     {
@@ -8515,8 +8515,12 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsMovingForward |= (g_Controller0->buttonFlags.held & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown)) == ControllerFlag_LStickHighUp;
         g_Player_IsMovingBackward = (g_Controller0->buttonFlags.held & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown)) == ControllerFlag_LStickHighDown;
         g_Player_HasMoveInput     = g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.stepLeft |
-                                                                              (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighRight | ControllerFlag_LStickHighDown | ControllerFlag_LStickHighLeft) |
-                                                                              g_GameWorkPtr->config.controllerConfig.stepRight | g_GameWorkPtr->config.controllerConfig.aim);
+                                                                          (ControllerFlag_LStickHighUp    |
+                                                                           ControllerFlag_LStickHighRight |
+                                                                           ControllerFlag_LStickHighDown  |
+                                                                           ControllerFlag_LStickHighLeft) |
+                                                                          g_GameWorkPtr->config.controllerConfig.stepRight |
+                                                                          g_GameWorkPtr->config.controllerConfig.aim);
     }
 
     g_Player_IsSteppingLeftHold  = (g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.stepLeft) &&
@@ -8525,8 +8529,8 @@ void Player_Controller(void) // 0x8007F32C
     g_Player_IsSteppingRightHold = (g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.stepRight) &&
                                   !(g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.stepLeft);
 
-    g_Player_IsSteppingLeftTap  |= (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.stepLeft)  != 0;
-    g_Player_IsSteppingRightTap |= (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.stepRight) != 0;
+    g_Player_IsSteppingLeftTap  |= (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.stepLeft)  != false;
+    g_Player_IsSteppingRightTap |= (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.stepRight) != false;
 
     if (g_GameWork.config.extraWalkRunCtrl)
     {
@@ -8554,13 +8558,13 @@ void Player_Controller(void) // 0x8007F32C
     }
     else
     {
-        attackBtnInput = g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.action;
+        heldAttackActionFlag = g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.action;
 
         g_Player_IsHoldAttack = (g_Player_IsHoldAttack * 2) & 0x1F;
         g_Player_IsAttacking  = (g_Player_IsAttacking * 2) & 0x3;
         g_Player_IsShooting   = (g_Player_IsShooting * 2) & 0x3;
 
-        g_Player_IsHoldAttack |= (attackBtnInput & 0xFFFF) != false;
+        g_Player_IsHoldAttack |= (heldAttackActionFlag & 0xFFFF) != false;
         g_Player_IsAttacking  |= (g_Player_IsHoldAttack & 0xF) == 0xF;
 
         g_Player_IsShooting |= g_Player_IsHoldAttack != false && !(g_Player_IsHoldAttack & 0x11);
@@ -8571,7 +8575,8 @@ void Player_Controller(void) // 0x8007F32C
         }
     }
 
-    g_Player_HasActionInput = g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.run | g_GameWorkPtr->config.controllerConfig.action);
+    g_Player_HasActionInput = g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.run |
+                                                                    g_GameWorkPtr->config.controllerConfig.action);
 
     if (g_SysWork.sysState != SysState_Gameplay)
     {
@@ -9147,7 +9152,7 @@ void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg
     }
 }
 
-bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
+bool func_800806AC(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x800806AC
 {
     bool result;
     //static s_Collision D_800C4620;
@@ -9164,9 +9169,9 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
         return result;
     }
 
-    Collision_SurfaceGet(&D_800C4620, arg1, arg3);
+    Collision_SurfaceGet(&D_800C4620, posX, posZ);
 
-    result = arg2 < D_800C4620.groundHeight;
+    result = posY < D_800C4620.groundHeight;
     if (result)
     {
         result = D_800C4620.groundType != NO_VALUE;
@@ -9180,9 +9185,9 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
     return result;
 }
 
-bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
+bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x8008074C
 {
-    return func_800806AC(arg0, arg1, 1 << 31, arg3);
+    return func_800806AC(arg0, posX, INT_MAX + 1, posZ);
 }
 
 void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C

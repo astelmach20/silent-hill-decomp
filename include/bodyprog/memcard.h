@@ -187,7 +187,7 @@ typedef struct _MemCard_Directory
 {
     /* 0x0   */ char filenames[MEMCARD_FILE_COUNT_MAX][21];
     /* 0x13B */ u8   blockCounts[MEMCARD_FILE_COUNT_MAX]; // Size of each file in 8192 byte blocks.
-    /* 0x14C */ s8   __pad[2];
+    /* 0x14C */ s8   __pad_14C[2];
 } s_MemCard_Directory;
 STATIC_ASSERT_SIZEOF(s_MemCard_Directory, 332);
 
@@ -412,7 +412,7 @@ extern s8 __pad_bss_800BCD39;
 extern s16 g_MemCard_TotalElementsCount;
 /** @brief Amount of elements in each memory card. */
 extern u8 g_Savegame_ElementCount1[MEMCARD_SLOT_COUNT_MAX];
-/** @brief Index of selected element in the selected file from memory card. */
+/** @brief Index of selected element in the selected file from the memory card. */
 extern u8 g_Savegame_SelectedElementIdx;
 extern s8 g_SelectedFileIdx;
 extern s8 g_SelectedDeviceId;
@@ -465,7 +465,7 @@ void MemCard_InitStatusNotConnected(void);
  * 
  * Scratch: https://decomp.me/scratch/x4Wrk
  *
- * @return Value list in bit-field like. In order to retrieve the data for usage use `MemCard_StatusGet`.
+ * @return Status bitfield. `MemCard_StatusGet` is used to retrieve data.
  */
 s32 MemCard_AllMemCardsStatusGet(void);
 
@@ -475,9 +475,8 @@ s32 MemCard_AllMemCardsStatusGet(void);
  */
 void func_8002E8D4(void);
 
-/** @unused @brief Sets `g_MemCard_SaveWork.memCardInitalized`
- * to false and initalizes a null "Save Work" process with a
- * last saved memory card state as `MemCardResult_Success`.
+/** @unused @brief Sets `g_MemCard_SaveWork.memCardInitalized` to `false` and initalizes a null "Save Work" process with
+ * a last saved memory card state as `MemCardResult_Success`.
  * 
  * Scratch 1: https://decomp.me/scratch/uHWZ1
  * Scratch 2: https://decomp.me/scratch/bBBHt
@@ -488,23 +487,23 @@ void MemCard_InitStatusSuccess(void);
  * 
  * Scratch: https://decomp.me/scratch/67dYs
  *
- * @return Value list in bit-field like. In order to retrieve the data for usage use `MemCard_FileStatusGet`.
+ * @return Status bitfield. `MemCard_StatusGet` is used to retrieve data.
  */
 s32 func_8002E914(void);
 
-/** @brief Sets `g_MemCard_SaveWork.saveWork[0]` process if no process
+/** @brief Sets `g_MemCard_SaveWork.saveWork[0]` process if none has been set.
  * 
  * Scratch: https://decomp.me/scratch/lmp3g
  *
  * @param processId `e_MemCardProcess`.
  * @param deviceId Memory card index.
- * @param fileIdx File index from memory card.
- * @param saveIdx Index of selected save from selected file in the memory card.
- * @return True if process was succesfully set, false otherwise.
+ * @param fileIdx File index on the memory card.
+ * @param saveIdx Index of the selected save from the selected file on the memory card.
+ * @return `true` if the process was succesfully set, `false` otherwise.
  */
 bool MemCard_ProcessSet(s32 processId, s32 deviceId, s32 fileIdx, s32 saveIdx);
 
-/** @brief Return memory card last process result state.
+/** @brief Returns the memory card last process result state.
  *
  * Scratch: https://decomp.me/scratch/0ZNLb
  *
@@ -512,27 +511,27 @@ bool MemCard_ProcessSet(s32 processId, s32 deviceId, s32 fileIdx, s32 saveIdx);
  */
 s32 MemCard_LastMemCardResultGet(void);
 
-/** @brief Return the status of all files from a memory card.
+/** @brief Returns the status of all files on a memory card.
  *
  * Scratch: https://decomp.me/scratch/IZ2Xs
  *
  * @param deviceId Memory card index.
- * @return Value list in bit-field like. In order to retrieve the data for usage use `MemCard_FileStatusGet`.
+ * @return Status bitfield. `MemCard_StatusGet` is used to retrieve data.
  */
-s32 MemCard_FilesStatusesGet(s32 deviceId);
+s32 MemCard_FileStatusesGet(s32 deviceId);
 
-/** @brief Retrieves save's metadata information (s_MemCard_SaveMetadata).
+/** @brief Retrieves a savegame's metadata (s_MemCard_SaveMetadata).
  * 
  * Scratch: https://decomp.me/scratch/hs5LP
  *
  * @param deviceId Memory card index.
- * @param fileIdx File index from memory card.
- * @param saveIdx Index of selected save from selected file in the memory card.
- * @return Data stored at `g_MemCard_SaveHeaderInfo_Slot`
+ * @param fileIdx File index on the memory card.
+ * @param saveIdx Index of the selected save from the selected file on the memory card.
+ * @return Data stored at `g_MemCard_SaveHeaderInfo_Slot`.
  */
 s_MemCard_SaveMetadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx);
 
-/** @brief Returns the count of used files in the specified memory card.
+/** @brief Returns the count of used files on the specified memory card.
  * 
  * Scratch: https://decomp.me/scratch/dJ8Oq
  *
@@ -541,7 +540,7 @@ s_MemCard_SaveMetadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 s
  */
 s32 MemCard_UsedFileCount(s32 deviceId);
 
-/** @brief Returns the count of available files in the specified memory card.
+/** @brief Returns the count of available files on the specified memory card.
  * 
  * Scratch: https://decomp.me/scratch/3agLG
  *
@@ -550,37 +549,35 @@ s32 MemCard_UsedFileCount(s32 deviceId);
  */
 s32 MemCard_FreeFilesCount(s32 deviceId);
 
-/** @unused @brief Checks if no save have been done in any inserted memory card
- * and set the passed params the indexes required to access to the save with
- * the biggest total saves count from any memory card.
+/** @brief @unused Checks if no savegame have been created on any inserted memory card and sets the passed params the
+ * indicess required to access it, with the biggest total savegame count from any memory card.
  *
  * Scratch: https://decomp.me/scratch/9SoBG
  *
- * @param outDeviceId Returns device ID (Memory card).
- * @param outFileIdx Returns file index in memory card.
- * @param outSaveIdx Returns save index in file from the memory card.
- * @return True if any save have been detected, false otherwise.
+ * @param outDeviceId Output device ID (memory card).
+ * @param outFileIdx Output file index on the memory card.
+ * @param outSaveIdx Output savegame index in the file from the memory card.
+ * @return `true` if any save have been detected, `false` otherwise.
  */
 bool MemCard_NoSavesDoneCheck(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx);
 
 /** @brief Game's memory card update function.
- * Updates internal memory card processes state (g_MemCard_Work.state)
- * and process any process set in `g_MemCard_SaveWork.saveWork[X].processId`.
+ * Updates the internal memory card processes state (`g_MemCard_Work.state`) and processes any process set in
+ * `g_MemCard_SaveWork.saveWork[X].processId`.
  *
  * Scratch 1: https://decomp.me/scratch/QgEOs
  * Scratch 2: https://decomp.me/scratch/cONhw
  *
- * @note This update system can be disabled by setting
- * `g_MemCard_SysAvailibityStatus` to false.
+ * @note Can be disabled by setting `g_MemCard_SysAvailibityStatus` to `false`.
  */
 void MemCard_Update(void);
 
-/** Copies user config into an `s_Savegame_OptionsConfig` and calculates footer checksum. */
+/** Copies the user config into an `s_Savegame_OptionsConfig` and calculates the footer checksum. */
 void MemCard_UserConfigCopy(s_Savegame_OptionsConfig* dest, s_OptionsConfig* src);
 
 s32 MemCard_BiggestTotalSavegameCountGet(s32 deviceId);
 
-/** Copies savegame into an s_Savegame_Container and calculates footer checksum. */
+/** Copies savegame into an `s_Savegame_Container` and calculates the footer checksum. */
 void MemCard_GameDataCopy(s_Savegame_Container* dest, s_Savegame* src);
 
 void MemCard_TotalSavegameCountUpdate(s32 deviceId, s32 fileIdx, s32 saveIdx, s_Savegame* arg3);

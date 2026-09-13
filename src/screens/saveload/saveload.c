@@ -406,17 +406,17 @@ void SaveScreen_SaveBorder(s_SaveScreenElement* saveEntry, s_SaveScreenElement* 
 void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E3304
 {
     const char* DIALOG_STRS[11] = {
-        "\x07MEMORY_CARD\nis_not_inserted",
-        "\x07MEMORY_CARD\nis_\x01not_\x01""formatted",
-        "\x07MEMORY_CARD\nmay_be_broken",
-        "\x07Now_checking\nMEMORY_CARD",
-        "\x07Out_of_blocks",
-        "\x07No_data_file",
-        "\x07No_data_file",
-        "\x07____Fil""\x01""e_\x01\x01is_\x01\x01""da\x01ma\x01g\x01""ed",
-        "\x07",
-        "\x07________\x01New_save",
-        "\x07____Crea\x01t\x01""e_\x01n\x01""e\x01w_\x01""fi\x01le"
+        "\7MEMORY_CARD\nis_not_inserted",
+        "\7MEMORY_CARD\nis_\x01not_\x01""formatted",
+        "\7MEMORY_CARD\nmay_be_broken",
+        "\7Now_checking\nMEMORY_CARD",
+        "\7Out_of_blocks",
+        "\7No_data_file",
+        "\7No_data_file",
+        "\7____Fil""\x01""e_\x01\x01is_\x01\x01""da\x01ma\x01g\x01""ed",
+        "\7",
+        "\7________\x01New_save",
+        "\7____Crea\x01t\x01""e_\x01n\x01""e\x01w_\x01""fi\x01le"
     };
 
     s32 i;
@@ -586,17 +586,17 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
 
     const char* DIALOG_STRS[] = {
         " ",
-        "\x07You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01""CARD!",
-        "\x07Now_formatting...",
-        "\x07Now_saving...",
-        "\x07Unable_to_create_a_new_file.",
-        "\x07""Finished_saving.",
-        "\x07""Failed_to_save!",
-        "\x07The_data_is_not_found!",
-        "\x07The_data_is_damaged!",
-        "\x07""Failed_to_load!",
-        "\x07""Finished_loading.",
-        "\x07Now_loading..."
+        "\7You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01""CARD!",
+        "\7Now_formatting...",
+        "\7Now_saving...",
+        "\7Unable_to_create_a_new_file.",
+        "\7""Finished_saving.",
+        "\7""Failed_to_save!",
+        "\7The_data_is_not_found!",
+        "\7The_data_is_damaged!",
+        "\7""Failed_to_load!",
+        "\7""Finished_loading.",
+        "\7Now_loading..."
     };
 
     const s16 X_OFFSETS[] = {
@@ -734,9 +734,9 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
     static bool D_801E7558;
 
     const char* DIALOG_STRS[] = {
-        "\x07Is_it_OK_to_overwrite?",
-        "\x07Is_it_OK_to_format?",
-        "\x07Yes__________No"
+        "\7Is_it_OK_to_overwrite?",
+        "\7Is_it_OK_to_format?",
+        "\7Yes__________No"
     };
 
     const u8 X_OFFSETS[] = {
@@ -758,7 +758,7 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
             Gfx_StringPositionSet(160 - (X_OFFSETS[stringIdx] / 2), 178);
             Gfx_StringDraw(DIALOG_STRS[stringIdx], DEFAULT_MAP_MESSAGE_LENGTH);
             Gfx_StringPositionSet(104, 196);
-            Gfx_StringDraw("\x07Yes__________No", DEFAULT_MAP_MESSAGE_LENGTH);
+            Gfx_StringDraw("\7Yes__________No", DEFAULT_MAP_MESSAGE_LENGTH);
 
             poly = (POLY_F4*)GsOUT_PACKET_P;
             setPolyF4(poly);

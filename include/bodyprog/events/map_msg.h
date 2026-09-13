@@ -41,7 +41,7 @@ typedef enum _MapMsgReturnCode
     MapMsgReturnCode_Terminate   = 1,
     MapMsgReturnCode_Select2     = 2,
     MapMsgReturnCode_Select3     = 3,
-    MapMsgReturnCode_Select4     = 4,
+    MapMsgReturnCode_YesOrNo     = 4,
     MapMsgReturnCode_DisplayAll  = 20,
     MapMsgReturnCode_SetByT      = 88,
     MapMsgReturnCode_AlignCenter = 99

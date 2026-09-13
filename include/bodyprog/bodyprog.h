@@ -929,13 +929,12 @@ extern s16 SQRT[100];
 /** @brief Draws a palette of colors in the frame buffer. */
 void func_8003652C(void);
 
-/** @brief @unused Loading screen text.
+/** @brief @unused Draws loading screen text.
  *
- * Just like in earlier builds of Silent Hill 2, the game
- * was intended to show a black screen with
- * "Now loading" text in middle of the screen.
+ * Just like in earlier builds of Silent Hill 2, the game was intended to show a black screen with "Now loading." text
+ * in middle of the screen.
  */
-void func_80032CE8(void);
+void GameFs_LoadingTextDraw(void);
 
 void func_80032D1C(void);
 
@@ -2288,10 +2287,11 @@ s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);
 
 void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg3);
 
-bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed.
+/** Called by `func_8008074C` which is @unused. */
+bool func_800806AC(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
 
-/** Probably returns `bool`. */
-bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+/** @unused */
+bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
 
 /** Fills `g_CollisionPointCache` with collision data at a given 2D position.
  *
