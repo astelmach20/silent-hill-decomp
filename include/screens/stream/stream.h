@@ -12,7 +12,7 @@
 
 extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
 
-extern u8 D_800A900C[];
+extern u8 g_MemCardWarningImg[];
 
 typedef struct _DECENV
 {

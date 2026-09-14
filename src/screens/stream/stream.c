@@ -48,7 +48,7 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
             break;
     }
 
-    Screen_BackgroundImgDraw(D_800A900C);
+    Screen_BackgroundImgDraw(g_MemCardWarningImg);
 }
 
 void GameState_MovieIntro_Update(void) // 0x801E279C

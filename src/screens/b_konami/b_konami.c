@@ -215,9 +215,9 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
             case KcetLogoStateStep_NoMemCard:
 #if VERSION_REGION_IS(NTSCJ)
-                Fs_QueueStartReadTim(FILE_1ST_NO_MEMCD_TIM, FS_BUFFER_1, &D_800A900C);
+                Fs_QueueStartReadTim(FILE_1ST_NO_MEMCD_TIM, FS_BUFFER_1, &g_MemCardWarningImg);
 #else
-                Fs_QueueStartReadTim(FILE_1ST_NO_MCD_E_TIM, FS_BUFFER_1, &D_800A900C);
+                Fs_QueueStartReadTim(FILE_1ST_NO_MCD_E_TIM, FS_BUFFER_1, &g_MemCardWarningImg);
 #endif
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;
@@ -227,9 +227,9 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
             case KcetLogoStateStep_NoMemCardFreeSpace:
 #if VERSION_REGION_IS(NTSCJ)
-                Fs_QueueStartReadTim(FILE_1ST_NO_BLOCK_TIM, FS_BUFFER_1, &D_800A900C);
+                Fs_QueueStartReadTim(FILE_1ST_NO_BLOCK_TIM, FS_BUFFER_1, &g_MemCardWarningImg);
 #else
-                Fs_QueueStartReadTim(FILE_1ST_NO_BLK_E_TIM, FS_BUFFER_1, &D_800A900C);
+                Fs_QueueStartReadTim(FILE_1ST_NO_BLK_E_TIM, FS_BUFFER_1, &g_MemCardWarningImg);
 #endif
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;

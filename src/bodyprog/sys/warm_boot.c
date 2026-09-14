@@ -41,7 +41,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 
     if (g_SysWork.sysFlags & SysFlag_DemoActive)
     {
-        if (g_Demo_FrameCount > (TICKS_PER_SECOND * 30))
+        if (g_Demo_FrameCount > SECONDS_60_FPS(30))
         {
             return ResetType_WarmBoot;
         }
@@ -62,7 +62,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
         g_WarmBootTimer = 0;
     }
 
-    if (g_WarmBootTimer > (TICKS_PER_SECOND * 2))
+    if (g_WarmBootTimer > SECONDS_60_FPS(2))
     {
         return ResetType_WarmBoot;
     }

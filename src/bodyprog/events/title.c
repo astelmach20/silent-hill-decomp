@@ -252,7 +252,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
             if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown) ||
                 g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+                                                      g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 g_GameWork.gameState = GameState_MainMenu;
 

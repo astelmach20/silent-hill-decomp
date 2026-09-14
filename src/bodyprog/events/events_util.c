@@ -993,7 +993,7 @@ void Event_DisplayMapMsgWithDimmedBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, 
 
             // Check for "continue" input.
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                  g_GameWorkPtr->config.controllerConfig.cancel))
+                                                      g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(1);
             }

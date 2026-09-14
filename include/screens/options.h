@@ -138,10 +138,10 @@ typedef enum _InputAction
  */
 typedef enum _BrightnessMenuState
 {
-    BrightnessMenuState_0     = 0,
-    BrightnessMenuState_1     = 1,
-    BrightnessMenuState_2     = 2,
-    BrightnessMenuState_Leave = 3
+    BrightnessMenuState_Enter     = 0,
+    BrightnessMenuState_StartFade = 1,
+    BrightnessMenuState_SetConfig = 2,
+    BrightnessMenuState_Leave     = 3
 } e_BrightnessMenuState;
 
 // ========

@@ -740,7 +740,7 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
 
 void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 {
-    #define LINE_BASE_X   64
+    #define LINE_BASE_X   (SCREEN_WIDTH / 5)
     #define LINE_BASE_Y   64
     #define LINE_OFFSET_X 16
     #define LINE_OFFSET_Y 16
@@ -1669,19 +1669,16 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
     // Handle menu state.
     switch (g_GameWork.gameStateSteps[1])
     {
-        case BrightnessMenuState_0:
-            // Entry.
-            Game_StateStepSet(1, BrightnessMenuState_1);
+        case BrightnessMenuState_Enter:
+            Game_StateStepSet(1, BrightnessMenuState_StartFade);
             break;
 
-        case BrightnessMenuState_1:
-            // Set fade.
+        case BrightnessMenuState_StartFade:
             ScreenFade_Start(true, true, false);
-            Game_StateStepSet(1, BrightnessMenuState_2);
+            Game_StateStepSet(1, BrightnessMenuState_SetConfig);
             break;
 
-        case BrightnessMenuState_2:
-            // Set config.
+        case BrightnessMenuState_SetConfig:
             if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)
             {
                 if (g_GameWork.config.brightness != 0)
@@ -1701,7 +1698,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
 
             // Fade screen and leave menu.
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+                                                      g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
                 {

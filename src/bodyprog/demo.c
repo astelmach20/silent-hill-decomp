@@ -241,7 +241,7 @@ s32 Demo_StateGet(s32 gameState)
 
 void Demo_ExitDemo(void) // 0x8008F4E4
 {
-    g_Demo_FrameCount          = 999 * TICKS_PER_SECOND;
+    g_Demo_FrameCount          = SECONDS_60_FPS(999);
     g_Demo_ActivePlaybackFrame = NULL;
     g_Demo_DemoStep            = 0;
     g_SysWork.sysFlags        |= SysFlag_DoWarmReset;

@@ -133,7 +133,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
+    g_IsLoadingFinished = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
 
     // Update world objects if not paused.
     if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause) &&
@@ -349,7 +349,7 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
             break;
     }
 
-    if (D_800A9A0C != 0)
+    if (g_IsLoadingFinished)
     {
         Game_StateSetNext(GameState_OptionScreen);
     }
@@ -519,7 +519,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
             g_SysWork.sysStateSteps[0]++;
         }
 
-        if (D_800A9A0C != 0)
+        if (g_IsLoadingFinished)
         {
             Game_StateSetNext(GameState_PaperMapScreen);
         }
@@ -563,7 +563,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
     {
         case 0:
             ScreenFade_Start(false, false, false);
-            D_800A9A0C                  = 0;
+            g_IsLoadingFinished                 = false;
             g_SysWork.sysStateSteps[0] = 1;
 
         case 1:
@@ -575,7 +575,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
             break;
     }
 
-    if (D_800A9A0C == 0)
+    if (!g_IsLoadingFinished)
     {
         return;
     }
@@ -699,9 +699,9 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
 
     // When `SysState_ReadMessage_Update` is called, the game world freezes.
     // The following conditions unfreeze:
-    // - A specific event related flag is disenabled.
-    // - A specific camera related flag is disenabled.
-    // - There is no alive enemy.
+    // - A specific event related flag is disabled.
+    // - A specific camera related flag is disabled.
+    // - All enemies are dead.
     if (!(g_MapEventData->transitionFlags & AreaTransitionFlag_UnfreezeWorld) &&
         !(g_SysWork.sysFlags & SysFlag_5))
     {
@@ -807,7 +807,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
             break;
 
         case 1:
-            if (D_800A9A0C != 0)
+            if (g_IsLoadingFinished)
             {
                 ScreenFade_Start(true, true, false);
                 func_8003943C();
@@ -996,7 +996,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             Screen_BackgroundImgDraw(&g_DeathTipImg);
 
             if (!(g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                    g_GameWorkPtr->config.controllerConfig.cancel)))
+                                                        g_GameWorkPtr->config.controllerConfig.cancel)))
             {
                 if (g_SysWork.sysStateStepData[0] <= SECONDS_60_FPS(8))
                 {
@@ -1041,7 +1041,7 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
         g_GameWork.gameStateSteps[0] = 1;
     }
 
-    D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
+    g_IsLoadingFinished = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
 
     Savegame_EventFlagSetAlt(g_MapEventData->completeEventFlag);
     g_MapOverlayHdr.mapEventFuncs[g_MapEventParam]();
