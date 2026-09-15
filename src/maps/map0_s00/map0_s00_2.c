@@ -502,15 +502,15 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
         case 0:
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                               Q12(-22.0f), Q12(-2.4f), Q12(130.1f),
-                               Q12(0.0f), Q12(0.0f),
-                               Q12(0.0f), Q12(0.0f),
-                               true);
+                                    Q12(-22.0f), Q12(-2.4f), Q12(130.1f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    true);
             Event_CameraLookAtSet(&cherylChara.position,
-                             Q12(0.0f), Q12(-1.0f), Q12(0.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             true);
+                                  Q12(0.0f), Q12(-1.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  true);
             break;
 
         case 1:
@@ -812,15 +812,16 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
 
             // Warp camera.
             Event_CameraPositionSet(&playerChara.position,
-                               Q12(0.24f), Q12(-4.06f), Q12(-5.0f),
-                               Q12(0.0f), Q12(0.0f),
-                               Q12(0.0f), Q12(0.0f),
-                               true);
+                                    Q12(0.24f), Q12(-4.06f), Q12(-5.0f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    true);
             Event_CameraLookAtSet(&playerChara.position,
-                             Q12(-0.72f), Q12(-2.11f), Q12(-1.63f),
-                             Q12(0.0f), Q12(0.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             true);
+                                  Q12(-0.72f), Q12(-2.11f), Q12(-1.63f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  true);
+
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -857,15 +858,15 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                               Q12(-62.0f), camPosY, camPosZ,
-                               Q12(0.0f), Q12(0.0f),
-                               Q12(0.0f), Q12(0.0f),
-                               g_WarpCamera0);
+                                    Q12(-62.0f), camPosY, camPosZ,
+                                    Q12(0.0f), Q12(0.0f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    g_WarpCamera0);
             Event_CameraLookAtSet(NULL,
-                             playerChara.position.vx, Q12(-0.7f), playerChara.position.vz - Q12(5.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             g_WarpCamera0);
+                                  playerChara.position.vx, Q12(-0.7f), playerChara.position.vz - Q12(5.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  g_WarpCamera0);
 
             g_WarpCamera0 = false;
             break;
@@ -894,15 +895,16 @@ void func_800DB26C(void) // 0x800DB26C
     if (g_SysWork.sysStateSteps[0] == 0)
     {
         Event_CameraPositionSet(NULL,
-                           Q12(-62.0f), Q12(-2.24f), Q12(117.0f),
-                           Q12(0.0f), Q12(0.0f),
-                           Q12(0.0f), Q12(0.0f),
-                           true);
+                                Q12(-62.0f), Q12(-2.24f), Q12(117.0f),
+                                Q12(0.0f), Q12(0.0f),
+                                Q12(0.0f), Q12(0.0f),
+                                true);
         Event_CameraLookAtSet(NULL,
-                         Q12(-62.0f), Q12(-0.7f), Q12(104.0f),
-                         Q12(0.0f), Q12(0.0f),
-                         Q12(0.0f), Q12(0.0f),
-                         true);
+                              Q12(-62.0f), Q12(-0.7f), Q12(104.0f),
+                              Q12(0.0f), Q12(0.0f),
+                              Q12(0.0f), Q12(0.0f),
+                              true);
+
         Event_TweenReset(2);
     }
 
@@ -1115,15 +1117,16 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             if (D_800DFACC == 0)
             {
                 Event_CameraPositionSet(NULL,
-                                   Q12(-254.63f), Q12(-0.77f), Q12(219.56f),
-                                   Q12(0.0f), Q12(0.0f),
-                                   Q12(0.0f), Q12(0.0f),
-                                   true);
+                                        Q12(-254.63f), Q12(-0.77f), Q12(219.56f),
+                                        Q12(0.0f), Q12(0.0f),
+                                        Q12(0.0f), Q12(0.0f),
+                                        true);
                 Event_CameraLookAtSet(&playerChara.position,
-                                 Q12(0.0f), Q12(-0.6f), Q12(0.0f),
-                                 Q12(0.0f), Q12(0.0f),
-                                 Q12(0.0f), Q12(0.0f),
-                                 true);
+                                      Q12(0.0f), Q12(-0.6f), Q12(0.0f),
+                                      Q12(0.0f), Q12(0.0f),
+                                      Q12(0.0f), Q12(0.0f),
+                                      true);
+
                 D_800DFACC++;
             }
 
@@ -1145,15 +1148,15 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 
                 // Warp camera.
                 Event_CameraPositionSet(NULL,
-                                   Q12(-250.81f), Q12(-0.32f), Q12(218.59f),
-                                   Q12(0.0f), Q12(0.0f),
-                                   Q12(0.0f), Q12(0.0f),
-                                   warpCam);
+                                        Q12(-250.81f), Q12(-0.32f), Q12(218.59f),
+                                        Q12(0.0f), Q12(0.0f),
+                                        Q12(0.0f), Q12(0.0f),
+                                        warpCam);
                 Event_CameraLookAtSet(NULL,
-                                 Q12(-247.13f), Q12(-0.56f), Q12(217.04f),
-                                 Q12(0.0f), Q12(0.0f),
-                                 Q12(0.0f), Q12(0.0f),
-                                 warpCam);
+                                      Q12(-247.13f), Q12(-0.56f), Q12(217.04f),
+                                      Q12(0.0f), Q12(0.0f),
+                                      Q12(0.0f), Q12(0.0f),
+                                      warpCam);
 
                 // Warp player.
                 Math_Vector3Set(&playerChara.position, Q12(-251.12f), Q12(0.0f), Q12(218.56f));
@@ -1182,15 +1185,15 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 
                 // Set camera to look toward handing dead body.
                 Event_CameraPositionSet(NULL,
-                                   camPos.vx, camPos.vy, camPos.vz,
-                                   Q12(0.0f), Q12(3.0f),
-                                   Q12(0.0f), Q12(0.0f),
-                                   false);
+                                        camPos.vx, camPos.vy, camPos.vz,
+                                        Q12(0.0f), Q12(3.0f),
+                                        Q12(0.0f), Q12(0.0f),
+                                        false);
                 Event_CameraLookAtSet(NULL,
-                                 Q12(-247.43f), Q12(-1.0298f), Q12(217.34f),
-                                 Q12(0.0f), Q12(0.0f),
-                                 Q12(0.0f), Q12(0.0f),
-                                 false);
+                                      Q12(-247.43f), Q12(-1.0298f), Q12(217.34f),
+                                      Q12(0.0f), Q12(0.0f),
+                                      Q12(0.0f), Q12(0.0f),
+                                      false);
             }
             break;
 
@@ -1613,15 +1616,16 @@ void func_800DCA30(void) // 0x800DCA30
         if (playerPosZ < Q12(48.0f) && playerPosX > Q12(-59.0f))
         {
             Event_CameraPositionSet(NULL,
-                               Q12(-60.55f), Q12(-0.51f), Q12(47.63f),
-                               Q12(0.0f), Q12(0.0f),
-                               Q12(0.0f), Q12(0.0f),
-                               g_WarpCamera);
+                                    Q12(-60.55f), Q12(-0.51f), Q12(47.63f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    g_WarpCamera);
             Event_CameraLookAtSet(NULL,
-                             Q12(-56.91f), Q12(-1.26f), Q12(46.14f),
-                             Q12(0.0f), Q12(0.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             g_WarpCamera);
+                                  Q12(-56.91f), Q12(-1.26f), Q12(46.14f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  g_WarpCamera);
+
             g_WarpCamera = false;
             return;
         }
@@ -1637,15 +1641,16 @@ void func_800DCA30(void) // 0x800DCA30
             camPosX  = MAX(MIN(Q12(-61.5f), playerPosX), Q12(-63.5f));
 
             Event_CameraPositionSet(NULL,
-                               camPosX, camPosY, camPosZ,
-                               Q12(0.0f), Q12(0.0f),
-                               Q12(0.0f), Q12(0.0f),
-                               !g_WarpCamera);
+                                    camPosX, camPosY, camPosZ,
+                                    Q12(0.0f), Q12(0.0f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    !g_WarpCamera);
             Event_CameraLookAtSet(NULL,
-                             playerPosX, Q12(-0.7f), playerPosZ - Q12(5.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             Q12(0.0f), Q12(0.0f),
-                             !g_WarpCamera);
+                                  playerPosX, Q12(-0.7f), playerPosZ - Q12(5.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  !g_WarpCamera);
+
             g_WarpCamera = true;
             return;
         }

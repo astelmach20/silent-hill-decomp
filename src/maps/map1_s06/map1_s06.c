@@ -77,8 +77,14 @@ void func_800D5614(void) // 0x800D5614
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(22.47f), Q12(-3.43f), Q12(-12.94f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(21.59f), Q12(-1.52f), Q12(-16.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL,
+                                    Q12(22.47f), Q12(-3.43f), Q12(-12.94f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(21.59f), Q12(-1.52f), Q12(-16.34f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             Game_TurnFlashlightOff();
 
@@ -124,8 +130,14 @@ void func_800D5614(void) // 0x800D5614
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(22.11f), Q12(-5.18f), Q12(-20.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(21.24f), Q12(-2.4f), Q12(-17.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL,
+                                    Q12(22.11f), Q12(-5.18f), Q12(-20.45f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(21.24f), Q12(-2.4f), Q12(-17.71f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             SysWork_StateStepIncrement(0);
 
@@ -167,8 +179,14 @@ void func_800D5614(void) // 0x800D5614
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(22.11f), Q12(-5.18f), Q12(-20.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(21.24f), Q12(-2.4f), Q12(-17.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL,
+                                    Q12(22.11f), Q12(-5.18f), Q12(-20.45f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(21.24f), Q12(-2.4f), Q12(-17.71f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
             Game_TurnFlashlightOn();
@@ -299,8 +317,16 @@ void func_800D5DD8(void) // 0x800D5DD8
             g_SavegamePtr->paperMapIdx = 1;
             D_800D7790 = 0;
 
-            Event_CameraPositionSet(NULL, Q12(106.5799f), Q12(-3.6199f), Q12(45.23f), 0, 0, 0, 0, true);
-            Event_CameraLookAtSet(NULL, Q12(109.19f), Q12(-1.3699f), Q12(43.2f), 0, 0, 0, 0, true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(106.5799f), Q12(-3.6199f), Q12(45.23f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(109.19f), Q12(-1.3699f), Q12(43.2f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
+
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -367,7 +393,7 @@ void func_800D5DD8(void) // 0x800D5DD8
                 D_800D778F = 0x80;
 
                 if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                     g_GameWorkPtr->config.controllerConfig.cancel))
+                                                          g_GameWorkPtr->config.controllerConfig.cancel))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -570,10 +596,19 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
 
 void func_800D6C88(void) // 0x800D6C88
 {
-    if (g_SysWork.playerWork.player.position.vx == Q12(21.45f) && g_SysWork.playerWork.player.position.vz == Q12(-15.26f))
+    if (g_SysWork.playerWork.player.position.vx == Q12(21.45f) &&
+        g_SysWork.playerWork.player.position.vz == Q12(-15.26f))
     {
-        Event_CameraPositionSet(NULL, Q12(21.69f), Q12(-2.38f), Q12(-19.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-        Event_CameraLookAtSet(NULL, Q12(21.08f), Q12(-0.45f), Q12(-15.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        // Warp camera.
+        Event_CameraPositionSet(NULL,
+                                Q12(21.69f), Q12(-2.38f), Q12(-19.16f),
+                                Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                true);
+        Event_CameraLookAtSet(NULL,
+                              Q12(21.08f), Q12(-0.45f), Q12(-15.71f),
+                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                              true);
+
         vcExecCamera();
         vcReturnPreAutoCamWork(false);
     }

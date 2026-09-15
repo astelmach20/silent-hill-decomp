@@ -580,11 +580,11 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             // Scroll left/right.
             if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)
             {
-                vol = vol + SOUND_VOL_STEP;
+                vol += SOUND_VOL_STEP;
             }
             if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)
             {
-                vol = vol - SOUND_VOL_STEP;
+                vol -= SOUND_VOL_STEP;
             }
 
             // Set config.
@@ -2054,7 +2054,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
 
             // Leave menu.
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+                                                      g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SD_Call(Sfx_MenuCancel);
 
@@ -2073,7 +2073,8 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
                 Game_StateStepSet(1, ControllerMenuState_Type1);
             }
             // Move selection cursor left/right.
-            else if (g_Controller0->buttonFlags.pulsedGui & (ControllerFlag_LStickHighLeft | ControllerFlag_LStickHighRight))
+            else if (g_Controller0->buttonFlags.pulsedGui & (ControllerFlag_LStickHighLeft |
+                                                             ControllerFlag_LStickHighRight))
             {
                 Game_StateStepSet(1, ControllerMenuState_Actions);
             }
@@ -2109,7 +2110,8 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
                     Game_StateStepSet(1, (g_GameWork.gameStateSteps[1] + 1) & 3); // % 4
                 }
                 // Move selection cursor left/right.
-                else if (g_Controller0->buttonFlags.pulsedGui & (ControllerFlag_LStickHighLeft | ControllerFlag_LStickHighRight))
+                else if (g_Controller0->buttonFlags.pulsedGui & (ControllerFlag_LStickHighLeft |
+                                                                 ControllerFlag_LStickHighRight))
                 {
                     Game_StateStepSet(1, ControllerMenuState_Actions);
                 }
@@ -2143,7 +2145,8 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
                 }
             }
             // Move selection cursor left/right.
-            else if (g_Controller0->buttonFlags.pulsedGui & (ControllerFlag_LStickHighLeft | ControllerFlag_LStickHighRight))
+            else if (g_Controller0->buttonFlags.pulsedGui & (ControllerFlag_LStickHighLeft |
+                                                             ControllerFlag_LStickHighRight))
             {
                 Game_StateStepSet(1, selectedEntries.preset);
             }

@@ -66,11 +66,13 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
     {
         return ResetType_WarmBoot;
     }
-    else if (g_Controller0->buttonFlags.held == WARM_BOOT_COMBO_PRESS && (g_Controller0->buttonFlags.clicked & WARM_BOOT_COMBO_PRESS))
+    else if (g_Controller0->buttonFlags.held == WARM_BOOT_COMBO_PRESS &&
+             (g_Controller0->buttonFlags.clicked & WARM_BOOT_COMBO_PRESS))
     {
         return ResetType_WarmBoot;
     }
-    else if (g_Controller0->buttonFlags.held == WARM_BOOT_COMBO_PRESS_ALT && (g_Controller0->buttonFlags.clicked & ControllerFlag_Start))
+    else if (g_Controller0->buttonFlags.held == WARM_BOOT_COMBO_PRESS_ALT &&
+             (g_Controller0->buttonFlags.clicked & ControllerFlag_Start))
     {
         return ResetType_WarmBoot;
     }

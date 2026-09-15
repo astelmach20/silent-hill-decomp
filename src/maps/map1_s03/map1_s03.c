@@ -1436,7 +1436,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                         }
 
                         // Warp camera.
-                        Event_CameraPositionSet(NULL, Q12(-61.18f), Q12(-3.0f), g_SysWork.playerWork.player.position.vz + Q12(0.49f),
+                        Event_CameraPositionSet(NULL,
+                                                Q12(-61.18f), Q12(-3.0f), g_SysWork.playerWork.player.position.vz + Q12(0.49f),
                                                 Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                                 D_800E62D0 == 0);
                         Event_CameraLookAtSet(NULL,
@@ -1507,7 +1508,10 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
         !Savegame_EventFlagGet(EventFlag_105))
     {
         // Warp camera.
-        Event_CameraPositionSet(NULL, Q12(-60.63f), Q12(-4.14f), Q12(17.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Event_CameraPositionSet(NULL,
+                                Q12(-60.63f), Q12(-4.14f), Q12(17.42f),
+                                Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                true);
         if (g_SysWork.playerWork.player.position.vz < Q12(18.5f))
         {
             Event_CameraLookAtSet(NULL,

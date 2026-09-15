@@ -336,7 +336,8 @@ void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
 
     if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
-        g_SysWork.sysStateSteps[0] >= EventState_MedallionCutsceneStart && g_SysWork.sysStateSteps[0] < EventState_MedallionCutsceneEnd)
+        g_SysWork.sysStateSteps[0] >= EventState_MedallionCutsceneStart &&
+        g_SysWork.sysStateSteps[0] <  EventState_MedallionCutsceneEnd)
     {
         ScreenFade_ResetTimestep();
         SysWork_StateStepSet(0, EventState_Skip);
@@ -408,8 +409,16 @@ void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
             playerChara.rotation.vy = Q12_ANGLE(-22.5f);
 
             Event_WaitTimer(Q12(1.5f), false);
-            Event_CameraPositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(-97.3f), Q12(-2.3699f), Q12(21.97f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-100.37f), Q12(-2.2f), Q12(24.53f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
             break;
 
         case 12:

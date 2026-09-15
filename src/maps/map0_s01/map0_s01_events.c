@@ -448,7 +448,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
         case 5:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+                                                      g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }

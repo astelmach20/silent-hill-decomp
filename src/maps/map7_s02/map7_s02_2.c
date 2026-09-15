@@ -1501,11 +1501,14 @@ void func_800DD9E8(void) // 0x800DD9E8
 
         case 2:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 144, false);
+
             Event_CameraPositionSet(NULL, Q12(20.98f), Q12(-4.08f), Q12(-59.9f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(18.56f), Q12(-1.07f), Q12(-60.94f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             g_SysWork.playerWork.player.position.vx = Q12(19.2f);
             g_SysWork.playerWork.player.position.vz = Q12(-61.0f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
+
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -1515,28 +1518,32 @@ void func_800DD9E8(void) // 0x800DD9E8
         case 4:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
+
             Event_CameraPositionSet(NULL, Q12(16.37f), Q12(-2.56f), Q12(-60.41f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(20.18f), Q12(-1.4f), Q12(-60.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             Event_TweenReset(0);
             Event_TweenReset(2);
             Event_TweenReset(3);
             Event_TweenReset(5);
+
             Savegame_EventFlagSet(EventFlag_573);
+
             SysWork_StateStepIncrement(0);
             break;
 
         case 5:
+            // Warp camera.
             Event_CameraPositionSet(NULL,
-                               Event_TweenLinear(Q12(1.7701f), Q12(2.0f), 0) + Q12(16.37f),
-                               Q12(-2.56f),
-                               Event_TweenLinear(Q12(-0.16f), Q12(2.0f), 2) - Q12(60.41f),
-                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-
+                                    Event_TweenLinear(Q12(1.7701f), Q12(2.0f), 0) + Q12(16.37f),
+                                    Q12(-2.56f),
+                                    Event_TweenLinear(Q12(-0.16f), Q12(2.0f), 2) - Q12(60.41f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             Event_CameraLookAtSet(NULL,
-                             Event_TweenLinear(Q12(1.7801f), Q12(2.0f), 0) + Q12(20.18f),
-                             Q12(-1.4f),
-                             Event_TweenLinear(Q12(-0.0301f), Q12(2.0f), 2) - Q12(60.76f),
-                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                                  Event_TweenLinear(Q12(1.7801f), Q12(2.0f), 0) + Q12(20.18f),
+                                  Q12(-1.4f),
+                                  Event_TweenLinear(Q12(-0.0301f), Q12(2.0f), 2) - Q12(60.76f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
 
             Event_WaitTimer(Q12(2.0f), false);
             break;
@@ -1552,7 +1559,9 @@ void func_800DD9E8(void) // 0x800DD9E8
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_555);
+
             vcReturnPreAutoCamWork(false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             func_8008D448();
@@ -2313,7 +2322,8 @@ void func_800DFDDC(void) // 0x800DFDDC
             if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter ||
                 g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
             {
-                if (!Savegame_EventFlagGet(EventFlag_487) && (D_800EA494.field_0 == 1 || D_800EA494.field_0 == 5 || D_800EA494.field_0 == 6))
+                if (!Savegame_EventFlagGet(EventFlag_487) &&
+                    (D_800EA494.field_0 == 1 || D_800EA494.field_0 == 5 || D_800EA494.field_0 == 6))
                 {
                     SysWork_StateStepSet(0, 5);
                 }
@@ -2377,7 +2387,9 @@ void func_800DFDDC(void) // 0x800DFDDC
             Game_TimerUpdate();
 
             // TODO: Should `Gfx_CursorDraw` first args be `s16`?
-            Gfx_CursorDraw((s16)(FP_FROM(sharedData_800E2CA8_7_s01, 12) + 8), (s16)FP_FROM(sharedData_800E2CAC_7_s01, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+            Gfx_CursorDraw((s16)(FP_FROM(sharedData_800E2CA8_7_s01, 12) + 8),
+                           (s16)FP_FROM(sharedData_800E2CAC_7_s01, 12) + 8,
+                           8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
             if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
             {
@@ -2470,8 +2482,17 @@ void func_800DFDDC(void) // 0x800DFDDC
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             func_8008D438();
-            Event_CameraPositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(-138.15f), Q12(-1.71f), Q12(-138.77f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-140.56f), Q12(-1.03f), Q12(-141.88f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
+
             WorldObject_ModelNameSet(&D_800EBB64.object, "STONE2_H");
             SysWork_StateStepIncrement(0);
 

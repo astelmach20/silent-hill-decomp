@@ -1506,10 +1506,10 @@ void func_800D8FC0(void) // 0x800D8FC0
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                               Event_TweenLinear(Q12(-1.28f), Q12(6.5f), 0) + Q12(163.78f),
-                               Event_TweenLinear(Q12(1.16f), Q12(6.5f), 1) - Q12(2.31f),
-                               Event_TweenLinear(Q12(-4.41f), Q12(6.5f), 2) + Q12(58.91f),
-                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                                    Event_TweenLinear(Q12(-1.28f), Q12(6.5f), 0) + Q12(163.78f),
+                                    Event_TweenLinear(Q12(1.16f), Q12(6.5f), 1) - Q12(2.31f),
+                                    Event_TweenLinear(Q12(-4.41f), Q12(6.5f), 2) + Q12(58.91f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
 
             if (g_SysWork.sysStateSteps[0] != 4)
             {

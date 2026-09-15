@@ -328,7 +328,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
 
                     if (g_SysWork.sysStateSteps[0] == sysState0 &&
                         (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                          g_GameWorkPtr->config.controllerConfig.cancel)))
+                                                               g_GameWorkPtr->config.controllerConfig.cancel)))
                     {
                         SysWork_StateStepSet(0, 3);
                     }
@@ -570,7 +570,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             if (g_Gfx_PaperMapMarkingAlpha >= 128)
             {
                 if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                     g_GameWorkPtr->config.controllerConfig.cancel))
+                                                          g_GameWorkPtr->config.controllerConfig.cancel))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -776,7 +776,8 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             D_800F2298++;
             if (D_800F2298 >= 0x80)
             {
-                if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
+                if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                          g_GameWorkPtr->config.controllerConfig.cancel))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -1290,7 +1291,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             Event_WaitTimer(Q12(1.0f), false);
 
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+                                                      g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }

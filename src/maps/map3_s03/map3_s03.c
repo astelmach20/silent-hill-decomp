@@ -648,7 +648,8 @@ void func_800D27F4(void) // 0x800D27F4
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (g_SysWork.sysStateSteps[0] == 9 &&
-                (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.skip | g_GameWorkPtr->config.controllerConfig.cancel)))
+                (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.skip |
+                                                       g_GameWorkPtr->config.controllerConfig.cancel)))
             {
                 SD_Call(19);
                 SysWork_StateStepIncrement(0);

@@ -303,14 +303,15 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
 
         case 22:
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.skip))
+                                                      g_GameWorkPtr->config.controllerConfig.skip))
             {
                 Game_StateStepSet(1, 23);
             }
             break;
 
         case 23:
-            if (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
+            if (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickHighRight |
+                                                      ControllerFlag_LStickHighLeft))
             {
                 g_Inventory_SelectionId = g_Inventory_SelectionId == 0;
                 Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
@@ -320,7 +321,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             {
                 s32 prevGameState;
                 ScreenFade_Start(true, false, false);
-                prevGameState       = g_GameWork.gameStateSteps[2];
+                prevGameState = g_GameWork.gameStateSteps[2];
 
                 Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
 
@@ -721,8 +722,8 @@ void Inventory_Logic(void) // 0x8004D518
                 g_Inventory_SelectionId = InvSelectionId_Map;
             }
             else if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.item |
-                                                      (g_GameWorkPtr->config.controllerConfig.enter |
-                                                       g_GameWorkPtr->config.controllerConfig.cancel)))
+                                                           (g_GameWorkPtr->config.controllerConfig.enter |
+                                                            g_GameWorkPtr->config.controllerConfig.cancel)))
             {
                 step = g_GameWork.gameStateSteps[2];
                 Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
