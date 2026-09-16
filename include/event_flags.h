@@ -1200,5 +1200,6 @@ typedef enum _EventFlag
     EventFlag_1641 = 1641,
     EventFlag_1642 = 1642,
 
+    EventFlag_Count,
     EventFlag_Hack = -1, // @hack Force enum to be treated as `s32`.
 } e_EventFlag;

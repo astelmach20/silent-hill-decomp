@@ -1717,9 +1717,9 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
         case BrightnessMenuState_Leave:
             // Switch to previous menu.
             // TODO: Odd check for `ScreenFade_IsFinished()`.
-            if ( (g_Screen_FadeStatus & (1 << 2)) &&
-                !(g_Screen_FadeStatus & (1 << 1)) &&
-                 (g_Screen_FadeStatus & (1 << 0)))
+            if ( (g_ScreenFade_Status & (1 << 2)) &&
+                !(g_ScreenFade_Status & (1 << 1)) &&
+                 (g_ScreenFade_Status & (1 << 0)))
             {
                 ScreenFade_Start(true, true, false);
                 Game_StateStepSet(0, OptionsMenuState_LeaveBrightness);
@@ -2311,7 +2311,6 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
     return boundActionIdx;
 }
 
-
 void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx) // 0x801E6F60
 {
     #define STR_BASE_Y    22
@@ -2371,7 +2370,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     };
 
     /** @brief Controller menu entry strings for the presets pane on the left. */
-    static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] = {
+    static const char* PRESETS_PANE_ENTRY_STRS[] = {
         "EXIT",
         "TYPE_1",
         "TYPE_2",
@@ -2379,7 +2378,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     };
 
     /** @brief Controller menu entry strings for the actions pane on the right. */
-    static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] = {
+    static const char* ACTIONS_PANE_ENTRY_STRS[] = {
         "ENTER",
         "CANCEL",
         "SKIP",
@@ -2405,7 +2404,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     for (i = 0; i < ControllerMenuState_Count; i++)
     {
         Gfx_StringPositionSet(24, STR_BASE_Y + (i * STR_OFFSET_Y));
-        Gfx_StringDraw(CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[i], 20);
+        Gfx_StringDraw(PRESETS_PANE_ENTRY_STRS[i], 20);
     }
 
     if (!isOnRightPane)
@@ -2427,7 +2426,7 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     {
         // Draw action string.
         Text_Debug_PositionSet(96, strYPos);
-        Text_Debug_Draw(CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[i]);
+        Text_Debug_Draw(ACTIONS_PANE_ENTRY_STRS[i]);
 
         // Draw button icon.
         if (i != boundActionIdx)

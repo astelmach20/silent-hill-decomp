@@ -1636,7 +1636,8 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         Gfx_StringPositionSet((digitCount * 10) + 254, 178);
         Gfx_StringDrawInt(2, sec);
 
-        if (!(hyperBlasterBeamColor & 0x18)) // Checks if the player have no special hyper blaster beam color unlocked.
+        // Check if no special hyper blaster beam color is unlocked.
+        if (!(hyperBlasterBeamColor & 0x18))
         {
             return;
         }
@@ -1717,14 +1718,14 @@ void SaveScreen_Init(void) // 0x801E63C0
     g_SaveScreen_IsLoadError = false;
     if (g_GameWork.gameState == GameState_AutoLoadSavegame || g_GameWork.gameState == GameState_LoadSavegameScreen)
     {
-        if (D_800A97D8 != 0)
+        if (g_SaveScreen_IsInSaveScreen)
         {
             g_MemCard_AllMemCardsStatus = 0;
         }
     }
 
     g_SaveScreen_MemCardStateTextTimer = 0;
-    D_800A97D8              = g_GameWork.gameState == GameState_SaveScreen;
+    g_SaveScreen_IsInSaveScreen        = g_GameWork.gameState == GameState_SaveScreen;
 
     SaveScreen_ScreenInfoClear();
     Game_StateStepIncrement(0);

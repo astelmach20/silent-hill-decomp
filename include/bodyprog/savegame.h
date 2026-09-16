@@ -19,12 +19,12 @@ typedef struct _Savegame
     /* 0xAA     */ u8              equippedWeapon;              /** `e_InvItemId` | Affects the visible player weapon model. */
     /* 0xAB     */ u8              invSlotCount;                /** Item slots. */
     /* 0xAC     */ u32             itemToggleFlags;             /** `e_ItemToggleFlags` */
-    /* 0xB0     */ s32             mapEnemyStates[45];          /** Flags indicating the enemy states in a given map.
+    /* 0xB0     */ s32             mapEnemyStates[Chara_Count]; /** Flags indicating the enemy states in a given map.
                                                                  * All set to 1 by default. As soon as they are killed (not just stunned),
                                                                  * set to 0 based on a currently unknown index value.
                                                                  */
     /* 0x164    */ s32             paperMapFlags;               // See Sparagas' `HasMapsFlags` struct for details of every bit.
-    /* 0x168    */ u32             eventFlags[52];              // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags
+    /* 0x168    */ u32             eventFlags[52];              /** Accessed via `Savegame_EventFlagGet` and `Savegame_EventFlagSet`. */
                                                                 // grouped by location and not item types.
                                                                 // Also includes map marking flags - see Sparagas' `MapMarkingsFlags` struct for details of every bit.
     /* 0x238    */ q19_12          healthSaturation;            /** Range: [0, 300]. Ampoules give extra stored health. If the player loses health, it will be slowly restored. */

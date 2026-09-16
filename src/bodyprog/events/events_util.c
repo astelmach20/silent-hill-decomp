@@ -270,14 +270,16 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
                 }
             }
 
-            if (cmd != ScreenFadeCmd_Start) // `cmd` will only be different if `ScreenFadeCmd_Auto` was passed.
+            // `cmd` will only be different if `ScreenFadeCmd_Auto` was passed.
+            if (cmd != ScreenFadeCmd_Start)
             {
                 SysWork_StateStepIncrement(2);
             }
             break;
 
         case ScreenFadeCmd_Wait:
-            if (fadeType < ScreenFadeType_ScreenBorders) // `fadeType == ScreenFadeType_Black || fadeType == ScreenFadeType_White`
+            // `fadeType == ScreenFadeType_Black || fadeType == ScreenFadeType_White`.
+            if (fadeType < ScreenFadeType_ScreenBorders)
             {
                 if ((fadeOut == false && ScreenFade_IsNone()) ||
                     (fadeOut == true  && ScreenFade_IsFinished()))
@@ -295,7 +297,7 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
     }
 }
 
-const RECT D_8002AB10 =  // 0x8002AB10 .rodata
+const RECT D_8002AB10 = // 0x8002AB10 .rodata
 {
     SCREEN_WIDTH, 256,
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT

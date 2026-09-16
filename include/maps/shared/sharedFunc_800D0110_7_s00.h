@@ -43,7 +43,7 @@ void sharedFunc_800D0110_7_s00(void)
                     break;
 
                 case GameState_SaveScreen:
-                    switch (g_Screen_FadeStatus)
+                    switch (g_ScreenFade_Status)
                     {
                         default:
                             bgmFlags  = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);

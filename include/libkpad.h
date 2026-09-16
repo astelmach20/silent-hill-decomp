@@ -82,7 +82,7 @@ typedef struct
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 
-// Controller node?
+// Controller node? Related to libkpad.
 typedef struct _SysWork_2510
 {
     struct _SysWork_2510* next_0;

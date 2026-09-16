@@ -279,9 +279,12 @@ void Demo_DemoRandSeedAdvance(void) // 0x8008F598
     {
         Rng_SetSeed(g_Demo_RandSeedBackup + SEED_OFFSET);
     }
+
+    #undef SEED_OFFSET
 #else
     // JAP0 doesn't have code here, just 16 bytes of stack for some reason?
-    // TODO: find which other versions are also missing code for this func, `>= VERSION_DATE_NTSC_1_1` check above is just a guess.
+    // TODO: Find which other versions are also missing code for this function.
+    // `>= VERSION_DATE_NTSC_1_1` check above is just a guess.
     u8 unused[16];
 #endif
 }
@@ -298,7 +301,7 @@ bool Demo_Update(void) // 0x8008F5D8
     prevScreenFadeCpy      = prevScreenFade;
     isLoadingChunks        = g_Demo_IsLoadingChunks;
     g_Demo_IsLoadingChunks = false;
-    prevScreenFade         = g_Screen_FadeStatus;
+    prevScreenFade         = g_ScreenFade_Status;
 
     if (!(g_SysWork.sysFlags & SysFlag_DemoActive))
     {
@@ -314,7 +317,6 @@ bool Demo_Update(void) // 0x8008F5D8
     }
 
     demoStep = g_Demo_DemoStep;
-
     if (g_Demo_ActiveState->frameCount <= demoStep)
     {
         nullsub_8008F518();
@@ -323,7 +325,7 @@ bool Demo_Update(void) // 0x8008F5D8
     }
 
     if (!Gfx_ScreenFadeIn_IsInProgress(prevScreenFadeCpy)   ||
-        !Gfx_ScreenFadeIn_IsInProgress(g_Screen_FadeStatus) ||
+        !Gfx_ScreenFadeIn_IsInProgress(g_ScreenFade_Status) ||
         isLoadingChunks)
     {
         g_Demo_ActivePlaybackFrame = NULL;

@@ -646,7 +646,7 @@ void func_800D3564(s_SubCharacter* floatstinger) // 0x800D3564
     floatstingerProps.field_EE = 0;
     floatstinger->moveSpeed    = 0;
 
-    if ((floatstinger->model.anim.status >> 1) != FloatstingerAnim_5 && (s32)g_SavegamePtr->eventFlags[10] < 0)
+    if (ANIM_STATUS_IDX_GET(floatstinger->model.anim.status) != FloatstingerAnim_5 && (s32)g_SavegamePtr->eventFlags[10] < 0)
     {
         floatstinger->model.anim.status = ANIM_STATUS(FloatstingerAnim_5, false);
         sp10.vx                         = floatstinger->position.vx;

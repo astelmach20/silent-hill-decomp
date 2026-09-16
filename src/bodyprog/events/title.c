@@ -26,7 +26,7 @@
 // STATIC VARIABLES
 // ========================================
 
-static s32 g_MainMenuState              = 0;
+static s32 g_MainMenuState              = MainMenuState_Start;
 static s32 g_MainMenu_SelectedEntry     = MainMenuEntry_Start;
 static u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) |
                                           (1 << MainMenuEntry_Option);
@@ -71,7 +71,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     if (g_GameWork.gameStateSteps[0] == 0)
     {
-        g_MainMenuState = 0;
+        g_MainMenuState = MainMenuState_Start;
 
         if (playInGameDemo)
         {
@@ -85,7 +85,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     switch (g_MainMenuState)
     {
-        case MenuState_Start:
+        case MainMenuState_Start:
             g_GameWork.background2dColor.r = 0;
             g_GameWork.background2dColor.g = 0;
             g_GameWork.background2dColor.b = 0;
@@ -98,7 +98,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             g_ScreenFadeTimestep = Q12(2.0f);
             g_MainMenuState++;
 
-        case MenuState_Main:
+        case MainMenuState_Main:
             if (playInGameDemo)
             {
                 GameBoot_InGameStartup();
@@ -217,7 +217,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                     case MainMenuEntry_Start:
                         ScreenFade_Reset();
-                        g_MainMenuState = MenuState_DifficultySelector;
+                        g_MainMenuState = MainMenuState_DifficultySelector;
                         break;
 
                     case MainMenuEntry_Option:
@@ -234,7 +234,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         default:
             break;
 
-        case MenuState_DifficultySelector:
+        case MainMenuState_DifficultySelector:
             if (playInGameDemo)
             {
                 GameBoot_InGameStartup();
@@ -302,18 +302,18 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 SD_Call(Sfx_MenuStartGame);
 
                 ScreenFade_Start(true, false, false);
-                g_MainMenuState     = 4;
+                g_MainMenuState = MainMenuState_NewGameStart;
             }
             // Cancel.
             else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SD_Call(Sfx_MenuCancel);
-                g_MainMenuState = 1;
+                g_MainMenuState = MainMenuState_Main;
             }
             break;
 
-        case MenuState_LoadGame:
-        case MenuState_NewGameStart:
+        case MainMenuState_LoadGame:
+        case MainMenuState_NewGameStart:
             if (ScreenFade_IsFinished())
             {
                 Screen_Refresh(SCREEN_WIDTH, 0);
@@ -373,7 +373,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         MainMenu_BackgroundDraw();
         func_8003B560();
 
-        if (g_MainMenuState < 3)
+        if (g_MainMenuState < MainMenuState_DifficultySelector)
         {
             MainMenu_MainTextDraw();
             return;

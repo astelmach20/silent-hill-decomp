@@ -206,7 +206,7 @@ GameFs_LoadingTextDraw                       = 0x80032CE8; // type:func
 //----------------------------------------------------------------
 //--- PA: 0x00E1BC   VA: 0x80032D1C   subsegment: c, sys/game_main
 //----------------------------------------------------------------
-GameState_Boot_Update                        = 0x80032D1C; // type:func
+GameState_Init_Update                        = 0x80032D1C; // type:func
 MainLoop                                     = 0x80032EE0; // type:func
 
 //---------------------------------------------------------------------
@@ -2508,6 +2508,7 @@ g_GameStateUpdateFuncs                       = 0x800A977C;
 //--------------------------------------------------------------------
 g_SlotElementSelectedIdx                     = 0x800A97D4;
 g_SelectedSaveSlotIdx                        = 0x800A97D6;
+g_SaveScreen_IsInSaveScreen                  = 0x800A97D8;
 D_800A97DC                                   = 0x800A97DC;
 unavailableMemCardSlotIdx                    = 0x800A97E0;
 fileStatuses                                 = 0x800A97E4;
@@ -3029,7 +3030,7 @@ g_GameWork                                   = 0x800BC728; // type:GameWork size
 //---------------------------------------------------
 //--- PA: 0x0981A0   VA: 0x800BCD00   subsegment: bss
 //---------------------------------------------------
-g_Screen_FadeStatus                          = 0x800BCD0C;
+g_ScreenFade_Status                          = 0x800BCD0C;
 
 //-------------------------------------------------------------------
 //--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: .bss, sys/memcard_2

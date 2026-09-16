@@ -59,12 +59,12 @@ typedef enum _ScreenFadeCmd
 /** @brief Screen fade types. */
 typedef enum _ScreenFadeType
 {
-    ScreenFadeType_Black            = 0,
-    ScreenFadeType_White            = 1,
-    ScreenFadeType_ScreenBorders    = 2, // TODO: Investigate. Seems to enable borders around screen?
-    ScreenFadeType_CutsceneBorders  = 3, // TODO: Investigate. Same as `ScreenBorders` but also sets cutscene flag?
+    ScreenFadeType_Black           = 0,
+    ScreenFadeType_White           = 1,
+    ScreenFadeType_ScreenBorders   = 2, // TODO: Investigate. Seems to enable borders around screen?
+    ScreenFadeType_CutsceneBorders = 3, // TODO: Investigate. Same as `ScreenBorders` but also sets cutscene flag?
 
-    ScreenFadeType_Hack             = -1 /** @hack Forces the enum as `s32`. */
+    ScreenFadeType_Hack            = -1 /** @hack Forces the enum as `s32`. */
 } e_ScreenFadeType;
 
 /** @brief Increments the event state step to use on next tick.

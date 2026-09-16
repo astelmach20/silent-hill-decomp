@@ -30,7 +30,7 @@ s8                   g_SelectedDeviceId;
 u8 g_SlotElementSelectedIdx[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
 s8 g_SelectedSaveSlotIdx                            = 0;
 u8 D_800A97D7                                       = 0;
-s8 D_800A97D8                                       = 0xFF;
+s8 g_SaveScreen_IsInSaveScreen                      = 0xFF;
 s8 D_800A97D9                                       = 0; // @unused Dead code. Only used for a check which ask if this is 0.
 
 // ========================================

@@ -22,7 +22,7 @@ extern s32 g_WarmBootTimer;
 // FUNCTIONS
 // ==========
 
-void GameState_Boot_Update(void);
+void GameState_Init_Update(void);
 
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop(void);

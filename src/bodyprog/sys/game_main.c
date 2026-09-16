@@ -39,7 +39,7 @@ static u16 g_baseVabAudiosTaskId[] = {
 };
 
 static void (*g_GameStateUpdateFuncs[])(void) = {
-    GameState_Boot_Update,
+    GameState_Init_Update,
     GameState_KonamiLogo_Update,
     GameState_KcetLogo_Update,
     GameState_MovieIntroFadeIn_Update,
@@ -67,7 +67,7 @@ static void (*g_GameStateUpdateFuncs[])(void) = {
 // MAIN LOOP
 // ========================================
 
-void GameState_Boot_Update(void) // 0x80032D1C
+void GameState_Init_Update(void) // 0x80032D1C
 {
     s32 gameState;
     s32 VabAudioTaskId;
@@ -193,7 +193,7 @@ void MainLoop(void) // 0x80032EE0
 
         g_SysWork.bgmStatusFlags = BgmStatusFlag_None;
 
-        // Call update function for current GameState.
+        // Call update function for current game state.
         g_GameStateUpdateFuncs[g_GameWork.gameState]();
 
         Demo_Update();
@@ -207,8 +207,9 @@ void MainLoop(void) // 0x80032EE0
 
         Screen_FadeUpdate();
         MemCard_Update();
-        Sd_TaskPoolExecute();
 
+        // Update sound.
+        Sd_TaskPoolExecute();
         if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
         {
             Fs_QueueUpdate();

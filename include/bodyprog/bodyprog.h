@@ -85,11 +85,11 @@ typedef enum _MainMenuEntry
 
 typedef enum _MainMenuState
 {
-    MenuState_Start              = 0,
-    MenuState_Main               = 1,
-    MenuState_LoadGame           = 2,
-    MenuState_DifficultySelector = 3,
-    MenuState_NewGameStart       = 4
+    MainMenuState_Start              = 0,
+    MainMenuState_Main               = 1,
+    MainMenuState_LoadGame           = 2,
+    MainMenuState_DifficultySelector = 3,
+    MainMenuState_NewGameStart       = 4
 } e_MainMenuState;
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
@@ -1680,6 +1680,7 @@ void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6
 /** Might retrun `bool`. */
 void func_80089090(s32 arg0);
 
+// Related to libkpad.
 void func_800890B8(void);
 
 s32 func_80089128(void);

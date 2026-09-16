@@ -127,7 +127,7 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
         return KcetLogoStateStep_HasSavegame;
     }
 
-    return KcetLogoStateStep_NoSaveGame;
+    return KcetLogoStateStep_NoSavegame;
 }
 
 void GameState_KcetLogo_Update(void) // 0x800C99A4
@@ -237,7 +237,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 Game_StateStepSet(0, KcetLogoStateStep_LogoDelay);
                 break;
 
-            case KcetLogoStateStep_NoSaveGame:
+            case KcetLogoStateStep_NoSavegame:
                 GameFs_StreamBinLoad();
                 GameFs_TitleGfxSeek();
                 nextGameState = GameState_MovieIntro;

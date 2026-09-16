@@ -3952,7 +3952,7 @@ void func_800E9AC8(void) // 0x800E9AC8
 
 void func_800E9C28(void) // 0x800E9C28
 {
-    g_Screen_FadeStatus = ScreenFadeState_FadeOutComplete;
+    g_ScreenFade_Status = ScreenFadeState_FadeOutComplete;
 
     switch (g_SysWork.sysStateSteps[0])
     {

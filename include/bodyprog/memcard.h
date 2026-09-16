@@ -365,7 +365,7 @@ extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
 
 extern u8 D_800A97D7;
 
-extern s8 D_800A97D8;
+extern s8 g_SaveScreen_IsInSaveScreen;
 
 extern s8 D_800A97D9;
 

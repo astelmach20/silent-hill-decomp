@@ -310,7 +310,7 @@ GameFs_LoadingTextDraw                       = 0x800329D0; // type:func
 //----------------------------------------------------------------
 //--- PA: 0x00DEA4   VA: 0x80032A04   subsegment: c, sys/game_main
 //----------------------------------------------------------------
-GameState_Boot_Update                        = 0x80032A04; // type:func
+GameState_Init_Update                        = 0x80032A04; // type:func
 MainLoop                                     = 0x80032BC8; // type:func
 
 //---------------------------------------------------------------------
@@ -3284,7 +3284,7 @@ vcWork                                       = 0x800BC200;
 g_ActiveBufferIdx                            = 0x800BC4E8;
 g_SysWork                                    = 0x800BC4F0; // type:SysWork size:0x2768
 g_GameWork                                   = 0x800BEC58; // type:GameWork size:0x5D8
-g_Screen_FadeStatus                          = 0x800BF23C;
+g_ScreenFade_Status                          = 0x800BF23C;
 
 //-------------------------------------------------------------------
 //--- PA: 0x09A6E8   VA: 0x800BF248   subsegment: .bss, sys/memcard_2

@@ -3,12 +3,9 @@
 
 #include "bodyprog/math/math.h"
 
-/** @brief Handles the general controller
- * handling, controller IO stream and state.
- * Game controller logic seems to have been split among many parts of
- * the game depending on the state or screen the player is using.
- * For example, the controller logic for the inventory screen is handled separately from the
- * one for the in-game state.
+/** @brief Handles the general controller functionality, controller IO stream, and state.
+ * Game controller logic is split between different parts of the game depending on what the user is using.
+ * For example, controller logic in the inventory screen is handled separately from in-game controller logic.
  */
 
 #define INPUT_ACTION_COUNT   14

@@ -12,7 +12,7 @@ typedef enum _KcetLogoStateStep
     KcetLogoStateStep_CheckMemCards,
     KcetLogoStateStep_NoMemCard,
     KcetLogoStateStep_NoMemCardFreeSpace,
-    KcetLogoStateStep_NoSaveGame,
+    KcetLogoStateStep_NoSavegame,
     KcetLogoStateStep_HasSavegame,
     KcetLogoStateStep_LogoDelay,
     KcetLogoStateStep_FinishAfterFade
