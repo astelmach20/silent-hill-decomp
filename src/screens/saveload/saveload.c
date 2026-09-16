@@ -909,7 +909,7 @@ void SaveScreen_SlotBorder(void) // 0x801E4010
             borderLine = (LINE_F2*)GsOUT_PACKET_P;
             setLineF2(borderLine);
 
-            setRGB0(borderLine, Q8_COLOR(0.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
+            setRGB0(borderLine, 0, 255, 0);
 
             setXY2(borderLine,
                    BORDER_LINES[j][i].vertex0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_LINES[j][i].vertex0.vy,
@@ -929,10 +929,10 @@ void SaveScreen_SlotBorder(void) // 0x801E4010
             setPolyG4(glowPoly);
             setSemiTrans(glowPoly, true);
 
-            setRGB0(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.5f), Q8_COLOR(0.0f));
-            setRGB1(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
-            setRGB2(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.5f), Q8_COLOR(0.0f));
-            setRGB3(glowPoly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+            setRGB0(glowPoly, 0, 128, 0);
+            setRGB1(glowPoly, 0, 0, 0);
+            setRGB2(glowPoly, 0, 128, 0);
+            setRGB3(glowPoly, 0, 0, 0);
 
             setXY4(glowPoly,
                    BORDER_GLOW_QUADS[j][i].vertex0.vx + (g_SelectedSaveSlotIdx * SLOT_COLUMN_OFFSET), BORDER_GLOW_QUADS[j][i].vertex0.vy,
@@ -969,15 +969,15 @@ void SaveScreen_SlotStatusMsgShineDraw(s32 slotIdx) // 0x801E43C8
         setPolyF4(poly);
         setSemiTrans(poly, true);
 
-        if ((u16)colorTimer < Q8_COLOR(0.125f))
+        if ((u16)colorTimer < 32)
         {
-            color = (colorTimer * 2) + Q8_COLOR(0.125f);
-            setRGB0(poly, color, color, Q8_COLOR(0.125f));
+            color = (colorTimer * 2) + 32;
+            setRGB0(poly, color, color, 32);
         }
         else
         {
-            color = Q8_COLOR(0.375f) - ((colorTimer - Q8_COLOR(0.125f)) * 2);
-            setRGB0(poly, color, color, Q8_COLOR(0.125f));
+            color = Q8_COLOR(0.375f) - ((colorTimer - 32) * 2);
+            setRGB0(poly, color, color, 32);
         }
 
         setXY4(poly,
@@ -1162,10 +1162,10 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
         trackPoly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(trackPoly);
 
-        setRGB0(trackPoly, Q8_COLOR(0.125f), Q8_COLOR(0.125f), Q8_COLOR(0.125f));
-        setRGB1(trackPoly, Q8_COLOR(0.125f), Q8_COLOR(0.125f), Q8_COLOR(0.125f));
-        setRGB2(trackPoly, Q8_COLOR(0.5f),   Q8_COLOR(0.5f),   Q8_COLOR(0.5f));
-        setRGB3(trackPoly, Q8_COLOR(0.5f),   Q8_COLOR(0.5f),   Q8_COLOR(0.5f));
+        setRGB0(trackPoly, 32, 32, 32);
+        setRGB1(trackPoly, 32, 32, 32);
+        setRGB2(trackPoly, 128,   128,   128);
+        setRGB3(trackPoly, 128,   128,   128);
 
         trackOffsetX = (slotIdx * SLOT_COLUMN_OFFSET) - 139;
         setXY4(trackPoly,
@@ -1515,13 +1515,13 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
         if (i & 0x1)
         {
-            setRGB0(line_g2, Q8_COLOR(0.625f),  Q8_COLOR(0.5f),    Q8_COLOR(0.25f));
+            setRGB0(line_g2, Q8_COLOR(0.625f),  128,    64);
             setRGB1(line_g2, Q8_COLOR(0.6875f), Q8_COLOR(0.6875f), Q8_COLOR(0.6875f));
         }
         else
         {
             setRGB0(line_g2, Q8_COLOR(0.6875f), Q8_COLOR(0.6875f), Q8_COLOR(0.6875f));
-            setRGB1(line_g2, Q8_COLOR(0.625f),  Q8_COLOR(0.5f),    Q8_COLOR(0.25f));
+            setRGB1(line_g2, Q8_COLOR(0.625f),  128,    64);
         }
 
         setXY2(line_g2,
@@ -1535,6 +1535,7 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
 void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 {
+    // @unused
     char* labelStrs[] = {
         "Data",
         "Save",
@@ -1544,20 +1545,20 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         "You_need_1_free_block\n__to_create_a_new_file."
     };
 
-    GsOT*               ot;
-    s32                 saveId;
-    s32                 mins;
-    s32                 beamColorFlag;
-    s32                 sec;
-    s32                 hours;
-    s32                 saveDataIdx;
-    s32                 i;
-    s32                 digitCount;
-    s32                 offset;
-    u32                 hyperBlasterBeamColor;
-    u32                 timeInSec;
+    GsOT*                   ot;
+    s32                     saveId;
+    s32                     mins;
+    s32                     beamColorFlag;
+    s32                     sec;
+    s32                     hours;
+    s32                     saveDataIdx;
+    s32                     i;
+    s32                     digitCount;
+    s32                     offset;
+    u32                     hyperBlasterBeamColor;
+    u32                     timeInSec;
     s_MemCard_SaveMetadata* ptr;
-    POLY_G4*            poly;
+    POLY_G4*                poly;
 
     ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
@@ -1581,7 +1582,7 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         timeInSec = FP_FROM(ptr->gameplayTimer, Q12_SHIFT);
 
         offset = ptr->add290Hours;
-        hours  = (timeInSec / 3600) + offset * 290;
+        hours  = (timeInSec / 3600) + (offset * 290);
 
         hyperBlasterBeamColor = ptr->pickedUpSpecialItemCount;
 
@@ -1592,17 +1593,17 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         Gfx_StringPositionSet(40, 178);
         Gfx_StringDraw("Data", 5);
 
-        digitCount = saveDataIdx < 10;
+        digitCount = (saveDataIdx < 10) ? 1 : 0;
 
-        Gfx_StringPositionSet(digitCount * 5 + 92, 178);
+        Gfx_StringPositionSet((digitCount * 5) + 92, 178);
         Gfx_StringDrawInt(2, saveDataIdx);
 
         Gfx_StringPositionSet(40, 196);
         Gfx_StringDraw("Save", 5);
 
-        digitCount = saveId < 10;
+        digitCount = (saveId < 10) ? 1 : 0;
 
-        Gfx_StringPositionSet(digitCount * 5 + 92, 196);
+        Gfx_StringPositionSet((digitCount * 5) + 92, 196);
         Gfx_StringDrawInt(2, saveId);
 
         Gfx_StringPositionSet(128, 178);
@@ -1625,13 +1626,13 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         Gfx_StringDrawInt(3, hours);
         Gfx_StringDraw("_:_", 3);
 
-        digitCount = mins < 10;
+        digitCount = (mins < 10) ? 1 : 0;
 
         Gfx_StringPositionSet((digitCount * 10) + 220, 178);
         Gfx_StringDrawInt(2, mins);
         Gfx_StringDraw("_:_", 3);
 
-        digitCount = sec < 10;
+        digitCount = (sec < 10) ? 1 : 0;
 
         Gfx_StringPositionSet((digitCount * 10) + 254, 178);
         Gfx_StringDrawInt(2, sec);
@@ -1657,18 +1658,18 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
             if (i != 0)
             {
-                setRGB0(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
-                setRGB2(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
-                setRGB1(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
-                setRGB3(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+                setRGB0(poly, (beamColorFlag > 0) ? 0 : 255, 255, 0);
+                setRGB2(poly, (beamColorFlag > 0) ? 0 : 255, 255, 0);
+                setRGB1(poly, 0, 0, 0);
+                setRGB3(poly, 0, 0, 0);
                 setXY4(poly, -30, 89, -30, 93, 120, 89, 120, 93);
             }
             else
             {
-                setRGB0(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
-                setRGB2(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
-                setRGB1(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
-                setRGB3(poly, (beamColorFlag > 0) ? Q8_COLOR(0.0f) : Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(0.0f));
+                setRGB0(poly, 0, 0, 0);
+                setRGB2(poly, 0, 0, 0);
+                setRGB1(poly, (beamColorFlag > 0) ? 0 : 255, 255, 0);
+                setRGB3(poly, (beamColorFlag > 0) ? 0 : 255, 255, 0);
                 setXY4(poly, -30, 85, -30, 89, 120, 85, 120, 89);
             }
 

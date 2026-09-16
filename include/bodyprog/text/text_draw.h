@@ -143,10 +143,10 @@ void func_8004B76C(char* str, bool useFixedWidth);
 
 /** @brief Draws an integer string in screen space using 12x16 glyphs.
  *
- * @param widthMin Minimum width of the integer string.
+ * @param lengthMin Minimum length.
  * @param val Integer to draw.
  */
-void Gfx_StringDrawInt(s32 widthMin, s32 val);
+void Gfx_StringDrawInt(s32 lengthMin, s32 val);
 
 #if VERSION_REGION_IS(NTSCJ)
     void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1);

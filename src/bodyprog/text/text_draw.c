@@ -819,7 +819,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
     #undef ATLAS_COLUMN_COUNT
 }
 
-void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
+void Gfx_StringDrawInt(s32 lengthMin, s32 val) // 0x8004B9F8
 {
     #define GLYPH_SIZE_X       11
     #define ATLAS_COLUMN_COUNT 10
@@ -829,9 +829,9 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     s32   i;
     char* str;
 
-    if (widthMin > 0)
+    if (lengthMin > 0)
     {
-        for (i = 0; i < (widthMin - 1); i++)
+        for (i = 0; i < (lengthMin - 1); i++)
         {
             g_MapMsg_GlyphSprite.x += GLYPH_SIZE_X;
         }
@@ -857,7 +857,7 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
         quotient = (val / ATLAS_COLUMN_COUNT) >> 32;
         *str     = (val - (quotient * ATLAS_COLUMN_COUNT)) + '0';
 
-        if (widthMin > 0)
+        if (lengthMin > 0)
         {
             g_MapMsg_GlyphSprite.x -= GLYPH_SIZE_X;
         }

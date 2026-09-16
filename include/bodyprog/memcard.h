@@ -220,7 +220,7 @@ typedef struct _MemCard_Work
     /* 0x70 */ bool  hasNewDevice;
     /* 0x74 */ s32   fileHandle;
     /* 0x78 */ s32   retryCount;
-    /* 0x7C */ s32   field_7C; // Dead code.
+    /* 0x7C */ s32   field_7C; /** @unused Dead code. Only ever set to 0. */
 } s_MemCard_Work;
 STATIC_ASSERT_SIZEOF(s_MemCard_Work, 128);
 
@@ -287,7 +287,7 @@ STATIC_ASSERT_SIZEOF(s_Savegame_Container, 640);
 typedef struct _Savegame_OptionsConfig
 {
     /* 0x0  */ s_OptionsConfig   config;
-    /* 0x38 */ u8                unused_38[68];
+    /* 0x38 */ u8                unused_38[68]; /** @unused */
     /* 0x7C */ s_Savegame_Footer footer;
 } s_Savegame_OptionsConfig;
 
@@ -300,9 +300,9 @@ typedef struct _MemCard_TotalSavesInfo
 
 typedef struct _MemCard_SaveHeader
 {
-    /* 0x0  */ s32                    unused_0;
+    /* 0x0  */ s32                    unused_0; /** @unused */
     /* 0x4  */ s_MemCard_SaveMetadata saveMetadata[MEMCARD_SAVES_COUNT_MAX];
-    /* 0x88 */ s8                     unused_88[116];
+    /* 0x88 */ s8                     unused_88[116]; /** @unused */
     /* 0xFC */ s_Savegame_Footer      footer;
 } s_MemCard_SaveHeader;
 STATIC_ASSERT_SIZEOF(s_MemCard_SaveHeader, 256);
@@ -339,7 +339,7 @@ typedef struct _MemCard_SaveWork
     /* 0x0   */ s_MemCard_DeviceInfo     devices[MEMCARD_DEVICE_COUNT_MAX];
     /* 0xE0  */ s_MemCard_Process        saveWork[2];
     /* 0x110 */ s32                      memCardInitalized; /** `bool` */
-    /* 0x114 */ s32                      unused_114;
+    /* 0x114 */ s32                      unused_114;        /** @unused */
     /* 0x118 */ s_PsxSaveBlock           saveBlock;
     /* 0x318 */ s_MemCard_SaveHeader     saveInfo;
     /* 0x418 */ s_Savegame_OptionsConfig optionsConfig;

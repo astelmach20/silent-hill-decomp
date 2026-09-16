@@ -102,8 +102,8 @@
  * @param shift Fixed-point shift.
  * @return Fixed-point product of `a` and `b`.
  */
-#define FP_MULTIPLY_FLOAT(aInt, bFlt, shift) \
-    FP_MULTIPLY(aInt, TO_FIXED(bFlt, shift), shift)
+#define FP_MULTIPLY_FLOAT(a, b, shift) \
+    FP_MULTIPLY(a, TO_FIXED(b, shift), shift)
 
 /** @brief Multiplies an integer in a fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediates for higher precision.
@@ -113,8 +113,8 @@
  * @param shift Fixed-point shift.
  * @return Precise product of `a` and `b` converted from fixed-point.
  */
-#define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
-    FP_MULTIPLY((s64)(aInt), (s64)TO_FIXED(bFlt, shift), shift)
+#define FP_MULTIPLY_FLOAT_PRECISE(a, b, shift) \
+    FP_MULTIPLY((s64)(a), (s64)TO_FIXED(b, shift), shift)
 
 /** @brief Divides an integer in a fixed-point Q format by another.
  *

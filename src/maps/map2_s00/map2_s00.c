@@ -445,10 +445,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
 
 void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 {
-    s32 zoomX;
-    s32 zoomZ;
-    s32 zoomHuh;
-    s16 curve;
+    q19_12 progressAlpha;
 
     if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
     {
@@ -458,10 +455,12 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         }
         else
         {
-            if (!D_800F228E && g_SysWork.sysStateSteps[0] > 5 && g_SysWork.sysStateSteps[0] < 11)
+            if (!D_800F228E &&
+                g_SysWork.sysStateSteps[0] > 5 &&
+                g_SysWork.sysStateSteps[0] < 11)
             {
                 Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, Q12(0.0f), false);
-                D_800F228E = 1;
+                D_800F228E = true;
             }
         }
     }
@@ -470,7 +469,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
     {
         if (ScreenFade_IsFinished())
         {
-            D_800F228E = 0;
+            D_800F228E = false;
             SysWork_StateStepSet(0, 12);
         }
     }
@@ -486,13 +485,21 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_CofeArrowOnly);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_CofeSignOnly);
 
-            D_800F228E = 0;
+            D_800F228E = false;
 
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_CameraPositionSet(NULL, Q12(15.54f), Q12(-1.5f), Q12(55.64f), 0, 0, 0, 0, true);
-            Event_CameraLookAtSet(NULL, Q12(19.42f), Q12(-1.75f), Q12(56.6f), 0, 0, 0, 0, true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(15.54f), Q12(-1.5f), Q12(55.64f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(19.42f), Q12(-1.75f), Q12(56.6f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
+
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -521,9 +528,10 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             PaperMap_DrawScaled(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
 
-            D_800F228C += 0x20;
-
-            Map_BoxOutlineDraw(D_800F228C, -0xA0, -0xE0, 0x13F, 0x1BF, -0x58, -0xC0, 0x9F, 0xDF);
+            D_800F228C += Q12(0.008f);
+            PaperMap_ExpandingBoxesDraw(D_800F228C,
+                               -160, -224, 319, 447,
+                               -88, -192, 159, 223);
 
             if (D_800F228C == Q12(1.0f))
             {
@@ -533,7 +541,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
         case 8:
             // Decrement zoom counter.
-            D_800F228C -= 0x40;
+            D_800F228C -= 64;
 
             PaperMap_DrawScaled(72 - Q12_MULT_PRECISE(D_800F228C, 72),
                                 16 - Q12_MULT_PRECISE(D_800F228C, 16),
@@ -544,11 +552,12 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
                           16 - Q12_MULT_PRECISE(D_800F228C, 16),
                           (D_800F228C >> 1) + Q12(0.5f));
 
-            curve = (FP_TO(D_800F228C, 12) / (D_800F228C + Q12(1.0f))) * -1;
+            progressAlpha = -Q12_DIV(D_800F228C, D_800F228C + Q12(1.0f));
+            PaperMap_ExpandingBoxesDraw(progressAlpha,
+                               -160, -224, 319, 447,
+                               -16, -160, 0, 0);
 
-            Map_BoxOutlineDraw(curve, -160, -224, 319, 447, -16, -160, 0, 0);
-
-            if (D_800F228C == 0)
+            if (D_800F228C == Q12(0.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -596,7 +605,8 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
         case 12:
             Event_PaperMapCmd(PaperMapCmd_Unload, 0);
-            D_800F228E = 0;
+            D_800F228E = false
+;
             SysWork_StateStepIncrement(0);
 
         case 13:
@@ -623,7 +633,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
 void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 {
-    s16 curve;
+    q3_12 progressAlpha;
 
     if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
     {
@@ -730,8 +740,11 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 12:
             PaperMap_DrawScaled(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
+
             D_800F229C += 0x20;
-            Map_BoxOutlineDraw(D_800F229C, -0xA0, -0xE0, 0x13F, 0x1BF, -0xA0, 8, 0x9F, 0xDF);
+            PaperMap_ExpandingBoxesDraw(D_800F229C,
+                               -160, -224, 319, 447,
+                               -160, 8, 159, 223);
 
             if (D_800F229C == Q12(1.0f))
             {
@@ -751,11 +764,12 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
                           116 - Q12_MULT_PRECISE(D_800F229C, 116),
                           (D_800F229C >> 1) + Q12(0.5f));
 
-            curve = (FP_TO(D_800F229C, 12) / (D_800F229C + Q12(1.0f))) * -1;
+            progressAlpha = -Q12_DIV(D_800F229C, D_800F229C + Q12(1.0f));
+            PaperMap_ExpandingBoxesDraw(progressAlpha,
+                               -160, -224, 319, 447,
+                               -160, 240, 0, 0);
 
-            Map_BoxOutlineDraw(curve, -160, -224, 319, 447, -160, 240, 0, 0);
-
-            if (D_800F229C == 0)
+            if (D_800F229C == Q12(0.0f))
             {
                 SysWork_StateStepIncrement(0);
                 break;
@@ -774,7 +788,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             func_80068E0C(2, 1, 0x3A2, D_800F2298, 0, 116, Q12(0.5f));
 
             D_800F2298++;
-            if (D_800F2298 >= 0x80)
+            if (D_800F2298 >= 128)
             {
                 if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
                                                           g_GameWorkPtr->config.controllerConfig.cancel))
@@ -892,6 +906,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
         case 0:
             Player_ControlFreeze();
             Event_BgTextureCmd(BgTextureCmd_QueueRead, FILE_TIM_STKENNEL_TIM, false);
+
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -937,6 +952,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_NoteDoghouse, 1, false);
             break;
     }
@@ -961,6 +977,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
         case EventState_Initialize:
             Player_ControlFreeze();
             Event_BgTextureCmd(BgTextureCmd_QueueRead, FILE_TIM_INKENNEL_TIM, false);
+
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -996,6 +1013,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_HouseKey, 1, false);
             Savegame_EventFlagSet(EventFlag_M2S00_PickupDogHouseKey);
             Player_ItemRemove(InvItemId_NoteDoghouse, 1);
+
             SysWork_StateStepIncrement(0);
 
         case EventState_DontTakeKey:
@@ -1053,6 +1071,7 @@ void func_800E9A74(void) // 0x800E9A74
         case EventState_Initialize:
             Player_ControlFreeze();
             Event_InvItemCmd(InvItemCmd_QueueLoad, InvItemId_KeyOfWoodman, 0, false);
+
             SysWork_StateStepIncrement(0);
 
         case EventState_1:

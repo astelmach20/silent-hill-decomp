@@ -192,11 +192,11 @@ bool func_801E3124(void) // 0x801E3124
             switch (g_ScreenFade_Status)
             {
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-                    Screen_RectInterlacedClear(0, 32, 512, 448, Q8_COLOR(1.0f), Q8_COLOR(1.0f), Q8_COLOR(1.0f));
+                    Screen_RectInterlacedClear(0, 32, 512, 448, 255, 255, 255);
                     break;
 
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-                    Screen_RectInterlacedClear(0, 32, 512, 448, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+                    Screen_RectInterlacedClear(0, 32, 512, 448, 0, 0, 0);
                     break;
             }
 
@@ -249,7 +249,7 @@ bool func_801E3304(void) // 0x801E3304
         }
         else
         {
-            Screen_RectInterlacedClear(0, 32, 320, 448, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
+            Screen_RectInterlacedClear(0, 32, 320, 448, 0, 0, 0);
             LoadImage(&g_CreditsVramSaveRects[0], IMAGE_BUFFER_0);
             LoadImage(&g_CreditsVramSaveRects[1], IMAGE_BUFFER_1);
             DrawSync(SyncMode_Wait);

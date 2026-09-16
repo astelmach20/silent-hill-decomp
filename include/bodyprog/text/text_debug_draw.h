@@ -18,13 +18,13 @@ void Text_Debug_Draw(char* str);
 
 /** @brief Converts an integer to a text string, written backwards into scratchpad memory.
  *
- * Handles negative values. Pads with `'\v'` (blank character in debug font) on the left to meet the minimum width.
+ * Handles negative values. Pads with `'\v'` (blank character in debug font) on the left to meet the minimum length.
  *
- * @param widthMin Minimum character width of the output. Padded with blanks if needed.
+ * @param lengthMin Minimum length.
  * @param val Integer value to convert.
  * @return Formatted text string in scratchpad memory.
  */
-char* Text_Debug_IntToString(s32 widthMin, s32 val);
+char* Text_Debug_IntToString(s32 lengthMin, s32 val);
 
 #if VERSION_EQUAL_OR_OLDER(PROTO_981216)
 /** @brief Draws a Q19.12 fixed-point value to the screen with a specified number of decimal places.

@@ -16,114 +16,126 @@
 // ADDITIONAL 2D GFX
 // ========================================
 
-void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB) // 0x800881B8
+void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
+                    u32 clutX, s16 clutY, s32 tPage) // 0x800881B8
 {
     POLY_FT4* poly;
 
+    // Get polygon.
     poly = (POLY_FT4*)GsOUT_PACKET_P;
     setPolyFT4(poly);
 
+    // Set vertices.
     setXY0Fast(poly, x0 - x1, y0 - y1);
     setXY1Fast(poly, x0 + x1, y0 - y1);
     setXY2Fast(poly, x0 - x1, y0 + y1);
     setXY3Fast(poly, x0 + x1, y0 + y1);
 
-    *(u32*)(&poly->u0) = arg4 + (arg5 << 8) + (getClut(arg9, argA) << 16);
-    *(u32*)(&poly->u1) = (arg4 + arg6) + (arg5 << 8) + (getTPage(0, 0, argB << 6, (((argB >> 4) & 1) << 8)) << 16);
-    *(u16*)(&poly->u2) = arg4 + ((arg5 + arg7) << 8);
-    *(u16*)(&poly->u3) = (arg4 + arg6) + ((arg5 + arg7) << 8);
+    // Set UVs. @todo Use macros here?
+    *(u32*)(&poly->u0) = u + (v << 8) + (getClut(clutX, clutY) << 16);
+    *(u32*)(&poly->u1) = (u + width) + (v << 8) + (getTPage(0, 0, tPage << 6, (((tPage >> 4) & 0x1) << 8)) << 16);
+    *(u16*)(&poly->u2) = u + ((v + height) << 8);
+    *(u16*)(&poly->u3) = (u + width) + ((v + height) << 8);
 
-    *(u16*)(&poly->r0) = arg8 + (arg8 << 8);
-    poly->b0 = arg8;
-
+    // Set color.
+    *(u16*)(&poly->r0) = tint + (tint << 8);
+    poly->b0 = tint;
     setSemiTrans(poly, false);
 
+    // Submit polygon.
     addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, poly);
     poly++;
-
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8) // 0x80088370
+void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
+                        q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
+                        q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight) // 0x80088370
 {
-    s32      iVar1;
-    s16      iVar4;
-    u16      uVar6[2];
-    s16      sVar5[2];
+    #define BOX_COUNT 5
+
+    q19_12   lerpWeight;
+    q3_12    interpStep;
+    q4_12    cornersX[2];
+    q3_12    cornersY[2];
     s32      i;
     LINE_F3* line;
-    s32      temp;
-    s16      temp2;
-    s32      temp_v0;
+    s32      blueIntensity;
+    q3_12    tempX;
+    q19_12   invLerpWeight;
 
+    // Get line.
     line = (LINE_F3*)GsOUT_PACKET_P;
 
-    for (i = 0; i < 5; i++)
+    // Draw boxes.
+    for (i = 0; i < BOX_COUNT; i++)
     {
-        if (arg0 > 0)
+        if (progressAlpha > Q12(0.0f))
         {
-            iVar4 = CLAMP_LOW_THEN_MIN(FP_TO(arg0 - (i * Q12(0.5f)) / 5, Q12_SHIFT) /  Q12(0.5f), 0,  Q12(1.0f));
+            interpStep = CLAMP_LOW_THEN_MIN(Q12_DIV(progressAlpha - ((i * Q12(0.5f)) / 5), Q12(0.5f)),
+                                            Q12(0.0f),
+                                            Q12(1.0f));
         }
         else
         {
-            iVar4 = -arg0;
+            interpStep = -progressAlpha;
         }
 
-        iVar1   = iVar4;
-        temp_v0 = Q12(1.0f) - iVar1;
+        lerpWeight    = interpStep;
+        invLerpWeight = Q12(1.0f) - lerpWeight;
 
-        uVar6[0] = Q12_MULT_PRECISE(arg1, temp_v0) + Q12_MULT_PRECISE(arg5, iVar1);
-        sVar5[0] = Q12_MULT_PRECISE(arg2, temp_v0) + Q12_MULT_PRECISE(arg6, iVar1);
+        cornersX[0] = Q12_MULT_PRECISE(startX, invLerpWeight) + Q12_MULT_PRECISE(endX, lerpWeight);
+        cornersY[0] = Q12_MULT_PRECISE(startY, invLerpWeight) + Q12_MULT_PRECISE(endY, lerpWeight);
 
-        temp2    = uVar6[0] + Q12_MULT_PRECISE(arg3, temp_v0);
-        uVar6[1] = Q12_MULT_PRECISE(arg7, iVar1) + temp2;
+        tempX       = cornersX[0] + Q12_MULT_PRECISE(startWidth, invLerpWeight);
+        cornersX[1] = Q12_MULT_PRECISE(endWidth, lerpWeight) + tempX;
 
-        temp2    = sVar5[0] + Q12_MULT_PRECISE(arg4, temp_v0);
-        sVar5[1] = Q12_MULT_PRECISE(arg8, iVar1) + temp2;
+        tempX       = cornersY[0] + Q12_MULT_PRECISE(startHeight, invLerpWeight);
+        cornersY[1] = Q12_MULT_PRECISE(endHeight, lerpWeight) + tempX;
 
+        // Set vertices for first line.
         setLineF3(line);
-        setXY0Fast(line, uVar6[0], sVar5[0]);
-        setXY1Fast(line, uVar6[1], sVar5[0]);
-        setXY2Fast(line, uVar6[1], sVar5[1]);
-
+        setXY0Fast(line, cornersX[0], cornersY[0]);
+        setXY1Fast(line, cornersX[1], cornersY[0]);
+        setXY2Fast(line, cornersX[1], cornersY[1]);
         setSemiTrans(line, 0);
 
-        temp = 0x80 - ((i << 6) / 5);
-
+        // Set color.
+        blueIntensity      = 128 - ((i << 6) / 5);
         *(u16*)(&line->r0) = 0;
-        line->b0           = temp;
+        line->b0           = blueIntensity;
 
+        // Draw first line.
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
 
         line[1] = line[0];
         line[2] = line[1];
         line[3] = line[2];
-
         line++;
 
-        setXY0Fast(line, uVar6[0], sVar5[0] - 1);
-        setXY1Fast(line, uVar6[1], sVar5[0] - 1);
-        setXY2Fast(line, uVar6[1], sVar5[1] + 1);
-
+        // Draw second line.
+        setXY0Fast(line, cornersX[0], cornersY[0] - 1);
+        setXY1Fast(line, cornersX[1], cornersY[0] - 1);
+        setXY2Fast(line, cornersX[1], cornersY[1] + 1);
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
-
         line++;
 
-        setXY0Fast(line, uVar6[1], sVar5[1]);
-        setXY1Fast(line, uVar6[0], sVar5[1]);
-        setXY2Fast(line, uVar6[0], sVar5[0]);
-
+        // Draw third line.
+        setXY0Fast(line, cornersX[1], cornersY[1]);
+        setXY1Fast(line, cornersX[0], cornersY[1]);
+        setXY2Fast(line, cornersX[0], cornersY[0]);
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
-
         line++;
 
-        setXY0Fast(line, uVar6[1], sVar5[1] + 1);
-        setXY1Fast(line, uVar6[0], sVar5[1] + 1);
-        setXY2Fast(line, uVar6[0], sVar5[0] - 1);
-
+        // Draw fourth line.
+        setXY0Fast(line, cornersX[1], cornersY[1] + 1);
+        setXY1Fast(line, cornersX[0], cornersY[1] + 1);
+        setXY2Fast(line, cornersX[0], cornersY[0] - 1);
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
         line++;
     }
 
     GsOUT_PACKET_P = line;
+
+    #undef BOX_COUNT
 }

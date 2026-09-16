@@ -71,7 +71,7 @@ void Text_Debug_Draw(char* str) // 0x80031F40
             default:
                 glyphSprt = (SPRT_8*)packet;
                 addPrimFast(ot, glyphSprt, 3);
-                setRGBC0(glyphSprt, Q8_COLOR(0.5f), Q8_COLOR(0.5f), Q8_COLOR(0.5f), PRIM_RECT | RECT_TEXTURE | RECT_SIZE_8);
+                setRGBC0(glyphSprt, 128, 128, 128, PRIM_RECT | RECT_TEXTURE | RECT_SIZE_8);
                 setXY0Fast(glyphSprt, posX, posY);
 
                 charIdx = (char)toupper(charCode) - '*';
@@ -108,7 +108,7 @@ void Text_Debug_Draw(char* str) // 0x80031F40
     GsOUT_PACKET_P = packet;
 }
 
-char* Text_Debug_IntToString(s32 widthMin, s32 val) // 0x80032154
+char* Text_Debug_IntToString(s32 lengthMin, s32 val) // 0x80032154
 {
     bool  isNegative;
     char* str;
@@ -130,7 +130,7 @@ char* Text_Debug_IntToString(s32 widthMin, s32 val) // 0x80032154
     do
     {
         str--;
-        widthMin--;
+        lengthMin--;
         *str = '0' + (val % 10);
         val /= 10;
     }
@@ -140,14 +140,14 @@ char* Text_Debug_IntToString(s32 widthMin, s32 val) // 0x80032154
     {
         str--;
         *str = '-';
-        widthMin--;
+        lengthMin--;
     }
 
-    while (widthMin > 0)
+    while (lengthMin > 0)
     {
         str--;
         *str = '\v';
-        widthMin--;
+        lengthMin--;
     }
 
     return str;

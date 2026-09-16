@@ -1353,17 +1353,17 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
 
             if (i != 0)
             {
-                setRGB0(poly, Q8_COLOR(0.0f), Q8_COLOR(0.75f), Q8_COLOR(0.25f));
-                setRGB1(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f),  Q8_COLOR(0.0f));
-                setRGB2(poly, Q8_COLOR(0.0f), Q8_COLOR(0.75f), Q8_COLOR(0.25f));
-                setRGB3(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f),  Q8_COLOR(0.0f));
+                setRGB0(poly, 0, 192, 64);
+                setRGB1(poly, 0, 0,   0);
+                setRGB2(poly, 0, 192, 64);
+                setRGB3(poly, 0, 0,   0);
             }
             else
             {
-                setRGB0(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f),  Q8_COLOR(0.0f));
-                setRGB1(poly, Q8_COLOR(0.0f), Q8_COLOR(0.75f), Q8_COLOR(0.25f));
-                setRGB2(poly, Q8_COLOR(0.0f), Q8_COLOR(0.0f),  Q8_COLOR(0.0f));
-                setRGB3(poly, Q8_COLOR(0.0f), Q8_COLOR(0.75f), Q8_COLOR(0.25f));
+                setRGB0(poly, 0, 0,   0);
+                setRGB1(poly, 0, 192, 64);
+                setRGB2(poly, 0, 0,   0);
+                setRGB3(poly, 0, 192, 64);
             }
 
             setXY4(poly,

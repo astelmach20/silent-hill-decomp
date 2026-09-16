@@ -1412,7 +1412,7 @@ Bgm_SongStopFadeOut                          = 0x80089C00; // type:func
 //--- PA: 0x065168   VA: 0x80089CC8   subsegment: c, bodyprog_800881B8
 //--------------------------------------------------------------------
 Gfx_CursorDraw                               = 0x80089CC8; // type:func
-Map_BoxOutlineDraw                           = 0x80089E80; // type:func
+PaperMap_ExpandingBoxesDraw                  = 0x80089E80; // type:func
 
 //--------------------------------------------------------------
 //--- PA: 0x065C2C   VA: 0x8008A78C   subsegment: c, chara_spawn

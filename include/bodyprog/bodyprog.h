@@ -1675,7 +1675,8 @@ s32 func_80036498(void);
 // Used in some RoomBgmInit funcs.
 u32 func_800364BC(void);
 
-void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
+void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
+                    u32 clutX, s16 clutY, s32 tPage);
 
 /** Might retrun `bool`. */
 void func_80089090(s32 arg0);
@@ -2317,8 +2318,21 @@ s32 Math_MagnitudeShiftGet(q19_12 mag);
 
 u32 func_8008A2E0(s32 arg0);
 
-/* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
-void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8);
+/** @brief Draws a set of expanding boxes used to highlight a point on a paper map.
+ *
+ * @param progressAlpha Progress weight.
+ * @param startX X start corner (top-left).
+ * @param startY Y start corner (top-left).
+ * @param startWidth Start width.
+ * @param startHeight Start height.
+ * @param endX X end corner (bottom-right).
+ * @param endY Y end corner (bottom-right).
+ * @param endWidth End width.
+ * @param endHeight End height.
+ */
+void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
+                        q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
+                        q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight);
 
 // TODO: Move these to new headers.
 
