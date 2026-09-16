@@ -665,7 +665,7 @@ bool func_801E3970(void) // 0x801E3970
              (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip))
     {
         skipTo = D_801E5E84 + 168;
-        skipTo = FP_TO(skipTo, Q12_SHIFT) / Q12(1.0f); // TODO: What math macro matches?
+        skipTo = Q12_DIV(skipTo, Q12(1.0f));
         D_800C48F0 = skipTo;
         SD_Call(19);
     }

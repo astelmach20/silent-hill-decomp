@@ -764,7 +764,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
             }
             else
             {
-                vol = Q12_MULT_PRECISE(D_800E20FC, Q12(1.0f) - (FP_TO(vol - Q12(1.0f), Q12_SHIFT) / Q12(16.0f)));
+                vol = Q12_MULT_PRECISE(D_800E20FC, Q12(1.0f) - Q12_DIV(vol - Q12(1.0f),  Q12(16.0f)));
             }
         }
 

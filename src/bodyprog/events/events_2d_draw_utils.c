@@ -49,8 +49,8 @@ void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32
 }
 
 void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
-                        q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
-                        q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight) // 0x80088370
+                                 q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
+                                 q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight) // 0x80088370
 {
     #define BOX_COUNT 5
 

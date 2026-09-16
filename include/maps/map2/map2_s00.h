@@ -39,6 +39,7 @@ extern u8 D_800F1CA8[3]; // = { 0, 1, 2 }
 /** Alpha value? */
 extern q3_12 D_800F228C;
 
+/** `bool` */
 extern u8 D_800F228E;
 
 /** Paper map marking fade alpha. Used to fade in the marking sprite to half opacity. */

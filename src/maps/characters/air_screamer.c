@@ -9201,7 +9201,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             }
             else
             {
-                var_v1 = FP_TO(temp, Q12_SHIFT) / sharedData_800E2330_0_s01.hitDistance;
+                var_v1 = Q12_DIV(temp, sharedData_800E2330_0_s01.hitDistance);
             }
 
             hasLosHit  = true;
@@ -10473,7 +10473,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
 
         playerMoveSpeed    = SquareRoot12(Q12_SQUARE_PRECISE(playerOffsetX) +
                                           Q12_SQUARE_PRECISE(playerOffsetZ));
-        playerMoveSpeed    = FP_TO(playerMoveSpeed, Q12_SHIFT) / g_DeltaTime;
+        playerMoveSpeed    = Q12_DIV(playerMoveSpeed, g_DeltaTime);
         playerheadingAngle = ratan2(playerOffsetX, playerOffsetZ);
     }
 
@@ -10495,7 +10495,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
             var_s2 = Q12(1.0f);
         }
 
-        var_s2        = FP_TO(playerOffsetZ, Q12_SHIFT) / var_s2;
+        var_s2        = Q12_DIV(playerOffsetZ, var_s2);
         playerOffsetZ = Q12_MULT_PRECISE(playerMoveSpeed, var_s2);
         playerOffsetX = Q12_MULT_PRECISE(playerOffsetZ, Math_Sin(playerheadingAngle));
         playerOffsetZ = Q12_MULT_PRECISE(playerOffsetZ, Math_Cos(playerheadingAngle));
@@ -12916,7 +12916,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
                         break;
                 }
 
-                temp_lo = FP_TO(ret_3 - animTime, Q12_SHIFT) / distToGround;
+                temp_lo = Q12_DIV(ret_3 - animTime, distToGround);
                 speed1  = Q12_MULT_PRECISE(speed_2, temp_lo);
             }
 

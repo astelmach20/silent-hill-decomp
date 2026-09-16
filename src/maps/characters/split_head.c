@@ -70,8 +70,8 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     VECTOR3 sfxPos;
 
     keyframeIdx = FP_FROM(splitHead->model.anim.time, Q12_SHIFT);
-    sfxVol      = ((FP_TO(g_SplitHead_MovementAnimDuration, Q12_SHIFT) / Q12(24.0f)) >> 7) + 96;                          // @hack `(/ Q12(24.0f)) >> 7` should be same as `/ 0xC00000`?
-    sfxPitch    = ((FP_TO(g_SplitHead_MovementAnimDuration, Q12_SHIFT) / Q12(24.0f)) >> 6) - 64 + Rng_GenerateUInt(0, 7); // @hack `(/ Q12(24.0f)) >> 6` should be same as `/ 0x600000`?
+    sfxVol      = (Q12_DIV(g_SplitHead_MovementAnimDuration, Q12(24.0f)) >> 7) + 96;                          // @hack `(/ Q12(24.0f)) >> 7` should be same as `/ 0xC00000`?
+    sfxPitch    = (Q12_DIV(g_SplitHead_MovementAnimDuration, Q12(24.0f)) >> 6) - 64 + Rng_GenerateUInt(0, 7); // @hack `(/ Q12(24.0f)) >> 6` should be same as `/ 0x600000`?
 
     if ((keyframeIdx >= 147 && keyframeIdx < 162) ||
         (keyframeIdx >= 187 && keyframeIdx < 201))

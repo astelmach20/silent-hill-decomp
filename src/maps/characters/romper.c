@@ -1715,7 +1715,7 @@ void sharedFunc_800E9714_2_s02(s_SubCharacter* romper)
     sharedFunc_800D2E9C_0_s00(&newPosX, &newPosZ, &headingAngle);
 
     temp_v0 = (FP_TO(Math_Vector2MagCalcSafeQ6(newPosX - romper->position.vx, newPosZ - romper->position.vz), Q12_SHIFT) << 1) / moveSpeed;
-    moveSpeedStep  = FP_TO(moveSpeed, Q12_SHIFT) / temp_v0;
+    moveSpeedStep = Q12_DIV(moveSpeed, temp_v0);
 
     if (moveSpeedStep < Q12(0.0f))
     {

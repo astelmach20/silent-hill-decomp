@@ -387,7 +387,7 @@ s16 func_800D1354(void) // 0x800D1354
     z6 = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz + Q12(140.0f));
 
     tmp0 = FP_FROM((cos0 * Q6_TO_Q12((SquareRoot0(SQUARE(x6) + SQUARE(z6))))), Q12_SHIFT);
-    var1 = FP_TO(tmp0, Q12_SHIFT) / Q6_TO_Q12(SquareRoot0(0xBAC52));
+    var1 = Q12_DIV(tmp0, Q6_TO_Q12(SquareRoot0(0xBAC52)));
     var = MIN(var1, Q8(16.0f));
 
     if (var >= 0)

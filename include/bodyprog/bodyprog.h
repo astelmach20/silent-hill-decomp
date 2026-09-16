@@ -2331,8 +2331,8 @@ u32 func_8008A2E0(s32 arg0);
  * @param endHeight End height.
  */
 void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
-                        q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
-                        q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight);
+                                 q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
+                                 q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight);
 
 // TODO: Move these to new headers.
 

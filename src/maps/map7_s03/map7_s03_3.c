@@ -3795,7 +3795,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E972C
     {
         Math_SetSVectorFast(&g_WorldObject_Bin.rotation, D_800F482C, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
         WorldObjects_Add(&g_WorldObject_Bin.object, &g_WorldObject_Bin.position, &g_WorldObject_Bin.rotation);
-        D_800F482C -= (FP_TO(g_DeltaTime, Q12_SHIFT) / Q12(3.6f));
+        D_800F482C -= Q12_DIV(g_DeltaTime, Q12(3.6f));
     }
 
     if (g_Cutscene_UpdateNu)

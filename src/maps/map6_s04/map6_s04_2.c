@@ -540,8 +540,8 @@ void func_800DF160(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DF160
 
     if (temp_v0 != 0)
     {
-        var_s2 = FP_TO(temp_s2, Q12_SHIFT) / temp_v0;
-        var_s1 = FP_TO(temp_s1, Q12_SHIFT) / temp_v0;
+        var_s2 = Q12_DIV(temp_s2, temp_v0);
+        var_s1 = Q12_DIV(temp_s1, temp_v0);
     }
     else
     {
@@ -554,8 +554,8 @@ void func_800DF160(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DF160
 
     if (temp_v0_2 != 0)
     {
-        var_a2 = -FP_TO(temp_s3, Q12_SHIFT) / temp_v0_2;
-        var_a1 = FP_TO(temp_v0, Q12_SHIFT) / temp_v0_2;
+        var_a2 = -FP_TO(temp_s3, Q12_SHIFT) / temp_v0_2; // TODO: `Q12_DIV` doesn't match.
+        var_a1 = Q12_DIV(temp_v0, temp_v0_2);
     }
     else
     {

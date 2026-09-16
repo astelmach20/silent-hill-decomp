@@ -1180,7 +1180,7 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     {
         if (!(Rng_GenerateInt(0, 511) && distToTarget <= Q12(4.0f)) || // 1 in 512 chance.
             (!Rng_GenerateInt(0, 127) &&                               // 1 in 128 chance.
-             Rng_GenerateUInt(0, Q12_CLAMPED(1.0f)) < FP_TO(distToTarget, Q12_SHIFT) / Q12(4.0f)))
+             Rng_GenerateUInt(0, Q12_CLAMPED(1.0f)) < Q12_DIV(distToTarget, Q12(4.0f))))
         {
             if (stalkerProps.flags & StalkerFlag_11)
             {

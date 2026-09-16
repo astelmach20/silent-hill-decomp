@@ -1708,7 +1708,7 @@ q3_12 func_8006C248(s32 packedDir, q3_12 arg1, q3_12 deltaX, q7_8 deltaZ, q7_8 a
         return NO_VALUE;
     }
 
-    alpha = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1; // TODO: Use `Math_Vector2MagCalc`.
+    alpha = Q12_DIV(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), arg1);
     alpha = CLAMP(alpha, Q12(0.0f), Q12(1.0f));
 
     return alpha;
@@ -2431,8 +2431,8 @@ void func_8006D7EC(s_CollisionCharaState* charaState, SVECTOR* offset0, SVECTOR*
 
     if (dist != Q12(0.0f))
     {
-        charaState->direction.vx = FP_TO(charaState->offset.vx, Q12_SHIFT) / dist;
-        charaState->direction.vz = FP_TO(charaState->offset.vz, Q12_SHIFT) / charaState->distance;
+        charaState->direction.vx = Q12_DIV(charaState->offset.vx, dist);
+        charaState->direction.vz = Q12_DIV(charaState->offset.vz, charaState->distance);
 
         headingAngle             = ratan2(charaState->offset.vz, charaState->offset.vx);
         charaState->direction.vx = Math_Cos(headingAngle);

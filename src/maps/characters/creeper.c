@@ -154,7 +154,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
                                           SQUARE(Q12_TO_Q6(creeper->damage.position.vz))) << 18) /
                               Q12(0.8f);
 
-        creeper->fallSpeed    = FP_TO(creeper->damage.position.vy, Q12_SHIFT) / Q12(0.8f);
+        creeper->fallSpeed    = Q12_DIV(creeper->damage.position.vy, Q12(0.8f));
         creeper->headingAngle = Rng_AddGeneratedUInt(ratan2(creeper->damage.position.vx, creeper->damage.position.vz), -128, 127);
 
         creeperProps.flags |= CreeperFlag_1;
