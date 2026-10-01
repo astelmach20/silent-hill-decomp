@@ -774,7 +774,352 @@ void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
     }
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_StringDraw);
+s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004B798
+{
+    extern u32 D_800AF840[];
+
+    s32 j;
+    s32       fractionDigits;
+    bool      isFraction;
+    s32       digit;
+    s32       i;
+    register s32 c asm("$4"); // @hack
+    s32       longestLineWidth;
+    s32 lineIdx;
+    s32 posX;
+    s32 posY;
+    u32 color;
+    u8        code;
+    s32       arg;
+    s32 returnCode;
+    GsOT_TAG* ot;
+    GsOT*     ot2;
+    s32       temp;
+    s32       temp2;
+    s32       temp3;
+    s16       tpage;
+    s32       glyphWidth;
+    s32       tA;
+    s32       tB;
+    s32       tC;
+    register s32 tcopy asm("$4"); // @hack
+    u8* packet;
+    POLY_FT4* poly;
+
+    packet     = NULL;
+    returnCode = 0;
+    ot         = &g_OtTags0[g_ActiveBufferIdx][6];
+    color      = D_800AF840[D_800AF83C];
+
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        packet = GsOUT_PACKET_P;
+    }
+
+    switch (g_MapMsg_ActiveLine.positionIdx)
+    {
+        case 0:
+            D_800C5E10.vy = -92;
+            break;
+
+        case 1:
+            D_800C5E10.vy = 76 - ((D_800C5E1C - 1) * 16);
+            break;
+
+        case 2:
+            D_800C5E10.vy = -60;
+            break;
+
+        case 3:
+            D_800C5E10.vy = 44 - ((D_800C5E1C - 1) * 16);
+            break;
+
+        case 4:
+            D_800C5E10.vy = ((9 - D_800C5E1C) * 8) - 76;
+            break;
+    }
+
+    longestLineWidth = D_800C5E30[0];
+    for (j = 1; j < D_800C5E1C; j++)
+    {
+        if (longestLineWidth < D_800C5E30[j])
+        {
+            longestLineWidth = D_800C5E30[j];
+        }
+    }
+
+    posY = D_800C5E10.vy;
+    for (lineIdx = 0; lineIdx < D_800C5E1C; lineIdx++)
+    {
+        posX = D_800C5E10.vx = (returnCode == 99) ? (-D_800C5E30[lineIdx] * 6) : (-longestLineWidth * 6);
+
+        switch (returnCode)
+        {
+            case 99:
+                posX = D_800C5E10.vx = -D_800C5E30[lineIdx] * 6;
+                break;
+
+            case 'X':
+                posX = D_800C5E14;
+                break;
+
+            default:
+                posX = D_800C5E10.vx = -longestLineWidth * 6;
+                break;
+        }
+
+        for (j = 0; j < 21;)
+        {
+            switch (*mapMsg)
+            {
+                case '\t':
+                case '\n':
+                case ' ':
+                    mapMsg++;
+                    break;
+
+                case '~':
+                    code = *++mapMsg;
+                    arg  = *++mapMsg - '0';
+
+                    switch (code)
+                    {
+                        case 'N':
+                            posY += 16;
+                            j     = 21;
+                            break;
+
+                        case 'J':
+                            fractionDigits = 0;
+                            isFraction     = false;
+                            digit          = 0;
+
+                            if (g_SysWork.mapMsgTimer == NO_VALUE)
+                            {
+                                mapMsg            += 2;
+                                c                  = *mapMsg;
+                                g_MapMsg_AudioType = arg + 1;
+
+                                while (c != ')')
+                                {
+                                    if (c == '.')
+                                    {
+                                        isFraction = true;
+                                    }
+                                    else
+                                    {
+                                        if (isFraction)
+                                        {
+                                            fractionDigits++;
+                                        }
+
+                                        digit *= 10;
+                                        digit -= '0' - c;
+                                    }
+
+                                    mapMsg++;
+                                    c = *mapMsg;
+                                }
+
+                                digit = Q12(digit);
+                                for (i = 0; i < fractionDigits; i++)
+                                {
+                                    digit /= 10;
+                                }
+
+                                g_SysWork.mapMsgTimer = digit;
+                            }
+                            else
+                            {
+                                while (arg != ' ' && arg != '\t')
+                                {
+                                    arg = *++mapMsg;
+                                }
+                            }
+                            break;
+
+                        case 'M':
+                            returnCode = 99;
+                            posX       = D_800C5E10.vx = -D_800C5E30[lineIdx] * 6;
+                            break;
+
+                        case 'T':
+                            posX       = D_800C5E14;
+                            returnCode = 'X';
+                            break;
+
+                        case 'C':
+                            color      = D_800AF840[arg];
+                            D_800AF83C = arg;
+                            break;
+
+                        case 'D':
+                            displayLength = 200;
+                            break;
+
+                        case 'E':
+                            returnCode = NO_VALUE;
+                            j          = 21;
+                            lineIdx    = 9;
+                            break;
+
+                        case 'W':
+                            break;
+
+                        case 'S':
+                            returnCode = arg;
+                            j          = 21;
+                            lineIdx    = 9;
+                            break;
+                    }
+
+                    mapMsg++;
+                    break;
+
+                case '\0':
+                    returnCode = 1;
+                    j          = 21;
+                    lineIdx    = 9;
+                    break;
+
+                default:
+                    displayLength--;
+
+                    if (g_SysWork.enableHalfHeightGlyphs)
+                    {
+                        ot2  = &g_OrderingTable2[g_ActiveBufferIdx];
+                        poly = (POLY_FT4*)GsOUT_PACKET_P;
+                        setPolyFT4(poly);
+                        temp = j * 12;
+                        if (g_MapMsg_ActiveLine.positionIdx & 1)
+                        {
+                            temp2 = 0x7F93E000;
+                            temp2 = temp + temp2;
+                        }
+                        else
+                        {
+                            temp2 = temp + 0x7F931000;
+                        }
+                        tpage = lineIdx & 0xF;
+                        do {
+                        *(u32*)&poly->u0 = temp2;
+                        } while (0);
+                        tA = j * 12;
+                        tcopy = tA;
+                        if (g_MapMsg_ActiveLine.positionIdx & 1)
+                        {
+                            tA += 0xF000;
+                        }
+                        else
+                        {
+                            tA = tcopy + 0x2000;
+                        }
+                        if (g_MapMsg_ActiveLine.positionIdx & 1)
+                        {
+                            temp2 = (tpage | 0x10) << 16;
+                            *(u32*)&poly->u1 = tA + temp2;
+                        }
+                        else
+                        {
+                            temp2 = tpage << 16;
+                            *(u32*)&poly->u1 = tA + temp2;
+                        }
+
+                        tB = (j + 1) * 12;
+                        tcopy = tB;
+                        if (g_MapMsg_ActiveLine.positionIdx & 1)
+                        {
+                            temp2 = tB - 0x2000;
+                            *(u16*)&poly->u2 = temp2;
+                        }
+                        else
+                        {
+                            temp2 = tcopy + 0x1000;
+                            *(u16*)&poly->u2 = temp2;
+                        }
+
+                        tC = (j + 1) * 12;
+                        tcopy = tC;
+                        if (g_MapMsg_ActiveLine.positionIdx & 1)
+                        {
+                            tC -= 0x1000;
+                        }
+                        else
+                        {
+                            tC = tcopy + 0x2000;
+                        }
+
+                        *(u16*)&poly->u3 = tC;
+                        glyphWidth = posX + 12;
+                        poly->x0 = posX;
+                        poly->x1 = posX;
+                        setRGB0(poly, color, color >> 8, color >> 16);
+                        poly->y0 = posY * 2;
+                        poly->y1 = (posY * 2) + 30;
+                        poly->x2 = glyphWidth;
+                        poly->y2 = posY * 2;
+                        poly->x3 = glyphWidth;
+                        poly->y3 = (posY * 2) + 30;
+                        posX = glyphWidth;
+
+                        addPrim(&ot2->org[10], poly);
+                        GsOUT_PACKET_P = (PACKET*)(poly + 1);
+                    }
+                    else
+                    {
+                        *(u32*)&((SPRT*)packet)->w = 0x10000C;
+                        addPrimFast(ot, (SPRT*)packet, 4);
+                        *(u32*)&((SPRT*)packet)->r0 = color;
+                        *(u32*)&((SPRT*)packet)->x0 = (posX & 0xFFFF) + (posY << 16);
+                        if (g_MapMsg_ActiveLine.positionIdx == 4)
+                        {
+                            *(u32*)&((SPRT*)packet)->u0 = (j * 12) + ((lineIdx / 5) ? 0x7F93E000 : 0x7F931000);
+                        }
+                        else
+                        {
+                            *(u32*)&((SPRT*)packet)->u0 = (j * 12) + ((g_MapMsg_ActiveLine.positionIdx & 1) ? 0x7F93E000 : 0x7F931000);
+                        }
+                        posX += 12;
+
+                        packet += sizeof(SPRT);
+                        if (g_MapMsg_ActiveLine.positionIdx == 4)
+                        {
+                            setlen(packet, 1);
+                            ((u32*)packet)[1] = ((lineIdx % 5) & 0xF) | ((lineIdx / 5) ? 0xE1000210 : 0xE1000200);
+                        }
+                        else
+                        {
+                            setlen(packet, 1);
+                            ((u32*)packet)[1] = (lineIdx & 0xF) | ((g_MapMsg_ActiveLine.positionIdx & 1) ? 0xE1000210 : 0xE1000200);
+                        }
+                        addPrim(ot, (DR_TPAGE*)packet);
+                        packet += sizeof(DR_TPAGE);
+                    }
+
+                    mapMsg += 2;
+                    j++;
+
+                    if (displayLength <= 0)
+                    {
+                        if (!g_SysWork.enableHalfHeightGlyphs)
+                        {
+                            GsOUT_PACKET_P = packet;
+                        }
+
+                        return returnCode;
+                    }
+                    break;
+            }
+        }
+    }
+
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        GsOUT_PACKET_P = packet;
+    }
+
+    return returnCode;
+}
 
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_StringDraw_JP);
 
