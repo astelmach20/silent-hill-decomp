@@ -778,7 +778,159 @@ INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_StringDraw);
 
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_StringDraw_JP);
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C394);
+void func_8004C394(u8* str, s32 arg1, u32 arg2, s32 arg3) // 0x8004C394
+{
+    extern u32 D_800AF840[];
+
+    s32       i;
+    s32       posX;
+    s32       posY;
+    s32       glyphBase;
+    s32       idx;
+    s32       tp;
+    u32       clutUv;
+    s32       len;
+    u8        c;
+    u32       color;
+    GsOT_TAG* ot;
+    u8*       packet;
+    SPRT*     sprt;
+
+    ot     = &g_OtTags0[g_ActiveBufferIdx][6];
+    packet = GsOUT_PACKET_P;
+    color  = D_800AF840[D_800AF83C];
+
+    if (arg1 < 2)
+    {
+        if (arg1 >= 0)
+        {
+            posY = D_800C5E10.vy = (arg2 * 20) - 60;
+            posX = D_800C5E10.vx = (arg1 * 150) - 130;
+            goto block_end;
+        }
+    }
+
+    posY = D_800C5E10.vy = 72 - ((arg1 - 2) * 8);
+    posX = D_800C5E10.vx = -(arg2 * 6);
+
+block_end:
+
+    switch (arg3)
+    {
+        case 9:
+            posY = D_800C5E10.vy = (arg2 * 20) - 60;
+            posX = D_800C5E10.vx = (arg1 * 150) - 112;
+            break;
+
+        case 0:
+        case 2:
+        case 3:
+        case 4:
+            posY = D_800C5E10.vy = -33;
+            posX = D_800C5E10.vx = (arg1 * 150) - 134;
+            if (arg3 == 4)
+            {
+                posX = D_800C5E10.vx = (arg1 * 150) - 128;
+            }
+            break;
+
+        case 1:
+            posY = D_800C5E10.vy = -33;
+            posX = D_800C5E10.vx = (arg1 * 150) - 134;
+            break;
+
+        case 5:
+        case 6:
+            posY = D_800C5E10.vy = -25;
+            posX = D_800C5E10.vx = (arg1 * 150) - 134;
+            break;
+    }
+
+    clutUv    = 0x7F931000;
+    i         = 0;
+    glyphBase = (arg2 & 1) * 120;
+    do
+    {
+        if (i == 10 && arg3 >= 0 && arg3 < 7)
+        {
+            posX = D_800C5E10.vx;
+            posY = D_800C5E10.vy = D_800C5E10.vy + 18;
+            if (arg3 == 3)
+            {
+                posX = D_800C5E10.vx = D_800C5E10.vx - 6;
+            }
+        }
+
+        switch (*str)
+        {
+            case '~':
+                str++;
+                c   = *str++;
+                idx = *str - '0';
+                if (c == 'C')
+                {
+                    color      = D_800AF840[idx];
+                    D_800AF83C = idx;
+                }
+                str++;
+                break;
+
+            case '\0':
+                i = 20;
+                break;
+
+            default:
+                sprt = (SPRT*)packet;
+
+                *(u32*)&sprt->w = 0x10000C;
+                addPrimFast(ot, sprt, 4);
+                *(u32*)&sprt->r0 = color;
+                *(u32*)&sprt->x0 = (posX & 0xFFFF) + (posY << 16);
+                if (arg1 < 2)
+                {
+                    *(u32*)&sprt->u0 = glyphBase + (i * 12) + (arg1 ? 0x7F93E000 : 0x7F931000);
+                }
+                else
+                {
+                    clutUv = 0x7F931000;
+                    *(u32*)&sprt->u0 = (i * 12) + clutUv;
+                }
+                posX += 12;
+
+                packet += sizeof(SPRT);
+                if (arg1 < 2)
+                {
+                    setlen((DR_TPAGE*)packet, 1);
+                    tp = (arg2 >> 1) & 0xF;
+                    if (arg1 != 0)
+                    {
+                        tp = tp | 0x10;
+                        ((u32*)packet)[1] = _get_mode(0, 1, tp);
+                    }
+                    else
+                    {
+                        ((u32*)packet)[1] = _get_mode(0, 1, tp);
+                    }
+                }
+                else
+                {
+                    len       = 1;
+                    packet[3] = len;
+                    ((u32*)packet)[1] = _get_mode(0, 1, 4);
+                }
+
+                addPrim(ot, (DR_TPAGE*)packet);
+                packet += sizeof(DR_TPAGE);
+
+                str += 2;
+                i++;
+                break;
+        }
+    }
+    while (i < 20);
+
+    GsOUT_PACKET_P = packet;
+}
 
 void func_8004C7E4(void) // 0x8004C7E4
 {
