@@ -810,7 +810,20 @@ s32 func_8004C8AC(u8* arg0) // 0x8004C8AC
     return Krom2RawAdd2(arg0[1] | (arg0[0] << 8));
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C8D8);
+void func_8004C8D8(u16* arg0, s32* arg1, s32 arg2) // 0x8004C8D8
+{
+    // @hack Register pins and `do`/`while` block required for match.
+    do
+    {
+        register u16* str asm("$7")  = arg0;
+        register u8*  base asm("$4") = (u8*)0x801E1E80;
+        register s32  idx asm("$3")  = *arg1;
+        register s32  off asm("$2")  = idx * 6;
+
+        func_80036E48(str, (s16*)(base + off));
+    }
+    while (0);
+}
 
 INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025EB4);
 
