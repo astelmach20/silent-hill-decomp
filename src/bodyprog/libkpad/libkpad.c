@@ -50,7 +50,36 @@ s_SysWork_2510 D_800B142C = {
     .func_C  = func_8009E9D0,
 };
 
-INCLUDE_ASM("bodyprog/nonmatchings/libkpad/libkpad", func_8009E198);
+s32 func_8009E198(s_SysWork_2514* arg0, s32 arg1) // 0x8009E198
+{
+    // @hack Explicit registers required for match.
+    register s32              ret asm("$2");
+    register s_SysWork_2514_0 flags asm("$3");
+
+    ret = arg0 != NULL;
+    if (ret != 0)
+    {
+        flags.padPort_0_0 = 0;
+        flags.field_0_8   = 0x80;
+        flags.field_0_16  = 1;
+        flags.field_0_17  = 1;
+        flags.field_0_18  = 1;
+        flags.field_0_19  = 0;
+        flags.field_0_22  = 0;
+        flags.field_0_23  = 0;
+        flags.field_0_24  = 0;
+        arg1 &= 0x13;
+        flags.padPort_0_0 = arg1;
+
+        arg0->actuatorData_4  = 0;
+        *(s32*)&arg0->field_8 = 0;
+        arg0->field_C         = NULL;
+        arg0->field_10        = NULL;
+        arg0->field_0         = flags;
+    }
+
+    return ret;
+}
 
 s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 {
