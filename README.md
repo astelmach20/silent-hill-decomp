@@ -16,6 +16,22 @@ An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the 
 (At most some throwaway decompilation-helper scripts were made with AI, but the actual game code is being studied/reversed by humans).  
 Forks of the project may use AI for porting/fixes/adding features, but this decompilation remains human-led.
 
+## Status of this fork
+
+> [!NOTE]
+> This is a fork of [shdecompilations/silent-hill-decomp](https://github.com/shdecompilations/silent-hill-decomp). The progress badges below come from decomp.dev and track the **upstream** repository, so they do not reflect the work in this fork.
+
+**USA (1.1 / `SLUS-00707`): code is 100% decompiled.** Every function is now written in C. No `INCLUDE_ASM` stubs and no raw `asm` segments remain in `configs/USA`. The last function to be matched was `func_8009E198` (`libkpad`), which brought the build up from upstream's 99.99%.
+
+Other work in this fork:
+
+- **Data migration (USA):** almost all of the remaining raw `.data`/`.rodata` (`INCLUDE_RODATA` blobs, `MAP_MESSAGES`, AirScreamer tables, `VECTOR3`/`SVECTOR` constants, padding words between objects) is now defined in C across `BODYPROG`, `STREAM` and every map overlay.
+  - Still raw: `map0_s02` anim info (`0x6414`-`0x6500`), a 2-byte padding word in `map1_s06`, and a few linker-artifact padding bytes in `bodyprog`, `map3_s06`, `map4_s05` and `map5_s01` that `tools/postbuild.py` patches back in. `.bss` segments are left as they are.
+- **JAP2:** the build is fixed (stale `bodyprog` splits, symbols and postbuild garbage bytes). The previously unmatched Japanese text and inventory functions now match: `Gfx_StringDraw_JP`, `Gfx_MapMsg_StringDraw`, `Gfx_Inventory_ItemDescriptionDraw`, `func_8004C394`, `func_8004C8D8` and `func_8004C918`.
+- **Other regions:** the EUR, JAP0, JAP1 and JAP2 configs still contain raw `asm` segments.
+
+As the section below explains, 100% code is only the end of the first phase. Naming, data structuring, shiftability and documentation are still ongoing.
+
 ## Progress
 
 ### *What does the decompilation percentage mean?*

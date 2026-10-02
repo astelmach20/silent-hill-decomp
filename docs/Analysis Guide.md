@@ -106,6 +106,7 @@ Each scratch is also publicly viewable and forkable, making it easy to collabora
 - In the **Context** box, paste in the `ctx.c` content for the `.c` file that includes the function:
 
    * Run `tools/m2ctx.py src/bodyprog/bodyprog.c` (change to the .c file that has `INCLUDE_ASM` line for the function)
+   * Note: every function in the USA build is now matched, so `src/` contains no `INCLUDE_ASM` lines. This workflow still applies to functions that exist only in other regions (EUR/JAP0/JAP1/JAP2 still have raw `asm` segments in `configs/`), and to re-checking existing code during refactors. In that case, run `m2ctx.py` on the `.c` file where the function would live.
    * Copy the contents of the generated `ctx.c` into the box
 
 - Click **Create Scratch**
