@@ -2573,8 +2573,8 @@ void func_800DEDA4(void) // 0x800DEDA4
     }
 }
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC984);
+const VECTOR3 D_800CC984 = { 0xFFF4B334, 0xFFFFF000, 0xFFFEC000 };
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC990);
+const SVECTOR3 D_800CC990 = { 0x0000, 0x0000, 0x0000 };
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC998);
+const VECTOR3 D_800CC998 = { 0xFFFC0B34, 0xFFFFE667, 0xFFF74CCD };

@@ -829,7 +829,7 @@ void func_800D3128(void) // 0x800D3128
     Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
 }
 
-INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", sharedData_800CB088_3_s01);
+const VECTOR3 sharedData_800CB088_3_s01 = { 0x00013199, 0xFFFFE000, 0x0003B199 };
 
 INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", sharedData_800CB094_3_s01);
 

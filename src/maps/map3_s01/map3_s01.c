@@ -88,9 +88,9 @@ void func_800D1524(void) // 0x800D1524
     Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
 }
 
-INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", sharedData_800CB088_3_s01);
+const VECTOR3 sharedData_800CB088_3_s01 = { 0x0003B199, 0xFFFFE000, 0x00013199 };
 
-INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", sharedData_800CB094_3_s01);
+const VECTOR3 sharedData_800CB094_3_s01 = { 0x00039333, 0xFFFFF000, 0x00013199 };
 
 INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", sharedData_800CB0A0_3_s01);
 

@@ -1173,4 +1173,4 @@ void func_800D8DFC(void) // 0x800D8DFC
     }
 }
 
-INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800CB0CC);
+const VECTOR3 D_800CB0CC = { 0xFFFA40CD, 0x00000000, 0xFFFADCCD };

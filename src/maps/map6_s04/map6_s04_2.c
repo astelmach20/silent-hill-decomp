@@ -3835,9 +3835,9 @@ void func_800E7204(void) // 0x800E7204
     }
 }
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7C0);
+const VECTOR3 D_800CC7C0 = { 0x00008B33, 0xFFFFD800, 0xFFFE4000 };
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7CC);
+const VECTOR3 D_800CC7CC = { 0xFFFF0000, 0xFFFFE800, 0xFFFC0000 };
 
 void func_800E73B4(q19_12 arg0) // 0x800E73B4
 {
