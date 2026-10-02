@@ -2,7 +2,7 @@
 
 Several tools can be used to help disassemble and analyze the game. This guide covers loading the game's overlays into both **Ghidra** and **IDA Pro**.
 
-Ghidra is recommended over IDA due to its simple support for overlays, but it's useful to have other tools for cross-comparison.
+Ghidra is recommended because it handles overlays easily. IDA is useful for cross-checking.
 
 A short guide for using **decomp.me** to create matching function decompilations is also included below.
 
@@ -61,7 +61,7 @@ Currently, global data variables such as `g_SysWork/g_GameWork` still need to be
 
 The paid version of IDA Pro supports MIPS disassembly/decompilation, and has support for PSX executables built-in.
 
-Overlays are apparently supported but it's not clear how well that works, using separate databases per-map-overlay (a base database with main/bodyprog loaded, and then copies of that for each map) may be more reliable for now.
+IDA's overlay support is unproven. Separate databases may be more reliable: one base database with main and bodyprog loaded, and a copy of it for each map.
 
 - Open `SLUS_007.07` in IDA, it should be automatically detected as a PSX EXE.
 
@@ -106,7 +106,7 @@ Each scratch is also publicly viewable and forkable, making it easy to collabora
 - In the **Context** box, paste in the `ctx.c` content for the `.c` file that includes the function:
 
    * Run `tools/m2ctx.py src/bodyprog/bodyprog.c` (change to the .c file that has `INCLUDE_ASM` line for the function)
-   * Note: every function in the USA build is now matched, so `src/` contains no `INCLUDE_ASM` lines. This workflow still applies to functions that exist only in other regions (EUR/JAP0/JAP1/JAP2 still have raw `asm` segments in `configs/`), and to re-checking existing code during refactors. In that case, run `m2ctx.py` on the `.c` file where the function would live.
+   * The USA build has no `INCLUDE_ASM` lines left, so this mainly applies to other regions or to re-checking existing code. In that case, use the `.c` file the function belongs in.
    * Copy the contents of the generated `ctx.c` into the box
 
 - Click **Create Scratch**

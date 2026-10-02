@@ -1,23 +1,16 @@
 ## File Formats
-The game uses a number of custom file formats to store data related to models, levels, cutscenes, and other game assets.
-
-Some of these formats have been documented over the years, but a few still remain mostly unknown (or were only ever documented on long-closed-down websites).
-
-Since the goal of this project is a matching decompilation, understanding these file formats is essential and may also help shape the decompilation process.
+Custom formats are used for models, levels, cutscenes and other assets. Some are documented. Others are still mostly unknown, or were only documented on sites that no longer exist.
 
 ### Data Files
-The table below summarizes each file format encountered so far, their known or suspected purposes, and any available documentation or parsing tools.
-
-> [!NOTE]  
-> Many formats are still being reversed/inferred during the decompilation process. Contributions of parsers, template definitions, or observations are welcome!
+Formats seen so far, with known or suspected purpose and any parser or docs.
 
 | File Type | Purpose | Parser/Documentation |
 |-|-|-|
 | .ANM | Animation data | [anm.ksy](https://github.com/laura-a-n-n/silent-hill-museum/blob/main/ksy/sh1anm.ksy) |
 | .BIN | Overlay code, loaded into memory when needed by the game. | - |
-| .CMP | LZSS-compressed data, unused by game. | [lzss.c](https://github.com/Vatuu/silent-hill-decomp/blob/master/src/screens/b_konami/lzss.c) |
+| .CMP | LZSS-compressed data, unused by game. | [lzss.c](/src/screens/b_konami/lzss.c) |
 | .DAT | Data for demo playback, contains button states for each frame. | - |
-| .DMS | Cutscene keyframe data. | [sh1_dms.bt](https://github.com/Vatuu/silent-hill-decomp/tree/master/docs/file_formats/sh1_dms.bt) |
+| .DMS | Cutscene keyframe data. | [sh1_dms.bt](file_formats/sh1_dms.bt) |
 | .ILM | Skeletal models. | [sh1_model.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt) by Sparagas |
 | .IPD | Local static models. | [sh1_model.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/sh1_model.bt) by Sparagas, [sh_ipd2obj](https://github.com/belek666/sh_ipd2obj) by belek666 |
 | .KDT | Konami MIDI tracker files. | [kdt-tool](https://github.com/Nisto/kdt-tool) by Nisto |
@@ -26,20 +19,18 @@ The table below summarizes each file format encountered so far, their known or s
 | .TMD | PsyQ SDK 3D models, used exclusively on the item screen. | SDK `filefrmt.pdf` |
 | .VAB | PsyQ SDK audio container. | SDK `filefrmt.pdf` |
 | XA/* | XA audio & FMV video. | SDK `filefrmt.pdf` |
-| Savegame | Tracks players current progress in the game. | [ps1_memory_card.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt) by Sparagas |
+| Savegame | Player save data. | [ps1_memory_card.bt](https://github.com/Sparagas/Silent-Hill/blob/main/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt) by Sparagas |
 
 ### `SILENT.` & `HILL.` Containers
 The game keeps all of its data merged together inside the `SILENT.` and `HILL.` files on the game disc. `SILENT.` contains data/overlay files, while `HILL.` contains XA audio & video.
 
-These containers have no header or file table inside it, instead the list of files is kept in the main executable, in a [slightly-transformed way](https://github.com/Vatuu/silent-hill-decomp/blob/master/src/main/filetable.c.USA.inc).
-
-The game itself usually refers to each file by its index in the table, and uses the table to find which sector to seek to in order to read the file.
+The containers have no header or file table of their own. The [file table](/src/main/filetable.c.USA.inc) is stored, slightly encoded, in the main executable. The game refers to files by table index and uses the table to find the sector to read.
 
 > [!NOTE]  
-> [silentassets.py](https://github.com/Vatuu/silent-hill-decomp/tree/master/tools/silentassets/extract.py) tool can handle parsing the file table and extracting from these containers.
+> [`tools/silentassets/extract.py`](/tools/silentassets/extract.py) parses the file table and extracts files from both containers.
 
 ### Folder Paths
-Folder names were fortunately left included in the file table, even though game itself doesn't appear to make use of them:
+The file table still includes folder names, though the game doesn't seem to use them:
 
 | Folder Name | File Types | Purpose |
 |-|-|-|

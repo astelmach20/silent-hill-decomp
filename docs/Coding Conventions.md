@@ -16,7 +16,7 @@ s32 func_XXXXXXXX(s32 arg0)
     }
     else
     {
-        return arg0 > 5
+        return arg0 > 5;
     }
 }
 ```
@@ -96,7 +96,7 @@ For pointers, `void* name` is preferred over `void *name`.
 It is recommended to learn a little about fixed-point math, as *Silent Hill* uses it extensively due to the lack of a floating-point unit in the PSX hardware. Special macros (see `include/bodyprog/math/fixed_point.h`) are provided for high-level abstractions of Q formats to make the code more flexible and comprehensible.
 
 ### Constants
-Use constants for commonly reused values to avoid magic.
+Use named constants instead of magic numbers.
 
 ```
 #define INVENTORY_ITEM_COUNT_MAX 40
@@ -116,11 +116,10 @@ if ((!(g_Player_Health + 1 * 2 == FP_HEALTH(30.0f))) && (g_Player_SomeFlag & (1 
 
 
 // Do this.
-if ((g_player_Health + (1 * 2)) != FP_HEALTH(30.0f) && (g_Player_SomeFlag & (1 << 5)) && && g_Player_IsAlive == 1)
+if ((g_Player_Health + (1 * 2)) != FP_HEALTH(30.0f) && (g_Player_SomeFlag & (1 << 5)) && g_Player_IsAlive == 1)
 ```
 
-For boolean values, avoid using comparison operators.
-Because the C language doesn't have a true `bool` type, a typedef is provided. Note that some boolean checks involving comparisons with values other than 0 still require a comparison operator in order for the compiled code to match.
+Don't compare booleans with `== 0` / `!= 0`. C89 has no `bool`, so the repo provides a typedef. Some checks against values other than 0 still need an explicit comparison to match.
 
 For example:
 ```
@@ -156,14 +155,12 @@ Contents within the header should be ordered as follows:
 4. Structure definitions
 5. Function declarations
 
-This ordering ensures that each section's dependencies are already defined above it (for example, structures commonly depend on enums, and function prototype usually depend on structures).
+This way each section only depends on what is above it.
 
 ## Organization Tools
 
 ### Clang-format
-The repository includes a `clang-format` configuration to help enforce code consistency. Git also has a command to handle formatting modified files.
-
-Follow these steps prior to committing:
+The repo includes a `clang-format` config. Before committing:
 
 1. Stage modified files:</br>
    `git add src/`</br>
@@ -173,16 +170,12 @@ Follow these steps prior to committing:
 3. Review the changes with `git diff`, then re-stage and commit them:</br>
    `git add src/`
 
-### [configs_formatter.py](https://github.com/Vatuu/silent-hill-decomp/tree/master/tools/configs_formatter.py)
-A Python script is provided to rearrange registered symbol in `*.sym.txt` files based on addresses. Prior to committing, run it with `python3 tools/configs_formatter.py`.
+### [configs_formatter.py](/tools/configs_formatter.py)
+Sorts the symbols in the `sym.*.txt` config files by address. Run `python3 tools/configs_formatter.py` before committing.
 
 ## Naming Conventions
 
-Due the lack of debug symbols we had to invent naming conventions as are also looking for making a well covered and documented code.
-
-If the original name of a function, enum, or struct and most of its variables, entries, or fields are known, those names should be used.
-
-If the original names are unknown, follow a systematic naming pattern.
+The game shipped without debug symbols, so most names are invented. Use the original name when it is known. Otherwise, follow the patterns below.
 
 ### General
 Function names are written in `PascalCase`, using non-contracted words and prefixed with the subsystem they belong to. The prefix allows functions to be grouped for visual reference.
@@ -326,7 +319,7 @@ s32 Math_MyFunc(s32 dist) // 0xXXXXXXXX
         return 0;
     }
     
-    do {} while(0) // Hack.
+    do {} while (0); // Hack.
     
     // Value might be enum entry from `e_MyEnum`, but it's unclear right now.
     return 0x10;
@@ -368,16 +361,16 @@ The tags `@note`, `@unused` and `@bug` are used to tag anything noteworthy.
 /** @unused Some boolean statuses for each save slot.
  *
  * Apparently related to the color of the borders of the save file, but
- * appears nothing more than being constantly redifined to 1 or 0.
+ * it only ever gets set to 1 or 0.
  */
 extern s16 D_801E7514[2];
 
-/** @brief Main player colision handler.
+/** @brief Main player collision handler.
  *
  * @bug If the player attacks with the Katana and in middle of the movement,
  * he can be grabbed as collision behaves incorrectly.
  */
-void Player_Colision(); // 0x8000XXXX
+void Player_Collision(); // 0x8000XXXX
 
 /** @brief Struct containing enemy data.
  *

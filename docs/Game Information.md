@@ -1,9 +1,9 @@
 # Game Information
-A collection of all sorts of relevant information regarding the setup, dependencies, environment, etc. of the game.
+The SDK and libraries the game was built with, plus a list of known releases.
 
 ## SDK
 
-- Psy-Q version 4.4.0, with some 4.3.0 / 4.3.1 libraries, based on SDK `printver` output: [versions.txt](https://github.com/Vatuu/silent-hill-decomp/tree/master/lib/versions.txt)
+- Psy-Q version 4.4.0, with some 4.3.0 / 4.3.1 libraries, based on SDK `printver` output: [versions.txt](/lib/versions.txt)
 
 - The **Official Playstation Magazine Demo 16 (U)/OPM16** uses a previous version of the SDK.
 
@@ -19,20 +19,16 @@ A collection of all sorts of relevant information regarding the setup, dependenc
 
 ## File Formats
 
-Game uses a mixture of custom file formats and some PSY-Q/Sony proprietary formats, more information in [File Formats](https://github.com/Vatuu/silent-hill-decomp/wiki/File-Formats) document.
+A mix of custom and Psy-Q/Sony formats. See [File Formats](File%20Formats.md).
 
 ## Game Builds
 
-_Silent Hill_ had several releases across different regions, some pre-release demos were also distributed to the public, along with prototypes and press builds that were later made available online.
-
-All known releases are listed in the table below. The [silentassets](https://github.com/Vatuu/silent-hill-decomp/tree/master/tools/silentassets/extract.py) tool can extract data from each version included here.
-
-There are also some **unverified or undumped versions**, such as the _Hong Kong/Asia_ release seen in some collections. These are listed in the **Unknown Releases** section.
+Known releases, demos and prototypes are listed below. [`tools/silentassets/extract.py`](/tools/silentassets/extract.py) can extract data from all of them. Undumped or unverified versions are under **Unknown Releases**.
 
 ### Known Releases
 
 > [!NOTE]  
-> This repo only targets the **Silent Hill (U) v1.1** release, though other releases may provide insights into parts of the code or include code/data which may be useful for the decompilation.
+> The main target is **Silent Hill (U) v1.1**. The repo also has configs for EUR, JAP0, JAP1 and JAP2 (`configs/`), which are less complete. Other builds are useful for reference.
 
 | Date (YY-MM-DD) | Title | Game/disc code | Notes |
 |-|-|-|-|
