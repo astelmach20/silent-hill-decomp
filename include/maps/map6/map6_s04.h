@@ -122,7 +122,7 @@ extern s16        D_800EBB5A;
 
 extern s_800CB69C D_800CB69C;
 
-extern s_800CB6AC D_800CB6AC[6];
+extern const s_800CB6AC D_800CB6AC[6];
 
 extern s_800ED848 D_800ED848[16];
 
@@ -190,8 +190,8 @@ extern s32 D_800EB338[];
 extern VECTOR3 D_800CB728;
 extern s32     D_800EBB54;
 
-extern s_AnimInfo      D_800CC424[];
-extern s_UnkStruct3_Mo D_800CC4A4[];
+extern const s_AnimInfo      D_800CC424[];
+extern const s_UnkStruct3_Mo D_800CC4A4[];
 
 extern s32 D_800EBAAC[10];
 extern s32 D_800EBAD4[10];

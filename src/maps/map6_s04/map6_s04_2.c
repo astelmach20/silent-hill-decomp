@@ -1038,9 +1038,16 @@ void func_800E01F4(void) // 0x800E01F4
     D_800ED588 = 6;
 }
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB69C);
+const s_800CB69C D_800CB69C = { { 0, 0, 0, 0 }, 0x6E000, 0x800 };
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB6AC);
+const s_800CB6AC D_800CB6AC[6] = {
+    { 0x0, 0xB4000, 0x800, 0xB33 },
+    { 0x6, 0xB4000, 0xCC, 0x400 },
+    { 0x7, 0xB4000, 0xCC, 0x400 },
+    { 0x8, 0xB4000, 0xCC, 0x400 },
+    { 0x9, 0xB4000, 0xCC, 0x400 },
+    { 0xA, 0xB4000, 0xCC, 0x400 },
+};
 
 void func_800E0204(void) // 0x800E0204
 {
@@ -1495,7 +1502,7 @@ s32 func_800E0F28(q19_12 val0, q19_12 val1) // 0x800E0F28
     return integer;
 }
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB728);
+const VECTOR3 D_800CB728 = { 0x00002000, 0xFFFFFB34, 0xFFFE1800 };
 
 void func_800E0FAC(s32 arg0) // 0x800E0FAC
 {
@@ -1744,11 +1751,10 @@ void func_800E1CA0(void) // 0x800E1CA0
 
 void func_800E1D48(void) {}
 
-// TODO: rodata used in a bunch of funcs, can't be inserted properly until they're all decomped.
-extern char D_800CC4C4[]; // "HERO"
-extern char D_800CC4CC[]; // "LIGHT"
-extern char D_800CC4D4[]; // "L_INT"
-extern char D_800CC4DC[]; // "MSB"
+extern const char D_800CC4C4[]; // "HERO"
+extern const char D_800CC4CC[]; // "LIGHT"
+extern const char D_800CC4D4[]; // "L_INT"
+extern const char D_800CC4DC[]; // "MSB"
 
 void func_800E1D50(void) // 0x800E1D50
 {
@@ -1912,17 +1918,31 @@ const char* MAP_MESSAGES[] = {
     /* 75 */ "~J0(1.2)\t~E "
 };
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC424);
+const s_AnimInfo D_800CC424[] = {
+    { Anim_BlendLinear, 0x5C, 0, 0x5D, { 0xA000 }, -1, 805 },
+    { Anim_PlaybackOnce, 0x5D, 0, 0x5D, { 0x12000 }, 805, 819 },
+    { Anim_BlendLinear, 0x5E, 0, 0x5F, { 0xA000 }, -1, 820 },
+    { Anim_PlaybackOnce, 0x5F, 0, 0x5F, { 0x12000 }, 820, 834 },
+    { Anim_BlendLinear, 0x60, 0, 0x61, { 0xA000 }, -1, 835 },
+    { Anim_PlaybackOnce, 0x61, 0, 0x61, { 0x1E000 }, 835, 868 },
+    { Anim_BlendLinear, 0x62, 0, 0x63, { 0xA000 }, -1, 869 },
+    { Anim_PlaybackOnce, 0x63, 0, 0x63, { 0x1E000 }, 869, 902 },
+};
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4A4);
+const s_UnkStruct3_Mo D_800CC4A4[] = {
+    { 0x5D5C, 0xD6, 0x325, 0x333 },
+    { 0x5F5E, 0xD7, 0x334, 0x342 },
+    { 0x6160, 0xF0, 0x343, 0x364 },
+    { 0x6362, 0xF4, 0x365, 0x386 },
+};
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4C4);
+const char D_800CC4C4[] = "HERO";
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4CC);
+const char D_800CC4CC[] = "LIGHT";
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4D4);
+const char D_800CC4D4[] = "L_INT";
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4DC);
+const char D_800CC4DC[] = "MSB";
 
 void func_800E219C(void) // 0x800E219C
 {

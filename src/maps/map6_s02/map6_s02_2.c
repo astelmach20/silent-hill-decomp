@@ -1774,6 +1774,6 @@ void func_800D32D0(void) // 0x800D32D0
     }
 }
 
-INCLUDE_RODATA("maps/map6_s02/nonmatchings/map6_s02_2", D_800CAB90);
+const s_FsImageDesc D_800CAB90 = { { 0x0, 0x19 }, 0x0, 0x0, 0xE0, 0xC };
 
-INCLUDE_RODATA("maps/map6_s02/nonmatchings/map6_s02_2", D_800CAB98);
+const RECT D_800CAB98 = { 0x340, 0x100, 0x40, 0x100 };
