@@ -27,6 +27,8 @@ void (*g_MapEventFuncs[])() = {
     /* 6 */ MapEvent_ChannelingStoneItemTake
 };
 
+const s32 D_800C9578 = 0;
+
 const s_MapOverlayHdr g_MapOverlayHdr = {
     .mapInfo                        = &MAP_INFOS[MapType_ER],
     .mapRoomIdxGet              = Map_RoomIdxGet,
