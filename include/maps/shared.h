@@ -51,6 +51,7 @@ typedef struct
     /* 0xD5C */ s16         field_D5C[4][2]; // Related to animations. Move offset distances?
     /* 0xD6C */ s8          unk_D6C[4];
     /* 0xD70 */ s16         field_D70[2][2];
+    /* 0xD78 */ s16         unk_D78[4][2];
 } s_func_800D2E04;
 
 typedef struct
