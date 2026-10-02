@@ -62,6 +62,8 @@ segments:
 
       # .text section
       - [0x1778, c, map0_s02_header]
+      - [0x1778, c, map0_s02_data_6974]
+      - [0x1778, c, map0_s02_data_6500]
       - [0x1778, c, map0_s02_events_data]
       - [0x1778, c, particle]
       - [0x4530, c, player]
@@ -70,9 +72,9 @@ segments:
 
       # .data section
       - [0x6414, data, map0_s02_anim_info]
-      - [0x6500, data]
+      - [0x6500, .data, map0_s02_data_6500]
       - [0x65E4, .data, map0_s02_header]
       - [0x67C0, .data, map0_s02_events]
       - [0x6818, .data, map0_s02_events_data]
-      - [0x6974, data]
+      - [0x6974, .data, map0_s02_data_6974]
   - [0xA000]

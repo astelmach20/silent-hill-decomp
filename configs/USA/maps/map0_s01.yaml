@@ -66,6 +66,8 @@ segments:
 
       # .text section
       - [0x3614, c, map0_s01_header]
+      - [0x3614, c, map0_s01_data_14B54]
+      - [0x3614, c, map0_s01_data_14220]
       - [0x3614, c, map0_s01_anim_info]
       - [0x3614, c, map0_s01_events_data]
       - [0x3614, c, particle_glass]
@@ -78,9 +80,9 @@ segments:
 
       # .data section
       - [0x13EB8, .data, map0_s01_anim_info]
-      - [0x14220, data]
+      - [0x14220, .data, map0_s01_data_14220]
       - [0x1481C, .data, map0_s01_header]
       - [0x14910, .data, map0_s01_events]
       - [0x14A40, .data, map0_s01_events_data]
-      - [0x14B54, data]
+      - [0x14B54, .data, map0_s01_data_14B54]
   - [0x19100]

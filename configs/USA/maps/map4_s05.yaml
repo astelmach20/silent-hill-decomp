@@ -62,6 +62,10 @@ segments:
       - [0x1729, rodata] # 3 random bytes, linker artifact, splat doesn't seem to write to .s so postbuild.py has to patch them back in.
 
       - [0x172C, c, map4_s05_header]
+
+      - [0x172C, c, map4_s05_data_E7EC]
+
+      - [0x172C, c, map4_s05_data_E1EC]
       - [0x172C, c, map4_s05_events_data]
       - [0x172C, c, map4_s05_anim_info]
 
@@ -74,9 +78,9 @@ segments:
 
       # .data section
       - [0xE05C, .data, map4_s05_anim_info]
-      - [0xE1EC, data]
+      - [0xE1EC, .data, map4_s05_data_E1EC]
       - [0xe5bc, .data, map4_s05_header]
       - [0xE6C8, .data, map4_s05]
       - [0xE714, .data, map4_s05_events_data]
-      - [0xE7EC, data]
+      - [0xE7EC, .data, map4_s05_data_E7EC]
   - [0x12500]

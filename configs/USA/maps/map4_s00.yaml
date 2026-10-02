@@ -60,6 +60,10 @@ segments:
       - [0x10A0, .rodata, map4_s00]
 
       - [0x135C, c, map4_s00_header]
+
+      - [0x135C, c, map4_s00_data_36B4]
+
+      - [0x135C, c, map4_s00_data_3578]
       - [0x135C, c, map4_s00_events_data]
       - [0x135C, c, map4_s00_anim_info]
 
@@ -70,9 +74,9 @@ segments:
 
       # .data section
       - [0x3528, .data, map4_s00_anim_info]
-      - [0x3578, data]
+      - [0x3578, .data, map4_s00_data_3578]
       - [0x363c, .data, map4_s00_header]
       - [0x365C, .data, map4_s00]
       - [0x369C, .data, map4_s00_events_data]
-      - [0x36B4, data]
+      - [0x36B4, .data, map4_s00_data_36B4]
   - [0x4000]

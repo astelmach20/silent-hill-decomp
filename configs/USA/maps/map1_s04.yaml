@@ -61,6 +61,8 @@ segments:
 
       # .text section
       - [0x13E4, c, map1_s04_anim_info]
+      - [0x13E4, c, map1_s04_data_3AC0]
+      - [0x13E4, c, map1_s04_data_39A4]
       - [0x13E4, c, map1_s04_header]
       - [0x13E4, c, map1_s04_events_data]
       - [0x13E4, c, particle]
@@ -69,9 +71,9 @@ segments:
 
       # .data section
       - [0x3938, .data, map1_s04_anim_info]
-      - [0x39A4, data]
+      - [0x39A4, .data, map1_s04_data_39A4]
       - [0x3a38, .data, map1_s04_header]
       - [0x3A5C, .data, map1_s04]
       - [0x3A9C, .data, map1_s04_events_data]
-      - [0x3AC0, data]
+      - [0x3AC0, .data, map1_s04_data_3AC0]
   - [0x4B00]

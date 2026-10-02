@@ -60,6 +60,10 @@ segments:
       - [0x10A0, .rodata, map3_s05]
 
       - [0x207C, c, map3_s05_header]
+
+      - [0x207C, c, map3_s05_data_116F8]
+
+      - [0x207C, c, map3_s05_data_FCD8]
       - [0x207C, c, map3_s05_events_data]
       - [0x207C, c, map3_s05_anim_info]
 
@@ -70,9 +74,9 @@ segments:
 
       # .data section
       - [0xFA68, .data, map3_s05_anim_info]
-      - [0xFCD8, data]
+      - [0xFCD8, .data, map3_s05_data_FCD8]
       - [0x10c74, .data, map3_s05_header]
       - [0x11178, .data, map3_s05]
       - [0x11218, .data, map3_s05_events_data]
-      - [0x116F8, data]
+      - [0x116F8, .data, map3_s05_data_116F8]
   - [0x14000]

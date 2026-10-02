@@ -60,6 +60,10 @@ segments:
       - [0x10A0, .rodata, map1_s05]
 
       - [0x1558, c, map1_s05_header]
+
+      - [0x1558, c, map1_s05_data_C770]
+
+      - [0x1558, c, map1_s05_data_C27C]
       - [0x1558, c, map1_s05_events_data]
       - [0x1558, c, map1_s05_anim_info]
       # .text section
@@ -71,10 +75,10 @@ segments:
 
       # .data section
       - [0xC10C, .data, map1_s05_anim_info]
-      - [0xC27C, data]
+      - [0xC27C, .data, map1_s05_data_C27C]
       - [0xc6cc, .data, map1_s05_header]
       - [0xC704, data]
       - [0xC704, .data, map1_s05_events_data]
       - [0xC734, .data, map1_s05]
-      - [0xC770, data]
+      - [0xC770, .data, map1_s05_data_C770]
   - [0xF200]

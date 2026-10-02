@@ -71,6 +71,8 @@ segments:
 
       # Data only C files
       - [0x3BF8, c, map7_s03_header]
+      - [0x3BF8, c, map7_s03_data_23CA0]
+      - [0x3BF8, c, map7_s03_data_20B58]
       - [0x3BF8, c, map7_s03_events_data]
       - [0x3BF8, c, map7_s03_anim_info]
 
@@ -93,9 +95,9 @@ segments:
 
       # .data section
       - [0x20828, .data, map7_s03_anim_info]
-      - [0x20B58, data]
+      - [0x20B58, .data, map7_s03_data_20B58]
       - [0x23a34, .data, map7_s03_header]
       - [0x23A74, .data, map7_s03_3]
       - [0x23C04, .data, map7_s03_events_data]
-      - [0x23CA0, data]
+      - [0x23CA0, .data, map7_s03_data_23CA0]
   - [0x2BA00]

@@ -62,6 +62,10 @@ segments:
       - [0x2E68, .rodata, map2_s02]
 
       - [0x332C, c, map2_s02_header]
+
+      - [0x332C, c, map2_s02_data_2435C]
+
+      - [0x332C, c, map2_s02_data_21734]
       - [0x332C, c, map2_s02_events_data]
       - [0x332C, c, map2_s02_anim_info]
 
@@ -74,9 +78,9 @@ segments:
 
       # .data section
       - [0x21524, .data, map2_s02_anim_info]
-      - [0x21734, data]
+      - [0x21734, .data, map2_s02_data_21734]
       - [0x23ecc, .data, map2_s02_header]
       - [0x2411C, .data, map2_s02]
       - [0x24164, .data, map2_s02_events_data]
-      - [0x2435C, data]
+      - [0x2435C, .data, map2_s02_data_2435C]
   - [0x27700]

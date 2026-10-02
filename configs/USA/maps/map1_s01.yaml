@@ -63,6 +63,10 @@ segments:
       - [0x1628, .rodata, map1_s01]
 
       - [0x227C, c, map1_s01_header]
+
+      - [0x227C, c, map1_s01_data_13F84]
+
+      - [0x227C, c, map1_s01_data_10DA8]
       - [0x227C, c, map1_s01_events_data]
       - [0x227C, c, map1_s01_anim_info]
 
@@ -77,9 +81,9 @@ segments:
 
       # .data section
       - [0x10B78, .data, map1_s01_anim_info]
-      - [0x10DA8, data]
+      - [0x10DA8, .data, map1_s01_data_10DA8]
       - [0x134e0, .data, map1_s01_header]
       - [0x139E4, .data, map1_s01]
       - [0x13AA4, .data, map1_s01_events_data]
-      - [0x13F84, data]
+      - [0x13F84, .data, map1_s01_data_13F84]
   - [0x15D00]
