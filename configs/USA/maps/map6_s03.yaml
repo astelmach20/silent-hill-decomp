@@ -57,7 +57,6 @@ segments:
       # .rodata section
       - [0x0, .rodata, map6_s03_header]
       - [0x1050, .rodata, particle]
-      - [0x1204, rodata]
       - [0x1208, .rodata, player]
       - [0x1328, .rodata, Chara_Stalker]
       - [0x1688, .rodata, Chara_HangedScratcher]

@@ -59,7 +59,6 @@ segments:
       - [0x1050, .rodata, particle]
       - [0x10A0, .rodata, Chara_Cybil]
       - [0x1190, .rodata, Chara_Dahlia]
-      - [0x1264, rodata]
       - [0x1268, .rodata, map6_s01_2]
       - [0x25E8, c, map6_s01_header]
       - [0x25E8, c, map6_s01_events_data]

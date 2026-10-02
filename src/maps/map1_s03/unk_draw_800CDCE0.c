@@ -181,3 +181,5 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
     return true;
 }
+
+const s32 __pad_rodata_800CA5DC = 0;

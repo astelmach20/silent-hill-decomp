@@ -57,12 +57,9 @@ segments:
       # .rodata section
       - [0x0, .rodata, map0_s00_header]
       - [0x1050, .rodata, particle]
-      - [0x13DC, rodata]
       - [0x13E0, .rodata, player]
-      - [0x1564, rodata]
       - [0x1568, .rodata, Chara_Stalker]
       - [0x18C8, .rodata, Chara_Cheryl]
-      - [0x18DC, rodata]
       - [0x18E0, .rodata, map0_s00_2]
 
       # Data only C files

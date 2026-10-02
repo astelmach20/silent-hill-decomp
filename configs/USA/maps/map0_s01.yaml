@@ -60,7 +60,6 @@ segments:
       - [0x1060, .rodata, particle]
       - [0x1288, .rodata, player]
       - [0x1478, .rodata, Chara_AirScreamer]
-      - [0x2444, rodata]
       - [0x2448, .rodata, Chara_Cybil]
       - [0x2538, .rodata, map0_s01_2]
       - [0x2568, .rodata, map0_s01_events]

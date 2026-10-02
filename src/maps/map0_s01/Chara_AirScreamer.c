@@ -429,3 +429,5 @@ const s_func_800D2E04 sharedData_800CAA98_0_s01 = {
 };
 
 #include "../src/maps/characters/air_screamer.c" // 0x800D2170
+
+const s32 __pad_rodata_800CB9BC = 0;

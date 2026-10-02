@@ -57,9 +57,7 @@ segments:
       # .rodata section
       - [0x0, .rodata, map6_s00_header]
       - [0x1050, .rodata, particle]
-      - [0x12DC, rodata]
       - [0x12E0, .rodata, Chara_AirScreamer]
-      - [0x2D5C, rodata]
       - [0x2D60, .rodata, Chara_Groaner]
       - [0x2EC8, .rodata, map6_s00]
 

@@ -59,7 +59,6 @@ segments:
       - [0x1050, .rodata, particle]
       - [0x1278, .rodata, player]
       - [0x1398, .rodata, Chara_Kaufmann]
-      - [0x1464, rodata]
       - [0x1468, .rodata, map5_s03_2]
 
       # .text section

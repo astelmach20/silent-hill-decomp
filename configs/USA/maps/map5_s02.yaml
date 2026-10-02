@@ -59,7 +59,6 @@ segments:
       - [0x1050, .rodata, particle]
       - [0x10A0, .rodata, characters]
       - [0x1490, .rodata, Chara_Kaufmann]
-      - [0x155C, rodata]
       - [0x1560, .rodata, map5_s02_2]
 
       - [0x2154, c, map5_s02_header]

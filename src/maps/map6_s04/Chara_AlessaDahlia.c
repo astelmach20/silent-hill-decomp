@@ -11,3 +11,5 @@
 // Including her here seems to let it work for now.
 
 #include "../src/maps/characters/dahlia.c"
+
+const s32 __pad_rodata_800CB624 = 0;

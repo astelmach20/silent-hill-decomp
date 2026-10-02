@@ -57,9 +57,7 @@ segments:
       # .rodata section
       - [0x0, .rodata, map1_s02_header]
       - [0x1050, .rodata, particle]
-      - [0x1204, rodata]
       - [0x1208, .rodata, player]
-      - [0x14E4, rodata]
       - [0x14E8, .rodata, Chara_Stalker]
       - [0x1848, .rodata, Chara_Creeper]
       - [0x18E8, .rodata, map1_s02]

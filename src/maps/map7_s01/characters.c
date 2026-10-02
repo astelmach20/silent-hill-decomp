@@ -16,3 +16,5 @@
 #include "../src/maps/unk_m3s03.c" // 0x800D16A4
 
 #include "../src/maps/characters/puppet_nurse.c"
+
+const s32 __pad_rodata_800CAD9C = 0;

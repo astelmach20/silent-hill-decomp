@@ -58,7 +58,6 @@ segments:
       - [0x0, .rodata, map6_s02_header]
       - [0x1050, .rodata, particle]
       - [0x10A0, .rodata, Chara_Alessa]
-      - [0x10CC, rodata]
       - [0x10D0, .rodata, map6_s02_2]
 
       - [0x1628, c, map6_s02_header]

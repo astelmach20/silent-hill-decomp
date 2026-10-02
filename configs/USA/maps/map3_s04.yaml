@@ -58,7 +58,6 @@ segments:
       - [0x0, .rodata, map3_s04_header]
       - [0x1050, .rodata, particle]
       - [0x10A0, .rodata, Chara_PuppetNurse]
-      - [0x10EC, rodata]
       - [0x10F0, .rodata, Chara_Lisa]
       - [0x1190, .rodata, map3_s04_2]
 

@@ -4275,3 +4275,5 @@ void func_800DD8CC(VECTOR3* charaPos) // 0x800DD8CC
 
     func_800DD044();
 }
+
+const s32 __pad_rodata_800CAEB4 = 0;

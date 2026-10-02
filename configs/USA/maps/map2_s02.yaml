@@ -58,7 +58,6 @@ segments:
       - [0x0, .rodata, map2_s02_header]
       - [0x1050, .rodata, particle]
       - [0x1278, .rodata, Chara_AirScreamer]
-      - [0x2CFC, rodata]
       - [0x2D00, .rodata, Chara_Groaner]
       - [0x2E68, .rodata, map2_s02]
 

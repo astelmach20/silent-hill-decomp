@@ -62,7 +62,6 @@ segments:
       - [0x1840, .rodata, Chara_Stalker]
       - [0x1BA0, .rodata, Chara_MonsterCybil]
       - [0x1FB0, .rodata, Chara_AlessaDahlia]
-      - [0x20AC, rodata]
       - [0x20B0, .rodata, map6_s04_2]
 
       - [0x3268, c, map6_s04_header]

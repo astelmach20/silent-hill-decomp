@@ -59,7 +59,6 @@ segments:
       - [0x1050, .rodata, particle_glass]
       - [0x1060, .rodata, particle]
       - [0x10B0, .rodata, characters]
-      - [0x1824, rodata]
       - [0x1828, .rodata, Chara_GhostChildAlessa]
       - [0x1858, .rodata, Chara_Lisa]
       - [0x18F8, .rodata, map7_s01_2]
