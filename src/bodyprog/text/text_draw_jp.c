@@ -1121,7 +1121,114 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004B798
     return returnCode;
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_StringDraw_JP);
+void Gfx_StringDraw_JP(u8* str, s32 lineIdx) // 0x8004C064
+{
+    extern u32 D_800AF840[];
+
+    s32       i;
+    s32       posX;
+    s32       posY;
+    s32       glyphU2;
+    s32       tU;
+    s32       glyphU3;
+    u32       color;
+    GsOT_TAG* ot;
+    u8*       packet;
+    SPRT*     sprt;
+    s32       len;
+    POLY_FT4* poly;
+    GsOT*     ot2;
+
+    ot     = &g_OtTags0[g_ActiveBufferIdx][6];
+    color  = D_800AF840[D_800AF83C];
+    packet = NULL;
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        packet = GsOUT_PACKET_P;
+    }
+
+    posX = D_800C5E10.vx = -120;
+    posY = D_800C5E10.vy = (D_800C5E20 == 2) ? ((lineIdx * 16) - 12) : ((lineIdx * 16) - 20);
+
+    i       = 0;
+    do
+    {
+        switch (*str)
+        {
+            case '\t':
+            case ' ':
+                str++;
+                break;
+
+            case '\0':
+                i       = 21;
+                break;
+
+            default:
+                if (g_SysWork.enableHalfHeightGlyphs)
+                {
+                    poly = (POLY_FT4*)GsOUT_PACKET_P;
+                    ot2  = &g_OrderingTable2[g_ActiveBufferIdx];
+
+                    setPolyFT4(poly);
+                    *(u32*)&poly->u0 = (i * 12) + ((lineIdx & 1) ? 0x7F93E000 : 0x7F931000);
+                    *(u32*)&poly->u1 = ((lineIdx & 1) ? ((i * 12) + 0xF000) : ((i * 12) + 0x2000)) +
+                                       (((lineIdx & 1) ? (((((lineIdx >> 1) << 6) + 0xC0) & 0x3FF) >> 6 | 0x10) : ((((lineIdx >> 1) << 6) + 0xC0) & 0x3FF) >> 6) << 16);
+                    glyphU2 = (i + 1) * 12;
+                    tU = (lineIdx & 1) ? (glyphU2 - 0x2000) : (glyphU2 + 0x1000);
+                    *(u16*)&poly->u2 = tU;
+                    glyphU3 = (i + 1) * 12;
+                    tU = (lineIdx & 1) ? (glyphU3 - 0x1000) : (glyphU3 + 0x2000);
+                    *(u16*)&poly->u3 = tU;
+                    setRGB0(poly, color, color >> 8, color >> 16);
+                    setXY4(poly,
+                           posX,      posY * 2,
+                           posX,      (posY + 15) * 2,
+                           posX + 12, posY * 2,
+                           posX + 12, (posY + 15) * 2);
+                    posX += 12;
+
+                    addPrim(&ot2->org[10], poly);
+                    GsOUT_PACKET_P = (PACKET*)(poly + 1);
+                }
+                else
+                {
+                    sprt = (SPRT*)packet;
+
+                    *(u32*)&sprt->w = 0x10000C;
+                    addPrimFast(ot, sprt, 4);
+                    *(u32*)&sprt->r0 = color;
+                    *(u32*)&sprt->x0 = (posX & 0xFFFF) + (posY << 16);
+                    *(u32*)&sprt->u0 = (i * 12) + ((lineIdx & 1) ? 0x7F93E000 : 0x7F931000);
+                    posX += 12;
+
+                    packet += sizeof(SPRT);
+                    len       = 1;
+                    packet[3] = len;
+                    if ((lineIdx & 1))
+                    {
+                        ((u32*)packet)[1] = _get_mode(0, 1, ((((lineIdx >> 1) << 6) + 0xC0) & 0x3FF) >> 6 | 0x10);
+                    }
+                    else
+                    {
+                        ((u32*)packet)[1] = _get_mode(0, 1, ((((lineIdx >> 1) << 6) + 0xC0) & 0x3FF) >> 6);
+                    }
+                    addPrim(ot, (DR_TPAGE*)packet);
+                    packet += sizeof(DR_TPAGE);
+                }
+
+                str     += 2;
+                i++;
+                break;
+        }
+    }
+    while (i < 21);
+
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        GsOUT_PACKET_P = packet;
+    }
+}
 
 void func_8004C394(u8* str, s32 arg1, u32 arg2, s32 arg3) // 0x8004C394
 {
