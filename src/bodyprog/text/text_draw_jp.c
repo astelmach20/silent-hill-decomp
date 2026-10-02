@@ -1332,4 +1332,108 @@ INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F38);
 
 INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F44);
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C918);
+void func_8004C918(u8* str, s32 arg1, s32 arg2, s32 arg3) // 0x8004C918
+{
+    RECT rect;
+    s32  i;
+    u8*  ptr;
+
+    ptr = str;
+    i   = 0;
+    if (D_800C3920 > 0)
+    {
+        do // @hack
+        {
+            do
+            {
+                func_8004C8D8((u16*)func_8004C8AC(ptr), &i, arg2);
+                ptr += 2;
+                i++;
+            } while (i < D_800C3920);
+        } while (0);
+    }
+
+    do // @hack
+    {
+        do
+        {
+            switch (arg3)
+            {
+                case 13:
+                    rect.x = 158;
+                    rect.y = 16;
+                    rect.w = 30;
+                    rect.h = 16;
+                    break;
+
+                case 12:
+                    rect.x = 256;
+                    rect.y = 480;
+                    rect.w = 60;
+                    rect.h = 16;
+                    break;
+
+                case 7:
+                case 8:
+                    rect.x = 192;
+                    rect.y = 16;
+                    rect.w = 60;
+                    rect.h = 16;
+                    break;
+
+                case 11:
+                    rect.x = 192;
+                    rect.y = 480;
+                    rect.w = 60;
+                    rect.h = 16;
+                    break;
+
+                case 0:
+                case 6:
+                    rect.x = 256;
+                    rect.y = 480;
+                    rect.w = 60;
+                    rect.h = 16;
+                    break;
+
+                case 2:
+                case 3:
+                case 5:
+                    rect.x = 256;
+                    rect.y = 16;
+                    rect.w = 60;
+                    rect.h = 16;
+                    break;
+
+                case 9:
+                    rect.x = 158;
+                    rect.y = 480;
+                    rect.w = 30;
+                    rect.h = 16;
+                    break;
+
+                case 10:
+                    do // @hack
+                    {
+                        rect.x = ((arg1 % 5) << 5) & 0x3C0;
+                    } while (0);
+                    rect.x += (arg1 % 5 & 1) * 30;
+                    rect.y = (arg1 / 5) ? 480 : 16;
+                    rect.h = 16;
+                    rect.w = D_800C3920 * 3;
+                    break;
+
+                case 14:
+                    rect.x = (arg1 % 5) << 6;
+                    rect.y = (arg1 / 5) ? 480 : 16;
+                    rect.w = 60;
+                    rect.h = 16;
+                    break;
+            }
+        } while (0);
+    } while (0);
+
+    ClearImage(&rect, 0, 0, 0);
+    LoadImage(&rect, (u32*)0x801E1E80);
+    DrawSync(0);
+}
