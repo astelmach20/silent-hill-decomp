@@ -16,4 +16,7 @@
 // TODO: Might be part of shared block above with `map6_s04::func_800E155C`
 void GameBoot_LoadScreen_StageString(void) {}
 
-INCLUDE_RODATA("maps/map6_s05/nonmatchings/map6_s05", D_800CA62C);
+const char* MAP_MESSAGES[] = {
+#include "maps/shared/map_msg_common.h"
+    "\tNO_STAGE! ~E "
+};
