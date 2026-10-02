@@ -9330,4 +9330,8 @@ s32 Math_MagnitudeShiftGet(q19_12 mag) // 0x800808F8
     return shift;
 }
 
-INCLUDE_RODATA("bodyprog/nonmatchings/player_control", hack_D_8002A844_fix);
+#if VERSION_IS(JAP2)
+const s32 hack_D_8002A844_fix[3] = { 0, 0, 0 };
+#else
+const s32 hack_D_8002A844_fix[3] = { 0x80073400, 0, 0 };
+#endif

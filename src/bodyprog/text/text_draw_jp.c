@@ -1387,26 +1387,26 @@ block_end:
 void func_8004C7E4(void) // 0x8004C7E4
 {
     // TODO: .rodata? `u8` used as placeholder, likely some kind of struct.
-    extern u8      D_80025EB4;
-    extern u8      D_80025EE0;
-    extern u8      D_80025F0C;
-    extern VECTOR3 D_80025F38;
+    extern const u8      D_80025EB4[];
+    extern const u8      D_80025EE0[];
+    extern const u8      D_80025F0C[];
+    extern const VECTOR3 D_80025F38;
 
     VECTOR3 unused = D_80025F38;
 
     D_800C3920 = 20;
 
-    func_8004C918(&D_80025EB4, 1, 1, 5);
-    func_8004C918(&D_80025EE0, 1, 1, 6);
-    func_8004C918(&D_80025F0C, 1, 1, 7);
+    func_8004C918((u8*)D_80025EB4, 1, 1, 5);
+    func_8004C918((u8*)D_80025EE0, 1, 1, 6);
+    func_8004C918((u8*)D_80025F0C, 1, 1, 7);
 }
 
 void func_8004C870(void)  // 0x8004C870
 {
-    extern u8 D_80025F44; // TODO: .rodata? `u8` used as placeholder, likely some kind of struct.
+    extern const u8 D_80025F44[]; // TODO: .rodata? `u8` used as placeholder, likely some kind of struct.
 
     D_800C3920 = 20;
-    func_8004C918(&D_80025F44, 1, 1, 5);
+    func_8004C918((u8*)D_80025F44, 1, 1, 5);
 }
 
 s32 func_8004C8AC(u8* arg0) // 0x8004C8AC
@@ -1429,15 +1429,15 @@ void func_8004C8D8(u16* arg0, s32* arg1, s32 arg2) // 0x8004C8D8
     while (0);
 }
 
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025EB4);
+const u8 D_80025EB4[44] = "\x82\xB1\x82\xB1\x82\xC5\x8E\x67\x82\xA4\x82\xB1\x82\xC6\x82\xCD\x82\xC5\x82\xAB\x82\xC8\x82\xA2\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x51";
 
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025EE0);
+const u8 D_80025EE0[44] = "\x82\xB1\x82\xB1\x82\xCC\x92\x6E\x90\x7D\x82\xCD\x8E\x9D\x82\xC1\x82\xC4\x82\xA2\x82\xC8\x82\xA2\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40";
 
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F0C);
+const u8 D_80025F0C[44] = "\x88\xC3\x82\xAD\x82\xC4\x8C\xA9\x82\xE9\x82\xB1\x82\xC6\x82\xAA\x82\xC5\x82\xAB\x82\xC8\x82\xA2\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40";
 
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F38);
+const VECTOR3 D_80025F38 = { (s32)D_80025EB4, (s32)D_80025EE0, (s32)D_80025F0C };
 
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F44);
+const u8 D_80025F44[48] = "\x83\x5A\x81\x5B\x83\x75\x82\xB5\x82\xDC\x82\xB7\x82\xA9\x81\x48\x81\x40\x82\xCD\x82\xA2\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x81\x40\x82\xA2\x82\xA2\x82\xA6";
 
 void func_8004C918(u8* str, s32 arg1, s32 arg2, s32 arg3) // 0x8004C918
 {

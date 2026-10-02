@@ -596,7 +596,7 @@ extern const s_800C44F0 D_800294F4[];
 
 extern const s_AnimInfo* D_800297B8;
 
-extern u_Filename D_8002B2CC;
+extern const u_Filename D_8002B2CC;
 
 extern s_FsImageDesc g_Font16AtlasImg;
 extern s_FsImageDesc g_KonamiLogoImg;

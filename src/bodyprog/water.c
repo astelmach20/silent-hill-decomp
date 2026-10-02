@@ -877,4 +877,10 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 
 void func_8008EF18(void) {} // 0x8008EF18
 
-INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002B2CC);
+#if VERSION_IS(JAP2)
+const u_Filename D_8002B2CC = { "DWAVE\0\x83" };
+#else
+const u_Filename D_8002B2CC = { "DWAVE\0\x08\x80" };
+#endif
+
+const s32 D_8002B2D4 = 0;
